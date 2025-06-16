@@ -1,0 +1,10 @@
+:root {
+  /* Brand colors from brand_doc.md */
+  --primary: #2A3959;   /* Blue */
+  --secondary: #F9A625; /* Yellow */
+  --accent: #F9A625;    /* Yellow accent */
+  --light: #FFFFFF;     /* White */
+  --light-gray: #F0F0F0; /* Keeping existing light gray */
+  --dark: #000000;      /* Black */
+  --gray: #333333;      /* Gray */
+} 

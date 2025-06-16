@@ -1,0 +1,160 @@
+{
+  "site_info": {
+    "name": "White Massif",
+    "description": "Leading corporate event management company in Bangalore",
+    "url": "https://whitemassif.com",
+    "scraped_date": "2025-01-27",
+    "total_pages": 6,
+    "total_posts": 3,
+    "media_assets": {
+      "total_images": 291,
+      "total_videos": 4,
+      "media_file": "data/media-assets.json"
+    }
+  },
+  "pages": [
+    {
+      "slug": "our-team-corporate-events",
+      "title": "White Massif Team | Event Planning Specialists",
+      "url": "https://whitemassif.com/our-team-corporate-events/",
+      "file_path": "data/pages/our-team-corporate-events.json",
+      "date_created": "2025-05-17T06:18:00Z",
+      "category": "About",
+      "description": "Meet our dynamic team of event planning specialists"
+    },
+    {
+      "slug": "clients",
+      "title": "Our Clients | Trusted By Top Brands",
+      "url": "https://whitemassif.com/clients/",
+      "file_path": "data/pages/clients.json",
+      "date_created": "2025-05-17T06:17:00Z",
+      "category": "Clients",
+      "description": "160+ corporate clients across various industries"
+    },
+    {
+      "slug": "service-test",
+      "title": "Services - Corporate Event Management in Bangalore",
+      "url": "https://whitemassif.com/service-test/",
+      "file_path": "data/pages/service-test.json",
+      "date_created": "2025-05-07T07:25:00Z",
+      "category": "Services",
+      "description": "Comprehensive corporate event management services"
+    },
+    {
+      "slug": "event-planners-for-companies",
+      "title": "Our Work | White Massif Event Planners For Companies 2025",
+      "url": "https://whitemassif.com/event-planners-for-companies/",
+      "file_path": "data/pages/event-planners-for-companies.json",
+      "date_created": "2025-03-18T06:59:00Z",
+      "category": "Portfolio",
+      "description": "Portfolio of corporate events and celebrations"
+    },
+    {
+      "slug": "contact",
+      "title": "Contact White Massif | Event Experts In Bangalore",
+      "url": "https://whitemassif.com/contact/",
+      "file_path": "data/pages/contact.json",
+      "date_created": "2025-03-13T06:58:00Z",
+      "category": "Contact",
+      "description": "Contact information and inquiry form"
+    },
+    {
+      "slug": "careers",
+      "title": "Careers At White Massif | Join Our Event Team",
+      "url": "https://whitemassif.com/careers/",
+      "file_path": "data/pages/careers.json",
+      "date_created": "2025-03-13T06:43:00Z",
+      "category": "Careers",
+      "description": "Join our dynamic event management team"
+    }
+  ],
+  "posts": [
+    {
+      "slug": "corporate-event-theme-and-ideas-copy",
+      "title": "Corporate Event Theme And Ideas - Copy",
+      "url": "https://whitemassif.com/corporate-event-theme-and-ideas-copy/",
+      "file_path": "data/posts/corporate-event-theme-and-ideas-copy.json",
+      "date_created": "2025-05-01T07:27:00Z",
+      "category": "Event Themes",
+      "tags": ["Corporate Events", "Event Themes", "Event Ideas", "Corporate Celebrations"],
+      "description": "Dynamic corporate event themes including Retro Rewind, Night of Aces, and Glow in Tropic"
+    },
+    {
+      "slug": "seasonal-and-festive-content",
+      "title": "Seasonal And Festive Content",
+      "url": "https://whitemassif.com/seasonal-and-festive-content/",
+      "file_path": "data/posts/seasonal-and-festive-content.json",
+      "date_created": "2025-02-10T05:37:00Z",
+      "category": "Seasonal Events",
+      "tags": ["Seasonal Events", "Corporate Celebrations", "Employee Engagement", "Festive Events"],
+      "description": "Seasonal corporate events including Summer Soiree, Denim Diwali, and Winter Wonderland"
+    },
+    {
+      "slug": "corporate-event-theme-and-ideas",
+      "title": "Corporate Event Themes And Ideas",
+      "url": "https://whitemassif.com/corporate-event-theme-and-ideas/",
+      "file_path": "data/posts/corporate-event-theme-and-ideas.json",
+      "date_created": "2025-02-09T12:17:00Z",
+      "category": "Event Themes",
+      "tags": ["Corporate Events", "Event Themes", "Event Ideas", "Corporate Celebrations"],
+      "description": "Comprehensive guide to corporate event themes including Colors of India and Lights Camera Action"
+    }
+  ],
+  "categories": {
+    "pages": [
+      "About",
+      "Services", 
+      "Portfolio",
+      "Clients",
+      "Contact",
+      "Careers"
+    ],
+    "posts": [
+      "Event Themes",
+      "Seasonal Events"
+    ]
+  },
+  "tags": [
+    "Corporate Events",
+    "Event Themes", 
+    "Event Ideas",
+    "Corporate Celebrations",
+    "Seasonal Events",
+    "Employee Engagement",
+    "Festive Events"
+  ],
+  "navigation": [
+    "SERVICES",
+    "TEAM", 
+    "WORK",
+    "CLIENTS",
+    "CAREERS"
+  ],
+  "contact_info": {
+    "phone": [
+      {
+        "name": "Prakash",
+        "number": "+91-990-0141-155"
+      },
+      {
+        "name": "Vinay", 
+        "number": "+91-990-0141-177"
+      }
+    ],
+    "email": [
+      {
+        "type": "General Enquiry",
+        "address": "info@whitemassif.com"
+      },
+      {
+        "type": "Business Enquiry",
+        "address": "contact@whitemassif.com"
+      },
+      {
+        "type": "Careers",
+        "address": "work@whitemassif.com"
+      }
+    ],
+    "address": "#8, 4th Floor, New Bel Road, Sanjaynagar, Bangalore, Karnataka, India. 560094"
+  }
+} 

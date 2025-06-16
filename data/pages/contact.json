@@ -1,0 +1,77 @@
+{
+  "slug": "contact",
+  "title": "Contact White Massif | Event Experts In Bangalore",
+  "meta_title": "Contact White Massif | Event Experts In Bangalore",
+  "meta_description": "Ready to initiate a project? Looking for a partner to bring your concept to life? Contact White Massif event experts in Bangalore for exceptional corporate events.",
+  "meta_keywords": "contact White Massif, Bangalore event management, corporate event experts, event planning contact, White Massif contact",
+  "url": "https://whitemassif.com/contact/",
+  "date_created": "2025-03-13T06:58:00Z",
+  "status": "published",
+  "featured_image": null,
+  "excerpt": "Ready to initiate a project? Looking for a partner to bring your concept to life? Or just want to get better acquainted with our team and our work? Reach out to us and we'll get back to you as soon as possible.",
+  "content": {
+    "hero": {
+      "title": "Let's Create Together.",
+      "description": "Ready to initiate a project? Looking for a partner to bring your concept to life? Or just want to get better acquainted with our team and our work? Reach out to us and we'll get back to you as soon as possible."
+    },
+    "contact_methods": [
+      {
+        "type": "phone",
+        "title": "Call Us",
+        "contacts": [
+          {
+            "name": "Prakash",
+            "value": "+91-990-0141-155"
+          },
+          {
+            "name": "Vinay",
+            "value": "+91-990-0141-177"
+          }
+        ]
+      },
+      {
+        "type": "location",
+        "title": "Location",
+        "contacts": [
+          {
+            "name": "Office Address",
+            "value": "#8, 4th Floor, New Bel Road, Sanjaynagar, Bangalore, Karnataka, India. 560094"
+          }
+        ]
+      },
+      {
+        "type": "email",
+        "title": "Email Us",
+        "contacts": [
+          {
+            "name": "General Enquiry",
+            "value": "info@whitemassif.com"
+          },
+          {
+            "name": "Business Enquiry",
+            "value": "contact@whitemassif.com"
+          }
+        ]
+      }
+    ],
+    "contact_form": {
+      "title": "Let's Create Together.",
+      "action": "SUBMIT",
+      "fields": [
+        "name",
+        "email",
+        "phone",
+        "company",
+        "event_type",
+        "message"
+      ]
+    }
+  },
+  "navigation": [
+    "SERVICES",
+    "TEAM", 
+    "WORK",
+    "CLIENTS",
+    "CAREERS"
+  ]
+} 

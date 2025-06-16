@@ -1,0 +1,55 @@
+{
+  "slug": "careers",
+  "title": "Careers At White Massif | Join Our Event Team",
+  "meta_title": "Careers At White Massif | Join Our Event Team",
+  "meta_description": "Join White Massif's dynamic event team. We foster an environment that encourages imagination, collaboration, and a relentless pursuit of excellence in event management.",
+  "meta_keywords": "White Massif careers, event management jobs, Bangalore event jobs, corporate event careers, join event team",
+  "url": "https://whitemassif.com/careers/",
+  "date_created": "2025-03-13T06:43:00Z",
+  "status": "published",
+  "featured_image": null,
+  "excerpt": "As a company, we are committed to fostering an environment that encourages imagination, collaboration, and a relentless pursuit of excellence.",
+  "content": {
+    "hero": {
+      "title": "CAREERS",
+      "subtitle": "Crafting Extraordinary Careers"
+    },
+    "culture_section": {
+      "title": "Our Culture",
+      "description": "As a company, we are committed to fostering an environment that encourages imagination, collaboration, and a relentless pursuit of excellence. Together, we aim to revolutionize the world of design and experiences, leaving a trail of inspiration and awe in our wake."
+    },
+    "join_team_section": {
+      "title": "Join Our Team",
+      "description": "Share your CV at \"work@whitemassif.com\" , and our HR team will get back to you shortly!",
+      "email": "work@whitemassif.com",
+      "process": [
+        "Send your CV to work@whitemassif.com",
+        "HR team will review your application",
+        "We'll get back to you shortly"
+      ]
+    },
+    "values": [
+      "Imagination",
+      "Collaboration", 
+      "Excellence",
+      "Innovation",
+      "Inspiration"
+    ],
+    "departments": [
+      "Creative & Design",
+      "Event Production",
+      "Client Servicing",
+      "Operations",
+      "Finance & Accounting",
+      "Human Resources",
+      "Digital Marketing"
+    ]
+  },
+  "navigation": [
+    "SERVICES",
+    "TEAM", 
+    "WORK",
+    "CLIENTS",
+    "CAREERS"
+  ]
+} 

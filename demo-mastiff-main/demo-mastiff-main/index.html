@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White Massif - Premium Event Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-logo">
+            <span class="logo-text" style="color: white;">White Massif</span>
+        </div>
+        <div class="preloader-progress">
+            <div class="preloader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="#hero">
+                    <span class="logo-text logo-dark">White Massif</span>
+                    <span class="logo-text logo-light">White Massif</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#case-studies" class="nav-link">Case Studies</a></li>
+                    <li><a href="#team" class="nav-link">Team</a></li>
+                    <li><a href="#blog" class="nav-link">Insights</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="#planner" class="btn btn-primary">Plan Your Event</a>
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-container">
+            <ul class="mobile-nav-links">
+                <li><a href="#about" class="mobile-nav-link">About</a></li>
+                <li><a href="#services" class="mobile-nav-link">Services</a></li>
+                <li><a href="#case-studies" class="mobile-nav-link">Case Studies</a></li>
+                <li><a href="#team" class="mobile-nav-link">Team</a></li>
+                <li><a href="#blog" class="mobile-nav-link">Insights</a></li>
+                <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+            </ul>
+            <div class="mobile-nav-footer">
+                <div class="mobile-nav-socials">
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                </div>
+                <a href="#planner" class="btn btn-primary btn-block">Plan Your Event</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-video">
+            <video autoplay muted loop playsinline>
+                <source src="assets/videos/hero_video.mp4" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Crafting <span class="highlight">Exceptional</span> Corporate Experiences</h1>
+            <p class="hero-subtitle">Where vision meets flawless execution</p>
+            <div class="hero-actions">
+                <a href="#case-studies" class="btn btn-primary">Explore Our Work</a>
+                <a href="#planner" class="btn btn-outline">Start Planning</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <div class="section-header">
+                        <span class="section-tag">About Us</span>
+                        <h2 class="section-title">Elevating Corporate Events to <span class="highlight">Unforgettable Experiences</span></h2>
+                    </div>
+                    <p class="about-lead">White Massif is a premium event management company specializing in creating exceptional corporate experiences that leave lasting impressions.</p>
+                    <p class="about-text">Our team of creative professionals combines strategic thinking with meticulous execution to transform your vision into reality. From intimate executive gatherings to large-scale conferences, we handle every aspect with precision and flair.</p>
+                    <div class="about-tagline">
+                        <span>Dream</span>
+                        <span class="separator">•</span>
+                        <span>Design</span>
+                        <span class="separator">•</span>
+                        <span>Deliver</span>
+                    </div>
+                    <a href="#services" class="btn btn-primary">Discover Our Services</a>
+                </div>
+                <div class="about-image">
+                    <div class="image-container">
+                        <img src="assets/images/corporate_team.jpeg" alt="White Massif Team in Action">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about-stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="250">0</div>
+                        <div class="stat-label">Events Executed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="12">0</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="98">0</div>
+                        <div class="stat-label">Client Satisfaction</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="45">0</div>
+                        <div class="stat-label">Team Members</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-tag">Our Expertise</span>
+                <h2 class="section-title">Comprehensive <span class="highlight">Event Solutions</span></h2>
+                <p class="section-subtitle">Tailored services to meet your corporate event needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="assets/images/icons/icon_calendar.png" alt="Concept & Theme Development">
+                    </div>
+                    <h3 class="service-title">Concept & Theme Development</h3>
+                    <p class="service-description">Creative ideation and strategic planning to develop unique event concepts aligned with your brand identity and objectives.</p>
+                    <a href="#" class="service-link">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="assets/images/icons/icon_event.png" alt="Venue Selection & Management">
+                    </div>
+                    <h3 class="service-title">Venue Selection & Management</h3>
+                    <p class="service-description">Expert venue sourcing, negotiation, and management to secure the perfect location for your event requirements.</p>
+                    <a href="#" class="service-link">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="assets/images/icons/icon_planning.png" alt="Stage & Set Design">
+                    </div>
+                    <h3 class="service-title">Stage & Set Design</h3>
+                    <p class="service-description">Custom stage and set design with premium production values to create immersive brand environments.</p>
+                    <a href="#" class="service-link">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="assets/images/icons/icon_management.png" alt="Technical Production">
+                    </div>
+                    <h3 class="service-title">Technical Production</h3>
+                    <p class="service-description">Comprehensive audio-visual, lighting, and technical solutions to deliver flawless presentations and experiences.</p>
+                    <a href="#" class="service-link">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="assets/images/icons/icon_team.png" alt="Guest Management">
+                    </div>
+                    <h3 class="service-title">Guest Management</h3>
+                    <p class="service-description">End-to-end attendee management including RSVP systems, registration, and on-site coordination.</p>
+                    <a href="#" class="service-link">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="assets/images/icons/icon_calendar_date.png" alt="Talent & Entertainment">
+                    </div>
+                    <h3 class="service-title">Talent & Entertainment</h3>
+                    <p class="service-description">Curated talent sourcing and management to enhance your event with the perfect entertainment options.</p>
+                    <a href="#" class="service-link">Learn More</a>
+                </div>
+            </div>
+            <div class="services-cta">
+                <a href="#planner" class="btn btn-primary">Discuss Your Requirements</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section id="case-studies" class="case-studies">
+        <div class="container">
+            <div class="section-header center light">
+                <span class="section-tag">Our Work</span>
+                <h2 class="section-title">Featured <span class="highlight">Case Studies</span></h2>
+                <p class="section-subtitle">Exceptional events we've brought to life</p>
+            </div>
+            <div class="case-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="conference">Conferences</button>
+                <button class="filter-btn" data-filter="product">Product Launches</button>
+                <button class="filter-btn" data-filter="corporate">Corporate Events</button>
+                <button class="filter-btn" data-filter="awards">Award Ceremonies</button>
+            </div>
+        </div>
+        <div class="case-slider">
+            <div class="case-slide" data-category="conference">
+                <div class="case-image">
+                    <img src="assets/images/event_tables.jpeg" alt="Global Tech Summit">
+                </div>
+                <div class="case-content">
+                    <span class="case-category">Conference</span>
+                    <h3 class="case-title">Global Tech Summit 2025</h3>
+                    <p class="case-description">A three-day immersive conference experience for 1,500+ technology professionals featuring keynote presentations, interactive workshops, and networking opportunities.</p>
+                    <a href="#" class="btn btn-outline">View Case Study</a>
+                </div>
+            </div>
+            <div class="case-slide" data-category="product">
+                <div class="case-image">
+                    <img src="assets/images/champagne_event.jpeg" alt="Luxury Automotive Launch">
+                </div>
+                <div class="case-content">
+                    <span class="case-category">Product Launch</span>
+                    <h3 class="case-title">Luxury Automotive Launch</h3>
+                    <p class="case-description">An exclusive unveiling event showcasing innovation and luxury for industry leaders, media, and VIP clients with immersive brand experiences.</p>
+                    <a href="#" class="btn btn-outline">View Case Study</a>
+                </div>
+            </div>
+            <div class="case-slide" data-category="awards">
+                <div class="case-image">
+                    <img src="assets/images/masquerade_event.jpeg" alt="Financial Excellence Awards">
+                </div>
+                <div class="case-content">
+                    <span class="case-category">Awards</span>
+                    <h3 class="case-title">Financial Excellence Awards</h3>
+                    <p class="case-description">A prestigious gala recognizing outstanding achievements in the financial sector, featuring celebrity hosts, entertainment, and an elegant dining experience.</p>
+                    <a href="#" class="btn btn-outline">View Case Study</a>
+                </div>
+            </div>
+            <div class="case-slide" data-category="corporate">
+                <div class="case-image">
+                    <img src="assets/images/business_presentation.jpeg" alt="Executive Leadership Retreat">
+                </div>
+                <div class="case-content">
+                    <span class="case-category">Corporate</span>
+                    <h3 class="case-title">Executive Leadership Retreat</h3>
+                    <p class="case-description">A curated three-day experience for C-suite executives combining strategic planning sessions with team-building activities in a luxury resort setting.</p>
+                    <a href="#" class="btn btn-outline">View Case Study</a>
+                </div>
+            </div>
+        </div>
+        <div class="case-navigation">
+            <button class="case-prev"><i class="fas fa-arrow-left"></i></button>
+            <button class="case-next"><i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="container">
+            <div class="case-studies-cta">
+                <a href="#" class="btn btn-primary">View All Case Studies</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Planner Section -->
+    <section id="planner" class="event-planner">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-tag">Start Planning</span>
+                <h2 class="section-title">Interactive <span class="highlight">Event Planner</span></h2>
+                <p class="section-subtitle">Begin your journey to an exceptional event experience</p>
+            </div>
+            <div class="planner-container">
+                <div class="planner-progress">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Event Type</div>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Details</div>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Services</div>
+                    </div>
+                    <div class="progress-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Contact</div>
+                    </div>
+                </div>
+                <div class="planner-content">
+                    <!-- Step 1: Event Type -->
+                    <div class="planner-step active" data-step="1">
+                        <h3 class="step-title">What type of event are you planning?</h3>
+                        <div class="event-type-grid">
+                            <div class="event-type-card">
+                                <div class="event-type-icon">
+                                    <i class="fas fa-microphone-alt"></i>
+                                </div>
+                                <h4 class="event-type-title">Conference</h4>
+                            </div>
+                            <div class="event-type-card">
+                                <div class="event-type-icon">
+                                    <i class="fas fa-box-open"></i>
+                                </div>
+                                <h4 class="event-type-title">Product Launch</h4>
+                            </div>
+                            <div class="event-type-card">
+                                <div class="event-type-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                                <h4 class="event-type-title">Corporate Meeting</h4>
+                            </div>
+                            <div class="event-type-card">
+                                <div class="event-type-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <h4 class="event-type-title">Award Ceremony</h4>
+                            </div>
+                            <div class="event-type-card">
+                                <div class="event-type-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h4 class="event-type-title">Team Building</h4>
+                            </div>
+                            <div class="event-type-card">
+                                <div class="event-type-icon">
+                                    <i class="fas fa-glass-cheers"></i>
+                                </div>
+                                <h4 class="event-type-title">Gala Dinner</h4>
+                            </div>
+                        </div>
+                        <div class="step-navigation">
+                            <button class="btn btn-primary next-step" data-next="2">Next Step</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Event Details -->
+                    <div class="planner-step" data-step="2">
+                        <h3 class="step-title">Tell us about your event</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="event-name">Event Name</label>
+                                <input type="text" id="event-name" placeholder="Enter event name">
+                            </div>
+                            <div class="form-group">
+                                <label for="event-date">Tentative Date</label>
+                                <input type="date" id="event-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="event-location">Location</label>
+                                <input type="text" id="event-location" placeholder="City or venue if known">
+                            </div>
+                            <div class="form-group">
+                                <label for="event-guests">Expected Guests</label>
+                                <input type="number" id="event-guests" placeholder="Approximate number">
+                            </div>
+                            <div class="form-group full">
+                                <label for="event-description">Event Description</label>
+                                <textarea id="event-description" placeholder="Tell us more about your vision for this event"></textarea>
+                            </div>
+                        </div>
+                        <div class="step-navigation">
+                            <button class="btn btn-outline prev-step" data-prev="1">Previous</button>
+                            <button class="btn btn-primary next-step" data-next="3">Next Step</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Services -->
+                    <div class="planner-step" data-step="3">
+                        <h3 class="step-title">Select services you're interested in</h3>
+                        <div class="services-selection">
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-concept">
+                                <label for="service-concept">Concept & Theme Development</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-venue">
+                                <label for="service-venue">Venue Selection & Management</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-design">
+                                <label for="service-design">Stage & Set Design</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-technical">
+                                <label for="service-technical">Technical Production</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-guest">
+                                <label for="service-guest">Guest Management & RSVP</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-talent">
+                                <label for="service-talent">Talent & Entertainment</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-catering">
+                                <label for="service-catering">Catering Coordination</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-branding">
+                                <label for="service-branding">Event Branding & Collateral</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-photography">
+                                <label for="service-photography">Photography & Videography</label>
+                            </div>
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="service-virtual">
+                                <label for="service-virtual">Virtual/Hybrid Components</label>
+                            </div>
+                        </div>
+                        <div class="step-navigation">
+                            <button class="btn btn-outline prev-step" data-prev="2">Previous</button>
+                            <button class="btn btn-primary next-step" data-next="4">Next Step</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Contact Information -->
+                    <div class="planner-step" data-step="4">
+                        <h3 class="step-title">Your Contact Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contact-name">Full Name</label>
+                                <input type="text" id="contact-name" placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-company">Company</label>
+                                <input type="text" id="contact-company" placeholder="Your company">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email</label>
+                                <input type="email" id="contact-email" placeholder="Your email address">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-phone">Phone</label>
+                                <input type="tel" id="contact-phone" placeholder="Your phone number">
+                            </div>
+                            <div class="form-group full">
+                                <label for="contact-message">Additional Information</label>
+                                <textarea id="contact-message" placeholder="Any other details you'd like to share"></textarea>
+                            </div>
+                            <div class="form-group full">
+                                <div class="consent-checkbox">
+                                    <input type="checkbox" id="contact-consent">
+                                    <label for="contact-consent">I agree to be contacted by White Massif regarding my event inquiry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-navigation">
+                            <button class="btn btn-outline prev-step" data-prev="3">Previous</button>
+                            <button class="btn btn-primary submit-planner">Submit Inquiry</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Success Message -->
+                    <div class="planner-success">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3 class="success-title">Thank You!</h3>
+                        <p class="success-message">Your event inquiry has been submitted successfully. One of our event specialists will contact you within 24 hours to discuss your requirements in detail.</p>
+                        <a href="#" class="btn btn-primary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-tag">Client Feedback</span>
+                <h2 class="section-title">What Our <span class="highlight">Clients Say</span></h2>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">White Massif transformed our annual conference into an unforgettable experience. Their attention to detail, creative approach, and flawless execution exceeded our expectations at every turn. The team's professionalism and dedication made the entire planning process seamless.</p>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="assets/testimonial-1.jpg" alt="Sarah Johnson">
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Sarah Johnson</h4>
+                                <p class="author-position">Marketing Director, Global Tech Inc.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">The product launch event organized by White Massif was nothing short of spectacular. They captured our brand essence perfectly and created an immersive experience that generated significant buzz. Their strategic approach to event design delivered measurable results for our business.</p>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="assets/testimonial-2.jpg" alt="Michael Chen">
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Michael Chen</h4>
+                                <p class="author-position">CEO, Innovate Solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">Working with White Massif for our executive retreat was a game-changer. They curated a perfect balance of professional development and team building in a stunning setting. Their ability to anticipate needs and solve problems proactively made the experience truly exceptional.</p>
+                        <div class="testimonial-author">
+                            <div class="author-image">
+                                <img src="assets/testimonial-3.jpg" alt="Priya Sharma">
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Priya Sharma</h4>
+                                <p class="author-position">HR Director, Pinnacle Financial</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-controls">
+                <div class="testimonial-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-tag">Our People</span>
+                <h2 class="section-title">Meet Our <span class="highlight">Expert Team</span></h2>
+                <p class="section-subtitle">The creative minds behind your exceptional events</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="assets/team-1.jpg" alt="Alexandra Reynolds">
+                        <div class="member-social">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Alexandra Reynolds</h3>
+                        <p class="member-position">Founder & Creative Director</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="assets/team-2.jpg" alt="David Mercer">
+                        <div class="member-social">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">David Mercer</h3>
+                        <p class="member-position">Technical Production Director</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="assets/team-3.jpg" alt="Sophia Chen">
+                        <div class="member-social">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Sophia Chen</h3>
+                        <p class="member-position">Client Experience Manager</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="assets/team-4.jpg" alt="Marcus Johnson">
+                        <div class="member-social">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Marcus Johnson</h3>
+                        <p class="member-position">Design & Production Lead</p>
+                    </div>
+                </div>
+            </div>
+            <div class="team-cta">
+                <a href="#" class="btn btn-outline">View Full Team</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-tag">Insights</span>
+                <h2 class="section-title">Latest From Our <span class="highlight">Blog</span></h2>
+                <p class="section-subtitle">Event industry trends, tips, and inspiration</p>
+            </div>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/blog-1.jpg" alt="The Future of Corporate Events">
+                        <div class="blog-category">Trends</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">May 15, 2025</div>
+                        <h3 class="blog-title">The Future of Corporate Events in a Hybrid World</h3>
+                        <p class="blog-excerpt">Exploring how technology and in-person experiences are blending to create new event formats that engage audiences across physical and digital spaces.</p>
+                        <a href="#" class="blog-link">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/blog-2.jpg" alt="Product Launch Strategies">
+                        <div class="blog-category">Strategy</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">April 28, 2025</div>
+                        <h3 class="blog-title">5 Innovative Product Launch Strategies for 2025</h3>
+                        <p class="blog-excerpt">Cutting-edge approaches to unveiling new products that captivate audiences and generate buzz in today's competitive marketplace.</p>
+                        <a href="#" class="blog-link">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="assets/blog-3.jpg" alt="Sustainable Event Planning">
+                        <div class="blog-category">Sustainability</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">April 15, 2025</div>
+                        <h3 class="blog-title">Sustainable Event Planning: The New Corporate Standard</h3>
+                        <p class="blog-excerpt">How leading companies are incorporating sustainability into their event strategies without compromising on quality or impact.</p>
+                        <a href="#" class="blog-link">Read Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-cta">
+                <a href="#" class="btn btn-primary">View All Articles</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-grid">
+            <div class="contact-form-container">
+                <div class="section-header">
+                    <span class="section-tag">Get In Touch</span>
+                    <h2 class="section-title">Let's Discuss Your <span class="highlight">Next Event</span></h2>
+                    <p class="section-subtitle">Reach out to our team to start planning your exceptional experience</p>
+                </div>
+                <form class="contact-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" placeholder="Your company">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Your email address">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" placeholder="Your phone number">
+                        </div>
+                        <div class="form-group full">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Tell us about your event or inquiry"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+            <div class="contact-info-container">
+                <div class="contact-info">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Visit Us</h3>
+                            <p>123 Event Plaza, Suite 500<br>New York, NY 10001</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Call Us</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email Us</h3>
+                            <p>info@whitemassif.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-social">
+                        <h3>Connect With Us</h3>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256349542!2d-73.98784492426815!3d40.75739657138223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b30eac9f%3A0xaca05ca48ab0c3fa!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1652887628465!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-container">
+                <div class="newsletter-content">
+                    <h2 class="newsletter-title">Subscribe to Our Newsletter</h2>
+                    <p class="newsletter-text">Stay updated with the latest event trends, industry insights, and company news</p>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <img src="assets/logo-white.png" alt="White Massif Logo">
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3 class="footer-title">Services</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#">Concept Development</a></li>
+                            <li><a href="#">Venue Management</a></li>
+                            <li><a href="#">Technical Production</a></li>
+                            <li><a href="#">Guest Management</a></li>
+                            <li><a href="#">Event Branding</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3 class="footer-title">Company</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#team">Our Team</a></li>
+                            <li><a href="#case-studies">Case Studies</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3 class="footer-title">Resources</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#blog">Blog</a></li>
+                            <li><a href="#">Event Guide</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3 class="footer-title">Contact</h3>
+                        <ul class="footer-contact">
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Event Plaza, Suite 500, New York, NY 10001</li>
+                            <li><i class="fas fa-phone-alt"></i> +1 (555) 123-4567</li>
+                            <li><i class="fas fa-envelope"></i> info@whitemassif.com</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 White Massif. All Rights Reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{
+  "slug": "clients",
+  "title": "Our Clients | Trusted By Top Brands",
+  "meta_title": "Our Clients | Trusted By Top Brands - White Massif",
+  "meta_description": "White Massif is trusted by 160+ corporate clients across various industries including IT, Banking, Manufacturing, Government, Healthcare, and more.",
+  "meta_keywords": "White Massif clients, corporate event clients, Bangalore event management clients, trusted brands, industry leaders",
+  "url": "https://whitemassif.com/clients/",
+  "date_created": "2025-05-17T06:17:00Z",
+  "status": "published",
+  "featured_image": null,
+  "excerpt": "Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with 160+ corporate clients across various industries.",
+  "content": {
+    "hero": {
+      "title": "Our Clients",
+      "description": "Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with 160+ corporate clients across various industries."
+    },
+    "client_categories": [
+      {
+        "category": "Information Technology",
+        "description": "Leading IT companies and technology firms",
+        "clients": []
+      },
+      {
+        "category": "Banking & Financial Institution",
+        "description": "Banks, financial services, and investment companies",
+        "clients": []
+      },
+      {
+        "category": "Manufacturing, Industry, Research & Development",
+        "description": "Manufacturing companies, industrial firms, and R&D organizations",
+        "clients": []
+      },
+      {
+        "category": "Government & Non Governmental Organization",
+        "description": "Government agencies and NGOs",
+        "clients": []
+      },
+      {
+        "category": "Consulting, Media, Logistics & Aviation",
+        "description": "Consulting firms, media companies, logistics, and aviation industry",
+        "clients": []
+      },
+      {
+        "category": "Pharma & Healthcare",
+        "description": "Pharmaceutical companies and healthcare organizations",
+        "clients": []
+      },
+      {
+        "category": "Real Estate, Retail & Hospitality",
+        "description": "Real estate developers, retail chains, and hospitality industry",
+        "clients": []
+      }
+    ],
+    "testimonials_section": {
+      "title": "What Client's Say?",
+      "testimonials": []
+    }
+  },
+  "navigation": [
+    "SERVICES",
+    "TEAM", 
+    "WORK",
+    "CLIENTS",
+    "CAREERS"
+  ]
+} 
