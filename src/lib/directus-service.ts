@@ -155,6 +155,7 @@ export class DirectusService {
           filter: {
             _and: [
               { status: { _eq: 'published' } },
+              // @ts-expect-error - Directus SDK type issue with array filters
               { tags: { _in: [tag] } }
             ]
           },
