@@ -41,6 +41,7 @@ export default function Navigation() {
     { name: 'Work', href: '/portfolio' },
     { name: 'Clients', href: '/clients' },
     { name: 'Careers', href: '/careers' },
+    { name: 'Feedback', href: '/feedback' },
     { name: 'Contact', href: '/contact' }
   ];
 
@@ -167,18 +168,20 @@ export default function Navigation() {
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
 
-              {/* Mobile menu button */}
+              {/* Mobile menu button - Touch Optimized */}
               <motion.button
                 onClick={toggleMenu}
-                className={`lg:hidden relative w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                className={`lg:hidden relative mobile-touch-target rounded-xl flex items-center justify-center transition-colors ${
                   isHomepage 
                     ? 'bg-gray-100 hover:bg-gray-200' 
                     : isDarkHeroPage
                       ? 'bg-white/20 hover:bg-white/30 backdrop-blur-sm'
                       : 'glass hover:bg-neutral-100'
                 }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                style={{ minWidth: '44px', minHeight: '44px' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                aria-label="Toggle navigation menu"
               >
                 <AnimatePresence mode="wait">
                   {isOpen ? (
@@ -278,11 +281,12 @@ export default function Navigation() {
                         <Link
                           href={item.href}
                           onClick={toggleMenu}
-                          className={`block px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                          className={`block mobile-touch-target px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
                             pathname === item.href
                               ? 'text-amber-400 bg-amber-500/20'
                               : 'text-white/80 hover:text-white hover:bg-white/10'
                           }`}
+                          style={{ minHeight: '44px' }}
                         >
                           {item.name}
                         </Link>

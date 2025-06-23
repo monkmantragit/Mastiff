@@ -154,9 +154,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Clean Video Hero Section */}
-      <section ref={heroRef} className="relative min-h-[100vh] lg:min-h-[120vh] flex items-center justify-center overflow-hidden">
-        {/* Full Video Background */}
+      {/* Clean Video Hero Section - Mobile Optimized */}
+      <section ref={heroRef} className="relative min-h-[100vh] sm:min-h-[100vh] lg:min-h-[120vh] flex items-center justify-center overflow-hidden">
+        {/* Full Video Background - Mobile Optimized */}
         <div className="absolute inset-0 z-0">
           <video
             className="absolute inset-0 w-full h-full object-cover"
@@ -165,64 +165,69 @@ export default function Home() {
             loop
             playsInline
             poster="/assets/images/home/01-01.png"
+            preload="metadata"
+            style={{
+              // Optimize video performance on mobile
+              willChange: 'auto',
+              backfaceVisibility: 'hidden'
+            }}
           >
             <source src="/assets/videos/wm-2025-intro-M2_l2.mp4" type="video/mp4" />
           </video>
           
-          {/* Minimal overlay for readability */}
-          <div className="absolute inset-0 bg-black/20" />
+          {/* Enhanced overlay for better mobile readability */}
+          <div className="absolute inset-0 bg-black/30 sm:bg-black/20" />
         </div>
 
-        {/* Top Badge Only */}
+        {/* Top Badge - Mobile Optimized */}
         <motion.div 
-          className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10"
+          className="absolute top-4 sm:top-8 left-1/2 transform -translate-x-1/2 z-10 px-4"
           initial={{ opacity: 0, y: -20 }}
           animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <Badge className="bg-[#F9A625]/95 text-black border-none text-sm px-4 py-2 backdrop-blur-sm font-body shadow-lg">
-            <MapPin className="w-4 h-4 mr-2" />
-            Bangalore&apos;s Premier Event Management
+          <Badge className="bg-[#F9A625]/95 text-black border-none text-xs sm:text-sm px-3 sm:px-4 py-2 backdrop-blur-sm font-body shadow-lg mobile-touch-target">
+            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+            <span className="hidden sm:inline">Bangalore&apos;s Premier Event Management</span>
+            <span className="sm:hidden">Premier Event Management</span>
           </Badge>
         </motion.div>
 
-        {/* Redesigned Sticky Bottom Bar */}
+        {/* Redesigned Sticky Bottom Bar - Mobile Optimized */}
         <motion.div 
           className="absolute bottom-0 left-0 right-0 z-20 bg-white/95 backdrop-blur-md border-t border-white/20"
           initial={{ opacity: 0, y: 100 }}
           animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.2, delay: 1 }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-8">
+          <div className="max-w-7xl mx-auto mobile-container py-6 sm:py-8">
             
-            {/* Main Content Row */}
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-6">
+            {/* Main Content Row - Mobile Optimized */}
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 mb-4 sm:mb-6">
               
-              {/* Headline Section */}
+              {/* Headline Section - Mobile Typography */}
               <div className="text-center lg:text-left flex-1 max-w-3xl">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display text-[#2A3959] leading-tight mb-4">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] leading-tight mb-3 sm:mb-4 mobile-heading">
                   Extraordinary Events,<br />
                   <span className="text-[#F9A625]">Unforgettable Experiences</span>
                 </h1>
-                <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-8 font-body leading-relaxed">
+                <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 font-body leading-relaxed mobile-body-text">
                   Premier event management in Bangalore, crafting moments that resonate for a lifetime.
                 </p>
               </div>
 
-              {/* CTA Section */}
-              <div className="flex flex-col sm:flex-row gap-4 lg:flex-col xl:flex-row">
+              {/* CTA Section - Touch Optimized */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:flex-col xl:flex-row w-full sm:w-auto">
                 <Button 
-                  size="lg" 
-                  className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-heading px-10 py-5 rounded-full shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl text-lg"
+                  className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px]"
                 >
                   Plan Your Event
-                  <ArrowRight className="ml-3 h-6 w-6" />
+                  <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
                 
                 <Button 
                   variant="outline" 
-                  size="lg"
-                  className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white transition-all duration-300 hover:scale-105 text-lg font-heading"
+                  className="mobile-touch-target border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 min-h-[48px]"
                 >
                   View Portfolio
                 </Button>

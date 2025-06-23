@@ -1,0 +1,238 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Mobile Optimization Rules for White Massif
+
+## Overview
+This rule set guides the mobile optimization process for the White Massif event management website. Follow the comprehensive plan outlined in [MOBILE_OPTIMIZATION_PLAN.md](mdc:MOBILE_OPTIMIZATION_PLAN.md).
+
+## Key Files and Structure
+
+### Core Files to Reference
+- **Main Plan**: [MOBILE_OPTIMIZATION_PLAN.md](mdc:MOBILE_OPTIMIZATION_PLAN.md) - Complete optimization strategy
+- **Global Styles**: [src/app/globals.css](mdc:src/app/globals.css) - Mobile-specific CSS utilities
+- **Layout**: [src/app/layout.tsx](mdc:src/app/layout.tsx) - Global layout and meta tags
+- **Navigation**: [src/components/navigation.tsx](mdc:src/components/navigation.tsx) - Mobile menu system
+
+### Pages to Optimize (Priority Order)
+1. **Homepage**: [src/app/page.tsx](mdc:src/app/page.tsx) - Hero video and main content
+2. **Services**: [src/app/services/page.tsx](mdc:src/app/services/page.tsx) - Service listings
+3. **About**: [src/app/about/page.tsx](mdc:src/app/about/page.tsx) - Team information
+4. **Portfolio**: [src/app/portfolio/page.tsx](mdc:src/app/portfolio/page.tsx) - Project showcase
+5. **Contact**: [src/app/contact/page.tsx](mdc:src/app/contact/page.tsx) - Contact forms
+6. **Feedback**: [src/app/feedback/page.tsx](mdc:src/app/feedback/page.tsx) - Interactive feedback form
+
+## Mobile Optimization Standards
+
+### Touch Targets
+- **Minimum size**: 44px × 44px (buttons, links, form controls)
+- **Recommended size**: 48px × 48px for primary actions
+- **Spacing**: Minimum 8px between interactive elements
+- **Padding**: Minimum 12px vertical, 16px horizontal for buttons
+
+### Typography Hierarchy
+```css
+/* Mobile-first typography scaling */
+h1: text-2xl (32px) mobile → text-4xl (40px) md+
+h2: text-xl (20px) mobile → text-3xl (32px) md+ 
+h3: text-lg (18px) mobile → text-2xl (28px) md+
+body: text-base (16px) all screens
+small: text-sm (14px) all screens
+```
+
+### Responsive Breakpoints
+```css
+/* Mobile-first approach */
+sm: 640px   /* Large mobile */
+md: 768px   /* Tablet */
+lg: 1024px  /* Desktop */
+xl: 1280px  /* Large desktop */
+```
+
+## Implementation Guidelines
+
+### Phase 1: Foundation (CRITICAL)
+1. **Global Mobile Styles**
+   - Add mobile-specific utilities to [src/app/globals.css](mdc:src/app/globals.css)
+   - Implement touch-friendly sizing standards
+   - Add safe area padding for notched devices
+
+2. **Navigation Optimization**
+   - Update [src/components/navigation.tsx](mdc:src/components/navigation.tsx)
+   - Ensure mobile menu animations are smooth
+   - Add proper focus states and touch targets
+
+3. **Homepage Critical Path**
+   - Optimize [src/app/page.tsx](mdc:src/app/page.tsx) for mobile
+   - Handle hero video mobile behavior
+   - Fix text scaling and button accessibility
+
+### Phase 2: Core Pages
+- Optimize service cards and layout grids
+- Ensure forms work seamlessly on mobile
+- Implement touch-friendly interactions
+- Add mobile-specific image handling
+
+### Phase 3: Enhanced Experience
+- Add mobile-specific features and gestures
+- Optimize secondary pages and components
+- Implement mobile performance enhancements
+
+## Critical Constraints
+
+### DO NOT MODIFY
+- Existing functionality and features
+- API integrations and webhook endpoints
+- Brand colors and core design language
+- Content structure and information architecture
+- SEO elements and meta tags
+
+### SAFE TO OPTIMIZE
+- Responsive layouts and spacing
+- Touch interactions and button sizes
+- Loading performance and animations
+- Accessibility and mobile usability
+- Image optimization and scaling
+
+## Mobile Testing Requirements
+
+### Device Matrix
+Test on these viewport sizes:
+- iPhone SE: 375px (smallest modern mobile)
+- iPhone 12/13: 390px (common iOS size)
+- Galaxy S21: 360px (common Android size)
+- iPad Mini: 768px (small tablet)
+
+### Testing Checklist Per Page
+- [ ] Text readable without zooming
+- [ ] All buttons easily tappable (44px+)
+- [ ] Forms work with mobile keyboards
+- [ ] Images scale correctly
+- [ ] No horizontal scrolling
+- [ ] Smooth 60fps animations
+- [ ] Loading states appropriate for mobile
+
+## Common Mobile Patterns
+
+### Mobile-First CSS Structure
+```css
+/* Mobile base styles */
+.component {
+  /* Mobile styles first */
+}
+
+/* Enhanced for larger screens */
+@media (min-width: 640px) {
+  .component {
+    /* Tablet+ enhancements */
+  }
+}
+
+@media (min-width: 1024px) {
+  .component {
+    /* Desktop+ enhancements */
+  }
+}
+```
+
+### Touch-Friendly Button Pattern
+```tsx
+<Button className="
+  min-h-[44px] 
+  px-6 py-3 
+  text-base 
+  touch-manipulation
+  active:scale-95
+  transition-transform
+">
+  Touch-Friendly Action
+</Button>
+```
+
+### Mobile Form Optimization
+```tsx
+<Input 
+  className="
+    min-h-[44px]
+    text-base
+    px-4 py-3
+  "
+  inputMode="text" // or "email", "numeric", etc.
+  autoComplete="name"
+/>
+```
+
+## Performance Optimization
+
+### Mobile-Specific Optimizations
+- Lazy load images below the fold
+- Optimize video playback for mobile networks
+- Minimize JavaScript bundle size
+- Use WebP images with fallbacks
+- Implement critical CSS for above-the-fold content
+
+### Animation Performance
+```css
+/* Use transform and opacity for smooth animations */
+.smooth-animation {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+```
+
+## Accessibility on Mobile
+
+### Mobile Screen Reader Support
+- Ensure touch targets are large enough
+- Add proper ARIA labels for mobile interactions
+- Test with mobile screen readers (VoiceOver, TalkBack)
+- Provide alternative navigation methods
+
+### High Contrast Support
+```css
+@media (prefers-contrast: high) {
+  .glass-effect {
+    background: solid-color;
+    border: 2px solid contrasting-color;
+  }
+}
+```
+
+## Quality Assurance
+
+### Before Committing Changes
+1. Test on multiple mobile devices/simulators
+2. Verify touch targets meet 44px minimum
+3. Check form functionality with mobile keyboards
+4. Ensure no horizontal scrolling occurs
+5. Validate smooth animation performance
+6. Test loading states and error handling
+
+### Performance Benchmarks
+- Lighthouse Mobile Score: 90+
+- First Contentful Paint: < 2.5s
+- Touch Target Compliance: 100%
+- No layout shifts on mobile
+
+## Documentation Requirements
+
+When making mobile optimizations:
+1. Update component documentation with mobile variants
+2. Add mobile-specific examples to Storybook (if applicable)
+3. Document any mobile-specific props or classes
+4. Update the [MOBILE_OPTIMIZATION_PLAN.md](mdc:MOBILE_OPTIMIZATION_PLAN.md) progress checklist
+
+## Implementation Priority
+
+Always follow this order:
+1. **Critical Foundation** - Navigation, homepage, global styles
+2. **Core Pages** - Services, about, portfolio, contact
+3. **Enhanced Experience** - Secondary pages and advanced features
+4. **Performance & Polish** - Optimization and final testing
+
+Remember: Mobile users are the majority. Every optimization should prioritize mobile experience while maintaining desktop functionality.
+
