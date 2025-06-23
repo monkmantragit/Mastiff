@@ -27,24 +27,17 @@ import {
   Timer
 } from 'lucide-react';
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 40 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -40 },
-  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-};
 
-const scaleIn = {
-  initial: { opacity: 0, scale: 0.9 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.9 },
-  transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
-};
+
+interface FeedbackResponse {
+  value: string | number | string[];
+  comment?: string;
+}
 
 interface FeedbackData {
   name: string;
   role: string;
-  responses: Record<string, any>;
+  responses: Record<string, FeedbackResponse>;
 }
 
 const questions = [
@@ -120,13 +113,13 @@ const questions = [
     subtitle: 'How well do we tell the White Massif story?',
     icon: Target,
     type: 'rating_with_comment',
-    question: 'Rate how effectively the new design presents White Massif\'s services and expertise',
+    question: 'Rate how effectively the new design presents White Massif&apos;s services and expertise',
     options: [
       { value: 5, label: 'Compelling', description: 'Clearly communicates value proposition' },
       { value: 4, label: 'Effective', description: 'Good communication of services' },
       { value: 3, label: 'Adequate', description: 'Decent content presentation' },
       { value: 2, label: 'Unclear', description: 'Some confusion about services' },
-      { value: 1, label: 'Poor', description: 'Doesn\'t effectively communicate value' }
+      { value: 1, label: 'Poor', description: 'Doesn&apos;t effectively communicate value' }
     ],
     followUp: 'Which sections need clearer messaging?'
   },
@@ -142,7 +135,7 @@ const questions = [
       { value: 4, label: 'Trustworthy', description: 'Builds good confidence' },
       { value: 3, label: 'Moderately Trustworthy', description: 'Reasonable confidence level' },
       { value: 2, label: 'Somewhat Trustworthy', description: 'Limited confidence building' },
-      { value: 1, label: 'Lacks Credibility', description: 'Doesn\'t build trust effectively' }
+      { value: 1, label: 'Lacks Credibility', description: 'Doesn&apos;t build trust effectively' }
     ],
     followUp: 'What elements would strengthen credibility?'
   },
@@ -174,7 +167,7 @@ const questions = [
       { value: 4, label: 'Strong Differentiator', description: 'Clear competitive advantage' },
       { value: 3, label: 'Moderate Differentiation', description: 'Some unique elements' },
       { value: 2, label: 'Slight Differentiation', description: 'Minor competitive edge' },
-      { value: 1, label: 'Generic', description: 'Doesn\'t stand out from competitors' }
+      { value: 1, label: 'Generic', description: 'Doesn&apos;t stand out from competitors' }
     ],
     followUp: 'What would make White Massif stand out even more?'
   },
@@ -226,10 +219,10 @@ const questions = [
   {
     id: 'missing_content',
     title: 'Content Gaps & Opportunities',
-    subtitle: 'Thinking from a potential client\'s perspective',
+    subtitle: 'Thinking from a potential client&apos;s perspective',
     icon: Sparkles,
     type: 'open_ended',
-    question: 'From a potential client\'s perspective, what information is missing that would help them make a decision to hire White Massif?',
+    question: 'From a potential client&apos;s perspective, what information is missing that would help them make a decision to hire White Massif?',
     followUp: 'What questions would a prospective client want answered before booking an event management company?'
   },
   {
@@ -278,7 +271,7 @@ export default function FeedbackPage() {
     }
   };
 
-  const handleResponse = (questionId: string, value: any, comment?: string) => {
+  const handleResponse = (questionId: string, value: string | number | string[], comment?: string) => {
     setFormData(prev => ({
       ...prev,
       responses: {
@@ -326,7 +319,7 @@ export default function FeedbackPage() {
             comment: userResponse.comment || null,
             // For multi-choice questions, also include the readable labels
             selectedLabels: question?.options && Array.isArray(userResponse.value) 
-              ? userResponse.value.map(val => question.options.find(opt => opt.value === val)?.label).filter(Boolean)
+              ? userResponse.value.map((val: string | number) => question.options?.find(opt => opt.value === val)?.label).filter(Boolean)
               : question?.options && userResponse.value
               ? question.options.find(opt => opt.value === userResponse.value)?.label
               : null
@@ -398,7 +391,7 @@ export default function FeedbackPage() {
             </h1>
             
             <p className="text-xl text-neutral-600 mb-8">
-              Your feedback has been submitted successfully. We'll review your insights and use them to refine the White Massif experience.
+              Your feedback has been submitted successfully. We&apos;ll review your insights and use them to refine the White Massif experience.
             </p>
             
             <Button 
@@ -445,7 +438,10 @@ export default function FeedbackPage() {
             {currentStep === 0 && (
               <motion.div
                 key="intro"
-                {...fadeInUp}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -40 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="text-center"
                 ref={heroRef}
               >
@@ -463,12 +459,12 @@ export default function FeedbackPage() {
                   <h1 className="text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-[#F9A625] to-[#2A3959] bg-clip-text text-transparent">
                     Help Us Perfect
                     <br />
-                    White Massif's Vision
+                    White Massif&apos;s Vision
                   </h1>
                   
                   <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-12 leading-relaxed">
-                    We've reimagined White Massif's digital presence with cutting-edge design and technology. 
-                    Your expert insights will help us ensure we've created something truly exceptional.
+                    We&apos;ve reimagined White Massif&apos;s digital presence with cutting-edge design and technology. 
+                    Your expert insights will help us ensure we&apos;ve created something truly exceptional.
                   </p>
                 </motion.div>
 
@@ -484,11 +480,11 @@ export default function FeedbackPage() {
                     <p className="text-sm text-neutral-600">Quick, focused questions</p>
                   </Card>
                   
-                                     <Card className="p-6 glass border-none">
-                     <Target className="w-8 h-8 text-[#F9A625] mb-4" />
-                     <h3 className="font-heading font-semibold mb-2">13 Key Areas</h3>
-                     <p className="text-sm text-neutral-600">Design + content strategy evaluation</p>
-                   </Card>
+                  <Card className="p-6 glass border-none">
+                    <Target className="w-8 h-8 text-[#F9A625] mb-4" />
+                    <h3 className="font-heading font-semibold mb-2">13 Key Areas</h3>
+                    <p className="text-sm text-neutral-600">Design + content strategy evaluation</p>
+                  </Card>
                   
                   <Card className="p-6 glass border-none">
                     <Heart className="w-8 h-8 text-[#F9A625] mb-4" />
@@ -503,43 +499,43 @@ export default function FeedbackPage() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                   className="space-y-6"
                 >
-                                     <div className="space-y-4">
-                     <div className="grid md:grid-cols-2 gap-4">
-                       <div>
-                         <Label htmlFor="name" className="text-sm font-medium text-neutral-700 mb-2 block">
-                           Your Name *
-                         </Label>
-                         <Input
-                           id="name"
-                           value={formData.name}
-                           onChange={(e) => handleUserInfo('name', e.target.value)}
-                           placeholder="Enter your full name"
-                           className="w-full"
-                         />
-                       </div>
-                       <div>
-                         <Label htmlFor="role" className="text-sm font-medium text-neutral-700 mb-2 block">
-                           Your Role (Optional)
-                         </Label>
-                         <Input
-                           id="role"
-                           value={formData.role}
-                           onChange={(e) => handleUserInfo('role', e.target.value)}
-                           placeholder="e.g., Marketing Director"
-                           className="w-full"
-                         />
-                       </div>
-                     </div>
-                   </div>
+                  <div className="space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="name" className="text-sm font-medium text-neutral-700 mb-2 block">
+                          Your Name *
+                        </Label>
+                        <Input
+                          id="name"
+                          value={formData.name}
+                          onChange={(e) => handleUserInfo('name', e.target.value)}
+                          placeholder="Enter your full name"
+                          className="w-full"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="role" className="text-sm font-medium text-neutral-700 mb-2 block">
+                          Your Role (Optional)
+                        </Label>
+                        <Input
+                          id="role"
+                          value={formData.role}
+                          onChange={(e) => handleUserInfo('role', e.target.value)}
+                          placeholder="e.g., Marketing Director"
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-                                     <Button 
-                     onClick={handleStart}
-                     disabled={!formData.name}
-                     className="btn-primary px-8 py-4 text-lg"
-                   >
-                     Begin Feedback Session
-                     <ArrowRight className="w-5 h-5 ml-2" />
-                   </Button>
+                  <Button 
+                    onClick={handleStart}
+                    disabled={!formData.name}
+                    className="btn-primary px-8 py-4 text-lg"
+                  >
+                    Begin Feedback Session
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
                 </motion.div>
               </motion.div>
             )}
@@ -565,6 +561,18 @@ export default function FeedbackPage() {
   );
 }
 
+interface Question {
+  id: string;
+  title: string;
+  subtitle: string;
+  icon: React.ComponentType<{ className?: string }>;
+  type: string;
+  question: string;
+  options?: Array<{ value: string | number; label: string; description?: string }>;
+  allowMultiple?: boolean;
+  followUp?: string;
+}
+
 function QuestionCard({ 
   question, 
   currentResponse, 
@@ -576,9 +584,9 @@ function QuestionCard({
   onSubmit, 
   isSubmitting 
 }: {
-  question: any;
-  currentResponse: any;
-  onResponse: (questionId: string, value: any, comment?: string) => void;
+  question: Question;
+  currentResponse: FeedbackResponse | undefined;
+  onResponse: (questionId: string, value: string | number | string[], comment?: string) => void;
   onNext: () => void;
   onPrevious: () => void;
   canGoBack: boolean;
@@ -621,7 +629,10 @@ function QuestionCard({
 
   return (
     <motion.div
-      {...fadeInUp}
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -40 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
       className="max-w-3xl mx-auto"
     >
       <Card className="glass border-none p-8 lg:p-12">
@@ -649,88 +660,88 @@ function QuestionCard({
           </div>
         </div>
 
-                 <div className="space-y-4 mb-8">
-           {question.type === 'open_ended' ? (
-             <motion.div
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: 0.2 }}
-             >
-               <Label className="text-sm font-medium text-neutral-700 mb-3 block">
-                 Share your detailed thoughts and suggestions:
-               </Label>
-               <Textarea
-                 value={selectedValue}
-                 onChange={(e) => setSelectedValue(e.target.value)}
-                 placeholder="Please provide your insights, suggestions, or recommendations..."
-                 className="w-full min-h-[150px] resize-none"
-               />
-             </motion.div>
-           ) : (
-             question.options?.map((option: any, index: number) => (
+        <div className="space-y-4 mb-8">
+          {question.type === 'open_ended' ? (
             <motion.div
-              key={option.value}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
             >
-              <Card
-                className={`p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
-                  (question.type === 'multi_choice' && question.allowMultiple)
-                    ? (multiSelect.includes(option.value) 
-                        ? 'ring-2 ring-[#F9A625] bg-[#F9A625]/5 border-[#F9A625]/20' 
-                        : 'hover:bg-neutral-50 border-neutral-200')
-                    : (selectedValue === option.value 
-                        ? 'ring-2 ring-[#F9A625] bg-[#F9A625]/5 border-[#F9A625]/20' 
-                        : 'hover:bg-neutral-50 border-neutral-200')
-                }`}
-                onClick={() => {
-                  if (question.type === 'multi_choice' && question.allowMultiple) {
-                    handleMultiSelect(option.value);
-                  } else {
-                    setSelectedValue(option.value);
-                  }
-                }}
+              <Label className="text-sm font-medium text-neutral-700 mb-3 block">
+                Share your detailed thoughts and suggestions:
+              </Label>
+              <Textarea
+                value={selectedValue}
+                onChange={(e) => setSelectedValue(e.target.value)}
+                placeholder="Please provide your insights, suggestions, or recommendations..."
+                className="w-full min-h-[150px] resize-none"
+              />
+            </motion.div>
+          ) : (
+            question.options?.map((option: { value: string | number; label: string; description?: string }, index: number) => (
+              <motion.div
+                key={option.value}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
               >
-                <div className="flex items-start gap-4">
-                  {question.type === 'rating_with_comment' && (
-                    <div className="flex items-center gap-1 flex-shrink-0">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-5 h-5 ${
-                            i < option.value ? 'text-[#F9A625] fill-current' : 'text-neutral-300'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  
-                  <div className="flex-1">
-                    <h4 className="font-heading font-semibold text-lg mb-2 text-neutral-900">
-                      {option.label}
-                    </h4>
-                    <p className="text-neutral-600">
-                      {option.description}
-                    </p>
-                  </div>
-                  
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    ((question.type === 'multi_choice' && question.allowMultiple && multiSelect.includes(option.value)) ||
-                     (selectedValue === option.value))
-                      ? 'bg-[#F9A625] border-[#F9A625]'
-                      : 'border-neutral-300'
-                  }`}>
-                    {((question.type === 'multi_choice' && question.allowMultiple && multiSelect.includes(option.value)) ||
-                      (selectedValue === option.value)) && (
-                      <CheckCircle className="w-4 h-4 text-white" />
+                <Card
+                  className={`p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                    (question.type === 'multi_choice' && question.allowMultiple)
+                      ? (multiSelect.includes(option.value as string) 
+                          ? 'ring-2 ring-[#F9A625] bg-[#F9A625]/5 border-[#F9A625]/20' 
+                          : 'hover:bg-neutral-50 border-neutral-200')
+                      : (selectedValue === option.value 
+                          ? 'ring-2 ring-[#F9A625] bg-[#F9A625]/5 border-[#F9A625]/20' 
+                          : 'hover:bg-neutral-50 border-neutral-200')
+                  }`}
+                  onClick={() => {
+                    if (question.type === 'multi_choice' && question.allowMultiple) {
+                      handleMultiSelect(option.value as string);
+                    } else {
+                      setSelectedValue(option.value);
+                    }
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    {question.type === 'rating_with_comment' && (
+                      <div className="flex items-center gap-1 flex-shrink-0">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-5 h-5 ${
+                              i < Number(option.value) ? 'text-[#F9A625] fill-current' : 'text-neutral-300'
+                            }`}
+                          />
+                        ))}
+                      </div>
                     )}
+                    
+                    <div className="flex-1">
+                      <h4 className="font-heading font-semibold text-lg mb-2 text-neutral-900">
+                        {option.label}
+                      </h4>
+                      <p className="text-neutral-600">
+                        {option.description}
+                      </p>
+                    </div>
+                    
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                      ((question.type === 'multi_choice' && question.allowMultiple && multiSelect.includes(option.value as string)) ||
+                       (selectedValue === option.value))
+                        ? 'bg-[#F9A625] border-[#F9A625]'
+                        : 'border-neutral-300'
+                    }`}>
+                      {((question.type === 'multi_choice' && question.allowMultiple && multiSelect.includes(option.value as string)) ||
+                        (selectedValue === option.value)) && (
+                        <CheckCircle className="w-4 h-4 text-white" />
+                      )}
+                    </div>
                   </div>
-                </div>
-                             </Card>
-             </motion.div>
-           )))}
-         </div>
+                </Card>
+              </motion.div>
+            )))}
+        </div>
 
         {question.followUp && (
           <motion.div
