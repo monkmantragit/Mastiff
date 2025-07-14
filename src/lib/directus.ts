@@ -1,4 +1,4 @@
-import { createDirectus, rest, staticToken, authentication } from '@directus/sdk';
+import { createDirectus, rest, authentication } from '@directus/sdk';
 
 // Define your Directus collections interface
 interface Blog {

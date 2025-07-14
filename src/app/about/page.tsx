@@ -333,7 +333,7 @@ export default function AboutPage() {
                   Excellence, our only acceptable standard.
                 </p>
                 <p>
-                  Today, 1000+ events later, we're still those same dreamers. Just with more grey hair, 
+                  Today, 1000+ events later, we&apos;re still those same dreamers. Just with more grey hair, 
                   deeper expertise, and an even fiercer commitment to turning the impossible into the unforgettable. 
                   Every event is our canvas. Every client, our inspiration. Every experience, our masterpiece.
                 </p>

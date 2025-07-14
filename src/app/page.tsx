@@ -309,7 +309,7 @@ export default function Home() {
                 Every Event Is A <span className="text-[#F9A625]">Masterpiece</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                We're not event planners. We're memory architects. Experience designers. Dream builders. 
+                We&apos;re not event planners. We&apos;re memory architects. Experience designers. Dream builders. 
                 Your vision, amplified through our expertise.
               </p>
             </motion.div>

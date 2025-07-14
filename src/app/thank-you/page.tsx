@@ -61,7 +61,7 @@ export default function ThankYouPage() {
   const nextSteps = [
     {
       icon: Phone,
-      title: "We'll Call You",
+      title: "We&apos;ll Call You",
       description: "Our event specialist will contact you within 24 hours to discuss your requirements in detail.",
       timeline: "Within 24 hours"
     },

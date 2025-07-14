@@ -166,7 +166,7 @@ export default function ContactPage() {
               transition={{ duration: 0.3 }}
             >
               <Sparkles className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide">Let's Talk</span>
+              <span className="text-sm font-medium tracking-wide">Let&apos;s Talk</span>
             </motion.div>
             
             {/* Main Headline with Kinetic Typography */}
@@ -192,7 +192,7 @@ export default function ContactPage() {
               transition={{ duration: 1, delay: 0.4 }}
             >
               Your vision deserves more than hope. It deserves action. It deserves partners who turn impossible into inevitable. 
-              Let's start the conversation that changes everything.
+              Let&apos;s start the conversation that changes everything.
             </motion.p>
             
             <motion.div 
@@ -221,7 +221,7 @@ export default function ContactPage() {
           transition={{ delay: 1.5 }}
         >
           <div className="flex flex-col items-center">
-            <span className="text-sm mb-2 font-body text-neutral-500">Let's connect</span>
+            <span className="text-sm mb-2 font-body text-neutral-500">Let&apos;s connect</span>
             <motion.div 
               className="w-px h-16 bg-gradient-to-b from-amber-500 to-transparent"
               animate={{ scaleY: [1, 0.5, 1] }}
