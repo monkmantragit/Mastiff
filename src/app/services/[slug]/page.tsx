@@ -159,6 +159,78 @@ export default function ServicePage({ params }: ServicePageProps) {
         </div>
       </section>
 
+      {/* Main Content Section */}
+      {service.content && (
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="prose prose-lg max-w-none"
+              >
+                <div 
+                  dangerouslySetInnerHTML={{ __html: service.content }}
+                  className="
+                    prose-headings:text-[#2A3959] 
+                    prose-headings:font-display 
+                    prose-h2:text-3xl 
+                    prose-h2:md:text-4xl 
+                    prose-h2:mb-6
+                    prose-h3:text-2xl 
+                    prose-h3:md:text-3xl
+                    prose-h3:mb-4
+                    prose-h4:text-xl 
+                    prose-h4:md:text-2xl
+                    prose-h4:mb-3
+                    prose-p:text-gray-700
+                    prose-p:leading-relaxed
+                    prose-p:mb-6
+                    prose-li:text-gray-700
+                    prose-li:mb-2
+                    prose-strong:text-[#2A3959]
+                    prose-strong:font-semibold
+                    prose-a:text-[#F9A625]
+                    prose-a:no-underline
+                    prose-a:hover:underline
+                    prose-ul:my-6
+                    prose-ol:my-6
+                    [&_.services-grid]:grid
+                    [&_.services-grid]:md:grid-cols-2
+                    [&_.services-grid]:gap-6
+                    [&_.services-grid]:my-8
+                    [&_.service-card]:bg-neutral-50
+                    [&_.service-card]:rounded-xl
+                    [&_.service-card]:p-6
+                    [&_.service-card]:hover:shadow-lg
+                    [&_.service-card]:transition-all
+                    [&_.service-card]:duration-300
+                    [&_.service-card_h4]:text-[#2A3959]
+                    [&_.service-card_h4]:font-heading
+                    [&_.service-card_h4]:mb-3
+                    [&_.service-card_p]:text-gray-600
+                    [&_.cta-section]:bg-gradient-to-r
+                    [&_.cta-section]:from-[#F9A625]/10
+                    [&_.cta-section]:to-[#2A3959]/10
+                    [&_.cta-section]:rounded-2xl
+                    [&_.cta-section]:p-8
+                    [&_.cta-section]:my-12
+                    [&_.cta-section]:text-center
+                    [&_.cta-section_h3]:text-[#2A3959]
+                    [&_.cta-section_h3]:mb-4
+                    [&_.cta-section_p]:text-gray-700
+                    [&_.cta-section_p]:max-w-2xl
+                    [&_.cta-section_p]:mx-auto
+                  "
+                />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Service Features */}
       {service.features && service.features.length > 0 && (
         <section className="py-20 bg-white">

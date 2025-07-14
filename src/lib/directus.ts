@@ -31,6 +31,7 @@ interface Service {
   title: string;
   description: string;
   slug: string;
+  content?: string;
   featured_image?: string;
   gallery?: string[];
   features?: ServiceFeature[];
@@ -38,6 +39,10 @@ interface Service {
   icon?: string;
   category?: string;
   stats?: ServiceStats;
+  highlights?: string[];
+  meta_title?: string;
+  meta_description?: string;
+  sort_order?: number;
 }
 
 interface ServiceFeature {
