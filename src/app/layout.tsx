@@ -1,34 +1,33 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Condensed, Edu_NSW_ACT_Foundation } from "next/font/google";
+import { Inter, Raleway } from "next/font/google";
 import Navigation from "@/components/navigation";
 import { CustomCursor } from "@/components/custom-cursor";
 import { Preloader } from "@/components/preloader";
+import Footer from "@/components/footer";
+import { PopupProvider } from "@/components/popup-provider";
+import FloatingCTA from "@/components/floating-cta";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Brand primary font: Using Inter as closest alternative to Sinkin Sans
+const sinkinSans = Inter({
+  variable: "--font-sinkin-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-const robotoCondensed = Roboto_Condensed({
-  variable: "--font-roboto-condensed",
+// Brand secondary font: Raleway
+const raleway = Raleway({
+  variable: "--font-raleway",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const eduNSW = Edu_NSW_ACT_Foundation({
-  variable: "--font-edu-nsw",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "White Massif Event Management - Creating Moments That Matter",
   description: "Premier event management company in Bangalore specializing in corporate events, celebrations, inaugurations, and hybrid experiences. Creating extraordinary moments that matter since 2012.",
-  keywords: ["Event Management", "Corporate Events", "Wedding Planning", "Bangalore Events", "Event Planning", "Celebrations", "Inaugurations", "Hybrid Events"],
+  keywords: ["Event Management", "Corporate Events", "Bangalore Events", "Event Planning", "Celebrations", "Inaugurations", "Hybrid Events", "Business Events"],
   authors: [{ name: "White Massif Event Management" }],
   creator: "White Massif Event Management",
   publisher: "White Massif Event Management",
@@ -58,12 +57,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${robotoCondensed.variable} ${eduNSW.variable} antialiased`}
+        className={`${sinkinSans.variable} ${raleway.variable} antialiased`}
       >
-        <Preloader />
-        <CustomCursor />
-        <Navigation />
-        <main>{children}</main>
+        <PopupProvider>
+          <Preloader />
+          <CustomCursor />
+          <Navigation />
+          <main>{children}</main>
+          <Footer />
+          <FloatingCTA />
+        </PopupProvider>
       </body>
     </html>
   );

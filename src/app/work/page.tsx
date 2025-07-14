@@ -117,7 +117,7 @@ export default function WorkPage() {
       year: "2023",
       category: "Corporate Celebration",
       image: "/assets/images/portfolio/DSC02450-scaled-1.jpg",
-      description: "Previous year's successful corporate celebration setting the benchmark for employee engagement events."
+      description: "Previous year&apos;s successful corporate celebration setting the benchmark for employee engagement events."
     }
   ];
 
@@ -158,20 +158,33 @@ export default function WorkPage() {
             transition={{ duration: 1 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <Badge variant="secondary" className="mb-6 bg-brand-yellow text-brand-blue font-subheading">
-              Our Work
-            </Badge>
-            <h1 className="text-5xl md:text-7xl font-heading mb-6">
-              Corporate <span className="text-brand-yellow">Events Portfolio</span>
+            <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow">
+              <Eye className="w-5 h-5 text-amber-500" />
+              <span className="text-sm font-medium tracking-wide text-white">Legendary Showcase</span>
+            </div>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
+              <span className="kinetic-text text-white">
+                Where Dreams
+              </span>
+              <br />
+              <span className="text-amber-400">
+                Become Reality
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 font-body max-w-3xl mx-auto">
-              Enhancing business event planners for companies to unmatched excellence, 
-              we specialize in orchestrating impeccably managed occasions that effortlessly combine expertise with strategic objectives.
+            <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-white/90 leading-relaxed">
+              Step into our hall of legends. Every project here represents an impossible vision made inevitable, 
+              a bold dream transformed into unforgettable reality. This is where extraordinary happens.
             </p>
-            <Button size="lg" className="btn-secondary font-subheading px-8 py-6 text-lg">
-              View Our Services
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Button className="btn-primary group">
+                <span>Explore The Portfolio</span>
+                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+              <Button className="btn-secondary group">
+                <span>Create Your Legend</span>
+                <Trophy className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -212,14 +225,16 @@ export default function WorkPage() {
             className="text-center mb-16"
           >
             <motion.div variants={fadeInUp}>
-              <Badge variant="secondary" className="mb-6 bg-brand-yellow text-brand-blue font-subheading">
-                Featured Work
-              </Badge>
-              <h2 className="text-5xl font-heading mb-6 text-brand-blue">
-                Our <span className="text-brand-yellow">Event Portfolio</span>
+              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
+                <Trophy className="w-5 h-5 text-amber-500" />
+                <span className="text-sm font-medium tracking-wide text-amber-600">Hall of Legends</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
+                Every Project. <span className="kinetic-text">A Legend.</span>
               </h2>
-              <p className="text-xl text-brand-gray max-w-2xl mx-auto font-body">
-                Showcasing exceptional corporate events that have set new standards in the industry
+              <p className="text-xl text-neutral-600 max-w-4xl mx-auto font-body leading-relaxed">
+                From Fortune 500 summits to industry-defining celebrations, witness the events that didn&apos;t just meet expectations—they redefined them. 
+                Each project in our portfolio represents a moment when impossible became inevitable.
               </p>
             </motion.div>
           </motion.div>
@@ -381,26 +396,26 @@ export default function WorkPage() {
             {[
               {
                 step: "01",
-                title: "Consultation & Planning",
-                description: "Understanding your vision, objectives, and requirements to create a comprehensive event strategy.",
+                title: "Vision Discovery",
+                description: "We don&apos;t just take briefs—we uncover dreams. Every legendary event begins with understanding your impossible vision.",
                 icon: Target
               },
               {
                 step: "02", 
-                title: "Design & Conceptualization",
-                description: "Crafting unique concepts and designs that align with your brand identity and event goals.",
+                title: "Strategic Alchemy",
+                description: "Where creativity meets strategy. We transform your vision into a masterpiece blueprint that captures hearts and minds.",
                 icon: Trophy
               },
               {
                 step: "03",
-                title: "Production & Execution",
-                description: "Seamless execution with our expert team managing every detail from setup to completion.",
+                title: "Flawless Manifestation",
+                description: "The moment magic happens. Our obsessed creators orchestrate every detail to transform your blueprint into breathtaking reality.",
                 icon: Users
               },
               {
                 step: "04",
-                title: "Follow-up & Analysis",
-                description: "Post-event analysis and feedback collection to ensure continuous improvement and success.",
+                title: "Legacy Assurance",
+                description: "The event ends. The legend begins. We ensure your experience creates ripples that last long after the final applause.",
                 icon: Award
               }
             ].map((process, index) => (
@@ -432,11 +447,15 @@ export default function WorkPage() {
             className="text-center"
           >
             <motion.div variants={fadeInUp}>
-              <h2 className="text-5xl font-heading mb-6 text-brand-blue">
-                Ready to Create Your Next <span className="text-brand-yellow">Exceptional Event?</span>
+              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
+                <Trophy className="w-5 h-5 text-amber-500" />
+                <span className="text-sm font-medium tracking-wide text-amber-600">Begin Your Legend</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
+                Ready to Create Your <span className="kinetic-text">Legendary Moment?</span>
               </h2>
-              <p className="text-xl text-brand-gray max-w-2xl mx-auto mb-8 font-body">
-                Let&apos;s discuss how we can bring your vision to life with our proven expertise
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-12 font-body leading-relaxed">
+                Your vision deserves more than an event—it deserves to become a legend. Let&apos;s transform your impossible dream into an inevitable reality.
               </p>
               
               <div className="grid md:grid-cols-3 gap-8 mb-12">

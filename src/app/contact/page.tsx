@@ -59,30 +59,30 @@ export default function ContactPage() {
   const contactInfo = [
     {
       icon: Phone,
-      title: "Call Us",
-      details: ["+91-990-0141-155", "+91-80-4112-8787"],
-      description: "Available 24/7 for urgent inquiries",
+      title: "Call The Legends",
+      details: ["+91 98450 45466", "Direct Line"],
+      description: "Available when inspiration strikes",
       gradient: "from-blue-500 to-indigo-600"
     },
     {
       icon: Mail,
-      title: "Email Us",
-      details: ["info@whitemassif.com", "events@whitemassif.com"],
-      description: "We respond within 2 hours",
+      title: "Start The Conversation",
+      details: ["info@whitemassif.com", "Where legends begin"],
+      description: "Response within 2 hours, guaranteed",
       gradient: "from-emerald-500 to-teal-600"
     },
     {
       icon: MapPin,
-      title: "Visit Us",
-      details: ["Bangalore, Karnataka", "India"],
-      description: "Schedule an appointment",
+      title: "Meet The Visionaries",
+      details: ["Bangalore, Karnataka", "Where dreams take shape"],
+      description: "Experience our creative sanctuary",
       gradient: "from-purple-500 to-violet-600"
     },
     {
       icon: Clock,
-      title: "Business Hours",
-      details: ["Mon - Sat: 9:00 AM - 7:00 PM", "Sun: By Appointment"],
-      description: "Extended hours for events",
+      title: "Always Creating",
+      details: ["Mon - Sat: 9:00 AM - 7:00 PM", "Dreams don't keep office hours"],
+      description: "Extended availability for urgent projects",
       gradient: "from-amber-500 to-orange-600"
     }
   ];
@@ -166,7 +166,7 @@ export default function ContactPage() {
               transition={{ duration: 0.3 }}
             >
               <Sparkles className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide">Get In Touch</span>
+              <span className="text-sm font-medium tracking-wide">Let's Talk</span>
             </motion.div>
             
             {/* Main Headline with Kinetic Typography */}
@@ -177,11 +177,11 @@ export default function ContactPage() {
               transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
               <span className="kinetic-text">
-                Let&apos;s Create
+                Dreams Don't
               </span>
               <br />
               <span className="text-neutral-800">
-                Something Amazing
+                Build Themselves
               </span>
             </motion.h1>
             
@@ -191,8 +191,8 @@ export default function ContactPage() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              Ready to transform your vision into an extraordinary event experience? 
-              Let&apos;s discuss your ideas and create something truly memorable together.
+              Your vision deserves more than hope. It deserves action. It deserves partners who turn impossible into inevitable. 
+              Let's start the conversation that changes everything.
             </motion.p>
             
             <motion.div 
@@ -202,11 +202,11 @@ export default function ContactPage() {
               transition={{ duration: 1, delay: 0.6 }}
             >
               <Button className="btn-primary group">
-                <span>Start Conversation</span>
+                <span>Begin The Journey</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
               <Button className="btn-secondary group">
-                <span>Schedule Call</span>
+                <span>Book Your Vision Call</span>
                 <Calendar className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </motion.div>
@@ -221,7 +221,7 @@ export default function ContactPage() {
           transition={{ delay: 1.5 }}
         >
           <div className="flex flex-col items-center">
-            <span className="text-sm mb-2 font-body text-neutral-500">Get in touch</span>
+            <span className="text-sm mb-2 font-body text-neutral-500">Let's connect</span>
             <motion.div 
               className="w-px h-16 bg-gradient-to-b from-amber-500 to-transparent"
               animate={{ scaleY: [1, 0.5, 1] }}
@@ -243,13 +243,13 @@ export default function ContactPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Contact Information
+                Connection Points
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900 leading-tight">
-                <span className="kinetic-text">Multiple</span> Ways to Connect
+                <span className="kinetic-text">Every Legend</span> Starts With Hello
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
-                Choose the most convenient way to reach us. We&apos;re here to help bring your vision to life.
+                Every extraordinary journey begins with a single step. Choose yours.
               </p>
             </motion.div>
           </motion.div>
@@ -296,7 +296,7 @@ export default function ContactPage() {
                   Tell Us About Your <span className="kinetic-text">Vision</span>
                 </h2>
                 <p className="text-lg text-neutral-600 mb-8 font-body">
-                  Share your event details and we&apos;ll get back to you with a customized proposal within 24 hours.
+                  Share your event details and we'll get back to you with a customized proposal within 24 hours.
                 </p>
               </motion.div>
 
@@ -494,10 +494,10 @@ export default function ContactPage() {
                     <h3 className="text-xl font-heading text-neutral-900 mb-2">Urgent Inquiry?</h3>
                     <p className="text-neutral-600 mb-4">Call us directly for immediate assistance</p>
                     <a 
-                      href="tel:+91-990-0141-155"
+                      href="tel:+91-98450-45466"
                       className="text-2xl font-bold text-amber-600 hover:text-amber-700 transition-colors"
                     >
-                      +91-990-0141-155
+                      +91 98450 45466
                     </a>
                   </CardContent>
                 </Card>

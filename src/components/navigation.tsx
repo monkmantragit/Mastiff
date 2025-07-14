@@ -37,11 +37,11 @@ export default function Navigation() {
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
-    { name: 'Team', href: '/about' },
+    { name: 'Team', href: '/team' },
     { name: 'Work', href: '/portfolio' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Clients', href: '/clients' },
     { name: 'Careers', href: '/careers' },
-    { name: 'Feedback', href: '/feedback' },
     { name: 'Contact', href: '/contact' }
   ];
 
@@ -83,11 +83,13 @@ export default function Navigation() {
               className="flex items-center relative z-10"
             >
               <Link href="/" className="group flex items-center space-x-4">
-                {/* Logo icon with glow effect */}
+                {/* Company Logo */}
                 <div className="relative">
-                  <div className="w-10 h-10 bg-gradient-to-br from-[#F9A625] to-[#2A3959] rounded-xl flex items-center justify-center shadow-lg shadow-[#F9A625]/20 group-hover:shadow-[#F9A625]/40 transition-all duration-300">
-                    <Sparkles className="w-5 h-5 text-white" />
-                  </div>
+                  <img 
+                    src="/logo.png" 
+                    alt="White Massif Event Management Logo" 
+                    className="w-10 h-10 object-contain transition-all duration-300 group-hover:scale-110"
+                  />
                   <div className="absolute inset-0 bg-[#F9A625]/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 
@@ -343,4 +345,4 @@ export default function Navigation() {
       </AnimatePresence>
     </>
   );
-} 
+}

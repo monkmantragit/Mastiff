@@ -50,35 +50,35 @@ export default function AboutPage() {
   const heroScale = useTransform(scrollY, [0, 500], [1, 1.1]);
 
   const stats = [
-    { number: "12+", label: "Years Experience", icon: Calendar, color: "text-blue-500" },
-    { number: "500+", label: "Events Delivered", icon: Trophy, color: "text-amber-500" },
-    { number: "160+", label: "Happy Clients", icon: Users, color: "text-emerald-500" },
-    { number: "26", label: "Team Members", icon: Star, color: "text-purple-500" }
+    { number: "11+", label: "Years of Excellence", icon: Calendar, color: "text-blue-500" },
+    { number: "1000+", label: "Dreams Realized", icon: Trophy, color: "text-amber-500" },
+    { number: "1.5M+", label: "Lives Touched", icon: Users, color: "text-emerald-500" },
+    { number: "150+", label: "Creative Minds", icon: Star, color: "text-purple-500" }
   ];
 
   const values = [
     {
       icon: Shield,
-      title: "Excellence",
-      description: "We maintain the highest standards in every aspect of event management, from initial planning to final execution.",
+      title: "Relentless Excellence",
+      description: "Good enough never is. We obsess over details others overlook. Excellence isn't a goal—it's our minimum standard.",
       gradient: "from-blue-500 to-indigo-600"
     },
     {
       icon: Heart,
-      title: "Passion",
-      description: "Our love for creating extraordinary experiences drives us to go beyond expectations for every client.",
+      title: "Emotional Intelligence",
+      description: "We don't just plan events. We read rooms, understand hearts, and create moments that resonate on a human level.",
       gradient: "from-rose-500 to-pink-600"
     },
     {
       icon: Rocket,
-      title: "Innovation",
-      description: "We embrace cutting-edge technology and creative solutions to deliver unique and memorable events.",
+      title: "Fearless Innovation",
+      description: "Status quo is our kryptonite. We push boundaries, embrace the unconventional, and turn 'what if' into 'wow.'",
       gradient: "from-purple-500 to-violet-600"
     },
     {
       icon: Eye,
-      title: "Vision",
-      description: "We see beyond the ordinary, crafting experiences that inspire, engage, and leave lasting impressions.",
+      title: "Visionary Thinking",
+      description: "We see what others miss. Possibilities where others see problems. Magic where others see mundane.",
       gradient: "from-emerald-500 to-teal-600"
     }
   ];
@@ -120,33 +120,33 @@ export default function AboutPage() {
 
   const milestones = [
     {
-      year: "2012",
-      title: "Foundation",
-      description: "White Massif was established with a vision to transform the event management landscape in Bangalore.",
+      year: "2013",
+      title: "The Spark",
+      description: "Four friends. One dream. Zero clients. Infinite ambition. White Massif is born in a tiny Bangalore office.",
       icon: Rocket
     },
     {
-      year: "2015",
-      title: "Growth",
-      description: "Expanded our services and team, establishing ourselves as a premium event management company.",
+      year: "2016",
+      title: "The Breakthrough",
+      description: "First Fortune 500 client. First standing ovation. First time we knew—this is bigger than us.",
       icon: TrendingUp
     },
     {
-      year: "2018",
-      title: "Innovation",
-      description: "Introduced cutting-edge technology and hybrid event solutions to meet evolving client needs.",
+      year: "2019",
+      title: "The Revolution",
+      description: "Pioneered hybrid events before the world knew it needed them. Always ahead of the curve.",
       icon: Lightbulb
     },
     {
-      year: "2021",
-      title: "Excellence",
-      description: "Achieved industry recognition and expanded our portfolio to include Fortune 500 companies.",
+      year: "2022",
+      title: "The Recognition",
+      description: "1000th event. Industry leadership. The moment we stopped following trends and started setting them.",
       icon: Award
     },
     {
-      year: "2024",
-      title: "Future",
-      description: "Leading the industry with AI-powered analytics and sustainable event solutions.",
+      year: "2025",
+      title: "The Future",
+      description: "AI-powered experiences. Sustainable solutions. The best is yet to come.",
       icon: Zap
     }
   ];
@@ -208,7 +208,7 @@ export default function AboutPage() {
               transition={{ duration: 0.3 }}
             >
               <Sparkles className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide">About White Massif</span>
+              <span className="text-sm font-medium tracking-wide">Est. 2013</span>
             </motion.div>
             
             {/* Main Headline with Kinetic Typography */}
@@ -219,11 +219,11 @@ export default function AboutPage() {
               transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
               <span className="kinetic-text">
-                Crafting
+                We Are
               </span>
               <br />
               <span className="text-neutral-800">
-                Extraordinary Experiences
+                The Architects of Extraordinary
               </span>
             </motion.h1>
             
@@ -233,8 +233,8 @@ export default function AboutPage() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              For over a decade, we&apos;ve been transforming visions into reality, creating memorable experiences 
-              that inspire, engage, and deliver measurable results for businesses across Bangalore and beyond.
+              Creators. Writers. Producers. Experiential Designers. Idea Generators. Visionaries. 
+              We don't just manage events. We craft moments that move mountains, build bridges, and leave legacies.
             </motion.p>
             
             <motion.div 
@@ -244,11 +244,11 @@ export default function AboutPage() {
               transition={{ duration: 1, delay: 0.6 }}
             >
               <Button className="btn-primary group">
-                <span>Our Story</span>
+                <span>Discover Our Journey</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
               <Button className="btn-secondary group">
-                <span>Meet Our Team</span>
+                <span>Meet The Visionaries</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </motion.div>
@@ -263,7 +263,7 @@ export default function AboutPage() {
           transition={{ delay: 1.5 }}
         >
           <div className="flex flex-col items-center">
-            <span className="text-sm mb-2 font-body text-neutral-500">Discover our story</span>
+            <span className="text-sm mb-2 font-body text-neutral-500">The story continues</span>
             <motion.div 
               className="w-px h-16 bg-gradient-to-b from-amber-500 to-transparent"
               animate={{ scaleY: [1, 0.5, 1] }}
@@ -313,45 +313,45 @@ export default function AboutPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Our Story
+                The Beginning
               </Badge>
               <h2 className="text-4xl md:text-6xl font-display mb-6 text-neutral-900 leading-tight">
-                <span className="kinetic-text">Passion</span> Meets Excellence
+                Born From <span className="kinetic-text">Obsession</span>
               </h2>
               <div className="space-y-6 text-lg text-neutral-600 font-body leading-relaxed">
                 <p>
-                  Founded in 2012, White Massif emerged from a simple yet powerful vision: to transform 
-                  the event management landscape by combining creative excellence with flawless execution. 
-                  What started as a small team of passionate professionals has grown into Bangalore&apos;s 
-                  premier event management company.
+                  In 2013, four dreamers sat in a small Bangalore office with an audacious idea: 
+                  What if events could be more than logistics? What if they could be transformative experiences 
+                  that change how people feel, think, and connect?
                 </p>
                 <p>
-                  Our journey has been marked by continuous innovation, unwavering commitment to quality, 
-                  and an obsession with exceeding client expectations. From intimate corporate gatherings 
-                  to grand celebrations involving thousands of attendees, we&apos;ve consistently delivered 
-                  experiences that inspire and engage.
+                  That question became our obsession. And that obsession built White Massif.
                 </p>
                 <p>
-                  Today, we stand proud as industry leaders, trusted by Fortune 500 companies and 
-                  celebrated for our ability to turn ambitious visions into extraordinary realities. 
-                  Our success is built on the foundation of strong relationships, innovative thinking, 
-                  and an unwavering commitment to excellence.
+                  We didn't just want to manage events. We wanted to architect emotions. Engineer memories. 
+                  Design moments so powerful they'd echo through time. From day one, mediocrity was our enemy. 
+                  Excellence, our only acceptable standard.
+                </p>
+                <p>
+                  Today, 1000+ events later, we're still those same dreamers. Just with more grey hair, 
+                  deeper expertise, and an even fiercer commitment to turning the impossible into the unforgettable. 
+                  Every event is our canvas. Every client, our inspiration. Every experience, our masterpiece.
                 </p>
               </div>
             </motion.div>
             
             <motion.div variants={fadeInUp}>
               <div className="glass rounded-3xl p-8">
-                <h3 className="text-2xl font-heading text-neutral-900 mb-8">Our Mission</h3>
+                <h3 className="text-2xl font-heading text-neutral-900 mb-8">Why We Exist</h3>
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
                       <Target className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-heading text-neutral-900 mb-2">Transform Visions</h4>
+                      <h4 className="font-heading text-neutral-900 mb-2">To Transform</h4>
                       <p className="text-neutral-600 font-body">
-                        We transform our clients&apos; visions into extraordinary experiences that exceed expectations.
+                        Ideas into experiences. Visions into reality. Dreams into memories that last forever.
                       </p>
                     </div>
                   </div>
@@ -361,9 +361,9 @@ export default function AboutPage() {
                       <Lightbulb className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-heading text-neutral-900 mb-2">Drive Innovation</h4>
+                      <h4 className="font-heading text-neutral-900 mb-2">To Innovate</h4>
                       <p className="text-neutral-600 font-body">
-                        We continuously push boundaries with creative solutions and cutting-edge technology.
+                        Challenge conventions. Break boundaries. Set new standards for what events can be.
                       </p>
                     </div>
                   </div>
@@ -373,9 +373,9 @@ export default function AboutPage() {
                       <Heart className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-heading text-neutral-900 mb-2">Create Impact</h4>
+                      <h4 className="font-heading text-neutral-900 mb-2">To Impact</h4>
                       <p className="text-neutral-600 font-body">
-                        We create meaningful experiences that inspire, engage, and deliver measurable results.
+                        Touch hearts. Change minds. Create ripples that become waves of transformation.
                       </p>
                     </div>
                   </div>
@@ -398,13 +398,13 @@ export default function AboutPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Our Values
+                Core Beliefs
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900">
-                What <span className="kinetic-text">Drives</span> Us
+                The <span className="kinetic-text">DNA</span> of Excellence
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
-                Our core values guide every decision we make and every experience we create.
+                Four principles. Zero compromise. This is what makes us, us.
               </p>
             </motion.div>
           </motion.div>
@@ -442,14 +442,14 @@ export default function AboutPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass-dark px-6 py-2 text-amber-400 border-amber-400/20">
-                Leadership Team
+                The Founders
               </Badge>
               <h2 className="text-4xl md:text-6xl font-display mb-6 text-white leading-tight">
-                Meet Our <span className="kinetic-text">Visionaries</span>
+                Four Minds. <span className="kinetic-text">One Vision.</span>
               </h2>
               <p className="text-xl text-white/70 max-w-3xl mx-auto font-body leading-relaxed">
-                Our leadership team combines decades of experience with innovative thinking, 
-                ensuring every event exceeds expectations and delivers measurable results.
+                Meet the dreamers who dared to reimagine what events could be. 
+                Each a master of their craft. Together, unstoppable.
               </p>
             </motion.div>
           </motion.div>
@@ -510,13 +510,13 @@ export default function AboutPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Our Journey
+                Timeline
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900">
-                <span className="kinetic-text">Milestones</span> of Excellence
+                The Journey <span className="kinetic-text">Continues</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
-                A decade of growth, innovation, and success in transforming the event management industry.
+                Every milestone a stepping stone. Every year, bolder than the last.
               </p>
             </motion.div>
           </motion.div>
@@ -564,25 +564,25 @@ export default function AboutPage() {
           >
             <motion.div variants={fadeInUp}>
               <h2 className="text-5xl md:text-7xl font-display mb-8 text-neutral-900">
-                Ready to <span className="kinetic-text">Partner</span> With Us?
+                Your Story <span className="kinetic-text">Starts Here</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-12 font-body leading-relaxed">
-                Let&apos;s collaborate to create extraordinary experiences that inspire your audience 
-                and deliver measurable business results through innovative design and flawless execution.
+                Every legendary event begins with a conversation. Every transformation starts with trust. 
+                Let's write your next chapter together.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
                 <Button className="btn-primary text-lg px-12 py-6">
-                  <span>Start Collaboration</span>
+                  <span>Begin The Conversation</span>
                   <ArrowRight className="ml-2 w-6 h-6" />
                 </Button>
                 
                 <div className="flex items-center space-x-6">
-                  <a href="tel:+91-990-0141-155" className="group flex items-center space-x-3 text-neutral-600 hover:text-amber-600 transition-colors">
+                  <a href="tel:+91-98450-45466" className="group flex items-center space-x-3 text-neutral-600 hover:text-amber-600 transition-colors">
                     <div className="w-12 h-12 glass rounded-full flex items-center justify-center group-hover:bg-amber-100 transition-colors">
                       <Phone className="w-5 h-5" />
                     </div>
-                    <span className="font-medium">+91-990-0141-155</span>
+                    <span className="font-medium">+91 98450 45466</span>
                   </a>
                   
                   <a href="mailto:info@whitemassif.com" className="group flex items-center space-x-3 text-neutral-600 hover:text-amber-600 transition-colors">

@@ -4,64 +4,51 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Calendar, Clock, ArrowRight, User } from "lucide-react";
+import { Calendar, Clock, ArrowRight, User, BookOpen } from "lucide-react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
-// Mock blog data - In a real app, this would come from Directus
-const mockBlogPosts = [
-  {
-    id: 1,
-    title: "Building Modern Web Apps with Next.js 14.2",
-    excerpt: "Discover the latest features and best practices for building production-ready applications with Next.js 14.2, including server components, streaming, and more.",
-    slug: "building-modern-web-apps-nextjs-14",
-    published_date: "2024-01-15",
-    featured_image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
-    tags: ["Next.js", "React", "Web Development"],
-    status: "published" as const,
-    author: "Modern Stack Team",
-    read_time: "8 min read"
-  },
-  {
-    id: 2,
-    title: "Mastering Tailwind CSS for Beautiful UIs",
-    excerpt: "Learn advanced Tailwind CSS techniques to create stunning, responsive user interfaces that work perfectly across all devices and screen sizes.",
-    slug: "mastering-tailwind-css-beautiful-uis",
-    published_date: "2024-01-12",
-    featured_image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&h=400&fit=crop",
-    tags: ["Tailwind CSS", "CSS", "Design"],
-    status: "published" as const,
-    author: "Design Team",
-    read_time: "6 min read"
-  },
-  {
-    id: 3,
-    title: "Directus CMS: The Perfect Headless Solution",
-    excerpt: "Explore how Directus CMS provides the perfect balance of flexibility and ease of use for modern content management in headless architectures.",
-    slug: "directus-cms-perfect-headless-solution",
-    published_date: "2024-01-10",
-    featured_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop",
-    tags: ["Directus", "CMS", "Backend"],
-    status: "published" as const,
-    author: "Backend Team",
-    read_time: "10 min read"
-  },
-  {
-    id: 4,
-    title: "Shadcn/UI: Building Accessible Components",
-    excerpt: "Deep dive into Shadcn/UI component library and learn how to build accessible, customizable UI components that enhance user experience.",
-    slug: "shadcn-ui-building-accessible-components",
-    published_date: "2024-01-08",
-    featured_image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=400&fit=crop",
-    tags: ["Shadcn/UI", "Accessibility", "Components"],
-    status: "published" as const,
-    author: "UI/UX Team",
-    read_time: "7 min read"
-  }
-];
+import Image from "next/image";
+import { DirectusService, type Blog } from '@/lib/directus-service';
 
 export default function BlogPage() {
+  const [posts, setPosts] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+      try {
+        console.log('🔍 Fetching blog posts from Directus...');
+        const fetchedPosts = await DirectusService.getBlogPosts();
+        console.log('📊 Fetched posts:', fetchedPosts);
+        console.log('📝 Number of posts:', fetchedPosts?.length || 0);
+        setPosts(fetchedPosts || []);
+      } catch (error) {
+        console.error('❌ Error fetching blog posts:', error);
+        setPosts([]);
+      }
+      setLoading(false);
+    };
+
+    fetchPosts();
+  }, []);
+
+  const categories = ['All', ...Array.from(new Set(posts.map(post => post.category).filter((cat): cat is string => Boolean(cat))))];
+  const filteredPosts = selectedCategory === 'All' 
+    ? posts 
+    : posts.filter(post => post.category === selectedCategory);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-[#F9A625] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100">
       {/* Header */}
       <section className="container mx-auto px-4 py-20">
         <motion.div
@@ -70,101 +57,158 @@ export default function BlogPage() {
           transition={{ duration: 0.8 }}
           className="text-center space-y-8"
         >
-          <Badge variant="secondary" className="mb-4">
-            <User className="w-4 h-4 mr-2" />
-            Content Management with Directus
-          </Badge>
+          <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
+            <BookOpen className="w-5 h-5 text-[#F9A625]" />
+            <span className="text-sm font-medium tracking-wide text-[#F9A625]">Insights & Vision</span>
+          </div>
           
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent">
-            Blog & Insights
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display leading-tight mb-8 text-[#2A3959]">
+            Where Ideas
+            <br />
+            <span className="text-[#F9A625]">Become Legends</span>
           </h1>
           
-          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Discover the latest insights, tutorials, and best practices for modern web development.
-            All content powered by Directus CMS.
+          <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed">
+            Behind every legendary event lies a revolutionary idea. Explore the insights, strategies, and visionary thinking 
+            that transform ordinary occasions into extraordinary legacies.
           </p>
         </motion.div>
       </section>
 
+      {/* Category Filter */}
+      {categories.length > 1 && (
+        <section className="container mx-auto px-4 mb-12">
+          <div className="flex flex-wrap justify-center gap-3">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  selectedCategory === category 
+                    ? "bg-[#F9A625] text-black" 
+                    : "bg-white text-neutral-600 hover:bg-neutral-100 border border-neutral-200"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Blog Posts Grid */}
       <section className="container mx-auto px-4 pb-20">
-        <div className="grid md:grid-cols-2 gap-8">
-          {mockBlogPosts.map((post, index) => (
-            <motion.div
-              key={post.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <Card className="h-full hover:shadow-lg transition-all duration-300 group cursor-pointer">
-                <div className="aspect-video overflow-hidden rounded-t-lg">
-                  <img
-                    src={post.featured_image}
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                
-                <CardHeader>
-                  <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-2">
-                    <Calendar className="w-4 h-4" />
-                    {new Date(post.published_date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                    <span className="mx-2">•</span>
-                    <Clock className="w-4 h-4" />
-                    {post.read_time}
-                    <span className="mx-2">•</span>
-                    {post.author}
-                  </div>
-                  
-                  <CardTitle className="group-hover:text-blue-600 transition-colors">
-                    {post.title}
-                  </CardTitle>
-                  
-                  <CardDescription className="line-clamp-3">
-                    {post.excerpt}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent className="pt-0">
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-wrap gap-2">
-                      {post.tags.slice(0, 2).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
+        {filteredPosts.length === 0 ? (
+          <div className="text-center py-20">
+            <BookOpen className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+            <h3 className="text-2xl font-display text-neutral-600 mb-2">No posts found</h3>
+            <p className="text-neutral-500">Check back later for new insights and articles.</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPosts.map((post, index) => (
+              <motion.div
+                key={post.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="h-full glass rounded-3xl hover:shadow-xl transition-all duration-500 group cursor-pointer border-neutral-200">
+                  <Link href={`/blog/${post.slug || post.id}`}>
+                    <div className="aspect-video overflow-hidden rounded-t-3xl relative">
+                      {post.featured_image ? (
+                        <Image
+                          src={post.featured_image}
+                          alt={post.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#F9A625]/20 to-[#2A3959]/20 flex items-center justify-center">
+                          <div className="w-16 h-16 bg-gradient-to-br from-[#F9A625] to-[#2A3959] rounded-2xl flex items-center justify-center">
+                            <BookOpen className="w-8 h-8 text-white" />
+                          </div>
+                        </div>
+                      )}
+                      {post.category && (
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-black/50 text-white border-0 text-xs">
+                            {post.category}
+                          </Badge>
+                        </div>
+                      )}
                     </div>
                     
-                    <Link href={`/blog/${post.slug}`}>
-                      <Button variant="ghost" size="sm" className="group/btn">
-                        Read More
-                        <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+                    <CardHeader className="p-6">
+                      <div className="flex items-center gap-2 text-sm text-neutral-500 mb-4">
+                        <Calendar className="w-4 h-4" />
+                        {new Date(post.published_date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                        {post.read_time && (
+                          <>
+                            <span className="mx-2">•</span>
+                            <Clock className="w-4 h-4" />
+                            {post.read_time}
+                          </>
+                        )}
+                      </div>
+                      
+                      <CardTitle className="text-xl font-heading mb-4 text-[#2A3959] group-hover:text-[#F9A625] transition-colors line-clamp-2">
+                        {post.title}
+                      </CardTitle>
+                      
+                      {post.excerpt && (
+                        <CardDescription className="text-neutral-600 font-body leading-relaxed line-clamp-3 mb-4">
+                          {post.excerpt}
+                        </CardDescription>
+                      )}
+                      
+                      {post.author && (
+                        <div className="text-sm text-[#F9A625] font-medium">
+                          By {post.author}
+                        </div>
+                      )}
+                    </CardHeader>
+                    
+                    <CardContent className="px-6 pb-6">
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-wrap gap-2">
+                          {post.tags && post.tags.slice(0, 2).map((tag) => (
+                            <Badge key={tag} className="bg-[#F9A625]/10 border-[#F9A625]/30 text-[#F9A625] text-xs px-2 py-1">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                        
+                        <ArrowRight className="w-4 h-4 text-[#F9A625] group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </CardContent>
+                  </Link>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
-        {/* Load More */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <Button size="lg" variant="outline">
-            Load More Articles
-          </Button>
-        </motion.div>
+        {/* Load More - Future Enhancement */}
+        {filteredPosts.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mt-16"
+          >
+            <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black px-8 py-4 rounded-full">
+              <span>Explore More Insights</span>
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </motion.div>
+        )}
       </section>
 
       {/* CTA Section */}
@@ -175,20 +219,34 @@ export default function BlogPage() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+          <Card className="bg-gradient-to-r from-[#2A3959] via-[#1a2332] to-[#2A3959] text-white border-0 rounded-3xl">
             <CardContent className="p-12 text-center">
-              <h3 className="text-3xl font-bold mb-4">Ready to Start Your Project?</h3>
-              <p className="text-blue-100 mb-8 text-lg">
-                Get started with this powerful tech stack and create amazing web experiences.
+              <div className="inline-flex items-center space-x-2 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full mb-8">
+                <BookOpen className="w-5 h-5 text-[#F9A625]" />
+                <span className="text-sm font-medium tracking-wide">Join The Vision</span>
+              </div>
+              <h3 className="text-4xl md:text-5xl font-display mb-6 leading-tight">
+                Ready to Create Your <span className="text-[#F9A625]">Legend?</span>
+              </h3>
+              <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto font-body">
+                Don&apos;t just read about legendary events. Create them. Let our insights inspire your next vision.
               </p>
-              <Button size="lg" variant="secondary" className="group">
-                Get Started Now
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg">
+                  Start Your Journey
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
+                >
+                  Subscribe to Insights
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </motion.div>
       </section>
     </div>
   );
-} 
+}

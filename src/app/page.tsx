@@ -19,6 +19,7 @@ import {
   MapPin
 } from "lucide-react";
 import { useRef } from "react";
+import { usePopup } from "@/components/popup-provider";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -37,67 +38,68 @@ const staggerContainer = {
 export default function Home() {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
+  const { openPopup } = usePopup();
 
   // Event services data with REAL event photos
   const services = [
     {
       id: "01",
-      title: "Corporate Events",
-      description: "Professional conferences, product launches, and business meetings that leave lasting impressions and drive meaningful connections.",
+      title: "Business Critical Events",
+      description: "Transform your corporate vision into powerful experiences. Where business objectives meet creative excellence.",
       icon: Target,
       gradient: "from-[#F9A625] to-[#2A3959]",
-      features: ["Conference Planning", "Product Launches", "Team Building", "Award Ceremonies"],
-      stats: { events: "150+", clients: "45+" },
+      features: ["Strategic Conferences", "Product Revelations", "Leadership Summits", "Achievement Galas"],
+      stats: { events: "300+", clients: "Fortune 500" },
       image: "/assets/images/services/DSC01980-scaled-1.jpg"
     },
     {
       id: "02", 
-      title: "Celebrations",
-      description: "Milestone celebrations, festivals, and special occasions that bring people together and create unforgettable memories.",
+      title: "Celebrations That Matter",
+      description: "Life's precious moments deserve more than a party. They deserve an experience that echoes through time.",
       icon: Sparkles,
       gradient: "from-[#2A3959] to-[#F9A625]",
-      features: ["Birthday Parties", "Anniversaries", "Festivals", "Milestone Events"],
-      stats: { events: "200+", clients: "60+" },
+      features: ["Milestone Magic", "Anniversary Elegance", "Festival Grandeur", "Birthday Brilliance"],
+      stats: { events: "400+", clients: "Families" },
       image: "/assets/images/services/DSC01901-scaled-1.jpg"
     },
     {
       id: "03",
-      title: "Inaugurations",
-      description: "Grand openings, ribbon cuttings, and ceremonial events that mark new beginnings with style and significance.",
+      title: "Grand Inaugurations",
+      description: "First impressions last forever. Launch your legacy with ceremonies that command attention and inspire awe.",
       icon: Award,
       gradient: "from-[#F9A625] to-[#2A3959]",
-      features: ["Grand Openings", "Ribbon Cuttings", "Launch Events", "VIP Management"],
-      stats: { events: "75+", clients: "30+" },
+      features: ["Store Launches", "Office Openings", "Property Unveilings", "VVIP Protocol"],
+      stats: { events: "150+", clients: "Industry Leaders" },
       image: "/assets/images/services/DSC01878-scaled-1.jpg"
     },
     {
       id: "04",
-      title: "Hybrid Events",
-      description: "Seamlessly blending physical and virtual experiences to reach audiences everywhere, anywhere, anytime.",
+      title: "Virtual & Hybrid Excellence",
+      description: "Break boundaries. Connect continents. Create experiences that transcend physical limitations.",
       icon: Globe,
       gradient: "from-[#2A3959] to-[#F9A625]",
-      features: ["Live Streaming", "Virtual Platforms", "Interactive Tech", "Global Reach"],
-      stats: { events: "100+", clients: "25+" },
+      features: ["Global Broadcasting", "Interactive Platforms", "Engagement Analytics", "Seamless Integration"],
+      stats: { events: "200+", clients: "Global Brands" },
       image: "/assets/images/services/DSC02449-scaled-1.jpg"
     },
     {
       id: "05",
-      title: "Wedding Planning",
-      description: "Intimate ceremonies to grand celebrations, we craft weddings that reflect your unique love story and cultural traditions.",
+      title: "Team Building & Retreats",
+      description: "Strengthen bonds. Build trust. Create unforgettable team experiences that drive performance and unity.",
       icon: Heart,
       gradient: "from-[#F9A625] to-[#2A3959]",
-      features: ["Ceremony Planning", "Reception Design", "Vendor Coordination", "Cultural Events"],
-      stats: { events: "80+", clients: "80+" },
+      features: ["Leadership Retreats", "Team Challenges", "Skill Building", "Employee Engagement"],
+      stats: { events: "250+", clients: "Happy Teams" },
       image: "/assets/images/services/2B6A1363-scaled-1.jpg"
     },
     {
       id: "06",
-      title: "Cultural Events",
-      description: "Festivals, performances, and cultural celebrations that honor traditions while creating modern experiences.",
+      title: "Cultural Experiences",
+      description: "Where tradition meets innovation. Celebrating heritage while creating contemporary magic.",
       icon: Star,
       gradient: "from-[#2A3959] to-[#F9A625]",
-      features: ["Cultural Festivals", "Art Events", "Performances", "Community Gatherings"],
-      stats: { events: "120+", clients: "40+" },
+      features: ["Festival Productions", "Art Installations", "Heritage Shows", "Community Connect"],
+      stats: { events: "300+", clients: "Institutions" },
       image: "/assets/images/services/DSC01696-scaled-1.jpg"
     }
   ];
@@ -105,23 +107,23 @@ export default function Home() {
   const whyChooseUs = [
     {
       icon: Heart,
-      title: "Passionate Storytelling",
-      description: "Every event tells a story. We craft experiences that resonate emotionally and create lasting memories."
+      title: "We Feel What You Feel",
+      description: "Your dream becomes our mission. Your success, our obsession. Every detail matters because you matter."
     },
     {
       icon: Shield,
-      title: "Trusted Expertise",
-      description: "12+ years of experience in Bangalore's event industry with a proven track record of excellence."
+      title: "Proven, Not Promised",
+      description: "11+ years. 1000+ events. Zero compromises. When excellence is non-negotiable, choose experience."
     },
     {
       icon: Sparkles,
-      title: "Creative Excellence",
-      description: "Award-winning creative team that transforms visions into extraordinary reality."
+      title: "Ideas That Inspire",
+      description: "Creativity isn't what we do. It's who we are. Watch your wildest visions become breathtaking reality."
     },
     {
       icon: Users,
-      title: "Personal Touch",
-      description: "Dedicated account management with personalized attention to every detail of your event."
+      title: "Your Team, Not Vendors",
+      description: "One dedicated team. One shared vision. From concept to curtain call, we're with you every step."
     }
   ];
 
@@ -188,8 +190,8 @@ export default function Home() {
         >
           <Badge className="bg-[#F9A625]/95 text-black border-none text-xs sm:text-sm px-3 sm:px-4 py-2 backdrop-blur-sm font-body shadow-lg mobile-touch-target">
             <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-            <span className="hidden sm:inline">Bangalore&apos;s Premier Event Management</span>
-            <span className="sm:hidden">Premier Event Management</span>
+            <span className="hidden sm:inline">Transforming Ideas Into Exceptional Experiences</span>
+            <span className="sm:hidden">Exceptional Experiences</span>
           </Badge>
         </motion.div>
 
@@ -208,20 +210,21 @@ export default function Home() {
               {/* Headline Section - Mobile Typography */}
               <div className="text-center lg:text-left flex-1 max-w-3xl">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] leading-tight mb-3 sm:mb-4 mobile-heading">
-                  Extraordinary Events,<br />
-                  <span className="text-[#F9A625]">Unforgettable Experiences</span>
+                  Where Imagination<br />
+                  <span className="text-[#F9A625]">Becomes Reality</span>
                 </h1>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 font-body leading-relaxed mobile-body-text">
-                  Premier event management in Bangalore, crafting moments that resonate for a lifetime.
+                  We don't just organize events. We craft experiences that move hearts, inspire minds, and create memories that last forever.
                 </p>
               </div>
 
               {/* CTA Section - Touch Optimized */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:flex-col xl:flex-row w-full sm:w-auto">
                 <Button 
+                  onClick={() => openPopup('hero-cta')}
                   className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px]"
                 >
-                  Plan Your Event
+                  Let's Create Together
                   <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
                 
@@ -229,7 +232,7 @@ export default function Home() {
                   variant="outline" 
                   className="mobile-touch-target border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 min-h-[48px]"
                 >
-                  View Portfolio
+                  View Our Story
                 </Button>
               </div>
 
@@ -243,15 +246,15 @@ export default function Home() {
                 <div className="flex items-center gap-2 text-[#2A3959]">
                   <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
                   <MapPin className="w-4 h-4 text-[#F9A625]" />
-                  <span>Bangalore Based</span>
+                  <span>Bangalore's Choice</span>
                 </div>
                 <div className="flex items-center gap-2 text-[#2A3959]">
                   <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
-                  <span>12+ Years Experience</span>
+                  <span>1000+ Dreams Realized</span>
                 </div>
                 <div className="flex items-center gap-2 text-[#2A3959]">
                   <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
-                  <span>500+ Events Delivered</span>
+                  <span>1.5M+ Hearts Touched</span>
                 </div>
               </div>
 
@@ -300,14 +303,14 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/30 px-6 py-2">
-                Our Event Expertise
+                What We Do Best
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-[#2A3959] leading-tight max-w-4xl mx-auto">
-                Events That <span className="text-[#F9A625]">Tell Stories</span>
+                Every Event Is A <span className="text-[#F9A625]">Masterpiece</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                From intimate gatherings to grand celebrations, we create experiences that connect hearts, 
-                inspire minds, and leave lasting impressions in Bangalore and beyond.
+                We're not event planners. We're memory architects. Experience designers. Dream builders. 
+                Your vision, amplified through our expertise.
               </p>
             </motion.div>
           </motion.div>
@@ -395,6 +398,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <Button 
+              onClick={() => openPopup('services-section')}
               size="lg" 
               className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg"
             >
@@ -417,13 +421,13 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 bg-[#F9A625]/20 text-[#F9A625] border-[#F9A625]/30 px-6 py-2">
-                Recent Work
+                Portfolio
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-white leading-tight max-w-4xl mx-auto">
-                Events in <span className="text-[#F9A625]">Action</span>
+                Where Stories <span className="text-[#F9A625]">Come Alive</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-                Take a glimpse into our portfolio of remarkable events across Bangalore
+                Every frame tells a story. Every moment, perfectly captured. This is what magic looks like.
               </p>
             </motion.div>
           </motion.div>
@@ -433,7 +437,7 @@ export default function Home() {
               { image: "/assets/images/services/DSC01514-scaled-1.jpg", title: "Corporate Conference", category: "Business" },
               { image: "/assets/images/services/2B6A0590-1-scaled-1.jpg", title: "Cultural Celebration", category: "Cultural" },
               { image: "/assets/images/services/DSC04807-1536x1024.jpg", title: "Grand Opening", category: "Inauguration" },
-              { image: "/assets/images/services/P__3108-scaled-1.jpg", title: "Wedding Ceremony", category: "Wedding" },
+              { image: "/assets/images/services/P__3108-scaled-1.jpg", title: "Team Building", category: "Corporate" },
               { image: "/assets/images/services/DSC01247-scaled-1.jpg", title: "Product Launch", category: "Corporate" },
               { image: "/assets/images/services/92A4532-scaled-1.jpg", title: "Festival Event", category: "Cultural" }
             ].map((item, index) => (
@@ -488,10 +492,10 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp}>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-[#2A3959] leading-tight max-w-4xl mx-auto">
-                Why Choose <span className="text-[#F9A625]">White Massif</span>
+                The <span className="text-[#F9A625]">White Massif</span> Difference
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto text-center font-body">
-                We don&apos;t just plan events; we craft experiences that resonate with your audience and achieve your goals.
+                In a world of event planners, we are experience architects. Here's what sets us apart.
               </p>
             </motion.div>
           </motion.div>
@@ -534,21 +538,21 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp} className="text-white">
               <Badge className="mb-6 glass-dark px-6 py-2 text-amber-400 border-amber-400/20">
-                Ready to Start?
+                Let's Talk
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 leading-tight">
-                Let&apos;s Create Something <span className="text-[#F9A625]">Extraordinary</span>
+                Your Vision Awaits Its <span className="text-[#F9A625]">Moment</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed">
-                From concept to celebration, we handle every detail with precision and creativity.
+                Every extraordinary event begins with a conversation. Let's start yours.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                 {[
-                  { icon: CheckCircle, title: "Full-Service Planning", desc: "End-to-end event management" },
-                  { icon: Users, title: "Expert Team", desc: "12+ years of experience" },
-                  { icon: Trophy, title: "Award-Winning", desc: "Recognized excellence" },
-                  { icon: Target, title: "Custom Solutions", desc: "Tailored to your vision" }
+                  { icon: CheckCircle, title: "Turnkey Solutions", desc: "From ideation to execution" },
+                  { icon: Users, title: "150+ Specialists", desc: "Masters of their craft" },
+                  { icon: Trophy, title: "Industry Leaders", desc: "Setting standards since 2013" },
+                  { icon: Target, title: "Zero Compromise", desc: "Perfection is our baseline" }
                 ].map((feature, index) => {
                   const FeatureIcon = feature.icon;
                   return (
@@ -565,10 +569,11 @@ export default function Home() {
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
+                  onClick={() => openPopup('cta-section')}
                   size="lg"
                   className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-heading px-8 py-4 rounded-full text-lg"
                 >
-                  Start Planning
+                  Begin Your Journey
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button 
@@ -577,7 +582,7 @@ export default function Home() {
                   className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
                 >
                   <Phone className="mr-2 h-5 w-5" />
-                  Call Us Now
+                  +91 98450 45466
               </Button>
               </div>
             </motion.div>
@@ -611,19 +616,20 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp}>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-[#2A3959] leading-tight max-w-4xl mx-auto">
-                Meet Our <span className="text-[#F9A625]">Expert Team</span>
+                The Minds Behind The <span className="text-[#F9A625]">Magic</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-neutral-600 max-w-4xl mx-auto mb-12 font-body leading-relaxed">
-                The passionate professionals behind every successful event, bringing years of experience and creative vision to your celebrations.
+                Four visionaries. One dream. Infinite possibilities. Meet the architects of extraordinary.
               </p>
             </motion.div>
               
             <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-12">
                 <Button 
+                  onClick={() => openPopup('team-section')}
                   size="lg"
                   className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black px-12 py-6 rounded-full text-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 font-heading"
                 >
-                Let&apos;s Plan Together
+                Start Your Story
                 <ArrowRight className="ml-3 h-6 w-6" />
                 </Button>
                 
@@ -632,7 +638,7 @@ export default function Home() {
                   size="lg"
                   className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white px-12 py-6 rounded-full text-xl transition-all duration-300 hover:scale-105 font-heading"
                 >
-                Meet The Team
+                Discover Our Journey
                 <Users className="ml-3 h-6 w-6" />
                 </Button>
               </div>

@@ -40,122 +40,110 @@ export default function CareersPage() {
 
   const jobOpenings = [
     {
-      title: "Senior Event Manager",
+      title: "Master of Event Alchemy",
+      subtitle: "(Senior Event Manager)",
       department: "Operations",
       location: "Bangalore",
-      type: "Full-time",
-      experience: "3-5 years",
-      description: "Lead end-to-end event management for corporate clients, ensuring flawless execution and client satisfaction.",
-      requirements: ["Bachelor's degree in Event Management or related field", "3+ years in corporate event management", "Strong project management skills", "Excellent communication abilities"],
-      salary: "₹6-10 LPA"
+      type: "Full-time Legend",
+      experience: "3-5 years of magic",
+      description: "Transform impossible client visions into inevitable realities. Lead Fortune 500 events that become industry legends and set new standards for excellence.",
+      requirements: ["Proven track record of delivering the impossible", "3+ years turning visions into legendary experiences", "Master of crisis-to-opportunity transformation", "Ability to inspire teams and clients alike"],
+      salary: "₹6-10 LPA + Legend Bonus",
+      impact: "Direct impact on 50+ Fortune 500 events annually"
     },
     {
-      title: "Creative Designer",
+      title: "Visionary Experience Architect",
+      subtitle: "(Creative Designer)",
       department: "Creative",
       location: "Bangalore",
-      type: "Full-time",
-      experience: "2-4 years",
-      description: "Create stunning visual concepts and designs for corporate events, branding, and marketing materials.",
-      requirements: ["Degree in Graphic Design or Visual Arts", "Proficiency in Adobe Creative Suite", "Strong portfolio of event design work", "Creative thinking and attention to detail"],
-      salary: "₹4-7 LPA"
+      type: "Full-time Visionary",
+      experience: "2-4 years of brilliance",
+      description: "Design experiences that don&apos;t just look beautiful—they feel legendary. Create visual stories that transform spaces into emotional journeys.",
+      requirements: ["Portfolio that makes hearts skip beats", "Master of design tools and creative thinking", "Ability to translate emotions into visuals", "Obsession with perfection and innovation"],
+      salary: "₹4-7 LPA + Creative Incentives",
+      impact: "Your designs will be seen by millions across global events"
     },
     {
-      title: "Client Relations Executive",
+      title: "Client Legend Liaison",
+      subtitle: "(Client Relations Executive)",
       department: "Client Relations",
       location: "Bangalore",
-      type: "Full-time",
-      experience: "1-3 years",
-      description: "Build and maintain strong relationships with clients, ensuring their event requirements are met and exceeded.",
-      requirements: ["Bachelor's degree in Business or Communications", "Excellent interpersonal skills", "Customer service experience", "Strong organizational abilities"],
-      salary: "₹3-5 LPA"
+      type: "Full-time Relationship Builder",
+      experience: "1-3 years of connection",
+      description: "Be the bridge between client dreams and legendary realities. Transform one-time clients into lifelong advocates and co-creators of legends.",
+      requirements: ["Natural gift for human connection", "Ability to read between the lines of client needs", "Passion for exceeding every expectation", "Fluent in both empathy and excellence"],
+      salary: "₹3-5 LPA + Performance Recognition",
+      impact: "Build relationships that span decades and continents"
     },
     {
-      title: "Production Coordinator",
+      title: "Flawless Execution Maestro",
+      subtitle: "(Production Coordinator)",
       department: "Production",
       location: "Bangalore",
-      type: "Full-time",
-      experience: "2-4 years",
-      description: "Coordinate all production aspects of events including logistics, vendor management, and on-site execution.",
-      requirements: ["Experience in event production", "Strong coordination skills", "Ability to work under pressure", "Knowledge of AV equipment and staging"],
-      salary: "₹4-6 LPA"
-    },
-    {
-      title: "Digital Marketing Specialist",
-      department: "Marketing",
-      location: "Bangalore",
-      type: "Full-time",
-      experience: "2-3 years",
-      description: "Develop and execute digital marketing strategies to promote our services and enhance brand visibility.",
-      requirements: ["Digital marketing experience", "Knowledge of SEO, SEM, and social media", "Analytics and reporting skills", "Creative content creation abilities"],
-      salary: "₹3-6 LPA"
-    },
-    {
-      title: "Business Development Manager",
-      department: "Sales",
-      location: "Bangalore",
-      type: "Full-time",
-      experience: "3-6 years",
-      description: "Drive business growth by identifying new opportunities and building relationships with potential clients.",
-      requirements: ["Proven sales track record", "B2B sales experience preferred", "Strong networking abilities", "Strategic thinking and planning skills"],
-      salary: "₹5-8 LPA"
+      type: "Full-time Orchestrator",
+      experience: "2-4 years of precision",
+      description: "Be the invisible force that makes impossible events look effortless. Coordinate complex productions where every detail matters and every moment counts.",
+      requirements: ["Proven ability to make chaos look like choreography", "Expert in production logistics and vendor symphonies", "Grace under pressure, excellence under deadlines", "Technical knowledge meets creative vision"],
+      salary: "₹4-6 LPA + Excellence Rewards",
+      impact: "Enable flawless execution of 100+ events annually"
     }
   ];
 
   const benefits = [
     {
-      title: "Competitive Salary",
-      description: "Industry-leading compensation packages",
+      title: "Legend-Worthy Compensation",
+      description: "Premium packages that reflect your premium talent and contribution",
       icon: TrendingUp
     },
     {
-      title: "Learning & Development",
-      description: "Professional courses and conference sponsorships",
+      title: "Mastery Investment",
+      description: "Unlimited learning budget—courses, conferences, certifications. Your growth is our priority",
       icon: GraduationCap
     },
     {
-      title: "Flexible Hours",
-      description: "Work-life balance with flexible timing",
+      title: "Freedom to Create",
+      description: "Flexible schedules that honor your peak creativity hours and life priorities",
       icon: Clock
     },
     {
-      title: "Team Events",
-      description: "Regular team outings and celebration events",
+      title: "Legend Celebrations",
+      description: "Epic team experiences that build bonds and create memories worth sharing",
       icon: Coffee
     },
     {
-      title: "Growth Opportunities",
-      description: "Clear career progression paths",
+      title: "Unlimited Ascension",
+      description: "No ceiling on your potential. We build career paths as ambitious as your dreams",
       icon: Target
     },
     {
-      title: "Health Benefits",
-      description: "Comprehensive health insurance coverage",
+      title: "Holistic Wellness",
+      description: "Complete health coverage because your wellbeing enables your brilliance",
       icon: Heart
     }
   ];
 
   const companyValues = [
     {
-      title: "Innovation First",
-      description: "We embrace creativity and cutting-edge solutions in every project",
+      title: "Obsession with Excellence",
+      description: "We don&apos;t accept good enough. Every project is a masterpiece waiting to be born",
       icon: Sparkles,
       color: "text-amber-500"
     },
     {
-      title: "Team Excellence",
-      description: "Collaborative environment where every voice matters",
+      title: "Legendary Collaboration",
+      description: "Individual brilliance amplified by collective genius. Where minds meet, magic happens",
       icon: Users,
       color: "text-blue-500"
     },
     {
-      title: "Client Success",
-      description: "Your growth is our success - we measure our wins by yours",
+      title: "Client Legend Creation",
+      description: "We don&apos;t just serve clients—we create legends together. Their success becomes our legacy",
       icon: Trophy,
       color: "text-emerald-500"
     },
     {
-      title: "Work-Life Balance",
-      description: "Flexible schedules and wellness programs for our team",
+      title: "Balanced Brilliance",
+      description: "Peak performance requires peak wellness. We nurture whole humans, not just workers",
       icon: Heart,
       color: "text-rose-500"
     }
@@ -192,34 +180,34 @@ export default function CareersPage() {
               className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow"
               whileHover={{ scale: 1.05 }}
             >
-              <Sparkles className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide">Join Our Team</span>
+              <Users className="w-5 h-5 text-amber-500" />
+              <span className="text-sm font-medium tracking-wide">Legend Makers Wanted</span>
             </motion.div>
             
             {/* Main Headline */}
             <motion.h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-display leading-[0.85] mb-8"
+              className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8"
               initial={{ opacity: 0, y: 50 }}
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.2, delay: 0.2 }}
             >
               <span className="kinetic-text">
-                Build Your
+                Don&apos;t Just Work.
               </span>
               <br />
               <span className="text-neutral-800">
-                Dream Career
+                Create Legends.
               </span>
             </motion.h1>
             
             <motion.p 
-              className="text-lg md:text-xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"
+              className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              Join White Massif and be part of Bangalore&apos;s premier event management team. 
-              Create exceptional experiences while growing your career in a supportive, innovative environment.
+              Ordinary careers create ordinary outcomes. At WhiteMassif, we don&apos;t hire employees—we forge visionaries. 
+              Join the team that turns impossible visions into inevitable realities. Your legend starts here.
             </motion.p>
 
             <motion.div
@@ -229,8 +217,12 @@ export default function CareersPage() {
               transition={{ duration: 1, delay: 0.6 }}
             >
               <Button className="btn-primary group">
-                <span>View Open Positions</span>
+                <span>Begin Your Legend</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+              <Button className="btn-secondary group">
+                <span>Meet The Legends</span>
+                <Users className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </motion.div>
           </motion.div>
@@ -282,14 +274,14 @@ export default function CareersPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Our Culture
+                The Legend Code
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-display mb-6 text-neutral-900 leading-tight">
-                <span className="kinetic-text">What We</span> Stand For
+              <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900 leading-tight">
+                <span className="kinetic-text">How Legends</span> Are Born
               </h2>
-              <p className="text-lg text-neutral-600 max-w-4xl mx-auto font-body leading-relaxed">
-                Our values guide everything we do. From client relationships to team collaboration, 
-                these principles shape our culture and drive our success.
+              <p className="text-xl text-neutral-600 max-w-4xl mx-auto font-body leading-relaxed">
+                These aren&apos;t just company values—they&apos;re the sacred principles that transform ordinary people into extraordinary creators. 
+                Every legend who joins us embodies these truths.
               </p>
             </motion.div>
           </motion.div>
@@ -330,13 +322,13 @@ export default function CareersPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Employee Benefits
+                Legend Privileges
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-display mb-6 text-neutral-900">
-                <span className="kinetic-text">Why Choose</span> White Massif?
+              <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900">
+                <span className="kinetic-text">Why Legends</span> Choose Us
               </h2>
-              <p className="text-lg text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
-                We believe in taking care of our team. Here&apos;s what you can expect when you join us.
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
+                Because legends deserve legendary treatment. Here&apos;s how we invest in the visionaries who make miracles happen.
               </p>
             </motion.div>
           </motion.div>
@@ -379,11 +371,14 @@ export default function CareersPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Open Positions
+                Legend Openings
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-display mb-8 text-neutral-900">
-                <span className="kinetic-text">Current</span> Opportunities
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900">
+                Your <span className="kinetic-text">Legendary Role</span> Awaits
               </h2>
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body mb-12">
+                These aren&apos;t just jobs—they&apos;re invitations to join an elite team of visionaries. Find your perfect match and begin your legend.
+              </p>
             </motion.div>
           </motion.div>
 
@@ -397,9 +392,14 @@ export default function CareersPage() {
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex-1 mb-6 lg:mb-0">
                     <div className="flex flex-wrap items-center gap-4 mb-4">
-                      <h3 className="text-2xl font-heading text-neutral-900 group-hover:text-amber-600 transition-colors">
-                        {job.title}
-                      </h3>
+                      <div>
+                        <h3 className="text-2xl font-heading text-neutral-900 group-hover:text-amber-600 transition-colors">
+                          {job.title}
+                        </h3>
+                        {job.subtitle && (
+                          <p className="text-sm text-neutral-500 mt-1">{job.subtitle}</p>
+                        )}
+                      </div>
                       <Badge className="bg-amber-100 text-amber-700 border-amber-200">
                         {job.department}
                       </Badge>
@@ -412,7 +412,7 @@ export default function CareersPage() {
                       {job.description}
                     </p>
                     
-                    <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-500">
+                    <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-500 mb-4">
                       <div className="flex items-center">
                         <Briefcase className="w-4 h-4 mr-2" />
                         {job.experience}
@@ -421,16 +421,29 @@ export default function CareersPage() {
                         <MapPin className="w-4 h-4 mr-2" />
                         {job.location}
                       </div>
+                      <div className="flex items-center">
+                        <TrendingUp className="w-4 h-4 mr-2" />
+                        {job.salary}
+                      </div>
                     </div>
+                    
+                    {job.impact && (
+                      <div className="glass bg-amber-50 border-amber-200 rounded-xl p-4">
+                        <div className="flex items-center">
+                          <Trophy className="w-4 h-4 mr-2 text-amber-600" />
+                          <span className="text-sm font-medium text-amber-700">Impact: {job.impact}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   
                   <div className="flex flex-col sm:flex-row gap-4 lg:flex-col lg:w-48">
                     <Button className="btn-primary group">
-                      <span>Apply Now</span>
+                      <span>Join This Legend</span>
                       <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Button>
                     <Button className="btn-outline group">
-                      <span>Learn More</span>
+                      <span>Discover More</span>
                     </Button>
                   </div>
                 </div>
@@ -451,30 +464,30 @@ export default function CareersPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass-dark px-6 py-2 text-amber-400 border-amber-400/20">
-                Join Our Team
+                Create Your Own Legend
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-display mb-6 text-white leading-tight">
-                Don&apos;t See Your Perfect Role?
+              <h2 className="text-5xl md:text-6xl font-display mb-6 text-white leading-tight">
+                Don&apos;t See Your <span className="kinetic-text text-amber-400">Legendary Role?</span>
               </h2>
-              <p className="text-xl text-white/80 mb-12 max-w-3xl mx-auto">
-                We&apos;re always looking for talented individuals to join our growing team. 
-                Send us your resume and let&apos;s explore opportunities together.
+              <p className="text-xl text-white/90 mb-12 max-w-3xl mx-auto font-body">
+                True legends aren&apos;t defined by job descriptions—they define their own paths. If you&apos;re a visionary who doesn&apos;t fit in boxes, 
+                let&apos;s create a role as unique as your talent.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button className="btn-primary group">
                   <Mail className="mr-2 w-5 h-5" />
-                  <span>Send Your Resume</span>
+                  <span>Pitch Your Legend</span>
                 </Button>
                 <Button className="btn-secondary group">
-                  <span>Learn About Our Culture</span>
+                  <span>Meet Current Legends</span>
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </div>
               
               <div className="mt-12 pt-8 border-t border-white/10">
                 <p className="text-white/60 text-sm">
-                  Email your resume to: <span className="text-amber-400">careers@whitemassif.com</span>
+                  Email your vision to: <span className="text-amber-400">legends@whitemassif.com</span>
                 </p>
               </div>
             </motion.div>

@@ -1,0 +1,120 @@
+[
+  {
+    "id": 1,
+    "title": "Corporate Event Management Bangalore",
+    "slug": "corporate-events-bangalore",
+    "template": "service",
+    "status": "active",
+    "hero_title": "Transform Your Corporate Events",
+    "hero_subtitle": "Professional event management services in Bangalore with 12+ years of experience",
+    "hero_image": "/assets/images/landing/corporate-events-hero.jpg",
+    "hero_video": null,
+    "cta_text": "Get Free Consultation",
+    "content": "<p>Elevate your corporate events with our comprehensive event management services. From planning to execution, we ensure every detail is perfect.</p>",
+    "form_fields": [
+      {
+        "name": "name",
+        "label": "Full Name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "phone",
+        "label": "Phone",
+        "type": "tel",
+        "required": true
+      },
+      {
+        "name": "company",
+        "label": "Company",
+        "type": "text",
+        "required": false
+      },
+      {
+        "name": "event_type",
+        "label": "Event Type",
+        "type": "select",
+        "required": true,
+        "options": [
+          "Conference",
+          "Product Launch",
+          "Annual Event",
+          "Awards Ceremony"
+        ]
+      },
+      {
+        "name": "message",
+        "label": "Event Details",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "tracking_code": null,
+    "meta_title": "Corporate Event Management Bangalore | White Massif",
+    "meta_description": "Professional corporate event management services in Bangalore. 12+ years experience, 160+ clients served.",
+    "created_at": "2025-07-14 12:56:38",
+    "updated_at": "2025-07-14 12:56:38"
+  },
+  {
+    "id": 2,
+    "title": "Annual Corporate Events 2025",
+    "slug": "annual-events-2025",
+    "template": "campaign",
+    "status": "active",
+    "hero_title": "Make 2025 Your Best Year Yet",
+    "hero_subtitle": "Book your annual corporate event now and get exclusive 2025 packages",
+    "hero_image": "/assets/images/landing/annual-events-hero.jpg",
+    "hero_video": null,
+    "cta_text": "Book Now - Limited Slots",
+    "content": "<p>Early bird special for 2025 annual events. Limited slots available for premium dates.</p>",
+    "form_fields": [
+      {
+        "name": "name",
+        "label": "Full Name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "required": true
+      },
+      {
+        "name": "phone",
+        "label": "Phone",
+        "type": "tel",
+        "required": true
+      },
+      {
+        "name": "preferred_date",
+        "label": "Preferred Date",
+        "type": "date",
+        "required": true
+      },
+      {
+        "name": "budget",
+        "label": "Budget Range",
+        "type": "select",
+        "required": false,
+        "options": [
+          "50K-1L",
+          "1L-3L",
+          "3L-5L",
+          "5L+"
+        ]
+      }
+    ],
+    "tracking_code": null,
+    "meta_title": "Annual Corporate Events 2025 - Early Bird Special",
+    "meta_description": "Book your 2025 annual corporate event now. Limited slots, exclusive packages available.",
+    "created_at": "2025-07-14 12:56:38",
+    "updated_at": "2025-07-14 12:56:38"
+  }
+]

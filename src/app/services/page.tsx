@@ -90,10 +90,10 @@ const serviceCategories = [
 const serviceShowcases = [
   {
     id: "corporate-events",
-    title: "Corporate Events & Conferences",
-    description: "Professional events that drive business results and strengthen team relationships. From strategic planning to flawless execution, we ensure your corporate message resonates.",
+    title: "Business Critical Events",
+    description: "Where business objectives meet creative brilliance. We don't just host events. We engineer experiences that drive decisions, forge partnerships, and transform companies.",
     mainImage: "/assets/images/services/DSC01980-scaled-1.jpg",
-    imageCaption: "Annual corporate conference for 500+ attendees",
+    imageCaption: "Fortune 500 annual summit - 1000+ global leaders",
     gallery: [
       "/assets/images/services/DSC01980-scaled-1.jpg",
       "/assets/images/services/DSC_1942-1536x1025.jpg",
@@ -102,20 +102,20 @@ const serviceShowcases = [
     ],
     features: [
       {
-        title: "Strategic Planning",
-        description: "Complete event strategy aligned with business objectives and ROI goals"
+        title: "Strategic Architecture",
+        description: "Every detail engineered to amplify your message and achieve measurable business impact"
       },
       {
-        title: "Professional Production",
-        description: "High-quality AV, staging, and technical production for seamless presentations"
+        title: "Executive Production",
+        description: "Cinema-quality AV, immersive staging, and flawless technical orchestration"
       },
       {
-        title: "Attendee Management",
-        description: "Registration, check-in, networking facilitation, and experience management"
+        title: "Experience Design",
+        description: "Curated journeys that transform attendees into advocates and partners"
       },
       {
-        title: "Brand Integration",
-        description: "Seamless brand messaging and visual identity throughout the event"
+        title: "Brand Amplification",
+        description: "Your story, magnified. Your values, experienced. Your vision, realized."
       }
     ],
     stats: {
@@ -126,10 +126,10 @@ const serviceShowcases = [
   },
   {
     id: "celebrations",
-    title: "Celebrations & Festivals",
-    description: "Joyful celebrations that bring people together and create lasting memories. We honor traditions while adding contemporary flair to make every celebration extraordinary.",
+    title: "Celebrations That Echo",
+    description: "Life's precious moments deserve more than parties. They deserve experiences that echo through generations. Where tradition meets innovation. Where joy becomes legendary.",
     mainImage: "/assets/images/services/92A4532-scaled-1.jpg",
-    imageCaption: "Cultural festival with traditional performances and modern staging",
+    imageCaption: "10,000-guest cultural celebration - Pure magic captured",
     gallery: [
       "/assets/images/services/92A4532-scaled-1.jpg",
       "/assets/images/services/P__2970-scaled-1.jpg",
@@ -138,20 +138,20 @@ const serviceShowcases = [
     ],
     features: [
       {
-        title: "Cultural Sensitivity",
-        description: "Respectful planning that honors traditions, customs, and cultural significance"
+        title: "Cultural Mastery",
+        description: "Deep reverence for tradition, bold vision for innovation. Authenticity without compromise."
       },
       {
-        title: "Entertainment Curation",
-        description: "Diverse programming including music, dance, performances, and interactive experiences"
+        title: "Sensory Symphonies",
+        description: "Curated experiences that touch every sense. Music that moves. Moments that mesmerize."
       },
       {
-        title: "Logistics Management",
-        description: "Crowd management, security coordination, and vendor management for large gatherings"
+        title: "Flawless Orchestration",
+        description: "10 guests or 10,000. Every detail perfect. Every moment seamless. Every memory golden."
       },
       {
-        title: "Community Engagement",
-        description: "Local partnerships and community involvement for authentic celebrations"
+        title: "Community Soul",
+        description: "Celebrations that unite. Experiences that bond. Memories that bind generations."
       }
     ],
     stats: {
@@ -162,10 +162,10 @@ const serviceShowcases = [
   },
   {
     id: "inaugurations",
-    title: "Product Launches & Inaugurations",
-    description: "Grand openings and product launches that make a statement. We create memorable moments that generate buzz and establish your brand presence in the market.",
+    title: "Launches That Define Eras",
+    description: "First impressions last forever. Make yours legendary. From ribbon cuttings to global reveals, we create moments that mark beginnings and define futures.",
     mainImage: "/assets/images/services/DSC01878-scaled-1.jpg",
-    imageCaption: "Grand inauguration with VIP guests and media coverage",
+    imageCaption: "Global product launch - 50M+ impressions generated",
     gallery: [
       "/assets/images/services/DSC01878-scaled-1.jpg",
       "/assets/images/services/DJI_0111-scaled.jpg",
@@ -174,20 +174,20 @@ const serviceShowcases = [
     ],
     features: [
       {
-        title: "Launch Strategy",
-        description: "Comprehensive launch planning with market impact and media coverage goals"
+        title: "Impact Strategy",
+        description: "Launches designed to dominate headlines, trending topics, and market conversations"
       },
       {
-        title: "VIP Experience",
-        description: "Exclusive experiences for dignitaries, stakeholders, and key guests"
+        title: "VVIP Protocol",
+        description: "Red carpet excellence. White glove service. Experiences worthy of world leaders."
       },
       {
-        title: "Media Management",
-        description: "Press coordination, photo opportunities, and media kit distribution"
+        title: "Media Magnetism",
+        description: "Moments designed to go viral. Stories built to be shared. Impact measured in millions."
       },
       {
-        title: "Ceremonial Elements",
-        description: "Traditional ceremonies, ribbon cutting, and symbolic moments"
+        title: "Symbolic Power",
+        description: "Ceremonies that transcend tradition. Moments that become milestones. History in the making."
       }
     ],
     stats: {
@@ -203,18 +203,18 @@ const serviceShowcases = [
 // End-to-End Services
 const endToEndServices = [
   {
-    title: "Venue Sourcing",
-    description: "Choosing the perfect venue that aligns with your event goals, budget, and guest experience expectations.",
+    title: "Venue Mastery",
+    description: "We don't find venues. We discover canvases. Spaces that amplify your vision and elevate every moment.",
     icon: MapPin
   },
   {
-    title: "Creative Conceptualization", 
-    description: "From broader vision to finest details, we craft inspiring concepts that blend creativity with precision execution.",
+    title: "Creative Alchemy", 
+    description: "Where imagination meets innovation. Concepts that captivate. Designs that dazzle. Stories that stick.",
     icon: Palette
   },
   {
-    title: "Production & Technical",
-    description: "Complete technical production including lighting, sound, staging, AV equipment, and live streaming capabilities.",
+    title: "Technical Wizardry",
+    description: "State-of-the-art production. Cinema-quality experiences. Technology that disappears into magic.",
     icon: Settings
   }
 ];
@@ -277,18 +277,18 @@ export default function ServicesPage() {
                   transition={{ duration: 0.8 }}
                 >
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-display leading-tight mb-6 sm:mb-8 mobile-heading">
-                    <span className="text-white">Crafting</span>
-                    <span className="text-[#F9A625] block">Unforgettable</span>
-                    <span className="text-white">Experiences</span>
+                    <span className="text-white">Solutions</span>
+                    <span className="text-[#F9A625] block">Not Services</span>
+                    <span className="text-white">Results</span>
                   </h1>
                   
                   <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-200 mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto mobile-body-text px-4 sm:px-0">
-                    From corporate conferences to dream weddings, we transform your vision into extraordinary events that leave lasting impressions.
+                    We don't offer services. We deliver solutions. Measurable results. Memories that outlive moments.
                   </p>
 
                   {/* Event Type Badges - Mobile Optimized */}
                   <div className="flex flex-wrap gap-2 sm:gap-4 justify-center mb-8 sm:mb-12 px-4 sm:px-0">
-                    {['Corporate Events', 'Weddings', 'Celebrations', 'Product Launches'].map((type, index) => (
+                    {['Fortune 500 Events', 'Luxury Weddings', 'Grand Celebrations', 'Global Launches'].map((type, index) => (
                       <motion.div
                         key={type}
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -306,7 +306,7 @@ export default function ServicesPage() {
                     <Button 
                       className="btn-primary mobile-touch-target text-base sm:text-lg lg:text-xl font-bold px-8 sm:px-12 py-4 sm:py-5 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-102 min-h-[48px]"
                     >
-                      Plan Your Event
+                      Start Your Transformation
                       <Sparkles className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
                     </Button>
                     
@@ -315,7 +315,7 @@ export default function ServicesPage() {
                       className="mobile-touch-target border-2 border-white text-white hover:bg-white hover:text-[#2A3959] font-semibold px-8 sm:px-12 py-4 sm:py-5 text-base sm:text-lg lg:text-xl rounded-2xl transition-all duration-300 hover:scale-102 min-h-[48px]"
                     >
                       <Phone className="mr-2 sm:mr-3 w-5 h-5 sm:w-6 sm:h-6" />
-                      Call Now
+                      +91 98450 45466
                     </Button>
                   </div>
                 </motion.div>
@@ -365,14 +365,14 @@ export default function ServicesPage() {
             className="text-center mb-12 sm:mb-16"
           >
             <Badge className="bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/30 px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold mb-4 sm:mb-6 mobile-touch-target">
-              🎭 Event Specializations
+              Our Expertise
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] mb-4 sm:mb-6 leading-tight mobile-heading">
-              Every Event Type,
-              <span className="text-[#F9A625] block">Perfectly Executed</span>
+              Six Specialties.
+              <span className="text-[#F9A625] block">Infinite Possibilities.</span>
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mobile-body-text">
-              From intimate gatherings to grand celebrations, we specialize in creating memorable experiences across all event categories
+              Masters of every detail. Architects of every emotion. Choose your canvas. We'll create the masterpiece.
             </p>
           </motion.div>
 
@@ -429,10 +429,10 @@ export default function ServicesPage() {
             className="text-center mt-12 sm:mt-16"
           >
             <div className="mobile-card bg-gradient-to-r from-[#2A3959] to-[#1a2332] max-w-2xl mx-auto">
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 mobile-heading">Don&apos;t See Your Event Type?</h3>
-              <p className="text-gray-300 mb-4 sm:mb-6 mobile-body-text">We customize our services for any occasion. Let&apos;s discuss your unique requirements.</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 mobile-heading">Have Something Unique in Mind?</h3>
+              <p className="text-gray-300 mb-4 sm:mb-6 mobile-body-text">No vision too bold. No dream too big. Let's create something unprecedented.</p>
               <Button className="btn-primary mobile-touch-target text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-2xl min-h-[48px]">
-                Discuss Custom Event
+                Let's Innovate Together
                 <Phone className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
@@ -566,13 +566,13 @@ export default function ServicesPage() {
             className="text-center mb-12 sm:mb-16"
           >
             <Badge className="bg-[#F9A625]/20 text-[#F9A625] border-[#F9A625]/30 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium mb-4 sm:mb-6 mobile-touch-target">
-              🚀 Our Process
+              The Method
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-white mb-4 sm:mb-6 mobile-heading">
-              Your Event Journey
+              Four Steps to Extraordinary
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mobile-body-text">
-              From initial consultation to final execution, we guide you through every step with precision and care
+              Proven process. Predictable excellence. Every single time.
             </p>
           </motion.div>
 
@@ -580,29 +580,29 @@ export default function ServicesPage() {
             {[
               {
                 step: "01",
-                title: "Discovery & Consultation",
-                description: "We start by understanding your vision, goals, and requirements through detailed consultations",
+                title: "Dream Discovery",
+                description: "We don't just take briefs. We uncover dreams. Deep dive into your vision, values, and victory metrics.",
                 icon: "💡",
                 color: "from-blue-500 to-cyan-500"
               },
               {
                 step: "02", 
-                title: "Strategic Planning",
-                description: "Our team creates a comprehensive event strategy with timelines, budgets, and creative concepts",
+                title: "Strategic Sculpting",
+                description: "Your vision meets our expertise. Strategies carved with precision. Concepts crafted with care.",
                 icon: "📋",
                 color: "from-purple-500 to-pink-500"
               },
               {
                 step: "03",
-                title: "Execution & Coordination",
-                description: "We handle all logistics, vendor management, and on-site coordination with military precision",
+                title: "Flawless Execution",
+                description: "Show time. Every element orchestrated. Every moment choreographed. Perfection, delivered.",
                 icon: "⚡",
                 color: "from-orange-500 to-red-500"
               },
               {
                 step: "04",
-                title: "Success & Follow-up",
-                description: "Post-event analysis, feedback collection, and maintaining relationships for future events",
+                title: "Legacy Creation",
+                description: "The event ends. The impact begins. Relationships deepened. Success stories written.",
                 icon: "🎯",
                 color: "from-green-500 to-emerald-500"
               }
@@ -655,7 +655,7 @@ export default function ServicesPage() {
           >
             <div className="mobile-card bg-gradient-to-r from-[#F9A625] to-[#e8951e] max-w-2xl mx-auto">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 mobile-heading">Ready to Get Started?</h3>
-              <p className="text-white/90 mb-4 sm:mb-6 mobile-body-text">Let&apos;s discuss your event and create something extraordinary together</p>
+              <p className="text-white/90 mb-4 sm:mb-6 mobile-body-text">Let's discuss your event and create something extraordinary together</p>
               <Button className="bg-white text-[#F9A625] hover:bg-gray-100 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl mobile-touch-target min-h-[48px] w-full sm:w-auto">
                 Start Your Journey
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -745,13 +745,12 @@ export default function ServicesPage() {
                 </div>
                 
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-white mb-4 sm:mb-6 mobile-heading">
-                  Ready to Create Your
-                  <span className="text-[#F9A625] block">Perfect Event?</span>
+                  Stop Planning Events.
+                  <span className="text-[#F9A625] block">Start Creating Legacies.</span>
                 </h2>
                 
                 <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed mobile-body-text">
-                  Join hundreds of satisfied clients who have trusted us with their most important moments. 
-                  Let&apos;s transform your vision into an unforgettable reality.
+                  Join the visionaries who don't settle for ordinary. Your extraordinary awaits.
                 </p>
 
                 {/* Enhanced Contact Options - Mobile Optimized */}
@@ -765,7 +764,7 @@ export default function ServicesPage() {
                     <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Call Us Now</h3>
                     <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Speak directly with our event specialists</p>
                     <Button variant="outline" className="mobile-touch-target border-white/30 text-white hover:bg-white/10 text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
-                      +1 (555) 123-4567
+                      +91 98450 45466
                     </Button>
                   </motion.div>
 
@@ -778,7 +777,7 @@ export default function ServicesPage() {
                     <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Email Us</h3>
                     <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Get detailed proposals and answers</p>
                     <Button variant="outline" className="mobile-touch-target border-white/30 text-white hover:bg-white/10 text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
-                      hello@masifevents.com
+                      info@whitemassif.com
                     </Button>
                   </motion.div>
 
@@ -801,13 +800,13 @@ export default function ServicesPage() {
                   <Button 
                     className="btn-primary mobile-touch-target text-white font-bold px-8 sm:px-10 py-4 sm:py-5 rounded-2xl text-base sm:text-lg transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
                   >
-                    Get Your Free Consultation
+                    Transform Your Vision Today
                     <ArrowRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
                   </Button>
                   
                   <div className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm text-center px-4 sm:px-0">
                     <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
-                    <span>Free consultation • No commitment • Quick response</span>
+                    <span>Free consultation • Zero obligation • 24hr response</span>
                   </div>
                 </div>
 

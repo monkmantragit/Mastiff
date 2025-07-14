@@ -386,20 +386,33 @@ export default function FeedbackPage() {
               <CheckCircle className="w-12 h-12 text-white" />
             </motion.div>
             
-            <h1 className="text-4xl font-heading font-bold mb-4 bg-gradient-to-r from-[#F9A625] to-[#2A3959] bg-clip-text text-transparent">
-              Thank You!
+            <h1 className="text-5xl md:text-6xl font-display leading-tight mb-6">
+              <span className="kinetic-text text-amber-500">Your Voice</span>
+              <br />
+              <span className="text-neutral-800">Has Been Heard</span>
             </h1>
             
-            <p className="text-xl text-neutral-600 mb-8">
-              Your feedback has been submitted successfully. We&apos;ll review your insights and use them to refine the White Massif experience.
+            <p className="text-xl text-neutral-600 mb-8 font-body leading-relaxed">
+              Your legendary insights are now part of our evolution. Every word you&apos;ve shared brings us closer to creating 
+              the extraordinary digital experience that WhiteMassif deserves. Thank you for helping us perfect the legend.
             </p>
             
-            <Button 
-              onClick={() => window.location.href = '/'}
-              className="btn-primary px-8 py-3 text-lg"
-            >
-              Return to Homepage
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <Button 
+                onClick={() => window.location.href = '/'}
+                className="btn-primary group"
+              >
+                <span>Experience The Legend</span>
+                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+              <Button 
+                onClick={() => window.location.href = '/contact'}
+                className="btn-secondary group"
+              >
+                <span>Connect With Us</span>
+                <Heart className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -425,8 +438,8 @@ export default function FeedbackPage() {
                 />
               </div>
             </div>
-            <Badge className="bg-[#F9A625] text-black border-none">
-              White Massif Feedback
+            <Badge className="glass px-4 py-2 text-amber-600 border-amber-200">
+              Excellence In Progress
             </Badge>
           </div>
         </div>
@@ -451,20 +464,24 @@ export default function FeedbackPage() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="mb-8"
                 >
-                  <Badge className="bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/20 mb-6">
-                    <Sparkles className="w-4 h-4 mr-2" />
-                    Design Feedback Collection
-                  </Badge>
+                  <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow">
+                    <Heart className="w-5 h-5 text-amber-500" />
+                    <span className="text-sm font-medium tracking-wide">Voice of Excellence</span>
+                  </div>
                   
-                  <h1 className="text-6xl font-heading font-bold mb-6 bg-gradient-to-r from-[#F9A625] to-[#2A3959] bg-clip-text text-transparent">
-                    Help Us Perfect
+                  <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
+                    <span className="kinetic-text">
+                      Your Voice.
+                    </span>
                     <br />
-                    White Massif&apos;s Vision
+                    <span className="text-neutral-800">
+                      Our Evolution.
+                    </span>
                   </h1>
                   
-                  <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-12 leading-relaxed">
-                    We&apos;ve reimagined White Massif&apos;s digital presence with cutting-edge design and technology. 
-                    Your expert insights will help us ensure we&apos;ve created something truly exceptional.
+                  <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed">
+                    Every legend listens to the voices that matter most. Your insights don&apos;t just improve our website—they shape the future 
+                    of how WhiteMassif creates legendary experiences. Help us perfect what promises to be extraordinary.
                   </p>
                 </motion.div>
 
@@ -474,22 +491,22 @@ export default function FeedbackPage() {
                   transition={{ duration: 0.8, delay: 0.4 }}
                   className="grid md:grid-cols-3 gap-6 mb-12"
                 >
-                  <Card className="p-6 glass border-none">
-                    <Timer className="w-8 h-8 text-[#F9A625] mb-4" />
-                    <h3 className="font-heading font-semibold mb-2">5 Minutes</h3>
-                    <p className="text-sm text-neutral-600">Quick, focused questions</p>
+                  <Card className="p-8 glass rounded-3xl border-neutral-200 hover:shadow-lg transition-all duration-300">
+                    <Timer className="w-10 h-10 text-amber-500 mb-6" />
+                    <h3 className="text-xl font-heading font-semibold mb-3 text-neutral-900">5 Legendary Minutes</h3>
+                    <p className="text-neutral-600 font-body">Precision questions that matter</p>
                   </Card>
                   
-                  <Card className="p-6 glass border-none">
-                    <Target className="w-8 h-8 text-[#F9A625] mb-4" />
-                    <h3 className="font-heading font-semibold mb-2">13 Key Areas</h3>
-                    <p className="text-sm text-neutral-600">Design + content strategy evaluation</p>
+                  <Card className="p-8 glass rounded-3xl border-neutral-200 hover:shadow-lg transition-all duration-300">
+                    <Target className="w-10 h-10 text-amber-500 mb-6" />
+                    <h3 className="text-xl font-heading font-semibold mb-3 text-neutral-900">Strategic Vision</h3>
+                    <p className="text-neutral-600 font-body">Design excellence evaluation</p>
                   </Card>
                   
-                  <Card className="p-6 glass border-none">
-                    <Heart className="w-8 h-8 text-[#F9A625] mb-4" />
-                    <h3 className="font-heading font-semibold mb-2">Your Impact</h3>
-                    <p className="text-sm text-neutral-600">Shape the final design</p>
+                  <Card className="p-8 glass rounded-3xl border-neutral-200 hover:shadow-lg transition-all duration-300">
+                    <Heart className="w-10 h-10 text-amber-500 mb-6" />
+                    <h3 className="text-xl font-heading font-semibold mb-3 text-neutral-900">Direct Impact</h3>
+                    <p className="text-neutral-600 font-body">Shape legendary experiences</p>
                   </Card>
                 </motion.div>
 
@@ -531,10 +548,10 @@ export default function FeedbackPage() {
                   <Button 
                     onClick={handleStart}
                     disabled={!formData.name}
-                    className="btn-primary px-8 py-4 text-lg"
+                    className="btn-primary px-10 py-5 text-xl group"
                   >
-                    Begin Feedback Session
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    <span>Share Your Vision</span>
+                    <ArrowRight className="w-6 h-6 ml-3 transition-transform duration-300 group-hover:translate-x-1" />
                   </Button>
                 </motion.div>
               </motion.div>
@@ -667,13 +684,13 @@ function QuestionCard({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Label className="text-sm font-medium text-neutral-700 mb-3 block">
-                Share your detailed thoughts and suggestions:
+              <Label className="text-lg font-heading text-neutral-800 mb-4 block">
+                Share your visionary insights:
               </Label>
               <Textarea
                 value={selectedValue}
                 onChange={(e) => setSelectedValue(e.target.value)}
-                placeholder="Please provide your insights, suggestions, or recommendations..."
+                placeholder="Your expert perspective helps us create something truly legendary. Share your vision, insights, and recommendations..."
                 className="w-full min-h-[150px] resize-none"
               />
             </motion.div>
@@ -756,7 +773,7 @@ function QuestionCard({
             <Textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Share your thoughts... (optional)"
+              placeholder="Your additional insights help us perfect the experience... (optional)"
               className="w-full min-h-[100px] resize-none"
             />
           </motion.div>
@@ -785,12 +802,12 @@ function QuestionCard({
               </>
             ) : isLastQuestion ? (
               <>
-                Submit Feedback
+                <span>Complete Your Vision</span>
                 <Send className="w-4 h-4 ml-2" />
               </>
             ) : (
               <>
-                Continue
+                <span>Continue the Journey</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
               </>
             )}

@@ -1,8 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
-
 import { motion } from "framer-motion";
 import { 
   ArrowRight, 
@@ -19,6 +18,7 @@ import {
   MapPin
 } from "lucide-react";
 import Image from "next/image";
+import { DirectusService, type TeamMember } from '@/lib/directus-service';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -36,188 +36,61 @@ const staggerContainer = {
 
 export default function TeamPage() {
   const [selectedCategory, setSelectedCategory] = React.useState("All");
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Real White Massif team data
-  const teamMembers = [
-    {
-      name: "Prakash A Vaswani",
-      position: "Director – Client Relations & Strategic Initiatives",
-      image: "/assets/images/team/Untitled-design-69.png",
-      category: "Leadership"
-    },
-    {
-      name: "Vinay Kukreja",
-      position: "Director – Production, Finance & Operations",
-      image: "/assets/images/team/Untitled-design-71.png",
-      category: "Leadership"
-    },
-    {
-      name: "Hasan Peer H C",
-      position: "Creative Director",
-      image: "/assets/images/team/Untitled-design-2.png",
-      category: "Creative"
-    },
-    {
-      name: "Naveen Abraham A",
-      position: "Head - Operations",
-      image: "/assets/images/team/Untitled-design-3.png",
-      category: "Operations"
-    },
-    {
-      name: "Pehal Kukreja",
-      position: "Head – Finance & Accounting",
-      image: "/assets/images/team/Untitled-design-72.png",
-      category: "Finance"
-    },
-    {
-      name: "Yogesh S",
-      position: "Director of Event Production",
-      image: "/assets/images/team/Untitled-design-17-1.png",
-      category: "Production"
-    },
-    {
-      name: "Neha",
-      position: "Art Director",
-      image: "/assets/images/team/Untitled-design-18-1.png",
-      category: "Creative"
-    },
-    {
-      name: "Prerna Gautam",
-      position: "Client Servicing Manager",
-      image: "/assets/images/team/Prerna-Gautam-Website-.png",
-      category: "Client Relations"
-    },
-    {
-      name: "Reynold Marshal X",
-      position: "Operations Manager",
-      image: "/assets/images/team/RAM-Website-.png",
-      category: "Operations"
-    },
-    {
-      name: "Sampurnaa Basak",
-      position: "Human Resource Manager",
-      image: "/assets/images/team/Untitled-design-7.png",
-      category: "HR"
-    },
-    {
-      name: "Yashawanth Prabhu",
-      position: "Senior Designer",
-      image: "/assets/images/team/Untitled-design-8.png",
-      category: "Creative"
-    },
-    {
-      name: "Joel Kevyn Braganza",
-      position: "Senior Production Executive",
-      image: "/assets/images/team/Untitled-design-9-e1723116048188.png",
-      category: "Production"
-    },
-    {
-      name: "Supreeth G",
-      position: "Senior Motion Graphic Designer",
-      image: "/assets/images/team/Untitled-design-12.png",
-      category: "Creative"
-    },
-    {
-      name: "Samarth A Patil",
-      position: "Senior Client Relations Executive",
-      image: "/assets/images/team/Untitled-design-13.png",
-      category: "Client Relations"
-    },
-    {
-      name: "Palak Kothari",
-      position: "Senior Design and Content Conceptualizer",
-      image: "/assets/images/team/POGO-Website-.png",
-      category: "Creative"
-    },
-    {
-      name: "Saloni Jain",
-      position: "Senior Client Servicing Executive",
-      image: "/assets/images/team/Untitled-design-14.png",
-      category: "Client Relations"
-    },
-    {
-      name: "Sowmya A",
-      position: "Digital Marketing Specialist",
-      image: "/assets/images/team/Untitled-design-15.png",
-      category: "Marketing"
-    },
-    {
-      name: "Sriram Sridhar",
-      position: "Assistant Production Manager",
-      image: "/assets/images/team/Sriram-Website-.png",
-      category: "Production"
-    },
-    {
-      name: "Ramya R Srivatsa",
-      position: "Client Servicing Executive",
-      image: "/assets/images/team/Ramya-Website-.png",
-      category: "Client Relations"
-    },
-    {
-      name: "Bhavika K Jain",
-      position: "Senior Executive - Client Servicing",
-      image: "/assets/images/team/Untitled-design-18.png",
-      category: "Client Relations"
-    },
-    {
-      name: "Anointa James",
-      position: "Graphic Designer",
-      image: "/assets/images/team/Untitled-design-19.png",
-      category: "Creative"
-    },
-    {
-      name: "Nithin H.C",
-      position: "Production Executive",
-      image: "/assets/images/team/Untitled-design-20.png",
-      category: "Production"
-    },
-    {
-      name: "Karunya Anububojan",
-      position: "Client Servicing Executive",
-      image: "/assets/images/team/Untitled-design-25.png",
-      category: "Client Relations"
-    },
-    {
-      name: "R Rajesh",
-      position: "Operations Executive",
-      image: "/assets/images/team/Untitled-design-26.png",
-      category: "Operations"
-    },
-    {
-      name: "Ram Babu",
-      position: "Operations Executive",
-      image: "/assets/images/team/Untitled-design-31.png",
-      category: "Operations"
-    },
-    {
-      name: "Kosinapogu ramesh",
-      position: "Operations Executive",
-      image: "/assets/images/team/Untitled-design-31.png",
-      category: "Operations"
-    }
-  ];
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      setLoading(true);
+      const fetchedMembers = await DirectusService.getTeamMembers();
+      setTeamMembers(fetchedMembers);
+      setLoading(false);
+    };
+
+    fetchTeamMembers();
+  }, []);
 
   const stats = [
-    { number: "26", label: "Team Members", icon: Users },
+    { number: teamMembers.length.toString(), label: "Team Members", icon: Users },
     { number: "12+", label: "Years Experience", icon: Award },
     { number: "500+", label: "Events Delivered", icon: Calendar },
     { number: "160+", label: "Happy Clients", icon: Star }
   ];
 
-  const departments = [
-    { name: "Leadership", count: 3, icon: Target, color: "bg-brand-blue" },
-    { name: "Creative", count: 6, icon: Lightbulb, color: "bg-brand-yellow" },
-    { name: "Operations", count: 5, icon: Zap, color: "bg-brand-blue" },
-    { name: "Client Relations", count: 6, icon: Users, color: "bg-brand-yellow" },
-    { name: "Production", count: 4, icon: Trophy, color: "bg-brand-blue" },
-    { name: "Others", count: 2, icon: Star, color: "bg-brand-yellow" }
-  ];
+  const getDepartmentData = () => {
+    const departmentMap = new Map();
+    const iconMap = {
+      "Leadership": Target,
+      "Creative": Lightbulb, 
+      "Operations": Zap,
+      "Client Relations": Users,
+      "Production": Trophy,
+      "Finance": Award,
+      "HR": Users,
+      "Marketing": Star
+    };
+    
+    teamMembers.forEach(member => {
+      if (member.department) {
+        departmentMap.set(member.department, (departmentMap.get(member.department) || 0) + 1);
+      }
+    });
+    
+    return Array.from(departmentMap.entries()).map(([name, count], index) => ({
+      name,
+      count,
+      icon: iconMap[name as keyof typeof iconMap] || Star,
+      color: index % 2 === 0 ? "bg-brand-blue" : "bg-brand-yellow"
+    }));
+  };
 
-  const categories = ["All", "Leadership", "Creative", "Operations", "Client Relations", "Production", "Finance", "HR", "Marketing"];
+  const departments = getDepartmentData();
+
+  const categories = ["All", ...Array.from(new Set(teamMembers.map(member => member.department).filter(Boolean)))];
 
   const filteredTeam = selectedCategory === "All" 
     ? teamMembers 
-    : teamMembers.filter(member => member.category === selectedCategory);
+    : teamMembers.filter(member => member.department === selectedCategory);
 
   return (
     <div className="min-h-screen pt-20">
@@ -240,17 +113,23 @@ export default function TeamPage() {
             transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="text-center max-w-4xl mx-auto text-white"
           >
-            <p className="text-sm font-medium tracking-wider uppercase mb-4 text-brand-yellow">
-              Our Team
-            </p>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light mb-6 tracking-tight">
-              Meet Our
+            <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow">
+              <Star className="w-5 h-5 text-amber-500" />
+              <span className="text-sm font-medium tracking-wide">The Visionaries</span>
+            </div>
+            
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
+              <span className="kinetic-text">
+                Masters of
+              </span>
               <br />
-              <span className="font-medium">Dynamic Team</span>
+              <span className="text-white">
+                The Impossible
+              </span>
             </h1>
-            <p className="text-lg md:text-xl mb-12 text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Our team comprises dynamic individuals propelled by creativity and efficiency, 
-              employing professional methodology and extensive cross-industry experience.
+            <p className="text-xl md:text-2xl mb-12 text-white/90 max-w-4xl mx-auto leading-relaxed font-body">
+              Behind every legendary event stands a team of obsessed creators. Meet the visionaries who turn dreams into reality, 
+              impossibilities into inevitabilities, and moments into memories that echo through time.
             </p>
           </motion.div>
         </div>
@@ -292,20 +171,20 @@ export default function TeamPage() {
             className="grid lg:grid-cols-2 gap-20 items-center"
           >
             <motion.div variants={fadeInUp}>
-              <p className="text-sm font-medium tracking-wider uppercase mb-4 text-brand-blue">
-                About White Massif
-              </p>
-              <h2 className="text-3xl md:text-5xl font-light mb-6 text-black tracking-tight">
-                Building Lasting Partnerships
+              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
+                <Trophy className="w-5 h-5 text-amber-500" />
+                <span className="text-sm font-medium tracking-wide text-amber-600">The WhiteMassif Way</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
+                Where <span className="kinetic-text">Obsession</span> Meets Excellence
               </h2>
-              <p className="text-lg mb-6 text-gray-700 leading-relaxed">
-                At White Massif Corporate Events, we believe in building lasting partnerships with our clients. 
-                Our distinctive approach involves open communication, collaborative planning and a commitment to 
-                delivering events that exceed expectations.
+              <p className="text-xl mb-8 text-neutral-700 leading-relaxed font-body">
+                We don&apos;t just build teams. We forge legends. Every member of our family is handpicked for their relentless 
+                pursuit of perfection, their hunger for the extraordinary, and their ability to transform impossible visions into inevitable realities.
               </p>
-              <p className="text-gray-600 mb-8 leading-relaxed">
-                Our success is measured by the success of our clients&apos; events. From concept to execution, 
-                our team of dedicated professionals turn your vision into reality.
+              <p className="text-lg text-neutral-600 mb-10 leading-relaxed font-body">
+                Our success isn&apos;t measured in events delivered—it&apos;s measured in dreams fulfilled, in legends created, 
+                in the moment a client realizes their wildest vision has become their lived reality.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 {[
@@ -353,35 +232,51 @@ export default function TeamPage() {
             className="text-center mb-20"
           >
             <motion.div variants={fadeInUp}>
-              <p className="text-sm font-medium tracking-wider uppercase mb-4 text-brand-blue">
-                Our Departments
-              </p>
-              <h2 className="text-3xl md:text-5xl font-light mb-6 text-black tracking-tight">
-                Specialized Teams
+              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
+                <Zap className="w-5 h-5 text-amber-500" />
+                <span className="text-sm font-medium tracking-wide text-amber-600">Excellence Architects</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
+                <span className="kinetic-text">Six Pillars</span> of Perfection
               </h2>
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
+                Each department isn&apos;t just a team—it&apos;s a specialty force dedicated to one mission: making the impossible inevitable.
+              </p>
             </motion.div>
           </motion.div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {departments.map((dept, index) => (
-              <motion.div key={index} variants={fadeInUp}>
-                <div className="bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300">
-                  <div className={`w-12 h-12 ${dept.color} rounded-xl flex items-center justify-center mx-auto mb-4`}>
-                    <dept.icon className="w-6 h-6 text-white" />
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="w-8 h-8 border-4 border-brand-yellow border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : departments.length === 0 ? (
+            <div className="text-center py-20">
+              <Zap className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-display text-neutral-600 mb-2">No departments found</h3>
+              <p className="text-neutral-500">Department information will be available once team data is loaded.</p>
+            </div>
+          ) : (
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {departments.map((dept, index) => (
+                <motion.div key={index} variants={fadeInUp}>
+                  <div className="bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300">
+                    <div className={`w-12 h-12 ${dept.color} rounded-xl flex items-center justify-center mx-auto mb-4`}>
+                      <dept.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-lg font-medium text-black mb-2">{dept.name}</h3>
+                    <p className="text-2xl font-light text-brand-yellow mb-1">{dept.count}</p>
+                    <p className="text-xs text-gray-500">Team Members</p>
                   </div>
-                  <h3 className="text-lg font-medium text-black mb-2">{dept.name}</h3>
-                  <p className="text-2xl font-light text-brand-yellow mb-1">{dept.count}</p>
-                  <p className="text-xs text-gray-500">Team Members</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -396,77 +291,103 @@ export default function TeamPage() {
             className="text-center mb-20"
           >
             <motion.div variants={fadeInUp}>
-              <p className="text-sm font-medium tracking-wider uppercase mb-4 text-brand-blue">
-                Team Members
-              </p>
-              <h2 className="text-3xl md:text-5xl font-light mb-6 text-black tracking-tight">
-                Meet Our Professionals
+              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
+                <Award className="w-5 h-5 text-amber-500" />
+                <span className="text-sm font-medium tracking-wide text-amber-600">The Dream Makers</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
+                The Faces Behind <span className="kinetic-text">The Magic</span>
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Offering comprehensive turnkey solutions with experience in diverse events from Business Meets to MICE
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
+                Meet the individuals who&apos;ve dedicated their lives to one singular obsession: creating experiences that redefine what&apos;s possible.
               </p>
             </motion.div>
           </motion.div>
 
           {/* Category Filter - Minimal Pills */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-3 mb-20"
-          >
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  selectedCategory === category 
-                    ? "bg-black text-white" 
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </motion.div>
+          {!loading && categories.length > 1 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="flex flex-wrap justify-center gap-3 mb-20"
+            >
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    selectedCategory === category 
+                      ? "bg-black text-white" 
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </motion.div>
+          )}
 
           {/* Team Grid - Clean Cards */}
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          >
-            {filteredTeam.map((member, index) => (
-              <motion.div key={index} variants={fadeInUp}>
-                <div className="bg-white rounded-2xl overflow-hidden group hover:shadow-lg transition-all duration-500">
-                  <div className="relative">
-                    <div className="w-full h-64 bg-gray-100 overflow-hidden">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        width={300}
-                        height={300}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="w-8 h-8 border-4 border-brand-yellow border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : filteredTeam.length === 0 ? (
+            <div className="text-center py-20">
+              <Users className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-display text-neutral-600 mb-2">No team members found</h3>
+              <p className="text-neutral-500">Check back later as we update our team information.</p>
+            </div>
+          ) : (
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              {filteredTeam.map((member, index) => (
+                <motion.div key={member.id || index} variants={fadeInUp}>
+                  <div className="bg-white rounded-2xl overflow-hidden group hover:shadow-lg transition-all duration-500">
+                    <div className="relative">
+                      <div className="w-full h-64 bg-gray-100 overflow-hidden">
+                        {member.image ? (
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            width={300}
+                            height={300}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-brand-yellow/20 to-brand-blue/20 flex items-center justify-center">
+                            <Users className="w-16 h-16 text-brand-blue" />
+                          </div>
+                        )}
+                      </div>
+                      {member.department && (
+                        <div className="absolute top-3 right-3">
+                          <span className="text-xs font-medium text-white bg-black/20 backdrop-blur-sm px-2 py-1 rounded-full">
+                            {member.department}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                    <div className="absolute top-3 right-3">
-                      <span className="text-xs font-medium text-white bg-black/20 backdrop-blur-sm px-2 py-1 rounded-full">
-                        {member.category}
-                      </span>
+                    <div className="p-4">
+                      <h3 className="text-lg font-medium text-black mb-1 group-hover:text-brand-blue transition-colors">
+                        {member.name}
+                      </h3>
+                      <p className="text-xs text-gray-600 leading-relaxed">{member.position}</p>
+                      {member.bio && (
+                        <p className="text-xs text-gray-500 mt-2 line-clamp-2">{member.bio}</p>
+                      )}
                     </div>
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-medium text-black mb-1 group-hover:text-brand-blue transition-colors">
-                      {member.name}
-                    </h3>
-                    <p className="text-xs text-gray-600 leading-relaxed">{member.position}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -481,13 +402,18 @@ export default function TeamPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <motion.div variants={fadeInUp}>
-              <h2 className="text-3xl md:text-5xl font-light mb-6 tracking-tight">
-                Ready to Work with Our
+              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
+                <Lightbulb className="w-5 h-5 text-amber-500" />
+                <span className="text-sm font-medium tracking-wide">Join The Vision</span>
+              </div>
+              <h2 className="text-5xl md:text-6xl font-display mb-8 leading-tight">
+                Ready to Work with
                 <br />
-                <span className="text-brand-yellow">Expert Team?</span>
+                <span className="kinetic-text text-amber-400">The Legends?</span>
               </h2>
-              <p className="text-lg text-white/70 mb-12 max-w-2xl mx-auto">
-                Contact us to discuss how our dedicated professionals can bring your vision to life
+              <p className="text-xl text-white/80 mb-12 max-w-3xl mx-auto font-body">
+                Your vision deserves more than a team. It deserves the masters who&apos;ve dedicated their lives to making the impossible inevitable. 
+                Let&apos;s create something legendary together.
               </p>
               
               <div className="grid md:grid-cols-3 gap-8 mb-12 text-sm">
@@ -516,10 +442,16 @@ export default function TeamPage() {
                 </div>
               </div>
               
-              <Button className="bg-white text-black hover:bg-white/90 px-8 py-4 rounded-full font-medium">
-                Join Our Team
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <Button className="btn-primary group">
+                  <span>Begin Your Legend</span>
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+                <Button className="btn-secondary group">
+                  <span>Join The Visionaries</span>
+                  <Users className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+              </div>
             </motion.div>
           </motion.div>
         </div>

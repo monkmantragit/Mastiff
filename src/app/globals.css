@@ -49,13 +49,16 @@
 :root {
   --radius: 1rem;
   
-  /* 2025 Premium Brand Colors - Liquid Glass Inspired */
-  --brand-primary: #F9A625;
+  /* Official White Massif Brand Colors */
+  --brand-primary: #F9A625; /* Yellow */
   --brand-primary-dark: #E6941F;
   --brand-primary-light: #FFB84D;
-  --brand-secondary: #2A3959;
+  --brand-secondary: #2A3959; /* Blue */
   --brand-secondary-dark: #1E2A3A;
   --brand-secondary-light: #3A4A6B;
+  --brand-white: #FFFFFF;
+  --brand-gray: #333333;
+  --brand-black: #000000;
   
   /* Advanced Neutral Palette */
   --neutral-50: #FAFAFA;
@@ -190,44 +193,45 @@
     .text-9xl { font-size: 5rem !important; }   /* 80px desktop */
   }
   
-  /* 2025 Premium Typography System */
+  /* White Massif Brand Typography System */
   .font-display {
-    font-family: var(--font-inter), 'Inter', sans-serif;
+    font-family: var(--font-sinkin-sans), 'Inter', sans-serif;
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
   
   .font-heading {
-    font-family: var(--font-inter), 'Inter', sans-serif;
+    font-family: var(--font-sinkin-sans), 'Inter', sans-serif;
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.025em;
   }
   
   .font-subheading {
-    font-family: var(--font-inter), 'Inter', sans-serif;
+    font-family: var(--font-raleway), 'Raleway', sans-serif;
     font-weight: 600;
     line-height: 1.3;
     letter-spacing: -0.01em;
   }
   
   .font-body {
-    font-family: var(--font-roboto-condensed), 'Roboto Condensed', sans-serif;
+    font-family: var(--font-raleway), 'Raleway', sans-serif;
     font-weight: 400;
     line-height: 1.6;
     letter-spacing: -0.005em;
   }
   
   .font-quote {
-    font-family: var(--font-edu-nsw), 'Edu NSW ACT Foundation', cursive;
+    font-family: var(--font-raleway), 'Raleway', sans-serif;
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: 0.01em;
+    font-style: italic;
   }
   
   .font-mono {
-    font-family: var(--font-roboto-condensed), 'Roboto Condensed', monospace;
+    font-family: var(--font-raleway), 'Raleway', monospace;
     font-feature-settings: "liga" 1, "calt" 1;
   }
   

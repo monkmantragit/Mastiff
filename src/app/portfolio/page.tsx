@@ -188,10 +188,10 @@ export default function PortfolioPage() {
   ];
 
   const stats = [
-    { number: "500+", label: "Extraordinary Events", icon: Calendar, color: "text-blue-500", bgColor: "from-blue-500/10 to-blue-500/5" },
-    { number: "160+", label: "Delighted Clients", icon: Users, color: "text-emerald-500", bgColor: "from-emerald-500/10 to-emerald-500/5" },
-    { number: "98%", label: "Success Rate", icon: Star, color: "text-amber-500", bgColor: "from-amber-500/10 to-amber-500/5" },
-    { number: "25+", label: "Global Reach", icon: Globe, color: "text-purple-500", bgColor: "from-purple-500/10 to-purple-500/5" }
+    { number: "1000+", label: "Dreams Realized", icon: Calendar, color: "text-blue-500", bgColor: "from-blue-500/10 to-blue-500/5" },
+    { number: "1.5M+", label: "Lives Touched", icon: Users, color: "text-emerald-500", bgColor: "from-emerald-500/10 to-emerald-500/5" },
+    { number: "100%", label: "Legends Created", icon: Star, color: "text-amber-500", bgColor: "from-amber-500/10 to-amber-500/5" },
+    { number: "∞", label: "Possibilities", icon: Globe, color: "text-purple-500", bgColor: "from-purple-500/10 to-purple-500/5" }
   ];
 
   const testimonials = [
@@ -299,7 +299,7 @@ export default function PortfolioPage() {
               whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
             >
               <Palette className="w-6 h-6 text-amber-400" />
-              <span className="text-lg font-medium tracking-wide text-white">Portfolio Showcase</span>
+              <span className="text-lg font-medium tracking-wide text-white">Proof of Excellence</span>
               <Sparkles className="w-5 h-5 text-cyan-400" />
             </motion.div>
             
@@ -311,11 +311,11 @@ export default function PortfolioPage() {
               transition={{ duration: 1.4, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
               <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
-                Extraordinary
+                Where Vision
               </span>
               <br />
               <span className="text-white">
-                Event Experiences
+                Becomes Victory
               </span>
             </motion.h1>
             
@@ -325,8 +325,8 @@ export default function PortfolioPage() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              Discover how we&apos;ve transformed bold visions into reality for leading organizations across industries, 
-              creating memorable experiences that inspire, engage, and deliver measurable results through innovation and excellence.
+              1000+ success stories. Zero compromises. Infinite possibilities. 
+              This is what happens when obsession meets opportunity.
             </motion.p>
             
             <motion.div 
@@ -337,12 +337,12 @@ export default function PortfolioPage() {
             >
               <Button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-0 group">
                 <Image className="mr-2 w-5 h-5" />
-                <span>Explore Projects</span>
+                <span>Witness Excellence</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
               <Button className="bg-white/10 backdrop-blur-xl text-white px-8 py-4 text-lg rounded-full border border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 group">
                 <MousePointer className="mr-2 w-5 h-5" />
-                <span>Start Your Project</span>
+                <span>Join The Legacy</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </motion.div>
@@ -423,16 +423,16 @@ export default function PortfolioPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 px-6 py-3 text-base border-amber-200">
-                Featured Portfolio
+                Hall of Fame
               </Badge>
               <h2 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900 leading-tight">
-                <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Showcase of</span>
+                <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Not Just Events.</span>
                 <br />
-                <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Excellence</span>
+                <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Legends.</span>
               </h2>
               <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
-                From intimate corporate gatherings to grand celebrations, explore our diverse portfolio 
-                of successful events that have exceeded client expectations and delivered remarkable results.
+                Step inside our hall of fame. Where ordinary becomes extraordinary. 
+                Where moments become milestones. Where events become legends.
               </p>
             </motion.div>
           </motion.div>
@@ -571,13 +571,13 @@ export default function PortfolioPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 px-6 py-3 text-base border-purple-200">
-                Client Success Stories
+                Voices of Victory
               </Badge>
               <h2 className="text-5xl md:text-6xl font-bold mb-6 text-slate-900 leading-tight">
-                What Our <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Clients</span> Say
+                When Dreams <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Speak</span>
               </h2>
               <p className="text-xl text-slate-600 max-w-3xl mx-auto font-light">
-                Hear from the visionary leaders who trusted us with their most important events and celebrations.
+                The words that matter most. From the visionaries who dared to dream bigger.
               </p>
             </motion.div>
           </motion.div>
@@ -626,14 +626,14 @@ export default function PortfolioPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 bg-white/10 backdrop-blur-xl text-cyan-400 px-6 py-3 text-base border-cyan-400/20">
-                Our Methodology
+                The Secret
               </Badge>
               <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
-                How We Create <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Magic</span>
+                Excellence <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Decoded</span>
               </h2>
               <p className="text-xl text-white/70 max-w-3xl mx-auto leading-relaxed font-light">
-                Our proven methodology ensures every project is delivered with excellence, 
-                from initial concept to final execution and beyond.
+                Four steps. Zero compromises. Infinite impact. 
+                This is how legends are born.
               </p>
             </motion.div>
           </motion.div>
@@ -703,28 +703,28 @@ export default function PortfolioPage() {
           >
             <motion.div variants={fadeInUp}>
               <h2 className="text-5xl md:text-7xl font-bold mb-8 text-slate-900 leading-tight">
-                Ready to Create Your <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">Masterpiece</span>?
+                Your Story Starts <span className="bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">Here</span>
               </h2>
               <p className="text-xl text-slate-600 max-w-4xl mx-auto mb-12 leading-relaxed font-light">
-                Let&apos;s collaborate to create an extraordinary event experience that captivates your audience, 
-                exceeds expectations, and delivers measurable business results through innovative design and flawless execution.
+                Ready to join our hall of fame? To create something that echoes through time? 
+                Your legend awaits.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
                 <Button className="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-lg px-12 py-6 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-0 group">
                   <Sparkles className="mr-2 w-6 h-6" />
-                  <span>Start Your Project</span>
+                  <span>Begin Your Legend</span>
                   <ArrowRight className="ml-2 w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
                 
                 <div className="flex items-center space-x-6">
-                  <a href="tel:+91-990-0141-155" className="group flex items-center space-x-3 text-slate-600 hover:text-amber-600 transition-colors">
+                  <a href="tel:+91-98450-45466" className="group flex items-center space-x-3 text-slate-600 hover:text-amber-600 transition-colors">
                     <div className="w-14 h-14 bg-white/80 backdrop-blur-xl rounded-full flex items-center justify-center group-hover:bg-amber-100 transition-all duration-300 shadow-lg group-hover:scale-110 border border-slate-200">
                       <Phone className="w-6 h-6" />
                     </div>
                     <div className="text-left">
-                      <div className="font-bold text-lg">+91-990-0141-155</div>
-                      <div className="text-sm opacity-70">Call Us Now</div>
+                      <div className="font-bold text-lg">+91 98450 45466</div>
+                      <div className="text-sm opacity-70">Call The Legends</div>
                     </div>
                   </a>
                   
@@ -733,8 +733,8 @@ export default function PortfolioPage() {
                       <Mail className="w-6 h-6" />
                     </div>
                     <div className="text-left">
-                      <div className="font-bold text-lg">Get Consultation</div>
-                      <div className="text-sm opacity-70">Free Expert Advice</div>
+                      <div className="font-bold text-lg">Start The Conversation</div>
+                      <div className="text-sm opacity-70">Where Legends Begin</div>
                     </div>
                   </a>
                 </div>

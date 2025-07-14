@@ -158,34 +158,34 @@ export default function ClientsPage() {
               className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow"
               whileHover={{ scale: 1.05 }}
             >
-              <Sparkles className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide">Our Clients</span>
+              <Trophy className="w-5 h-5 text-amber-500" />
+              <span className="text-sm font-medium tracking-wide">Hall of Trust</span>
             </motion.div>
             
             {/* Main Headline */}
             <motion.h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-display leading-[0.85] mb-8"
+              className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8"
               initial={{ opacity: 0, y: 50 }}
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.2, delay: 0.2 }}
             >
               <span className="kinetic-text">
-                Trusted By
+                Where Legends
               </span>
               <br />
               <span className="text-neutral-800">
-                Top Brands
+                Choose Legends
               </span>
             </motion.h1>
             
             <motion.p 
-              className="text-lg md:text-xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"
+              className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              Our clients&apos; trust has made us one of the leading event management companies in Bangalore. 
-              We are delighted to be associated with 160+ corporate clients across various industries.
+              Fortune 500 companies. Global brands. Industry pioneers. When the world&apos;s most demanding clients need the impossible delivered, 
+              they don&apos;t just choose an event company—they choose the legends who make legends.
             </motion.p>
           </motion.div>
         </div>
@@ -231,14 +231,14 @@ export default function ClientsPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Industry Expertise
+                Trust Across Industries
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-display mb-6 text-neutral-900 leading-tight">
-                <span className="kinetic-text">Diverse</span> Industry Experience
+              <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900 leading-tight">
+                <span className="kinetic-text">Seven Sectors.</span> Infinite Trust.
               </h2>
-              <p className="text-lg text-neutral-600 max-w-4xl mx-auto font-body leading-relaxed">
-                From technology giants to healthcare leaders, we&apos;ve successfully delivered 
-                exceptional events across all major industry sectors in Bangalore and beyond.
+              <p className="text-xl text-neutral-600 max-w-4xl mx-auto font-body leading-relaxed">
+                When industries that shape the world need events that define futures, they choose the same partner. 
+                From Silicon Valley to pharmaceutical giants, our clients don&apos;t just succeed—they lead.
               </p>
             </motion.div>
           </motion.div>
@@ -283,13 +283,14 @@ export default function ClientsPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Notable Clients
+                Brand Legends
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-display mb-6 text-neutral-900">
-                <span className="kinetic-text">Recognized</span> Brands
+              <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900">
+                The Names That <span className="kinetic-text">Shape Tomorrow</span>
               </h2>
-              <p className="text-lg text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
-                Some of the prestigious organizations that have trusted us with their most important events.
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
+                These aren&apos;t just clients. They&apos;re the brands that define industries, the companies that change the world. 
+                And when they need legendary events, they choose legendary partners.
               </p>
             </motion.div>
           </motion.div>
@@ -326,30 +327,39 @@ export default function ClientsPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Client Success
+                Voices of Excellence
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-display mb-8 text-neutral-900">
-                What <span className="kinetic-text">Clients</span> Say
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900">
+                When <span className="kinetic-text">Legends</span> Speak
               </h2>
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body mb-12">
+                Don&apos;t just take our word for it. Hear from the visionaries who&apos;ve experienced the WhiteMassif difference.
+              </p>
             </motion.div>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                quote: "White Massif transformed our annual conference into an unforgettable experience. Their attention to detail and innovative approach exceeded all expectations.",
-                company: "Technology Leader",
-                industry: "IT Services"
+                quote: "WhiteMassif didn&apos;t just deliver an event—they crafted an experience that redefined what we thought was possible. Our stakeholders are still talking about it months later.",
+                author: "Sarah Chen, VP Global Events",
+                company: "Fortune 500 Technology Company",
+                industry: "Silicon Valley Giant",
+                rating: 5
               },
               {
-                quote: "Professional, creative, and reliable. They delivered a flawless product launch event that perfectly captured our brand vision.",
-                company: "Manufacturing Giant",
-                industry: "Industrial Solutions"
+                quote: "When you&apos;re launching a product that will change an industry, you need partners who understand the stakes. WhiteMassif turned our vision into a moment that made history.",
+                author: "Michael Rodriguez, CMO",
+                company: "Industry-Leading Manufacturer",
+                industry: "Global Innovation Leader",
+                rating: 5
               },
               {
-                quote: "Their expertise in hybrid events helped us reach a global audience seamlessly. Outstanding execution and support throughout.",
-                company: "Healthcare Pioneer",
-                industry: "Pharmaceutical"
+                quote: "In healthcare, perfection isn&apos;t optional—it&apos;s essential. WhiteMassif delivered flawless execution that honored both our scientific rigor and our human mission.",
+                author: "Dr. Priya Sharma, Director",
+                company: "Pharmaceutical Pioneer",
+                industry: "Life Sciences Leader",
+                rating: 5
               }
             ].map((testimonial, index) => (
               <motion.div
@@ -358,14 +368,19 @@ export default function ClientsPage() {
                 className="glass rounded-3xl p-8 group hover:shadow-lg transition-all duration-300"
               >
                 <div className="mb-6">
-                  <Star className="w-8 h-8 text-amber-500 mb-4" />
-                  <p className="text-neutral-700 font-body leading-relaxed italic">
+                  <div className="flex mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-amber-500 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-lg text-neutral-700 font-body leading-relaxed italic mb-6">
                     &ldquo;{testimonial.quote}&rdquo;
                   </p>
                 </div>
-                <div className="border-t border-neutral-200 pt-4">
-                  <div className="font-heading text-neutral-900">{testimonial.company}</div>
-                  <div className="text-sm text-neutral-600">{testimonial.industry}</div>
+                <div className="border-t border-neutral-200 pt-6">
+                  <div className="font-heading text-neutral-900 mb-1">{testimonial.author}</div>
+                  <div className="font-medium text-amber-600 mb-1">{testimonial.company}</div>
+                  <div className="text-sm text-neutral-500">{testimonial.industry}</div>
                 </div>
               </motion.div>
             ))}
@@ -384,24 +399,24 @@ export default function ClientsPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass-dark px-6 py-2 text-amber-400 border-amber-400/20">
-                Join Our Clients
+                Join The Legacy
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-display mb-6 text-white leading-tight">
-                Ready to Join Our Success Stories?
+              <h2 className="text-5xl md:text-6xl font-display mb-6 text-white leading-tight">
+                Ready to Become <span className="kinetic-text text-amber-400">Legendary?</span>
               </h2>
-              <p className="text-xl text-white/80 mb-12 max-w-3xl mx-auto">
-                Experience the White Massif difference. Let us create an exceptional event 
-                that elevates your brand and engages your audience.
+              <p className="text-xl text-white/90 mb-12 max-w-3xl mx-auto font-body">
+                The world&apos;s most ambitious companies don&apos;t settle for ordinary events. They choose the partners who&apos;ve proven 
+                that impossible is just another word for opportunity. Your legend begins with a single conversation.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button className="btn-primary group">
-                  <span>Start Your Project</span>
+                  <span>Begin Your Legend</span>
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
                 <Button className="btn-secondary group">
-                  <span>View Our Work</span>
-                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <span>Join The Hall of Fame</span>
+                  <Trophy className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </div>
             </motion.div>

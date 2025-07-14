@@ -8,10 +8,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        heading: ['var(--font-inter)', 'Inter', 'sans-serif'],
-        body: ['var(--font-roboto-condensed)', 'Roboto Condensed', 'sans-serif'],
-        quote: ['var(--font-edu-nsw)', 'Edu NSW ACT Foundation', 'cursive'],
-        sans: ['var(--font-roboto-condensed)', 'Roboto Condensed', 'sans-serif'],
+        display: ['var(--font-sinkin-sans)', 'Inter', 'sans-serif'],
+        heading: ['var(--font-sinkin-sans)', 'Inter', 'sans-serif'],
+        body: ['var(--font-raleway)', 'Raleway', 'sans-serif'],
+        quote: ['var(--font-raleway)', 'Raleway', 'sans-serif'],
+        sans: ['var(--font-raleway)', 'Raleway', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
