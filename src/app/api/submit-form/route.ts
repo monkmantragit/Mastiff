@@ -16,7 +16,7 @@ function getClientIP(request: NextRequest): string {
     return real;
   }
   
-  return request.ip || 'unknown';
+  return 'unknown';
 }
 
 // Helper function to submit to Directus
