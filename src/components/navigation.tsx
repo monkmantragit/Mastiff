@@ -6,12 +6,14 @@ import { usePathname } from 'next/navigation';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sparkles, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { usePopup } from '@/components/popup-provider';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
+  const { openPopup } = usePopup();
 
   // Check if we're on homepage
   const isHomepage = pathname === '/';
@@ -159,13 +161,15 @@ export default function Navigation() {
 
             {/* CTA Button & Mobile Menu */}
             <div className="flex items-center space-x-4">
-              <Button className={`hidden md:flex text-sm px-6 py-2 ${
-                isHomepage 
-                  ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black' 
-                  : isDarkHeroPage
-                    ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black'
-                    : 'btn-primary'
-              }`}>
+              <Button 
+                onClick={() => openPopup('header-quote')}
+                className={`hidden md:flex text-sm px-6 py-2 ${
+                  isHomepage 
+                    ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black' 
+                    : isDarkHeroPage
+                      ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black'
+                      : 'btn-primary'
+                }`}>
                 <span>Get Quote</span>
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
@@ -303,7 +307,12 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                   >
-                    <Button className="w-full btn-primary">
+                    <Button 
+                      onClick={() => {
+                        openPopup('mobile-header-quote');
+                        toggleMenu();
+                      }}
+                      className="w-full btn-primary">
                       <span>Get Free Quote</span>
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
