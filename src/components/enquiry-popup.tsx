@@ -7,8 +7,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Phone, User, Calendar, MapPin, Send, Sparkles } from 'lucide-react';
+import { X, Mail, Phone, User, Calendar, MapPin, Send, Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { FormService } from '@/lib/form-service';
 
 interface EnquiryPopupProps {
   isOpen: boolean;
@@ -29,6 +30,10 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
     source: triggerSource
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
 
   const eventTypes = [
     'Corporate Conference',
@@ -54,23 +59,62 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
 
     try {
-      // Here you would normally send the data to your API
-      // For now, we'll simulate a successful submission
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Store form data in localStorage or sessionStorage for thank you page
-      localStorage.setItem('enquiryData', JSON.stringify({
-        ...formData,
-        timestamp: new Date().toISOString()
-      }));
-      
-      // Close popup and navigate to thank you page
-      onClose();
-      router.push('/thank-you');
+      // Validate required fields
+      if (!formData.email) {
+        setSubmitStatus({
+          success: false,
+          message: 'Email address is required.'
+        });
+        return;
+      }
+
+      if (!FormService.validateEmail(formData.email)) {
+        setSubmitStatus({
+          success: false,
+          message: 'Please enter a valid email address.'
+        });
+        return;
+      }
+
+      // Submit form using FormService
+      const result = await FormService.submitEnquiryForm({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        eventType: formData.eventType,
+        eventDate: formData.eventDate,
+        location: formData.location,
+        message: formData.message,
+        source: formData.source
+      });
+
+      if (result.success) {
+        // Store success data for thank you page
+        localStorage.setItem('enquiryData', JSON.stringify({
+          ...formData,
+          submissionId: result.id,
+          timestamp: new Date().toISOString()
+        }));
+        
+        // Close popup and navigate to thank you page
+        onClose();
+        router.push('/thank-you');
+      } else {
+        setSubmitStatus({
+          success: false,
+          message: result.message
+        });
+      }
+
     } catch (error) {
       console.error('Error submitting form:', error);
+      setSubmitStatus({
+        success: false,
+        message: 'An unexpected error occurred. Please try again.'
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -252,6 +296,28 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                   rows={4}
                 />
               </div>
+
+              {/* Status Message */}
+              {submitStatus && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`p-4 rounded-lg ${
+                    submitStatus.success 
+                      ? 'bg-green-50 border border-green-200 text-green-800' 
+                      : 'bg-red-50 border border-red-200 text-red-800'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2">
+                    {submitStatus.success ? (
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                    ) : (
+                      <AlertCircle className="w-5 h-5 text-red-600" />
+                    )}
+                    <span className="font-medium text-sm">{submitStatus.message}</span>
+                  </div>
+                </motion.div>
+              )}
 
               {/* Submit Button */}
               <div className="flex flex-col sm:flex-row gap-3 pt-4">

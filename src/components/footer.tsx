@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FormService } from '@/lib/form-service';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -30,10 +31,28 @@ export default function Footer() {
     e.preventDefault();
     setIsSubscribing(true);
     
-    // Simulate newsletter signup
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setEmail('');
-    setIsSubscribing(false);
+    try {
+      if (!FormService.validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      const result = await FormService.submitNewsletterForm({
+        email: email,
+        source: 'footer-newsletter'
+      });
+
+      if (result.success) {
+        alert('Successfully subscribed to our newsletter!');
+        setEmail('');
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      alert('An error occurred. Please try again.');
+    } finally {
+      setIsSubscribing(false);
+    }
   };
 
   const fadeInUp = {

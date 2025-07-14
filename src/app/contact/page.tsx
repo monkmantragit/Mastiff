@@ -23,6 +23,7 @@ import {
   Star
 } from "lucide-react";
 import { useRef, useState } from "react";
+import { FormService } from "@/lib/form-service";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -50,6 +51,12 @@ export default function ContactPage() {
     eventType: '',
     message: ''
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
   
   // Advanced parallax effects
   const heroY = useTransform(scrollY, [0, 500], [0, -150]);
@@ -103,10 +110,64 @@ export default function ContactPage() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Validate required fields
+      if (!formData.email) {
+        setSubmitStatus({
+          success: false,
+          message: 'Email address is required.'
+        });
+        return;
+      }
+
+      if (!FormService.validateEmail(formData.email)) {
+        setSubmitStatus({
+          success: false,
+          message: 'Please enter a valid email address.'
+        });
+        return;
+      }
+
+      // Submit form using FormService
+      const result = await FormService.submitContactForm({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        eventType: formData.eventType,
+        message: formData.message
+      });
+
+      setSubmitStatus({
+        success: result.success,
+        message: result.message
+      });
+
+      // Reset form on success
+      if (result.success) {
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          eventType: '',
+          message: ''
+        });
+      }
+
+    } catch (error) {
+      setSubmitStatus({
+        success: false,
+        message: 'An unexpected error occurred. Please try again.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -400,9 +461,44 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <Button type="submit" className="btn-primary w-full text-lg py-6">
-                  <Send className="mr-2 w-5 h-5" />
-                  <span>Send Message</span>
+                {/* Status Message */}
+                {submitStatus && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`p-4 rounded-lg ${
+                      submitStatus.success 
+                        ? 'bg-green-50 border border-green-200 text-green-800' 
+                        : 'bg-red-50 border border-red-200 text-red-800'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2">
+                      {submitStatus.success ? (
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                      ) : (
+                        <MessageCircle className="w-5 h-5 text-red-600" />
+                      )}
+                      <span className="font-medium">{submitStatus.message}</span>
+                    </div>
+                  </motion.div>
+                )}
+
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="btn-primary w-full text-lg py-6 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="mr-2 w-5 h-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 w-5 h-5" />
+                      <span>Send Message</span>
+                    </>
+                  )}
                 </Button>
               </motion.form>
             </motion.div>
