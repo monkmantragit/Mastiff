@@ -9,7 +9,7 @@
 1. Open Command Prompt or PowerShell in Windows
 2. Navigate to your project directory:
    ```
-   cd path\to\your\Mastiff\folder
+   cd path\to\your\Whitemassif\folder
    ```
 3. Install dependencies:
    ```

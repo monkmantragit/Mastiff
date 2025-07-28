@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(sed:*)",
+      "Bash(grep:*)",
+      "Bash(cd:*)",
+      "Bash(git add:*)",
+      "Bash(git config:*)",
+      "Bash(timeout 3m npm run build)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "Bash(git push origin nextjs-schema)",
+      "Bash(git commit:*)",
+      "mcp__supabase__query",
+      "Bash(tail:*)"
+    ],
+    "deny": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}

@@ -44,61 +44,61 @@ export default function Home() {
   const services = [
     {
       id: "01",
-      title: "Business Critical Events",
-      description: "Transform your corporate vision into powerful experiences. Where business objectives meet creative excellence.",
+      title: "Business Events",
+      description: "As business event management we are specialized in crafting extraordinary business conferences that inspire, educate, and propel organizations to new heights.",
       icon: Target,
       gradient: "from-[#F9A625] to-[#2A3959]",
-      features: ["Strategic Conferences", "Product Revelations", "Leadership Summits", "Achievement Galas"],
+      features: ["Conferences", "All Hands", "Annual Kick Offs", "Summits", "Leadership Meets", "Launches – Product, Brand, Facility", "Customer Meets", "Dealer Meets", "Hybrid Events"],
       stats: { events: "300+", clients: "Fortune 500" },
       image: "/assets/images/services/DSC01980-scaled-1.jpg"
     },
     {
       id: "02", 
-      title: "Celebrations That Matter",
-      description: "Life's precious moments deserve more than a party. They deserve an experience that echoes through time.",
+      title: "Celebration Galore",
+      description: "Celebrate your success with style and distinction. At White Massif Corporate event management, we understand that corporate celebrations go beyond just marking a date on the calendar.",
       icon: Sparkles,
       gradient: "from-[#2A3959] to-[#F9A625]",
-      features: ["Milestone Magic", "Anniversary Elegance", "Festival Grandeur", "Birthday Brilliance"],
-      stats: { events: "400+", clients: "Families" },
+      features: ["Annual Day Celebration", "Themed Celebrations", "Employee Engagement", "Rewards & Recognition", "Team Offsites", "Gala Nights", "Family Days"],
+      stats: { events: "400+", clients: "Corporates" },
       image: "/assets/images/services/DSC01901-scaled-1.jpg"
     },
     {
       id: "03",
-      title: "Grand Inaugurations",
-      description: "First impressions last forever. Launch your legacy with ceremonies that command attention and inspire awe.",
+      title: "Inauguration",
+      description: "We specialize in end-to-end execution of inaugurations tailored to your brand identity.From thematic décor and entry arch setups to floral arrangements and ribbon-cutting stations, we cover it all.",
       icon: Award,
       gradient: "from-[#F9A625] to-[#2A3959]",
-      features: ["Store Launches", "Office Openings", "Property Unveilings", "VVIP Protocol"],
+      features: ["Office Launches", "Plant Inaugurations", "Ribbon Cutting Ceremonies", "Facility Tours & Walkthroughs", "Brand Showcases", "CEO / Leadership Addresses", "Media & Press Briefings", "VIP Guest Management", "Customized Stage & Tech Setups", "Cultural & Entertainment Segments"],
       stats: { events: "150+", clients: "Industry Leaders" },
       image: "/assets/images/services/DSC01878-scaled-1.jpg"
     },
     {
       id: "04",
-      title: "Virtual & Hybrid Excellence",
-      description: "Break boundaries. Connect continents. Create experiences that transcend physical limitations.",
-      icon: Globe,
+      title: "Industry Convention, Customer & Dealers Meet",
+      description: "In an ever-evolving business landscape staying at the forefront of innovation, collaboration, and knowledge exchange is paramount.",
+      icon: Users,
       gradient: "from-[#2A3959] to-[#F9A625]",
-      features: ["Global Broadcasting", "Interactive Platforms", "Engagement Analytics", "Seamless Integration"],
+      features: ["Industry Conventions", "Customer Connect Programs", "Dealer & Distributor Meets", "Product Launches", "Business Networking Events", "Panel Discussions & Fireside Chats", "Partner Appreciation Events"],
       stats: { events: "200+", clients: "Global Brands" },
       image: "/assets/images/services/DSC02449-scaled-1.jpg"
     },
     {
       id: "05",
-      title: "Team Building & Retreats",
-      description: "Strengthen bonds. Build trust. Create unforgettable team experiences that drive performance and unity.",
-      icon: Heart,
+      title: "Hybrid Events",
+      description: "Tailor made services to seamlessly execute hybrid events, combining the best of in person and virtual components for a dynamic and engaging experience.",
+      icon: Globe,
       gradient: "from-[#F9A625] to-[#2A3959]",
-      features: ["Leadership Retreats", "Team Challenges", "Skill Building", "Employee Engagement"],
-      stats: { events: "250+", clients: "Happy Teams" },
+      features: ["Hybrid Townhalls", "Virtual + In-Person Summits", "Online Product Launches", "Hybrid Conferences & Panels", "Remote Team Engagement"],
+      stats: { events: "250+", clients: "Global Teams" },
       image: "/assets/images/services/2B6A1363-scaled-1.jpg"
     },
     {
       id: "06",
-      title: "Cultural Experiences",
-      description: "Where tradition meets innovation. Celebrating heritage while creating contemporary magic.",
+      title: "Special Projects",
+      description: "In a world where one-size-fits-all doesn't suffice, We design tailor-made experiences, where every detail is meticulously crafted to align with the unique vision, preferences, and objectives of our clients.",
       icon: Star,
       gradient: "from-[#2A3959] to-[#F9A625]",
-      features: ["Festival Productions", "Art Installations", "Heritage Shows", "Community Connect"],
+      features: ["Government & Public Sector Events", "International Delegation Visits", "Investor Meets", "CSR Impact Showcases"],
       stats: { events: "300+", clients: "Institutions" },
       image: "/assets/images/services/DSC01696-scaled-1.jpg"
     }
@@ -107,23 +107,23 @@ export default function Home() {
   const whyChooseUs = [
     {
       icon: Heart,
-      title: "We Feel What You Feel",
-      description: "Your dream becomes our mission. Your success, our obsession. Every detail matters because you matter."
+      title: "Aligned with Your Vision",
+      description: "We don't just take briefs we tune into your ambitions. Your goals shape every choice, every detail, every moment."
     },
     {
       icon: Shield,
-      title: "Proven, Not Promised",
-      description: "11+ years. 1000+ events. Zero compromises. When excellence is non-negotiable, choose experience."
+      title: "Built on Real Outcomes",
+      description: "Not just promises, but a proven track record. Years of consistent delivery and 1000+ events have taught us what truly works."
     },
     {
       icon: Sparkles,
-      title: "Ideas That Inspire",
-      description: "Creativity isn't what we do. It's who we are. Watch your wildest visions become breathtaking reality."
+      title: "Driven by Creative Impact",
+      description: "From striking ideas to seamless execution, we design events that resonate. Fresh concepts, thoughtful storytelling, lasting impressions."
     },
     {
       icon: Users,
-      title: "Your Team, Not Vendors",
-      description: "One dedicated team. One shared vision. From concept to curtain call, we're with you every step."
+      title: "A Partner from Start to Finish",
+      description: "We work as your internal team, not outsiders. With shared ownership and transparent collaboration, you'll always know we've got your back."
     }
   ];
 
@@ -210,11 +210,11 @@ export default function Home() {
               {/* Headline Section - Mobile Typography */}
               <div className="text-center lg:text-left flex-1 max-w-3xl">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] leading-tight mb-3 sm:mb-4 mobile-heading">
-                  Where Imagination<br />
-                  <span className="text-[#F9A625]">Becomes Reality</span>
+                  Crafting Corporate Gatherings into<br />
+                  <span className="text-[#F9A625]">Remarkable Experiences</span>
                 </h1>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 font-body leading-relaxed mobile-body-text">
-                  We don't just organize events. We craft experiences that move hearts, inspire minds, and create memories that last forever.
+                  We Are Creators. Writers. Producers. Experiential Designers. Idea Generators. Visionaries. Technical Directors. Logistic Masters. Entertainment Directors. Architects of Memories. Dreamers. Doers.
                 </p>
               </div>
 
@@ -246,15 +246,15 @@ export default function Home() {
                 <div className="flex items-center gap-2 text-[#2A3959]">
                   <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
                   <MapPin className="w-4 h-4 text-[#F9A625]" />
-                  <span>Bangalore's Choice</span>
+                  <span>11 Years of Experience</span>
                 </div>
                 <div className="flex items-center gap-2 text-[#2A3959]">
                   <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
-                  <span>1000+ Dreams Realized</span>
+                  <span>1000+ Events and Counting</span>
                 </div>
                 <div className="flex items-center gap-2 text-[#2A3959]">
                   <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
-                  <span>1.5M+ Hearts Touched</span>
+                  <span>1.5M+ Audience Engagement</span>
                 </div>
               </div>
 
@@ -309,8 +309,7 @@ export default function Home() {
                 Every Event Is A <span className="text-[#F9A625]">Masterpiece</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                We&apos;re not event planners. We&apos;re memory architects. Experience designers. Dream builders. 
-                Your vision, amplified through our expertise.
+                With over a decade of experience in Bangalore's corporate event space, we transform gatherings into landmark experiences. From bold ideas to seamless execution we make it happen.
               </p>
             </motion.div>
           </motion.div>
@@ -424,10 +423,10 @@ export default function Home() {
                 Portfolio
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-white leading-tight max-w-4xl mx-auto">
-                Where Stories <span className="text-[#F9A625]">Come Alive</span>
+                Where Vision Meets <span className="text-[#F9A625]">Precision</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-                Every frame tells a story. Every moment, perfectly captured. This is what magic looks like.
+                Elevating corporate events with seamless planning and strategic impact.
               </p>
             </motion.div>
           </motion.div>
@@ -495,7 +494,7 @@ export default function Home() {
                 The <span className="text-[#F9A625]">White Massif</span> Difference
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto text-center font-body">
-                In a world of event planners, we are experience architects. Here's what sets us apart.
+                Why Brands Trust White Massif - our proven approach to creating exceptional corporate experiences.
               </p>
             </motion.div>
           </motion.div>
@@ -549,10 +548,10 @@ export default function Home() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                 {[
-                  { icon: CheckCircle, title: "Turnkey Solutions", desc: "From ideation to execution" },
-                  { icon: Users, title: "150+ Specialists", desc: "Masters of their craft" },
-                  { icon: Trophy, title: "Industry Leaders", desc: "Setting standards since 2013" },
-                  { icon: Target, title: "Zero Compromise", desc: "Perfection is our baseline" }
+                  { icon: CheckCircle, title: "500+ Projects", desc: "Successfully delivered" },
+                  { icon: Users, title: "800+ Events", desc: "Executed with precision" },
+                  { icon: Trophy, title: "165+ Corporate Clients", desc: "Trusted partnerships" },
+                  { icon: Target, title: "30+ Team Size", desc: "Dedicated professionals" }
                 ].map((feature, index) => {
                   const FeatureIcon = feature.icon;
                   return (

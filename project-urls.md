@@ -1,4 +1,4 @@
-# Project URLs - Mastiff Website
+# Project URLs - Whitemassif Website
 
 ## Current Routes in Next.js Project
 

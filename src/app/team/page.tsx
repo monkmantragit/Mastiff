@@ -120,16 +120,15 @@ export default function TeamPage() {
             
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
               <span className="kinetic-text">
-                Masters of
+                The Minds
               </span>
               <br />
               <span className="text-white">
-                The Impossible
+                Behind The Magic
               </span>
             </h1>
             <p className="text-xl md:text-2xl mb-12 text-white/90 max-w-4xl mx-auto leading-relaxed font-body">
-              Behind every legendary event stands a team of obsessed creators. Meet the visionaries who turn dreams into reality, 
-              impossibilities into inevitabilities, and moments into memories that echo through time.
+              Meet the passionate professionals who bring your corporate events to life. Our experienced team combines strategic thinking with creative execution to deliver exceptional results.
             </p>
           </motion.div>
         </div>
@@ -176,15 +175,13 @@ export default function TeamPage() {
                 <span className="text-sm font-medium tracking-wide text-amber-600">The WhiteMassif Way</span>
               </div>
               <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
-                Where <span className="kinetic-text">Obsession</span> Meets Excellence
+                Where <span className="kinetic-text">Expertise</span> Meets Excellence
               </h2>
               <p className="text-xl mb-8 text-neutral-700 leading-relaxed font-body">
-                We don&apos;t just build teams. We forge legends. Every member of our family is handpicked for their relentless 
-                pursuit of perfection, their hunger for the extraordinary, and their ability to transform impossible visions into inevitable realities.
+                Our team brings together diverse skills and experience from across the event management industry. Each member contributes specialized knowledge to ensure your corporate events achieve their strategic objectives.
               </p>
               <p className="text-lg text-neutral-600 mb-10 leading-relaxed font-body">
-                Our success isn&apos;t measured in events delivered—it&apos;s measured in dreams fulfilled, in legends created, 
-                in the moment a client realizes their wildest vision has become their lived reality.
+                With 11+ years of experience and over 1000 events delivered, our team has the proven expertise to handle everything from intimate leadership meetings to large-scale corporate conferences.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 {[
@@ -237,10 +234,10 @@ export default function TeamPage() {
                 <span className="text-sm font-medium tracking-wide text-amber-600">Excellence Architects</span>
               </div>
               <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
-                <span className="kinetic-text">Six Pillars</span> of Perfection
+                <span className="kinetic-text">Specialized</span> Expertise
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
-                Each department isn&apos;t just a team—it&apos;s a specialty force dedicated to one mission: making the impossible inevitable.
+                Our departments work seamlessly together to deliver comprehensive event management solutions that drive business results.
               </p>
             </motion.div>
           </motion.div>
@@ -296,10 +293,10 @@ export default function TeamPage() {
                 <span className="text-sm font-medium tracking-wide text-amber-600">The Dream Makers</span>
               </div>
               <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
-                The Faces Behind <span className="kinetic-text">The Magic</span>
+                Our <span className="kinetic-text">Professional</span> Team
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
-                Meet the individuals who&apos;ve dedicated their lives to one singular obsession: creating experiences that redefine what&apos;s possible.
+                Meet the dedicated professionals who bring strategic thinking, creative vision, and operational excellence to every corporate event.
               </p>
             </motion.div>
           </motion.div>
@@ -409,11 +406,11 @@ export default function TeamPage() {
               <h2 className="text-5xl md:text-6xl font-display mb-8 leading-tight">
                 Ready to Work with
                 <br />
-                <span className="kinetic-text text-amber-400">The Legends?</span>
+                <span className="kinetic-text text-amber-400">Our Team?</span>
               </h2>
               <p className="text-xl text-white/80 mb-12 max-w-3xl mx-auto font-body">
-                Your vision deserves more than a team. It deserves the masters who&apos;ve dedicated their lives to making the impossible inevitable. 
-                Let&apos;s create something legendary together.
+                Experience the difference that comes from working with seasoned professionals who understand corporate event management. 
+                Let's create exceptional experiences together.
               </p>
               
               <div className="grid md:grid-cols-3 gap-8 mb-12 text-sm">
@@ -422,7 +419,7 @@ export default function TeamPage() {
                     <Phone className="w-5 h-5" />
                   </div>
                   <p className="text-white/60 mb-1">Call Us</p>
-                  <p>+91-990-0141-155</p>
+                  <p>+91 98450 45466</p>
                 </div>
                 
                 <div className="text-center">
@@ -444,11 +441,11 @@ export default function TeamPage() {
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button className="btn-primary group">
-                  <span>Begin Your Legend</span>
+                  <span>Start Your Project</span>
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
                 <Button className="btn-secondary group">
-                  <span>Join The Visionaries</span>
+                  <span>Join Our Team</span>
                   <Users className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </div>

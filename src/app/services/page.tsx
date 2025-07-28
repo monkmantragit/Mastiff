@@ -78,12 +78,12 @@ const heroImages = [
 
 // Service Categories for Quick Navigation
 const serviceCategories = [
-  { id: "corporate-events", name: "Corporate Events", icon: Building2 },
-  { id: "celebrations", name: "Celebrations", icon: PartyPopper },
+  { id: "corporate-events", name: "Business Events", icon: Building2 },
+  { id: "celebrations", name: "Corporate Celebrations", icon: PartyPopper },
   { id: "inaugurations", name: "Inaugurations", icon: Scissors },
   { id: "hybrid-events", name: "Hybrid Events", icon: Monitor },
-  { id: "wedding-planning", name: "Wedding Planning", icon: Church },
-  { id: "cultural-events", name: "Cultural Events", icon: Theater }
+  { id: "conventions", name: "Industry Conventions", icon: Users },
+  { id: "special-projects", name: "Special Projects", icon: Star }
 ];
 
 // Detailed Service Showcases
