@@ -20,8 +20,8 @@ import {
   PartyPopper,
   Scissors,
   Monitor,
-  Church,
-  Theater,
+  Users,
+  Star,
   Award,
   Heart,
   Shield
