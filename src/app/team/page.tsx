@@ -348,7 +348,7 @@ export default function TeamPage() {
                           <Image
                             src={typeof member.team_member_image === 'string' 
                               ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${member.team_member_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover` 
-                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${member.team_member_image.id || member.team_member_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover`
+                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${(member.team_member_image as { id: string }).id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover`
                             }
                             alt={member.name}
                             width={300}
