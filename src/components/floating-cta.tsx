@@ -30,7 +30,8 @@ export default function FloatingCTA() {
     } else {
       // Open WhatsApp chat
       const whatsappUrl = 'https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.';
-      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      console.log('Opening WhatsApp:', whatsappUrl);
+      window.location.href = whatsappUrl;
     }
   };
 
@@ -146,7 +147,7 @@ export default function FloatingCTA() {
           {/* Pulse Animation for Attention */}
           {!isExpanded && (
             <motion.div
-              className="absolute inset-0 bg-green-500 rounded-full"
+              className="absolute inset-0 bg-green-500 rounded-full pointer-events-none"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.7, 0, 0.7],

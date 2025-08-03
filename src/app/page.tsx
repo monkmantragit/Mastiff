@@ -181,7 +181,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Clean Video Hero Section - Mobile Optimized */}
-      <section ref={heroRef} className="relative min-h-[100vh] sm:min-h-[100vh] lg:min-h-[120vh] flex items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[100vh] sm:min-h-[100vh] lg:min-h-[140vh] xl:min-h-[130vh] flex items-center justify-center overflow-hidden">
         {/* Full Video Background - Mobile Optimized */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <video

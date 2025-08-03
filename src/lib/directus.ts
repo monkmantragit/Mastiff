@@ -60,7 +60,7 @@ interface TeamMember {
   id: number;
   name: string;
   position: string;
-  image?: string;
+  team_member_image?: string;
   bio?: string;
   department: string;
   email?: string;

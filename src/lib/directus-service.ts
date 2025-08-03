@@ -156,7 +156,8 @@ export class DirectusService {
    */
   static async getTeamMembers(): Promise<TeamMember[]> {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/team_members?fields=*&filter={"status":{"_eq":"active"}}&sort=name`, {
+      // Include image file details to get proper URLs
+      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/team_members?fields=*,team_member_image.*&filter={"status":{"_eq":"active"}}&sort=name`, {
         headers: {
           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
           'Content-Type': 'application/json'
@@ -169,6 +170,10 @@ export class DirectusService {
 
       const data = await response.json();
       const teamMembers = data.data || data;
+      
+      // Log for debugging
+      console.log('Team members from Directus:', teamMembers);
+      
       return teamMembers || [];
     } catch (error) {
       console.error('Error fetching team members:', error);

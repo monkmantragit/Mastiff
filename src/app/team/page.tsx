@@ -43,6 +43,7 @@ export default function TeamPage() {
     const fetchTeamMembers = async () => {
       setLoading(true);
       const fetchedMembers = await DirectusService.getTeamMembers();
+      console.log('Fetched team members:', fetchedMembers);
       setTeamMembers(fetchedMembers);
       setLoading(false);
     };
@@ -94,16 +95,10 @@ export default function TeamPage() {
 
   return (
     <div className="min-h-screen pt-20">
-      {/* Hero Section - Apple Style */}
-      <section className="relative py-32 overflow-hidden">
+      {/* Hero Section - Clean Gradient */}
+      <section className="relative py-32 overflow-hidden bg-gradient-to-br from-[#2A3959] via-[#1A2340] to-[#0F1826]">
         <div className="absolute inset-0">
-          <Image
-            src="/assets/images/team/Untitled-design-69.png"
-            alt="White Massif Team"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#F9A625]/10 via-transparent to-[#F9A625]/5"></div>
         </div>
         
         <div className="container mx-auto px-6 relative z-10">
@@ -349,13 +344,20 @@ export default function TeamPage() {
                   <div className="bg-white rounded-2xl overflow-hidden group hover:shadow-lg transition-all duration-500">
                     <div className="relative">
                       <div className="w-full h-64 bg-gray-100 overflow-hidden">
-                        {member.image ? (
+                        {member.team_member_image ? (
                           <Image
-                            src={member.image}
+                            src={typeof member.team_member_image === 'string' 
+                              ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${member.team_member_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover` 
+                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${member.team_member_image.id || member.team_member_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover`
+                            }
                             alt={member.name}
                             width={300}
                             height={300}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            onError={(e) => {
+                              console.error('Image failed to load:', e.currentTarget.src);
+                              console.log('Member data:', member);
+                            }}
                           />
                         ) : (
                           <div className="w-full h-full bg-gradient-to-br from-brand-yellow/20 to-brand-blue/20 flex items-center justify-center">
