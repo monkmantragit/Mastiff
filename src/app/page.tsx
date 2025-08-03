@@ -181,7 +181,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Clean Video Hero Section - Mobile Optimized */}
-      <section ref={heroRef} className="relative min-h-[100vh] sm:min-h-[100vh] lg:min-h-[140vh] xl:min-h-[130vh] flex items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[110vh] sm:min-h-[110vh] lg:min-h-[140vh] xl:min-h-[130vh] flex items-center justify-center overflow-hidden">
         {/* Full Video Background - Mobile Optimized */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <video
@@ -250,16 +250,16 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:flex-col xl:flex-row w-full sm:w-auto">
                 <Button 
                   onClick={() => openPopup('hero-cta')}
-                  className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px]"
+                  className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
                 >
                   Let's Create Together
                   <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
                 
-                <Link href="/team">
+                <Link href="/team" className="w-full sm:w-auto">
                   <Button 
                     variant="outline" 
-                    className="mobile-touch-target bg-white border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-[#F9A625] hover:border-[#2A3959] transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading font-semibold px-6 sm:px-8 py-3 sm:py-4 min-h-[48px]"
+                    className="mobile-touch-target bg-white border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-[#F9A625] hover:border-[#2A3959] transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading font-semibold px-6 sm:px-8 py-3 sm:py-4 min-h-[48px] w-full sm:w-auto"
                   >
                     View Our Story
                   </Button>
