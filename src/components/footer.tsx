@@ -62,38 +62,33 @@ export default function Footer() {
   };
 
   const services = [
-    { name: 'Corporate Events', href: '/services#corporate' },
-    { name: 'Cultural Celebrations', href: '/services#cultural' },
-    { name: 'Grand Inaugurations', href: '/services#inaugurations' },
-    { name: 'Virtual & Hybrid Events', href: '/services#virtual' },
-    { name: 'Team Building', href: '/services#team-building' },
-    { name: 'Product Launches', href: '/services#product-launches' }
+    { name: 'All Services', href: '/services' },
+    { name: 'Corporate Events', href: '/services' },
+    { name: 'Celebrations', href: '/services' },
+    { name: 'Inaugurations', href: '/services' },
+    { name: 'Hybrid Events', href: '/services' },
+    { name: 'Special Projects', href: '/services' }
   ];
 
   const quickLinks = [
-    { name: 'About Us', href: '/about' },
-    { name: 'Our Portfolio', href: '/portfolio' },
+    { name: 'Home', href: '/' },
+    { name: 'Services', href: '/services' },
     { name: 'Our Team', href: '/team' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' }
+    { name: 'Our Clients', href: '/clients' },
+    { name: 'Careers', href: '/careers' }
   ];
 
-  const industries = [
-    { name: 'Technology', href: '/clients#technology' },
-    { name: 'Healthcare', href: '/clients#healthcare' },
-    { name: 'Financial Services', href: '/clients#finance' },
-    { name: 'Manufacturing', href: '/clients#manufacturing' },
-    { name: 'Education', href: '/clients#education' },
-    { name: 'Government', href: '/clients#government' }
+  const contactInfo = [
+    { name: 'Get Quote', href: '/', action: 'popup' },
+    { name: 'WhatsApp Us', href: 'https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.' },
+    { name: 'Call Us', href: 'tel:+919845045466' },
+    { name: 'Email Us', href: 'mailto:info@whitemassif.com' }
   ];
 
   const socialLinks = [
-    { icon: Instagram, href: '#', label: 'Instagram', color: 'hover:text-pink-500' },
-    { icon: Facebook, href: '#', label: 'Facebook', color: 'hover:text-blue-600' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn', color: 'hover:text-blue-700' },
-    { icon: Youtube, href: '#', label: 'YouTube', color: 'hover:text-red-600' },
-    { icon: Twitter, href: '#', label: 'Twitter', color: 'hover:text-blue-400' }
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/whitemassif', label: 'LinkedIn', color: 'hover:text-blue-700' },
+    { icon: Instagram, href: 'https://www.instagram.com/whitemassif/', label: 'Instagram', color: 'hover:text-pink-500' },
+    { icon: Facebook, href: 'https://www.facebook.com/whitemassif', label: 'Facebook', color: 'hover:text-blue-600' }
   ];
 
   const trustIndicators = [
@@ -269,15 +264,17 @@ export default function Footer() {
                 ))}
               </nav>
 
-              <h4 className="font-bold text-lg mb-6">Industries We Serve</h4>
+              <h4 className="font-bold text-lg mb-6">Quick Actions</h4>
               <nav className="space-y-3">
-                {industries.slice(0, 4).map((industry, index) => (
+                {contactInfo.map((contact, index) => (
                   <Link
                     key={index}
-                    href={industry.href}
+                    href={contact.href}
+                    target={contact.href.startsWith('http') ? '_blank' : undefined}
+                    rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="block text-white/80 hover:text-[#F9A625] transition-colors duration-300 hover:translate-x-1 transform"
                   >
-                    {industry.name}
+                    {contact.name}
                   </Link>
                 ))}
               </nav>
@@ -372,15 +369,9 @@ export default function Footer() {
               </div>
               
               <div className="flex flex-wrap items-center gap-6 text-sm">
-                <Link href="/privacy" className="text-white/60 hover:text-[#F9A625] transition-colors">
-                  Privacy Policy
-                </Link>
-                <Link href="/terms" className="text-white/60 hover:text-[#F9A625] transition-colors">
-                  Terms of Service
-                </Link>
-                <Link href="/sitemap" className="text-white/60 hover:text-[#F9A625] transition-colors">
-                  Sitemap
-                </Link>
+                <span className="text-white/60">
+                  Bangalore, Karnataka, India
+                </span>
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
                   ISO 9001:2015 Certified
                 </Badge>

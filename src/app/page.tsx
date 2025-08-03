@@ -237,9 +237,10 @@ export default function Home() {
               
               {/* Headline Section - Mobile Typography */}
               <div className="text-center lg:text-left flex-1 max-w-3xl">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] leading-tight mb-3 sm:mb-4 mobile-heading">
-                  Crafting Corporate Gatherings into<br />
-                  <span className="text-[#F9A625]">Remarkable Experiences</span>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] leading-tight mb-3 sm:mb-4 mobile-heading">
+                  <span className="block">Crafting Corporate</span>
+                  <span className="block">Gatherings into</span>
+                  <span className="text-[#F9A625] block">Remarkable Experiences</span>
                 </h1>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 font-body leading-relaxed mobile-body-text">
                   We Are Creators. Writers. Producers. Experiential Designers. Idea Generators. Visionaries. Technical Directors. Logistic Masters. Entertainment Directors. Architects of Memories. Dreamers. Doers.
@@ -368,7 +369,7 @@ export default function Home() {
                         console.log(`✅ Service image loaded: ${service.title}`);
                       }}
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${service.gradient} opacity-80`} />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${service.gradient} opacity-40`} />
                     
                     {/* Floating Icon */}
                     <div className="absolute top-6 left-6">
