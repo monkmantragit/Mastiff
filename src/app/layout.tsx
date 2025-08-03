@@ -31,6 +31,14 @@ export const metadata: Metadata = {
   authors: [{ name: "White Massif Event Management" }],
   creator: "White Massif Event Management",
   publisher: "White Massif Event Management",
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/assets/images/favicon.ico', type: 'image/x-icon' }
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

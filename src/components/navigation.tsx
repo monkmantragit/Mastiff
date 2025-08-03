@@ -20,6 +20,9 @@ export default function Navigation() {
   
   // Check if we're on a page with dark hero background
   const isDarkHeroPage = pathname === '/services' || pathname === '/portfolio' || pathname === '/work';
+  
+  // Determine logo color based on page and scroll state
+  const shouldLogoBeBlack = isHomepage || isScrolled;
 
   // Advanced scroll effects
   const headerY = useTransform(scrollY, [0, 100], [0, -10]);
@@ -90,7 +93,9 @@ export default function Navigation() {
                   <img 
                     src="/logo.png" 
                     alt="White Massif Event Management Logo" 
-                    className="w-10 h-10 object-contain transition-all duration-300 group-hover:scale-110"
+                    className={`w-10 h-10 object-contain transition-all duration-300 group-hover:scale-110 ${
+                      shouldLogoBeBlack ? 'brightness-0' : 'brightness-0 invert'
+                    }`}
                   />
                   <div className="absolute inset-0 bg-[#F9A625]/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>

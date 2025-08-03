@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Phone, User, Calendar, MapPin, Send, Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
+import { X, Mail, Phone, User, Calendar, MapPin, Send, Sparkles, CheckCircle, AlertCircle, Shield } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FormService } from '@/lib/form-service';
 
@@ -138,24 +138,24 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
             onClick={e => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="relative p-6 sm:p-8 border-b border-gray-100">
+            <div className="relative p-6 sm:p-8 border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white">
               <div className="absolute top-4 right-4">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={onClose}
-                  className="h-8 w-8 p-0 hover:bg-gray-100 rounded-full"
+                  className="h-8 w-8 p-0 hover:bg-gray-100 rounded-full transition-all duration-300 hover:rotate-90"
                 >
                   <X className="h-4 w-4" />
                 </Button>
               </div>
               
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center p-2 shadow-lg">
+                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center p-2 shadow-lg border border-gray-200">
                   <img 
                     src="/logo.png" 
                     alt="White Massif Logo" 
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain brightness-0"
                   />
                 </div>
                 <div>
@@ -168,9 +168,26 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                 </div>
               </div>
               
-              <Badge className="bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/20">
-                Free Consultation • 24h Response
-              </Badge>
+              <div className="flex flex-wrap gap-2">
+                <Badge className="bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/20">
+                  Free Consultation • 24h Response
+                </Badge>
+              </div>
+              
+              {/* Company Statistics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+                {[
+                  { number: "500+", label: "PROJECTS" },
+                  { number: "800+", label: "EVENTS" },
+                  { number: "165+", label: "CORPORATE CLIENTS" },
+                  { number: "30+", label: "TEAM SIZE" }
+                ].map((stat, index) => (
+                  <div key={index} className="text-center p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div className="text-xl sm:text-2xl font-bold text-[#2A3959]">{stat.number}</div>
+                    <div className="text-xs text-gray-500 font-medium">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Form */}
@@ -189,8 +206,8 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                     required
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="mobile-input border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625]"
-                    placeholder="Your full name"
+                    className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
+                    placeholder="John Doe"
                   />
                 </div>
 
@@ -206,7 +223,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                     required
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="mobile-input border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625]"
+                    className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
                     placeholder="+91 98765 43210"
                   />
                 </div>
@@ -224,8 +241,8 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="mobile-input border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625]"
-                  placeholder="your@email.com"
+                  className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
+                  placeholder="your.email@company.com"
                 />
               </div>
 
@@ -241,7 +258,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                     name="eventType"
                     value={formData.eventType}
                     onChange={handleInputChange}
-                    className="mobile-input border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] bg-white"
+                    className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300 bg-white appearance-none cursor-pointer"
                   >
                     <option value="">Select event type</option>
                     {eventTypes.map(type => (
@@ -261,7 +278,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                     type="date"
                     value={formData.eventDate}
                     onChange={handleInputChange}
-                    className="mobile-input border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625]"
+                    className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
                   />
                 </div>
               </div>
@@ -277,8 +294,8 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                   type="text"
                   value={formData.location}
                   onChange={handleInputChange}
-                  className="mobile-input border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625]"
-                  placeholder="City, venue, or area"
+                  className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
+                  placeholder="Bangalore, Mumbai, or your preferred city"
                 />
               </div>
 
@@ -291,8 +308,8 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="mobile-textarea border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625]"
-                  placeholder="Share your event ideas, budget range, guest count, special requirements..."
+                  className="mobile-textarea border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300 resize-none"
+                  placeholder="Tell us about your vision - guest count, theme ideas, special requirements, budget range..."
                   rows={4}
                 />
               </div>
@@ -319,12 +336,22 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                 </motion.div>
               )}
 
+              {/* Visual Separator */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-200"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-3 bg-white text-gray-500">Ready to create your perfect event?</span>
+                </div>
+              </div>
+
               {/* Submit Button */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 btn-primary mobile-touch-target text-base font-semibold"
+                  className="flex-1 btn-primary mobile-touch-target text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   {isSubmitting ? (
                     <>
@@ -354,18 +381,20 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               </div>
 
               {/* Trust Elements */}
-              <div className="flex flex-wrap items-center justify-center gap-4 pt-4 border-t border-gray-100 text-xs text-gray-500">
-                <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>100% Secure</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>No Spam</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
-                  <span>Free Consultation</span>
+              <div className="bg-gray-50 rounded-xl p-4 -mx-2">
+                <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
+                  <div className="flex items-center space-x-2 text-green-700">
+                    <CheckCircle className="w-4 h-4" />
+                    <span className="font-medium">100% Secure</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-blue-700">
+                    <Shield className="w-4 h-4" />
+                    <span className="font-medium">No Spam</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-[#F9A625]">
+                    <Sparkles className="w-4 h-4" />
+                    <span className="font-medium">Free Consultation</span>
+                  </div>
                 </div>
               </div>
             </form>

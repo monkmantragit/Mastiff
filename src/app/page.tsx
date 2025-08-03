@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { 
   ArrowRight, 
   Users, 
@@ -20,6 +21,7 @@ import {
 } from "lucide-react";
 import { useRef } from "react";
 import { usePopup } from "@/components/popup-provider";
+import { HomepageMediaService } from "@/lib/homepage-media";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -40,7 +42,29 @@ export default function Home() {
   const isHeroInView = useInView(heroRef, { once: true });
   const { openPopup } = usePopup();
 
-  // Event services data with REAL event photos
+  // Get dynamic media URLs
+  const serviceImages = HomepageMediaService.getServiceImages();
+  const heroVideo = HomepageMediaService.getHeroVideo();
+  const portfolioImages = HomepageMediaService.getPortfolioImages();
+
+  // Optional: Keep minimal logging for verification (remove in production)
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+    console.log('🎬 Hero Video URL:', heroVideo);
+    console.log('🎯 Service Images loaded:', Object.keys(serviceImages).length, 'images');
+    console.log('🎨 Portfolio Images loaded:', portfolioImages.length, 'images');
+    
+    // Test video URL accessibility
+    console.log('🧪 Testing hero video URL...');
+    fetch(heroVideo, { method: 'HEAD' })
+      .then(response => {
+        console.log('✅ Video HEAD request:', response.status, response.statusText);
+        console.log('📝 Video Content-Type:', response.headers.get('content-type'));
+        console.log('📊 Video Content-Length:', response.headers.get('content-length'));
+      })
+      .catch(err => console.error('❌ Video HEAD request failed:', err));
+  }
+
+  // Event services data with DYNAMIC event photos from Supabase
   const services = [
     {
       id: "01",
@@ -50,7 +74,7 @@ export default function Home() {
       gradient: "from-[#F9A625] to-[#2A3959]",
       features: ["Conferences", "All Hands", "Annual Kick Offs", "Summits", "Leadership Meets", "Launches – Product, Brand, Facility", "Customer Meets", "Dealer Meets", "Hybrid Events"],
       stats: { events: "300+", clients: "Fortune 500" },
-      image: "/assets/images/services/DSC01980-scaled-1.jpg"
+      image: serviceImages.businessEvents
     },
     {
       id: "02", 
@@ -60,7 +84,7 @@ export default function Home() {
       gradient: "from-[#2A3959] to-[#F9A625]",
       features: ["Annual Day Celebration", "Themed Celebrations", "Employee Engagement", "Rewards & Recognition", "Team Offsites", "Gala Nights", "Family Days"],
       stats: { events: "400+", clients: "Corporates" },
-      image: "/assets/images/services/DSC01901-scaled-1.jpg"
+      image: serviceImages.celebrationGalore
     },
     {
       id: "03",
@@ -70,7 +94,7 @@ export default function Home() {
       gradient: "from-[#F9A625] to-[#2A3959]",
       features: ["Office Launches", "Plant Inaugurations", "Ribbon Cutting Ceremonies", "Facility Tours & Walkthroughs", "Brand Showcases", "CEO / Leadership Addresses", "Media & Press Briefings", "VIP Guest Management", "Customized Stage & Tech Setups", "Cultural & Entertainment Segments"],
       stats: { events: "150+", clients: "Industry Leaders" },
-      image: "/assets/images/services/DSC01878-scaled-1.jpg"
+      image: serviceImages.inauguration
     },
     {
       id: "04",
@@ -80,7 +104,7 @@ export default function Home() {
       gradient: "from-[#2A3959] to-[#F9A625]",
       features: ["Industry Conventions", "Customer Connect Programs", "Dealer & Distributor Meets", "Product Launches", "Business Networking Events", "Panel Discussions & Fireside Chats", "Partner Appreciation Events"],
       stats: { events: "200+", clients: "Global Brands" },
-      image: "/assets/images/services/DSC02449-scaled-1.jpg"
+      image: serviceImages.dealersMeet
     },
     {
       id: "05",
@@ -90,7 +114,7 @@ export default function Home() {
       gradient: "from-[#F9A625] to-[#2A3959]",
       features: ["Hybrid Townhalls", "Virtual + In-Person Summits", "Online Product Launches", "Hybrid Conferences & Panels", "Remote Team Engagement"],
       stats: { events: "250+", clients: "Global Teams" },
-      image: "/assets/images/services/2B6A1363-scaled-1.jpg"
+      image: serviceImages.hybridEvents
     },
     {
       id: "06",
@@ -100,7 +124,7 @@ export default function Home() {
       gradient: "from-[#2A3959] to-[#F9A625]",
       features: ["Government & Public Sector Events", "International Delegation Visits", "Investor Meets", "CSR Impact Showcases"],
       stats: { events: "300+", clients: "Institutions" },
-      image: "/assets/images/services/DSC01696-scaled-1.jpg"
+      image: serviceImages.specialProjects
     }
   ];
 
@@ -132,25 +156,25 @@ export default function Home() {
       name: "Prakash A Vaswani", 
       position: "Director – Client Relations & Strategic Initiatives",
       expertise: "Strategic Planning",
-      image: "/assets/images/team/team-1.jpg"
+      image: "/team/prakash.jpg"
     },
     { 
       name: "Vinay Kukreja",  
       position: "Director – Production, Finance & Operations",
       expertise: "Operations Excellence",
-      image: "/assets/images/team/team-2.jpg"
+      image: "/team/vinay.png"
     },
     { 
       name: "Hasan Peer H C", 
       position: "Creative Director",
       expertise: "Creative Vision",
-      image: "/assets/images/team/team-3.jpg"
+      image: "/team/hasan.jpg"
     },
     { 
       name: "Naveen Abraham A", 
       position: "Head - Operations",
       expertise: "Execution Mastery",
-      image: "/assets/images/team/team-4.jpg"
+      image: "/team/naveen .jpg"
     }
   ];
 
@@ -159,9 +183,9 @@ export default function Home() {
       {/* Clean Video Hero Section - Mobile Optimized */}
       <section ref={heroRef} className="relative min-h-[100vh] sm:min-h-[100vh] lg:min-h-[120vh] flex items-center justify-center overflow-hidden">
         {/* Full Video Background - Mobile Optimized */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <video
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover sm:object-cover object-contain"
             autoPlay
             muted
             loop
@@ -173,8 +197,12 @@ export default function Home() {
               willChange: 'auto',
               backfaceVisibility: 'hidden'
             }}
+            onLoadStart={() => console.log('🎬 Video load started:', heroVideo)}
+            onCanPlay={() => console.log('✅ Video can play:', heroVideo)}
+            onError={(e) => console.error('❌ Video error:', heroVideo, e)}
+            onLoadedData={() => console.log('📹 Video data loaded:', heroVideo)}
           >
-            <source src="/assets/videos/wm-2025-intro-M2_l2.mp4" type="video/mp4" />
+            <source src={heroVideo} type="video/mp4" />
           </video>
           
           {/* Enhanced overlay for better mobile readability */}
@@ -228,12 +256,14 @@ export default function Home() {
                   <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
                 
-                <Button 
-                  variant="outline" 
-                  className="mobile-touch-target border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 min-h-[48px]"
-                >
-                  View Our Story
-                </Button>
+                <Link href="/team">
+                  <Button 
+                    variant="outline" 
+                    className="mobile-touch-target bg-white border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-[#F9A625] hover:border-[#2A3959] transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading font-semibold px-6 sm:px-8 py-3 sm:py-4 min-h-[48px]"
+                  >
+                    View Our Story
+                  </Button>
+                </Link>
               </div>
 
             </div>
@@ -325,12 +355,17 @@ export default function Home() {
                   whileHover={{ y: -8 }}
                 >
                   {/* Event Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                      style={{ 
-                        backgroundImage: `url(${service.image})`,
-                        backgroundColor: '#2A3959' // fallback color
+                  <div className="relative h-64 overflow-hidden bg-[#2A3959]">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        console.error(`Failed to load service image: ${service.image}`);
+                        e.currentTarget.style.display = 'none';
+                      }}
+                      onLoad={() => {
+                        console.log(`✅ Service image loaded: ${service.title}`);
                       }}
                     />
                     <div className={`absolute inset-0 bg-gradient-to-t ${service.gradient} opacity-80`} />
@@ -432,32 +467,44 @@ export default function Home() {
           </motion.div>
 
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {[
-              { image: "/assets/images/services/DSC01514-scaled-1.jpg", title: "Corporate Conference", category: "Business" },
-              { image: "/assets/images/services/2B6A0590-1-scaled-1.jpg", title: "Cultural Celebration", category: "Cultural" },
-              { image: "/assets/images/services/DSC04807-1536x1024.jpg", title: "Grand Opening", category: "Inauguration" },
-              { image: "/assets/images/services/P__3108-scaled-1.jpg", title: "Team Building", category: "Corporate" },
-              { image: "/assets/images/services/DSC01247-scaled-1.jpg", title: "Product Launch", category: "Corporate" },
-              { image: "/assets/images/services/92A4532-scaled-1.jpg", title: "Festival Event", category: "Cultural" }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="relative group overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer max-w-md mx-auto w-full"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${item.image})` }}
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300" />
-                <div className="absolute bottom-6 left-6 text-white">
-                  <div className="text-sm text-[#F9A625] mb-1 font-medium">{item.category}</div>
-                  <div className="text-lg font-semibold">{item.title}</div>
-                </div>
-              </motion.div>
-            ))}
+            {portfolioImages.slice(0, 6).map((image, index) => {
+              const portfolioItems = [
+                { title: "Corporate Conference", category: "Business" },
+                { title: "Cultural Celebration", category: "Cultural" },
+                { title: "Grand Opening", category: "Inauguration" },
+                { title: "Team Building", category: "Corporate" },
+                { title: "Product Launch", category: "Corporate" },
+                { title: "Festival Event", category: "Cultural" }
+              ];
+              const item = { image, ...portfolioItems[index] };
+              return (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  className="relative group overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer max-w-md mx-auto w-full bg-gray-800"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      console.error(`Failed to load portfolio image: ${item.image}`);
+                      e.currentTarget.style.display = 'none';
+                    }}
+                    onLoad={() => {
+                      console.log(`✅ Portfolio image loaded: ${item.title}`);
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300" />
+                  <div className="absolute bottom-6 left-6 text-white">
+                    <div className="text-sm text-[#F9A625] mb-1 font-medium">{item.category}</div>
+                    <div className="text-lg font-semibold">{item.title}</div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.div 
@@ -520,6 +567,97 @@ export default function Home() {
               </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Process */}
+      <section className="py-16 lg:py-20 bg-gradient-to-br from-[#2A3959] to-[#1E2A3A]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="text-center mb-12 lg:mb-16"
+          >
+            <motion.div variants={fadeInUp}>
+              <Badge className="bg-[#F9A625]/20 text-[#F9A625] border-[#F9A625]/30 px-6 py-2 mb-6">
+                The Method
+              </Badge>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-white mb-6 leading-tight">
+                Four Steps to <span className="text-[#F9A625]">Extraordinary</span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Proven process. Predictable excellence. Every single time.
+              </p>
+            </motion.div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                step: "01",
+                title: "Dream Discovery",
+                description: "We don't just take briefs. We uncover dreams. Deep dive into your vision, values, and victory metrics.",
+                icon: "💡",
+                color: "from-blue-500 to-cyan-500"
+              },
+              {
+                step: "02", 
+                title: "Strategic Sculpting",
+                description: "Your vision meets our expertise. Strategies carved with precision. Concepts crafted with care.",
+                icon: "📋",
+                color: "from-purple-500 to-pink-500"
+              },
+              {
+                step: "03",
+                title: "Flawless Execution",
+                description: "Show time. Every element orchestrated. Every moment choreographed. Perfection, delivered.",
+                icon: "⚡",
+                color: "from-orange-500 to-red-500"
+              },
+              {
+                step: "04",
+                title: "Legacy Creation",
+                description: "The event ends. The impact begins. Relationships deepened. Success stories written.",
+                icon: "🎯",
+                color: "from-green-500 to-emerald-500"
+              }
+            ].map((process, index) => (
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                className="relative group"
+              >
+                {/* Connection Line - Only Desktop */}
+                {index < 3 && (
+                  <div className="hidden lg:block absolute top-12 left-full w-8 h-0.5 bg-gradient-to-r from-[#F9A625] to-transparent z-10"></div>
+                )}
+                
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-[#F9A625]/50 transition-all duration-300 hover:bg-white/15 group-hover:scale-105 h-full">
+                  <div className="text-center">
+                    {/* Step Number */}
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${process.color} flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <span className="text-2xl font-bold text-white">{process.step}</span>
+                    </div>
+                    
+                    {/* Process Icon */}
+                    <div className="text-4xl mb-4">{process.icon}</div>
+                    
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-white mb-4 group-hover:text-[#F9A625] transition-colors duration-300">
+                      {process.title}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      {process.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -587,18 +725,45 @@ export default function Home() {
             </motion.div>
             
             <motion.div variants={fadeInUp} className="relative">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-6 lg:gap-8">
                   {teamHighlights.map((member, index) => (
-                  <div key={index} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#F9A625] to-white rounded-full mx-auto mb-4"></div>
-                    <h4 className="font-bold text-white mb-2 text-sm lg:text-base">{member.name}</h4>
-                    <p className="text-white/80 text-xs lg:text-sm">{member.position}</p>
-                    <span className="text-xs px-3 py-1 bg-amber-500/20 text-amber-400 rounded-full inline-block mt-2">
+                  <div key={index} className="group relative">
+                    <div className="bg-white/10 backdrop-blur-md rounded-3xl overflow-hidden transition-all duration-300 hover:bg-white/20 hover:shadow-2xl hover:scale-105">
+                      {/* Image Container - Larger and more prominent */}
+                      <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                        <img 
+                          src={member.image} 
+                          alt={member.name}
+                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        />
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        
+                        {/* Expertise Badge - Positioned at bottom right */}
+                        <div className="absolute bottom-4 right-4">
+                          <span className="text-xs px-3 py-1 bg-[#F9A625]/90 text-black font-semibold rounded-full shadow-lg">
                             {member.expertise}
                           </span>
                         </div>
+                      </div>
+                      
+                      {/* Content Section */}
+                      <div className="p-5 lg:p-6">
+                        <h4 className="font-bold text-white mb-1 text-base lg:text-lg">
+                          {member.name}
+                        </h4>
+                        <p className="text-white/70 text-sm lg:text-base leading-relaxed">
+                          {member.position}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                   ))}
               </div>
+              
+              {/* Optional: Add a subtle pattern or decoration */}
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#F9A625]/10 rounded-full blur-3xl" />
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-white/5 rounded-full blur-3xl" />
             </motion.div>
           </motion.div>
         </div>
@@ -615,32 +780,23 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp}>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-[#2A3959] leading-tight max-w-4xl mx-auto">
-                The Minds Behind The <span className="text-[#F9A625]">Magic</span>
+                Your Vision Awaits Its <span className="text-[#F9A625]">Moment</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-neutral-600 max-w-4xl mx-auto mb-12 font-body leading-relaxed">
-                Four visionaries. One dream. Infinite possibilities. Meet the architects of extraordinary.
+                Four visionaries ready to transform your boldest ideas into unforgettable experiences. Your extraordinary event starts with a single conversation.
               </p>
-            </motion.div>
               
-            <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-12">
+              <div className="flex justify-center mb-12">
                 <Button 
                   onClick={() => openPopup('team-section')}
                   size="lg"
-                  className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black px-12 py-6 rounded-full text-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 font-heading"
+                  className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black px-16 py-6 rounded-full text-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 font-heading"
                 >
-                Start Your Story
-                <ArrowRight className="ml-3 h-6 w-6" />
-                </Button>
-                
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white px-12 py-6 rounded-full text-xl transition-all duration-300 hover:scale-105 font-heading"
-                >
-                Discover Our Journey
-                <Users className="ml-3 h-6 w-6" />
+                  Let's Create Magic Together
+                  <ArrowRight className="ml-3 h-6 w-6" />
                 </Button>
               </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>

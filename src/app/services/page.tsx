@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { usePopup } from "@/components/popup-provider";
 
 import { 
   ArrowRight, 
@@ -79,8 +80,8 @@ const heroImages = [
 // Service Categories for Quick Navigation
 const serviceCategories = [
   { id: "corporate-events", name: "Business Events", icon: Building2 },
-  { id: "celebrations", name: "Corporate Celebrations", icon: PartyPopper },
-  { id: "inaugurations", name: "Inaugurations", icon: Scissors },
+  { id: "celebrations", name: "Celebrations Galore", icon: PartyPopper },
+  { id: "inaugurations", name: "Launches", icon: Scissors },
   { id: "hybrid-events", name: "Hybrid Events", icon: Monitor },
   { id: "conventions", name: "Industry Conventions", icon: Users },
   { id: "special-projects", name: "Special Projects", icon: Star }
@@ -90,8 +91,8 @@ const serviceCategories = [
 const serviceShowcases = [
   {
     id: "corporate-events",
-    title: "Business Critical Events",
-    description: "Where business objectives meet creative brilliance. We don't just host events. We engineer experiences that drive decisions, forge partnerships, and transform companies.",
+    title: "Business Critical Events - Conferences | All Hands | Kick Offs | Summits",
+    description: "We specialize in crafting extraordinary business conferences that inspire, educate, and propel organizations to new heights. At White Massif, we understand that the success of your business conference is crucial to achieving your organizational objectives. With a commitment to excellence, innovation, and a client-centric approach, we go above and beyond to deliver conferences that leave a lasting impression. From thought-provoking content to unparalleled networking opportunities, our conferences are designed to inspire, educate, and empower.",
     mainImage: "/assets/images/services/DSC01980-scaled-1.jpg",
     imageCaption: "Fortune 500 annual summit - 1000+ global leaders",
     gallery: [
@@ -100,6 +101,7 @@ const serviceShowcases = [
       "/assets/images/services/DSC04807-1536x1024.jpg",
       "/assets/images/services/DSC01247-scaled-1.jpg"
     ],
+    extendedDescription: "Specializing in conference management, we collaborate with the best partners in the industry to orchestrate a diverse range of conferences and meetings tailored to various needs. Whether it's business conferences, global summits, symposiums, trade conferences & exhibitions, corporate annual kick offs or all hands sessions with the Leadership team from both India and abroad, we cover it all.\n\nOur team understands your needs, objectives, and brand goals, translating them into meticulously planned, creative, innovative, and impactful event experiences both domestically and internationally. Our comprehensive solutions encompasses budgeting, location planning, logistics, itinerary coordination, delegate management, local experiences, curated entertainment and the integration of cutting-edge technology & suitable infrastructure for business meetings. Our team of seasoned experts thoroughly comprehends your unique requirements and crafts a meticulously tailored plan to meet your specific needs.",
     features: [
       {
         title: "Strategic Architecture",
@@ -119,15 +121,16 @@ const serviceShowcases = [
       }
     ],
     stats: {
-      events: "150+",
+      events: "300+",
       satisfaction: "98%",
-      clients: "50+"
+      clients: "Fortune 500"
     }
   },
   {
     id: "celebrations",
-    title: "Celebrations That Echo",
-    description: "Life's precious moments deserve more than parties. They deserve experiences that echo through generations. Where tradition meets innovation. Where joy becomes legendary.",
+    title: "Celebrations Galore - Annual Day Celebration | Themed Celebrations | Team Offsite | Employee Engagement | Rewards & Recognition",
+    description: "Celebrate your success with style and distinction. At White Massif, we understand that corporate celebrations go beyond just marking a date on the calendar. We believe that moments of success, milestones, and achievements deserve to be celebrated in grandeur. These events are opportunities to strengthen team bonds, enhance corporate culture, and showcase your organization's achievements.",
+    extendedDescription: "With our dedicated team and meticulous planning, we ensure that every celebration becomes a memorable and impactful event. Let us be your dedicated partner in creating unforgettable moments that resonate with your team and stakeholders.",
     mainImage: "/assets/images/services/92A4532-scaled-1.jpg",
     imageCaption: "10,000-guest cultural celebration - Pure magic captured",
     gallery: [
@@ -155,15 +158,16 @@ const serviceShowcases = [
       }
     ],
     stats: {
-      events: "200+",
+      events: "400+",
       satisfaction: "99%",
-      clients: "75+"
+      clients: "Corporates"
     }
   },
   {
     id: "inaugurations",
-    title: "Launches That Define Eras",
-    description: "First impressions last forever. Make yours legendary. From ribbon cuttings to global reveals, we create moments that mark beginnings and define futures.",
+    title: "Launches - Products, Facility & Operations",
+    description: "Launching a new product, service, or brand is a momentous occasion that demands a grand and impactful celebration. Through years of experience launching diverse products, facilities, vehicles and brands, we have gained valuable insights into what leaves a lasting impression on the audience at the same time adapting to new innovations and trends to achieve the same.",
+    extendedDescription: "At White Massif, we understand that a successful launch is more than just an event – it's the beginning of a journey towards success. With our dedicated team, attention to detail, and commitment to excellence, we ensure that your launch event becomes a powerful catalyst for your brand's future achievements. From strategic planning to flawless execution, we are your partner in turning your vision into a spectacular reality.",
     mainImage: "/assets/images/services/DSC01878-scaled-1.jpg",
     imageCaption: "Global product launch - 50M+ impressions generated",
     gallery: [
@@ -191,9 +195,114 @@ const serviceShowcases = [
       }
     ],
     stats: {
-      events: "80+",
+      events: "150+",
       satisfaction: "97%",
-      clients: "40+"
+      clients: "Industry Leaders"
+    }
+  },
+  {
+    id: "hybrid-events",
+    title: "Hybrid Events",
+    description: "Tailor made services to seamlessly execute hybrid events, combining the best of in-person and virtual components for a dynamic and engaging experience.",
+    extendedDescription: "In these unparalleled times, we have fortified ourselves with advanced technical expertise and a refined skill set to proficiently orchestrate exceptional solutions to engage your colleagues, connect with stakeholders, host rewards and recognition events, unveil new products and services, and conduct fireside chats and leadership addresses—all executed either virtually or through a hybrid model. We achieve this through cutting-edge technology, innovative approaches, and the seamless integration of multiple applications streamed via virtual platforms. Our successful track record includes managing a spectrum of virtual events, from conferences, panel discussions, fireside chats, town halls, employee engagement and annual day celebrations.",
+    mainImage: "/assets/images/services/DSC02449-scaled-1.jpg",
+    imageCaption: "Hybrid event with global reach",
+    gallery: [
+      "/assets/images/services/DSC02449-scaled-1.jpg",
+      "/assets/images/services/DSC01696-scaled-1.jpg"
+    ],
+    features: [
+      {
+        title: "Virtual Excellence",
+        description: "Cutting-edge technology for seamless virtual experiences"
+      },
+      {
+        title: "Hybrid Integration",
+        description: "Perfect blend of physical and digital engagement"
+      },
+      {
+        title: "Global Reach",
+        description: "Connect audiences worldwide with innovative solutions"
+      },
+      {
+        title: "Interactive Design",
+        description: "Engaging experiences that captivate both in-person and virtual attendees"
+      }
+    ],
+    stats: {
+      events: "250+",
+      satisfaction: "96%",
+      clients: "Global Teams"
+    }
+  },
+  {
+    id: "conventions",
+    title: "Industry Convention, Customer & Dealer Meet",
+    description: "In an ever-evolving business landscape staying at the forefront of innovation, collaboration, and knowledge exchange is paramount. Establishing regular meet-and-greet sessions with industry experts, customers, dealers is essential for a business.",
+    extendedDescription: "This practice not only cultivates robust and enduring professional and personal relationships but also fosters loyalty, provides insights into the industry, customer perspectives, gathers feedback on market conditions, and disseminates crucial information about new products, services, or offers. Hosting these events creates an environment where thought leaders, professionals, stakeholders and enthusiasts converge for an immersive experience like no other.",
+    mainImage: "/assets/images/services/2B6A1363-scaled-1.jpg",
+    imageCaption: "Industry convention bringing leaders together",
+    gallery: [
+      "/assets/images/services/2B6A1363-scaled-1.jpg",
+      "/assets/images/services/P__3108-scaled-1.jpg"
+    ],
+    features: [
+      {
+        title: "Networking Excellence",
+        description: "Facilitating meaningful connections between industry leaders"
+      },
+      {
+        title: "Knowledge Exchange",
+        description: "Platforms for sharing insights and best practices"
+      },
+      {
+        title: "Relationship Building",
+        description: "Strengthening business partnerships and loyalty"
+      },
+      {
+        title: "Market Intelligence",
+        description: "Gathering valuable feedback and market insights"
+      }
+    ],
+    stats: {
+      events: "200+",
+      satisfaction: "98%",
+      clients: "Global Brands"
+    }
+  },
+  {
+    id: "special-projects",
+    title: "Special Projects",
+    description: "In a world where one-size-fits-all doesn't suffice, We design tailor-made experiences, where every detail is meticulously crafted to align with the unique vision, preferences, and objectives of our clients.",
+    extendedDescription: "From large scale public events, fundraising events, art & music festivals, cross - city biking events, setting up unique experiences we have delivered it all. These endeavors showcase our commitment to tailoring projects to fulfill the objectives",
+    mainImage: "/assets/images/services/Micelio-website--scaled.jpg",
+    imageCaption: "Unique special project execution",
+    gallery: [
+      "/assets/images/services/Micelio-website--scaled.jpg",
+      "/assets/images/services/YP_07175-scaled-1-1536x1024.jpg"
+    ],
+    features: [
+      {
+        title: "Custom Solutions",
+        description: "Tailor-made experiences for unique requirements"
+      },
+      {
+        title: "Creative Innovation",
+        description: "Out-of-the-box thinking for extraordinary events"
+      },
+      {
+        title: "Versatile Expertise",
+        description: "From festivals to fundraisers, we do it all"
+      },
+      {
+        title: "Objective Focus",
+        description: "Every detail aligned with your specific goals"
+      }
+    ],
+    stats: {
+      events: "300+",
+      satisfaction: "99%",
+      clients: "Institutions"
     }
   }
 ];
@@ -203,25 +312,41 @@ const serviceShowcases = [
 // End-to-End Services
 const endToEndServices = [
   {
-    title: "Venue Mastery",
-    description: "We don't find venues. We discover canvases. Spaces that amplify your vision and elevate every moment.",
+    title: "Venue Sourcing",
+    description: "Choosing the right venue is a make-or-break decision in event planning, shaping the overall success and atmosphere. At White Massif, we go the extra mile by providing complimentary venue planning services. With our diverse experience in different venues, we tailor selections to meet client needs, carefully considering factors such as seating, location, and availability. We stay ahead of industry trends, ensuring we deliver the optimal venue for our clients' events, all without additional costs.",
     icon: MapPin
   },
   {
-    title: "Creative Alchemy", 
-    description: "Where imagination meets innovation. Concepts that captivate. Designs that dazzle. Stories that stick.",
+    title: "Curation & Conceptualisation", 
+    description: "From the broader vision to the finer details, we craft an inspiring and unique concept. Our approach considers seamlessly blending creativity and precision to deliver unparalleled success to your event. Planning a successful event involves thorough attention to detail. At White Massif, our team of highly skilled professionals collaborate to bring your vision to life. Every element is meticulously crafted to seamlessly align with the overall theme, leaving an indelible impression on event attendees.",
     icon: Palette
   },
   {
-    title: "Technical Wizardry",
-    description: "State-of-the-art production. Cinema-quality experiences. Technology that disappears into magic.",
+    title: "Production - Fabrication, Infrastructure & Technicals",
+    description: "Upon finalizing the event concept, the production phase unfolds to breathe life into ideas and concepts. This includes the meticulous execution of themes, lighting, stage design, seating arrangements, decor, event branding, innovative displays, audio systems, visual effects, and more — all held to the highest standards. As a prominent event management company in Bangalore, we have a proven track record of delivering sophisticated and uniquely themed events. Each event is meticulously tailored to not only mirror the chosen theme but also encapsulate the essence of the client company and brand.",
     icon: Settings
+  },
+  {
+    title: "Entertainment Curation",
+    description: "We firmly believe that entertainment plays a crucial role in any event, with the primary challenge being to sustain audience engagement. Consequently, we consider it our duty to offer our clients only the finest options in terms of event entertainment. Whether it's outstanding dance groups, captivating African beats, impressive emceeing skills, or stand-up comedy performances, we are committed to ensuring that your event achieves resounding success. By collaborating with some of the most esteemed artists across India, we take the time to comprehend our clients' needs. Once the theme or idea is finalized, we present our clients with a carefully curated list of relevant performers and artists.",
+    icon: PartyPopper
+  },
+  {
+    title: "Show Flow Management",
+    description: "We are proud to be one of the only few event agencies to have specialist show callers as part of our team which helps us in delivering seamless event show flows. Understanding the uniqueness of each event, our team collaborates closely with the clients to customize a flow aligned with your goals, theme, and audience preferences. We meticulously plan and execute a detailed timeline, including key milestones, transitions, and entertainment segments. Our expertise lies in stitching all the variables together to ensure a smooth transition between different event segments, adapting to dynamic changes as needed.",
+    icon: Calendar
+  },
+  {
+    title: "Merchandising, Event Documentation & Other Support Services",
+    description: "We support our clients by extending our services to include gifting solutions and merchandising solutions. Whether it's creating unique and personalized gifts or assembling thoughtful welcome kits, we ensure that each item contributes to the overall success and ambiance of your event. A perfect event requires the art of capturing the cherished moments, ensuring that every smile, every emotion, and every detail is immortalized in timeless photographs and captivating videos. We also offer a dedicated on-site event support team that takes charge of various responsibilities, including managing merchandise, overseeing the registration desk, coordinating photo booths, and addressing any unexpected issues that may arise.",
+    icon: Award
   }
 ];
 
 export default function ServicesPage() {
   const heroRef = useRef(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const { openPopup } = usePopup();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -240,7 +365,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* Hero Section with Event-Focused Design - Mobile Optimized */}
-      <section ref={heroRef} className="relative min-h-[100vh] sm:min-h-screen flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[80vh] sm:min-h-[85vh] flex items-center overflow-hidden pt-20">
         {/* Background Image Carousel - Mobile Optimized */}
         <div className="absolute inset-0">
           {heroImages.map((image, index) => (
@@ -267,7 +392,7 @@ export default function ServicesPage() {
         {/* Main Hero Content - Mobile Optimized */}
         <div className="relative z-20 w-full mobile-safe-area">
           <div className="max-w-7xl mx-auto mobile-container">
-            <div className="flex items-center justify-center min-h-[80vh] py-8 sm:py-0">
+            <div className="flex items-center justify-center min-h-[60vh] py-8 sm:py-12">
               
               {/* Centered Content - Mobile Typography */}
               <div className="text-white text-center max-w-5xl">
@@ -277,18 +402,18 @@ export default function ServicesPage() {
                   transition={{ duration: 0.8 }}
                 >
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-display leading-tight mb-6 sm:mb-8 mobile-heading">
-                    <span className="text-white">Solutions</span>
-                    <span className="text-[#F9A625] block">Not Services</span>
-                    <span className="text-white">Results</span>
+                    <span className="text-white">Comprehensive</span>
+                    <span className="text-[#F9A625] block">Event Management</span>
+                    <span className="text-white">Services</span>
                   </h1>
                   
                   <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-200 mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto mobile-body-text px-4 sm:px-0">
-                    We don't offer services. We deliver solutions. Measurable results. Memories that outlive moments.
+                    11 years of expertise. 1000+ events delivered. 165+ corporate clients. Creating extraordinary corporate experiences that inspire, educate, and propel organizations to new heights.
                   </p>
 
                   {/* Event Type Badges - Mobile Optimized */}
                   <div className="flex flex-wrap gap-2 sm:gap-4 justify-center mb-8 sm:mb-12 px-4 sm:px-0">
-                    {['Fortune 500 Events', 'Luxury Weddings', 'Grand Celebrations', 'Global Launches'].map((type, index) => (
+                    {['Corporate Conferences', 'Product Launches', 'Hybrid Events', 'Team Celebrations'].map((type, index) => (
                       <motion.div
                         key={type}
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -304,10 +429,11 @@ export default function ServicesPage() {
                   {/* CTA Buttons - Touch Optimized */}
                   <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4 sm:px-0">
                     <Button 
+                      onClick={() => openPopup('services-hero')}
                       className="btn-primary mobile-touch-target text-base sm:text-lg lg:text-xl font-bold px-8 sm:px-12 py-4 sm:py-5 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-102 min-h-[48px]"
                     >
-                      Start Your Transformation
-                      <Sparkles className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
+                      Get Your Custom Quote
+                      <ArrowRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
                     </Button>
                     
                     <Button 
@@ -330,8 +456,8 @@ export default function ServicesPage() {
             {heroImages.map((image, index) => (
               <button
                 key={index}
-                className={`mobile-touch-target w-4 h-4 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-                  index === currentImage ? 'bg-[#F9A625] scale-125' : 'bg-white/50 hover:bg-white/80'
+                className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 ${
+                  index === currentImage ? 'bg-[#F9A625] scale-110' : 'bg-white/60 hover:bg-white/80'
                 }`}
                 onClick={() => setCurrentImage(index)}
                 aria-label={`View ${image.category} image`}
@@ -431,9 +557,12 @@ export default function ServicesPage() {
             <div className="mobile-card bg-gradient-to-r from-[#2A3959] to-[#1a2332] max-w-2xl mx-auto">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 mobile-heading">Have Something Unique in Mind?</h3>
               <p className="text-gray-300 mb-4 sm:mb-6 mobile-body-text">No vision too bold. No dream too big. Let's create something unprecedented.</p>
-              <Button className="btn-primary mobile-touch-target text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-2xl min-h-[48px]">
-                Let's Innovate Together
-                <Phone className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
+              <Button 
+                onClick={() => openPopup('services-unique')}
+                className="btn-primary mobile-touch-target text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-2xl min-h-[48px]"
+              >
+                Discuss Your Vision
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
           </motion.div>
@@ -499,9 +628,10 @@ export default function ServicesPage() {
                 </div>
 
                 <Button 
+                  onClick={() => openPopup(`services-${service.id}`)}
                   className="btn-primary mobile-touch-target text-black font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full min-h-[48px] w-full sm:w-auto"
                 >
-                  Learn More About {service.title.split(' ')[0]} {service.title.split(' ')[1]}
+                  Request Quote for {service.title.split(' - ')[0] || service.title.split(' ')[0]} {service.title.split(' ')[1] || ''}
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </motion.div>
@@ -546,8 +676,11 @@ export default function ServicesPage() {
                   ))}
                 </div>
                 
-                <button className="mt-3 sm:mt-4 text-[#F9A625] hover:text-[#F9A625]/80 font-body text-sm transition-colors mobile-touch-target py-2">
-                  View All Photos ({service.gallery.length})
+                <button 
+                  onClick={() => openPopup(`gallery-${service.id}`)}
+                  className="mt-3 sm:mt-4 text-[#F9A625] hover:text-[#F9A625]/80 font-body text-sm transition-colors mobile-touch-target py-2"
+                >
+                  View Portfolio ({service.gallery.length} photos)
                 </button>
               </motion.div>
             </div>
@@ -656,8 +789,11 @@ export default function ServicesPage() {
             <div className="mobile-card bg-gradient-to-r from-[#F9A625] to-[#e8951e] max-w-2xl mx-auto">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 mobile-heading">Ready to Get Started?</h3>
               <p className="text-white/90 mb-4 sm:mb-6 mobile-body-text">Let's discuss your event and create something extraordinary together</p>
-              <Button className="bg-white text-[#F9A625] hover:bg-gray-100 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl mobile-touch-target min-h-[48px] w-full sm:w-auto">
-                Start Your Journey
+              <Button 
+                onClick={() => openPopup('services-process')}
+                className="bg-white text-[#F9A625] hover:bg-gray-100 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl mobile-touch-target min-h-[48px] w-full sm:w-auto"
+              >
+                Get Started Today
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
@@ -789,7 +925,11 @@ export default function ServicesPage() {
                     <Calendar className="w-10 h-10 sm:w-12 sm:h-12 text-[#F9A625] mx-auto mb-3 sm:mb-4" />
                     <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Schedule Meeting</h3>
                     <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Book a free consultation session</p>
-                    <Button variant="outline" className="mobile-touch-target border-white/30 text-white hover:bg-white/10 text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
+                    <Button 
+                      onClick={() => openPopup('services-meeting')}
+                      variant="outline" 
+                      className="mobile-touch-target border-white/30 text-white hover:bg-white/10 text-sm sm:text-base min-h-[44px] w-full sm:w-auto"
+                    >
                       Book Now
                     </Button>
                   </motion.div>
@@ -798,9 +938,10 @@ export default function ServicesPage() {
                 {/* Primary CTA - Mobile Optimized */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <Button 
+                    onClick={() => openPopup('services-final-cta')}
                     className="btn-primary mobile-touch-target text-white font-bold px-8 sm:px-10 py-4 sm:py-5 rounded-2xl text-base sm:text-lg transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
                   >
-                    Transform Your Vision Today
+                    Get Your Event Quote
                     <ArrowRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
                   </Button>
                   

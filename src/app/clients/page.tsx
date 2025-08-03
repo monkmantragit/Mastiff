@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { usePopup } from "@/components/popup-provider";
 import { 
   ArrowRight, 
   Sparkles,
@@ -11,7 +12,7 @@ import {
   Calendar,
   Trophy,
   Star,
-  Building
+  Phone
 } from "lucide-react";
 
 // Animation variants
@@ -29,58 +30,7 @@ const staggerContainer = {
   }
 };
 
-// Client Categories from White Massif data
-const clientCategories = [
-  {
-    category: "Information Technology",
-    description: "Leading IT companies and technology firms",
-    icon: "💻",
-    gradient: "from-blue-500 to-cyan-500",
-    count: "40+"
-  },
-  {
-    category: "Banking & Financial Institution",
-    description: "Banks, financial services, and investment companies",
-    icon: "🏦",
-    gradient: "from-emerald-500 to-teal-500",
-    count: "25+"
-  },
-  {
-    category: "Manufacturing, Industry, Research & Development",
-    description: "Manufacturing companies, industrial firms, and R&D organizations",
-    icon: "🏭",
-    gradient: "from-amber-500 to-orange-500",
-    count: "35+"
-  },
-  {
-    category: "Government & Non Governmental Organization",
-    description: "Government agencies and NGOs",
-    icon: "🏛️",
-    gradient: "from-indigo-500 to-purple-500",
-    count: "15+"
-  },
-  {
-    category: "Consulting, Media, Logistics & Aviation",
-    description: "Consulting firms, media companies, logistics, and aviation industry",
-    icon: "✈️",
-    gradient: "from-rose-500 to-pink-500",
-    count: "20+"
-  },
-  {
-    category: "Pharma & Healthcare",
-    description: "Pharmaceutical companies and healthcare organizations",
-    icon: "💊",
-    gradient: "from-green-500 to-emerald-500",
-    count: "15+"
-  },
-  {
-    category: "Real Estate, Retail & Hospitality",
-    description: "Real estate developers, retail chains, and hospitality industry",
-    icon: "🏨",
-    gradient: "from-violet-500 to-purple-500",
-    count: "10+"
-  }
-];
+// Removed client categories as per requirements
 
 const stats = [
   {
@@ -90,42 +40,31 @@ const stats = [
     color: "text-amber-400"
   },
   {
-    number: "7",
-    label: "Industry Sectors",
-    icon: Building,
-    color: "text-emerald-400"
-  },
-  {
-    number: "12+",
+    number: "11+",
     label: "Years Experience", 
     icon: Trophy,
     color: "text-blue-400"
   },
   {
-    number: "500+",
+    number: "1000+",
     label: "Events Delivered",
     icon: Calendar,
     color: "text-purple-400"
+  },
+  {
+    number: "1.5M+",
+    label: "Audience Engagement",
+    icon: Star,
+    color: "text-emerald-400"
   }
 ];
 
-// Notable Clients (examples from the media assets data)
-const notableClients = [
-  { name: "Zluri", sector: "IT" },
-  { name: "NTT Data", sector: "IT" },
-  { name: "ABB", sector: "Manufacturing" },
-  { name: "Johnson Controls", sector: "Manufacturing" },
-  { name: "GSK", sector: "Pharma" },
-  { name: "Novo Nordisk", sector: "Healthcare" },
-  { name: "Government of Netherlands", sector: "Government" },
-  { name: "Coca Cola", sector: "Retail" },
-  { name: "KLM", sector: "Aviation" },
-  { name: "New York Times", sector: "Media" }
-];
+// Using actual client logos instead of notable clients list
 
 export default function ClientsPage() {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
+  const { openPopup } = usePopup();
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -170,11 +109,11 @@ export default function ClientsPage() {
               transition={{ duration: 1.2, delay: 0.2 }}
             >
               <span className="kinetic-text">
-                Where Legends
+                What Sets Us
               </span>
               <br />
               <span className="text-neutral-800">
-                Choose Legends
+                Apart
               </span>
             </motion.h1>
             
@@ -184,8 +123,7 @@ export default function ClientsPage() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              Fortune 500 companies. Global brands. Industry pioneers. When the world&apos;s most demanding clients need the impossible delivered, 
-              they don&apos;t just choose an event company—they choose the legends who make legends.
+              At White Massif, it's not just about executing an event it's about understanding the story behind it. We blend strategy with creativity, bringing ideas to life with precision, passion, and purpose
             </motion.p>
           </motion.div>
         </div>
@@ -219,59 +157,8 @@ export default function ClientsPage() {
         </div>
       </section>
 
-      {/* Client Categories */}
-      <section className="section-padding">
-        <div className="container-fluid mx-auto">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <motion.div variants={fadeInUp}>
-              <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Trust Across Industries
-              </Badge>
-              <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900 leading-tight">
-                <span className="kinetic-text">Seven Sectors.</span> Infinite Trust.
-              </h2>
-              <p className="text-xl text-neutral-600 max-w-4xl mx-auto font-body leading-relaxed">
-                When industries that shape the world need events that define futures, they choose the same partner. 
-                From Silicon Valley to pharmaceutical giants, our clients don&apos;t just succeed—they lead.
-              </p>
-            </motion.div>
-          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {clientCategories.map((category, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="glass rounded-3xl p-8 group hover:shadow-lg transition-all duration-300"
-              >
-                <div className="flex items-start justify-between mb-6">
-                  <div className="text-4xl">{category.icon}</div>
-                  <div className="text-right">
-                    <div className="text-2xl font-display text-amber-600 mb-1">{category.count}</div>
-                    <div className="text-xs text-neutral-500">Clients</div>
-                  </div>
-                </div>
-                
-                <h3 className="text-xl font-heading mb-4 text-neutral-900 group-hover:text-amber-600 transition-colors">
-                  {category.category}
-                </h3>
-                
-                <p className="text-neutral-600 font-body leading-relaxed">
-                  {category.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Notable Clients */}
+      {/* Our Clients */}
       <section className="section-padding bg-neutral-100">
         <div className="container-fluid mx-auto">
           <motion.div
@@ -283,32 +170,52 @@ export default function ClientsPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Brand Legends
+                Trusted Partners
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900">
-                The Names That <span className="kinetic-text">Shape Tomorrow</span>
+                Our <span className="kinetic-text">Clients</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
-                These aren&apos;t just clients. They&apos;re the brands that define industries, the companies that change the world. 
-                And when they need legendary events, they choose legendary partners.
+                Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with 160+ corporate clients across various industries.
               </p>
             </motion.div>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {notableClients.map((client, index) => (
+          {/* Client Logos Grid */}
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+            {[
+              "/assets/images/clients/ABB.png",
+              "/assets/images/clients/Amazon-Web-services.webp",
+              "/assets/images/clients/Coca-cola-1.png",
+              "/assets/images/clients/EMC.webp",
+              "/assets/images/clients/Ericsson.webp",
+              "/assets/images/clients/GSK-1.png",
+              "/assets/images/clients/Johnson-controls-1.png",
+              "/assets/images/clients/KLM-1.png",
+              "/assets/images/clients/Microsoft.webp",
+              "/assets/images/clients/NTT-Data-1.png",
+              "/assets/images/clients/Novo-Nordis.png",
+              "/assets/images/clients/The-new-york-times-1.png",
+              "/assets/images/clients/Zluri.png",
+              "/assets/images/clients/TVS.png",
+              "/assets/images/clients/Hitachi.png",
+              "/assets/images/clients/GE-1-1.png",
+              "/assets/images/clients/Finastra.webp",
+              "/assets/images/clients/Groupon.webp"
+            ].map((logo, index) => (
               <motion.div
                 key={index}
                 variants={fadeInUp}
-                className="glass rounded-2xl p-6 text-center group hover:shadow-lg transition-all duration-300"
+                className="bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 aspect-square"
               >
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-2xl flex items-center justify-center group-hover:from-amber-100 group-hover:to-orange-100 transition-all">
-                  <Building className="w-8 h-8 text-neutral-600 group-hover:text-amber-600 transition-colors" />
-                </div>
-                <h3 className="text-lg font-heading mb-2 text-neutral-900 group-hover:text-amber-600 transition-colors">
-                  {client.name}
-                </h3>
-                <p className="text-sm text-neutral-600 font-body">{client.sector}</p>
+                <img
+                  src={logo}
+                  alt={`Client ${index + 1}`}
+                  className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </motion.div>
             ))}
           </div>
@@ -410,13 +317,20 @@ export default function ClientsPage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Button className="btn-primary group">
-                  <span>Begin Your Legend</span>
+                <Button 
+                  onClick={() => openPopup('clients-cta')}
+                  className="btn-primary group"
+                >
+                  <span>Start Your Event Journey</span>
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
-                <Button className="btn-secondary group">
-                  <span>Join The Hall of Fame</span>
-                  <Trophy className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                <Button 
+                  onClick={() => window.open('tel:+919845012345', '_self')}
+                  variant="outline"
+                  className="border-2 border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group"
+                >
+                  <span>Call Us Now</span>
+                  <Phone className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </div>
             </motion.div>

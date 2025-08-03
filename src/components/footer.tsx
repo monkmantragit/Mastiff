@@ -182,7 +182,7 @@ export default function Footer() {
                   <img 
                     src="/logo.png" 
                     alt="White Massif Event Management Logo" 
-                    className="w-10 h-10 object-contain"
+                    className="w-10 h-10 object-contain brightness-0 invert"
                   />
                   <h3 className="text-2xl font-display text-[#F9A625]">White Massif</h3>
                 </div>

@@ -22,11 +22,15 @@ export default function FloatingCTA() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleMainClick = () => {
+  const handleMainClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (isExpanded) {
       setIsExpanded(false);
     } else {
-      openPopup('floating-cta');
+      // Open WhatsApp chat
+      const whatsappUrl = 'https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.';
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -53,7 +57,7 @@ export default function FloatingCTA() {
                 exit={{ opacity: 0, y: 20 }}
                 className="flex flex-col gap-3"
               >
-                {/* Call Button */}
+                {/* WhatsApp Button */}
                 <motion.div
                   initial={{ x: 100 }}
                   animate={{ x: 0 }}
@@ -64,9 +68,9 @@ export default function FloatingCTA() {
                     size="sm"
                     className="bg-green-500 hover:bg-green-600 text-white shadow-lg rounded-full px-4 py-2"
                   >
-                    <a href="tel:+919845045466" className="flex items-center gap-2">
-                      <Phone className="w-4 h-4" />
-                      <span className="hidden sm:inline">Call Now</span>
+                    <a href="https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                      <MessageCircle className="w-4 h-4" />
+                      <span className="hidden sm:inline">WhatsApp</span>
                     </a>
                   </Button>
                 </motion.div>
@@ -118,16 +122,18 @@ export default function FloatingCTA() {
             className="relative"
           >
             <Button
+              type="button"
               onClick={handleMainClick}
-              className="w-14 h-14 bg-gradient-to-r from-[#F9A625] to-[#2A3959] hover:from-[#2A3959] hover:to-[#F9A625] text-white rounded-full shadow-2xl border-4 border-white/20 backdrop-blur-sm"
+              className="w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl border-4 border-white/20 backdrop-blur-sm relative z-10"
             >
               <MessageCircle className="w-6 h-6" />
             </Button>
 
             {/* Expand/Collapse Toggle */}
             <button
+              type="button"
               onClick={handleToggleExpand}
-              className="absolute -top-1 -right-1 w-6 h-6 bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-100 transition-colors"
+              className="absolute -top-1 -right-1 w-6 h-6 bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-100 transition-colors z-20"
             >
               {isExpanded ? (
                 <X className="w-3 h-3" />
@@ -140,7 +146,7 @@ export default function FloatingCTA() {
           {/* Pulse Animation for Attention */}
           {!isExpanded && (
             <motion.div
-              className="absolute inset-0 bg-[#F9A625] rounded-full"
+              className="absolute inset-0 bg-green-500 rounded-full"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.7, 0, 0.7],

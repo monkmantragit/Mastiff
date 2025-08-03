@@ -89,65 +89,7 @@ export default function CareersPage() {
     }
   ];
 
-  const benefits = [
-    {
-      title: "Legend-Worthy Compensation",
-      description: "Premium packages that reflect your premium talent and contribution",
-      icon: TrendingUp
-    },
-    {
-      title: "Mastery Investment",
-      description: "Unlimited learning budget—courses, conferences, certifications. Your growth is our priority",
-      icon: GraduationCap
-    },
-    {
-      title: "Freedom to Create",
-      description: "Flexible schedules that honor your peak creativity hours and life priorities",
-      icon: Clock
-    },
-    {
-      title: "Legend Celebrations",
-      description: "Epic team experiences that build bonds and create memories worth sharing",
-      icon: Coffee
-    },
-    {
-      title: "Unlimited Ascension",
-      description: "No ceiling on your potential. We build career paths as ambitious as your dreams",
-      icon: Target
-    },
-    {
-      title: "Holistic Wellness",
-      description: "Complete health coverage because your wellbeing enables your brilliance",
-      icon: Heart
-    }
-  ];
-
-  const companyValues = [
-    {
-      title: "Obsession with Excellence",
-      description: "We don&apos;t accept good enough. Every project is a masterpiece waiting to be born",
-      icon: Sparkles,
-      color: "text-amber-500"
-    },
-    {
-      title: "Legendary Collaboration",
-      description: "Individual brilliance amplified by collective genius. Where minds meet, magic happens",
-      icon: Users,
-      color: "text-blue-500"
-    },
-    {
-      title: "Client Legend Creation",
-      description: "We don&apos;t just serve clients—we create legends together. Their success becomes our legacy",
-      icon: Trophy,
-      color: "text-emerald-500"
-    },
-    {
-      title: "Balanced Brilliance",
-      description: "Peak performance requires peak wellness. We nurture whole humans, not just workers",
-      icon: Heart,
-      color: "text-rose-500"
-    }
-  ];
+  // Removed benefits and company values sections for simplified page
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -262,102 +204,6 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* Company Values */}
-      <section className="section-padding">
-        <div className="container-fluid mx-auto">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <motion.div variants={fadeInUp}>
-              <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                The Legend Code
-              </Badge>
-              <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900 leading-tight">
-                <span className="kinetic-text">How Legends</span> Are Born
-              </h2>
-              <p className="text-xl text-neutral-600 max-w-4xl mx-auto font-body leading-relaxed">
-                These aren&apos;t just company values—they&apos;re the sacred principles that transform ordinary people into extraordinary creators. 
-                Every legend who joins us embodies these truths.
-              </p>
-            </motion.div>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {companyValues.map((value, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="glass rounded-3xl p-8 text-center group hover:shadow-lg transition-all duration-300"
-              >
-                <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-200 flex items-center justify-center group-hover:from-amber-50 group-hover:to-orange-50 transition-all`}>
-                  <value.icon className={`w-8 h-8 ${value.color} transition-colors`} />
-                </div>
-                
-                <h3 className="text-xl font-heading mb-4 text-neutral-900 group-hover:text-amber-600 transition-colors">
-                  {value.title}
-                </h3>
-                
-                <p className="text-neutral-600 font-body leading-relaxed">
-                  {value.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="section-padding bg-neutral-100">
-        <div className="container-fluid mx-auto">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <motion.div variants={fadeInUp}>
-              <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Legend Privileges
-              </Badge>
-              <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900">
-                <span className="kinetic-text">Why Legends</span> Choose Us
-              </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
-                Because legends deserve legendary treatment. Here&apos;s how we invest in the visionaries who make miracles happen.
-              </p>
-            </motion.div>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="glass rounded-2xl p-6 group hover:shadow-lg transition-all duration-300"
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center group-hover:from-amber-200 group-hover:to-orange-200 transition-all flex-shrink-0">
-                    <benefit.icon className="w-6 h-6 text-amber-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-heading mb-2 text-neutral-900 group-hover:text-amber-600 transition-colors">
-                      {benefit.title}
-                    </h3>
-                    <p className="text-neutral-600 font-body leading-relaxed">
-                      {benefit.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Open Positions */}
       <section className="section-padding">
@@ -438,12 +284,18 @@ export default function CareersPage() {
                   </div>
                   
                   <div className="flex flex-col sm:flex-row gap-4 lg:flex-col lg:w-48">
-                    <Button className="btn-primary group">
-                      <span>Join This Legend</span>
+                    <Button 
+                      onClick={() => window.open('mailto:jobs@whitemassif.com?subject=Application for ' + job.title + '&body=Dear WhiteMassif Team,%0D%0A%0D%0AI am writing to express my interest in the ' + job.title + ' position.%0D%0A%0D%0APlease find my CV attached. I would be happy to discuss how my experience aligns with your requirements.%0D%0A%0D%0ABest regards', '_blank')}
+                      className="btn-primary group"
+                    >
+                      <span>Apply Now</span>
                       <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Button>
-                    <Button className="btn-outline group">
-                      <span>Discover More</span>
+                    <Button 
+                      onClick={() => window.open('mailto:jobs@whitemassif.com?subject=Inquiry about ' + job.title + ' role', '_blank')}
+                      className="btn-outline group"
+                    >
+                      <span>Ask Questions</span>
                     </Button>
                   </div>
                 </div>
@@ -475,19 +327,29 @@ export default function CareersPage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Button className="btn-primary group">
+                <Button 
+                  onClick={() => window.open('mailto:jobs@whitemassif.com?subject=Creating My Own Legendary Role&body=Dear WhiteMassif Team,%0D%0A%0D%0AI am a visionary professional interested in creating a unique role that aligns with my skills and your company\'s mission.%0D%0A%0D%0APlease find my CV and cover letter attached outlining my vision for contributing to WhiteMassif.%0D%0A%0D%0ABest regards', '_blank')}
+                  className="btn-primary group"
+                >
                   <Mail className="mr-2 w-5 h-5" />
-                  <span>Pitch Your Legend</span>
+                  <span>Create Custom Role</span>
                 </Button>
-                <Button className="btn-secondary group">
-                  <span>Meet Current Legends</span>
+                <Button 
+                  onClick={() => window.location.href = '/team'}
+                  variant="outline"
+                  className="border-2 border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group"
+                >
+                  <span>Meet Our Team</span>
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </div>
               
               <div className="mt-12 pt-8 border-t border-white/10">
-                <p className="text-white/60 text-sm">
-                  Email your vision to: <span className="text-amber-400">legends@whitemassif.com</span>
+                <p className="text-white/60 text-sm mb-2">
+                  Email your application to: <span className="text-amber-400">jobs@whitemassif.com</span>
+                </p>
+                <p className="text-white/50 text-xs">
+                  Include your cover letter and attach your CV to make your application complete
                 </p>
               </div>
             </motion.div>

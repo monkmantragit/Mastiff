@@ -120,11 +120,11 @@ export default function TeamPage() {
             
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
               <span className="kinetic-text">
-                The Minds
+                Meet Our
               </span>
               <br />
               <span className="text-white">
-                Behind The Magic
+                Expert Team
               </span>
             </h1>
             <p className="text-xl md:text-2xl mb-12 text-white/90 max-w-4xl mx-auto leading-relaxed font-body">
@@ -376,9 +376,6 @@ export default function TeamPage() {
                         {member.name}
                       </h3>
                       <p className="text-xs text-gray-600 leading-relaxed">{member.position}</p>
-                      {member.bio && (
-                        <p className="text-xs text-gray-500 mt-2 line-clamp-2">{member.bio}</p>
-                      )}
                     </div>
                   </div>
                 </motion.div>
