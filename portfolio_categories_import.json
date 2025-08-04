@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Corporate Events",
+    "slug": "corporate-events",
+    "icon": "Building",
+    "description": "Professional corporate events and business gatherings",
+    "sort_order": 1,
+    "status": "published"
+  },
+  {
+    "name": "Corporate Celebration",
+    "slug": "corporate-celebration",
+    "icon": "Heart",
+    "description": "Corporate celebrations and company milestone events",
+    "sort_order": 2,
+    "status": "published"
+  },
+  {
+    "name": "Awards Ceremony",
+    "slug": "awards-ceremony",
+    "icon": "Award",
+    "description": "Award ceremonies and recognition events",
+    "sort_order": 3,
+    "status": "published"
+  },
+  {
+    "name": "Summit",
+    "slug": "summit",
+    "icon": "Globe",
+    "description": "Industry summits and conference events",
+    "sort_order": 4,
+    "status": "published"
+  }
+]

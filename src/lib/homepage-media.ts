@@ -5,12 +5,12 @@ const SUPABASE_STORAGE_URL = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL || 'ht
 export class HomepageMediaService {
   static getServiceImages() {
     const serviceImageMap: Record<string, string> = {
-      businessEvents: `${SUPABASE_STORAGE_URL}/massif/homepage/home page - Business Events.jpg`,
-      celebrationGalore: `${SUPABASE_STORAGE_URL}/massif/homepage/home page - Celebration Galore.jpg`,
-      inauguration: `${SUPABASE_STORAGE_URL}/massif/homepage/Home page - Inaugurations.jpg`,
-      dealersMeet: `${SUPABASE_STORAGE_URL}/massif/homepage/Home page - Dealers meet_.jpg`,
-      hybridEvents: `${SUPABASE_STORAGE_URL}/massif/homepage/Hybrid Events.jpg`,
-      specialProjects: `${SUPABASE_STORAGE_URL}/massif/homepage/Ho,e page - special events.jpg`
+      businessEvents: `${SUPABASE_STORAGE_URL}/massif/homepage/home page - Business Events.jpg?quality=90&width=800&height=600`,
+      celebrationGalore: `${SUPABASE_STORAGE_URL}/massif/homepage/home page - Celebration Galore.jpg?quality=90&width=800&height=600`,
+      inauguration: `${SUPABASE_STORAGE_URL}/massif/homepage/Home page - Inaugurations.jpg?quality=90&width=800&height=600`,
+      dealersMeet: `${SUPABASE_STORAGE_URL}/massif/homepage/Home page - Dealers meet_.jpg?quality=90&width=800&height=600`,
+      hybridEvents: `${SUPABASE_STORAGE_URL}/massif/homepage/Hybrid Events.jpg?quality=90&width=800&height=600`,
+      specialProjects: `${SUPABASE_STORAGE_URL}/massif/homepage/Ho,e page - special events.jpg?quality=90&width=800&height=600`
     };
     
     return serviceImageMap;
@@ -21,14 +21,14 @@ export class HomepageMediaService {
   }
   
   static getPortfolioImages() {
-    // Get the numbered home page images for portfolio
+    // Get the numbered home page images for portfolio with optimized quality
     const portfolioImages = [
-      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3.jpg`,
-      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3_.jpg`,
-      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3(1).jpg`,
-      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3(2).jpg`,
-      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3(3).jpg`,
-      `${SUPABASE_STORAGE_URL}/massif/homepage/Home page 3(4).jpg`
+      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3.jpg?quality=85&width=600&height=450`,
+      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3_.jpg?quality=85&width=600&height=450`,
+      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3(1).jpg?quality=85&width=600&height=450`,
+      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3(2).jpg?quality=85&width=600&height=450`,
+      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3(3).jpg?quality=85&width=600&height=450`,
+      `${SUPABASE_STORAGE_URL}/massif/homepage/Home page 3(4).jpg?quality=85&width=600&height=450`
     ];
     
     return portfolioImages;

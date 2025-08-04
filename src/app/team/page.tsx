@@ -194,18 +194,52 @@ export default function TeamPage() {
             </motion.div>
             
             <motion.div variants={fadeInUp} className="relative">
-              <div className="relative overflow-hidden rounded-3xl">
-                <Image
-                  src="/assets/images/team/Untitled-design-2.png"
-                  alt="White Massif Team Culture"
-                  width={600}
-                  height={400}
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 text-white">
-                  <h3 className="text-lg font-medium mb-1">Team Excellence</h3>
-                  <p className="text-sm text-white/80">Dedicated professionals delivering exceptional results</p>
+              <div className="relative overflow-hidden rounded-3xl h-80 bg-gradient-to-br from-[#2A3959] via-[#1A2340] to-[#0F1826]">
+                {/* Gradient Background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#F9A625]/20 via-transparent to-[#F9A625]/10"></div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute top-8 right-8 w-20 h-20 bg-[#F9A625]/20 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-12 right-16 w-16 h-16 bg-white/10 rounded-full blur-xl"></div>
+                <div className="absolute top-1/2 left-8 w-2 h-2 bg-[#F9A625] rounded-full animate-pulse"></div>
+                <div className="absolute top-16 left-16 w-1 h-1 bg-white/60 rounded-full"></div>
+                <div className="absolute bottom-20 left-20 w-1 h-1 bg-[#F9A625]/80 rounded-full"></div>
+                
+                {/* Geometric Pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute top-8 right-1/4 w-24 h-24 border border-white/20 rounded-lg rotate-12"></div>
+                  <div className="absolute bottom-8 left-1/4 w-16 h-16 border border-[#F9A625]/30 rounded-lg -rotate-12"></div>
+                </div>
+                
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white p-8">
+                  <div className="w-16 h-16 bg-[#F9A625]/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm border border-white/10">
+                    <Trophy className="w-8 h-8 text-[#F9A625]" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Team Excellence</h3>
+                  <p className="text-white/80 text-lg max-w-md">Dedicated professionals delivering exceptional results through strategic thinking and creative execution</p>
+                  
+                  {/* Stats Icons */}
+                  <div className="flex items-center space-x-6 mt-6">
+                    <div className="text-center">
+                      <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center mb-1">
+                        <Users className="w-4 h-4 text-[#F9A625]" />
+                      </div>
+                      <span className="text-xs text-white/60">Team</span>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center mb-1">
+                        <Star className="w-4 h-4 text-[#F9A625]" />
+                      </div>
+                      <span className="text-xs text-white/60">Quality</span>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center mb-1">
+                        <Target className="w-4 h-4 text-[#F9A625]" />
+                      </div>
+                      <span className="text-xs text-white/60">Results</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -343,7 +377,7 @@ export default function TeamPage() {
                 <motion.div key={member.id || index} variants={fadeInUp}>
                   <div className="bg-white rounded-2xl overflow-hidden group hover:shadow-lg transition-all duration-500">
                     <div className="relative">
-                      <div className="w-full h-64 bg-gray-100 overflow-hidden">
+                      <div className="w-full h-80 bg-gray-100 overflow-hidden">
                         {member.team_member_image ? (
                           <Image
                             src={typeof member.team_member_image === 'string' 
@@ -352,8 +386,8 @@ export default function TeamPage() {
                             }
                             alt={member.name}
                             width={300}
-                            height={300}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            height={400}
+                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                             onError={(e) => {
                               console.error('Image failed to load:', e.currentTarget.src);
                               console.log('Member data:', member);
@@ -373,11 +407,11 @@ export default function TeamPage() {
                         </div>
                       )}
                     </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-medium text-black mb-1 group-hover:text-brand-blue transition-colors">
+                    <div className="p-6">
+                      <h3 className="text-lg font-medium text-black mb-2 group-hover:text-brand-blue transition-colors">
                         {member.name}
                       </h3>
-                      <p className="text-xs text-gray-600 leading-relaxed">{member.position}</p>
+                      <p className="text-sm text-gray-600 leading-relaxed">{member.position}</p>
                     </div>
                   </div>
                 </motion.div>

@@ -89,20 +89,24 @@ export default function Navigation() {
             >
               <Link href="/" className="group flex items-center space-x-4">
                 {/* Company Logo */}
-                <div className="relative">
+                <div className={`relative rounded-xl p-2 transition-all duration-300 ${
+                  isHomepage || isScrolled
+                    ? 'bg-gradient-to-br from-[#2A3959] to-[#1a2332] shadow-lg'
+                    : isDarkHeroPage
+                      ? 'bg-transparent'
+                      : 'bg-gradient-to-br from-[#2A3959] to-[#1a2332] shadow-lg'
+                }`}>
                   <img 
-                    src="/logo.png" 
+                    src="/logo.png"
                     alt="White Massif Event Management Logo" 
-                    className={`w-10 h-10 object-contain transition-all duration-300 group-hover:scale-110 ${
-                      shouldLogoBeBlack ? 'brightness-0' : 'brightness-0 invert'
-                    }`}
+                    className="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-[#F9A625]/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 
                 {/* Brand text */}
                 <div className="hidden sm:block">
-                  <div className={`text-xl font-display font-bold transition-all duration-300 ${
+                  <div className={`text-lg lg:text-xl font-display font-bold transition-all duration-300 ${
                     isHomepage 
                       ? 'text-[#2A3959] group-hover:text-[#F9A625]' 
                       : isDarkHeroPage
@@ -129,7 +133,7 @@ export default function Navigation() {
               {navItems.map((item) => (
                 <Link key={item.name} href={item.href}>
                   <motion.div
-                    className={`relative px-4 py-2 rounded-xl font-medium text-sm transition-all duration-300 ${
+                    className={`relative px-3 lg:px-4 py-2 rounded-xl font-medium text-sm lg:text-base transition-all duration-300 ${
                       pathname === item.href
                         ? isHomepage 
                           ? 'text-[#F9A625] bg-[#F9A625]/10' 

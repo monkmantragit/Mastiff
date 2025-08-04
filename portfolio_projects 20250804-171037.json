@@ -1,0 +1,21 @@
+[
+	{
+		"id": 1,
+		"status": "published",
+		"sort": null,
+		"user_created": "e22981d5-0405-4142-b8db-8b746c38a3d7",
+		"date_created": "2025-08-04T17:10:17.334Z",
+		"user_updated": null,
+		"date_updated": null,
+		"title": "BRIGADE FIESTA 2024",
+		"slug": "brigade-fiesta-2024",
+		"year": 2024,
+		"category": 2,
+		"description": "Prestigious awards ceremony honoring excellence...\"",
+		"featured_image": "4241f63e-ae3f-4d96-8a2f-6d2c0edf5ac8",
+		"client_name": null,
+		"event_date": null,
+		"location": null,
+		"sort_order": 0
+	}
+]

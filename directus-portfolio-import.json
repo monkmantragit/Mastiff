@@ -1,0 +1,194 @@
+{
+  "portfolio_categories": [
+    {
+      "id": 1,
+      "name": "Corporate Events",
+      "slug": "corporate-events",
+      "icon": "Building",
+      "description": "Professional corporate events and business gatherings",
+      "sort_order": 1,
+      "status": "published"
+    },
+    {
+      "id": 2,
+      "name": "Corporate Celebration",
+      "slug": "corporate-celebration",
+      "icon": "Heart",
+      "description": "Corporate celebrations and company milestone events",
+      "sort_order": 2,
+      "status": "published"
+    },
+    {
+      "id": 3,
+      "name": "Awards Ceremony",
+      "slug": "awards-ceremony",
+      "icon": "Award",
+      "description": "Award ceremonies and recognition events",
+      "sort_order": 3,
+      "status": "published"
+    },
+    {
+      "id": 4,
+      "name": "Summit",
+      "slug": "summit",
+      "icon": "Globe",
+      "description": "Industry summits and conference events",
+      "sort_order": 4,
+      "status": "published"
+    }
+  ],
+  "portfolio_projects": [
+    {
+      "id": 1,
+      "status": "published",
+      "title": "BRIGADE FIESTA 2024",
+      "slug": "brigade-fiesta-2024",
+      "year": 2024,
+      "category": 2,
+      "description": "Annual corporate fiesta celebrating company culture, achievements, and team collaboration with spectacular entertainment and engagement activities.",
+      "client_name": "Brigade Group",
+      "event_date": "2024-03-15",
+      "location": "Bangalore, Karnataka",
+      "sort_order": 1,
+      "gallery_images": [
+        "Brigade 1.jpg",
+        "Brigade 2.jpg",
+        "Brigade 3.jpg",
+        "Brigade 4.jpg",
+        "Brigade 5.jpg",
+        "Brigade 6.jpg",
+        "Brigade 7.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "status": "published",
+      "title": "DTICI AWARDS 2024",
+      "slug": "dtici-awards-2024",
+      "year": 2024,
+      "category": 3,
+      "description": "Prestigious awards ceremony honoring excellence in technology and innovation across multiple industries with distinguished guests and recognition programs.",
+      "client_name": "DTICI",
+      "event_date": "2024-04-20",
+      "location": "Bangalore, Karnataka",
+      "sort_order": 2,
+      "gallery_images": [
+        "DTICI 1.jpg",
+        "DTICI 2.jpg",
+        "DTICI 3.jpg",
+        "DTICI 4.jpg",
+        "DTICI 5.jpg",
+        "DTICI 6.jpg",
+        "DTICI 7.jpg"
+      ]
+    },
+    {
+      "id": 3,
+      "status": "published",
+      "title": "GRAND PMU INDIA 2024",
+      "slug": "grand-pmu-india-2024",
+      "year": 2024,
+      "category": 1,
+      "description": "Large-scale corporate event showcasing business excellence and strategic partnerships in the Indian market with comprehensive networking opportunities.",
+      "client_name": "Grand PMU",
+      "event_date": "2024-05-10",
+      "location": "Mumbai, Maharashtra",
+      "sort_order": 3,
+      "gallery_images": [
+        "GRAND PMU 1 (1).jpg",
+        "GRAND PMU 2 (1).jpg",
+        "grand PMU 3.jpg",
+        "Grand pmu 4 (1).jpg",
+        "Grand pmu 5 (1).jpg",
+        "Grand pmu 6.jpg",
+        "Grand pmu 7.jpg"
+      ]
+    },
+    {
+      "id": 4,
+      "status": "published",
+      "title": "GSK XTRAVAGANZA 2024",
+      "slug": "gsk-xtravaganza-2024",
+      "year": 2024,
+      "category": 2,
+      "description": "Grand corporate celebration combining entertainment, networking, and brand showcase for pharmaceutical excellence with world-class production values.",
+      "client_name": "GSK",
+      "event_date": "2024-06-05",
+      "location": "Hyderabad, Telangana",
+      "sort_order": 4,
+      "gallery_images": [
+        "003.jpg",
+        "004.jpg",
+        "005.jpg",
+        "006.jpg",
+        "GSK - Xtravaganza 2024-130.jpg",
+        "GSK - Xtravaganza 2024-154.jpg"
+      ]
+    },
+    {
+      "id": 5,
+      "status": "published",
+      "title": "MICELIO CLEAN MOBILITY SUMMIT 2024",
+      "slug": "micelio-clean-mobility-summit-2024",
+      "year": 2024,
+      "category": 4,
+      "description": "International summit focusing on sustainable mobility solutions and clean energy innovations with global industry leaders.",
+      "client_name": "Micelio",
+      "event_date": "2024-07-12",
+      "location": "Bangalore, Karnataka",
+      "sort_order": 5,
+      "gallery_images": [
+        "MICELIO 1.JPG",
+        "Micelio 2.JPG",
+        "Micelio 3.JPG",
+        "Micelio 4.JPG",
+        "Micelio 5.JPG",
+        "Micelio 6.JPG",
+        "Micelio 7.JPG"
+      ]
+    },
+    {
+      "id": 6,
+      "status": "published",
+      "title": "ROLLS ROYCE R2 DATA LABS 2024",
+      "slug": "rolls-royce-r2-data-labs-2024",
+      "year": 2024,
+      "category": 1,
+      "description": "High-profile corporate event showcasing cutting-edge data analytics and engineering solutions with premium hospitality and technical demonstrations.",
+      "client_name": "Rolls Royce",
+      "event_date": "2024-08-15",
+      "location": "Bangalore, Karnataka",
+      "sort_order": 6,
+      "gallery_images": [
+        "rolls royce 1.jpg",
+        "rolls royce 2.jpg",
+        "rolls royce 3.jpg",
+        "rolls royce 4.jpg",
+        "rolls royce 5.jpg"
+      ]
+    },
+    {
+      "id": 7,
+      "status": "published",
+      "title": "WITHUM SOFT 2024",
+      "slug": "withum-soft-2024",
+      "year": 2024,
+      "category": 1,
+      "description": "Strategic corporate event showcasing innovation and technology solutions for global business transformation with thought leadership sessions.",
+      "client_name": "Withum",
+      "event_date": "2024-09-20",
+      "location": "Chennai, Tamil Nadu",
+      "sort_order": 7,
+      "gallery_images": [
+        "withum 1.jpg",
+        "withum 2.jpg",
+        "withum 3.jpg",
+        "withum 4.jpg",
+        "withum 5.jpg",
+        "withum 6.jpg",
+        "withum 7.jpg",
+        "withum 8.jpg"
+      ]
+    }
+  ]
+}

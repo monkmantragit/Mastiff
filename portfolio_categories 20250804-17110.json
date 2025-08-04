@@ -1,0 +1,38 @@
+[
+	{
+		"id": 1,
+		"name": "Corporate Events",
+		"slug": "corporate-events",
+		"icon": "Building",
+		"description": null,
+		"sort_order": 0,
+		"status": null
+	},
+	{
+		"id": 2,
+		"name": "Corporate Celebration",
+		"slug": "corporate-celebration",
+		"icon": "Heart",
+		"description": null,
+		"sort_order": 0,
+		"status": null
+	},
+	{
+		"id": 3,
+		"name": "Awards Ceremony",
+		"slug": "awards-ceremony",
+		"icon": "Award",
+		"description": null,
+		"sort_order": 0,
+		"status": null
+	},
+	{
+		"id": 4,
+		"name": "Summit",
+		"slug": "summit",
+		"icon": "Globe",
+		"description": null,
+		"sort_order": null,
+		"status": null
+	}
+]

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
+import { WorkMediaService } from "@/lib/work-media";
 import { 
   ArrowRight, 
   Users, 
@@ -40,86 +41,8 @@ export default function WorkPage() {
   const [selectedCategory, setSelectedCategory] = React.useState("All");
   const [selectedYear, setSelectedYear] = React.useState("All");
 
-  // Real White Massif portfolio data
-  const portfolioItems = [
-    {
-      title: "WITHUM SOTF 2024",
-      year: "2024",
-      category: "Corporate Event",
-      image: "/assets/images/portfolio/DSC02450-scaled-1.jpg",
-      description: "Strategic corporate event showcasing innovation and technology solutions for global business transformation."
-    },
-    {
-      title: "EMPOWER CELEBRATION 2024",
-      year: "2024",
-      category: "Corporate Celebration",
-      image: "/assets/images/portfolio/92A2004-scaled-1.jpg",
-      description: "Employee empowerment celebration recognizing achievements and fostering team spirit across the organization."
-    },
-    {
-      title: "DTICI AWARDS 2024",
-      year: "2024",
-      category: "Awards Ceremony",
-      image: "/assets/images/portfolio/Untitled-design-19-1.png",
-      description: "Prestigious awards ceremony honoring excellence in technology and innovation across multiple industries."
-    },
-    {
-      title: "ROLLS ROYCE R2 DATA LABS 2024",
-      year: "2024",
-      category: "Corporate Event",
-      image: "/assets/images/portfolio/Untitled-design-23-1.png",
-      description: "High-profile corporate event showcasing cutting-edge data analytics and engineering solutions."
-    },
-    {
-      title: "MICELIO CLEAN MOBILITY SUMMIT 2024",
-      year: "2024",
-      category: "Summit",
-      image: "/assets/images/portfolio/PSGF6309-1-scaled-1-1024x1024.jpg",
-      description: "International summit focusing on sustainable mobility solutions and clean energy innovations."
-    },
-    {
-      title: "GSK XTRAVAGANZA 2024",
-      year: "2024",
-      category: "Corporate Celebration",
-      image: "/assets/images/portfolio/DSC02450-scaled-1.jpg",
-      description: "Grand corporate celebration combining entertainment, networking, and brand showcase for pharmaceutical excellence."
-    },
-    {
-      title: "PLURAL SIGHT TWO GETHER FOR DECADES 2024",
-      year: "2024",
-      category: "Corporate Event",
-      image: "/assets/images/portfolio/92A2004-scaled-1.jpg",
-      description: "Milestone celebration event marking decades of innovation in technology education and professional development."
-    },
-    {
-      title: "GRAND PMU INDIA 2024",
-      year: "2024",
-      category: "Corporate Event",
-      image: "/assets/images/portfolio/Untitled-design-19-1.png",
-      description: "Large-scale corporate event showcasing business excellence and strategic partnerships in the Indian market."
-    },
-    {
-      title: "WITHUM SOTF 2025",
-      year: "2025",
-      category: "Corporate Event",
-      image: "/assets/images/portfolio/Untitled-design-23-1.png",
-      description: "Next-generation corporate event featuring advanced technology solutions and strategic business insights."
-    },
-    {
-      title: "BRIGADE FIESTA 2024",
-      year: "2024",
-      category: "Corporate Celebration",
-      image: "/assets/images/portfolio/PSGF6309-1-scaled-1-1024x1024.jpg",
-      description: "Annual corporate fiesta celebrating company culture, achievements, and team collaboration."
-    },
-    {
-      title: "BRIGADE FIESTA 2023",
-      year: "2023",
-      category: "Corporate Celebration",
-      image: "/assets/images/portfolio/DSC02450-scaled-1.jpg",
-      description: "Previous year&apos;s successful corporate celebration setting the benchmark for employee engagement events."
-    }
-  ];
+  // Dynamic portfolio data from Supabase
+  const portfolioItems = WorkMediaService.getPortfolioItems();
 
   const stats = [
     { number: "500+", label: "Events Delivered", icon: Calendar },
@@ -143,7 +66,7 @@ export default function WorkPage() {
       <section className="relative py-24 hero-gradient text-white overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/assets/images/portfolio/DSC02450-scaled-1.jpg"
+            src={portfolioItems[0]?.image || "/assets/images/portfolio/DSC02450-scaled-1.jpg"}
             alt="White Massif Portfolio"
             fill
             className="object-cover opacity-30"
