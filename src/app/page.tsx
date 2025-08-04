@@ -151,32 +151,6 @@ export default function Home() {
     }
   ];
 
-  const teamHighlights = [
-    { 
-      name: "Prakash A Vaswani", 
-      position: "Director – Client Relations & Strategic Initiatives",
-      expertise: "Strategic Planning",
-      image: "/team/prakash.jpg"
-    },
-    { 
-      name: "Vinay Kukreja",  
-      position: "Director – Production, Finance & Operations",
-      expertise: "Operations Excellence",
-      image: "/team/vinay.png"
-    },
-    { 
-      name: "Hasan Peer H C", 
-      position: "Creative Director",
-      expertise: "Creative Vision",
-      image: "/team/hasan.jpg"
-    },
-    { 
-      name: "Naveen Abraham A", 
-      position: "Head - Operations",
-      expertise: "Execution Mastery",
-      image: "/team/naveen .jpg"
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -361,12 +335,21 @@ export default function Home() {
                       src={service.image}
                       alt={service.title}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
                       onError={(e) => {
                         console.error(`Failed to load service image: ${service.image}`);
+                        // Fallback to a placeholder color gradient instead of hiding
                         e.currentTarget.style.display = 'none';
+                        const parent = e.currentTarget.parentElement;
+                        if (parent) {
+                          parent.style.background = `bg-gradient-to-br from-[#2A3959] to-[#1E2A3A]`;
+                        }
                       }}
                       onLoad={() => {
-                        console.log(`✅ Service image loaded: ${service.title}`);
+                        if (process.env.NODE_ENV === 'development') {
+                          console.log(`✅ Service image loaded: ${service.title}`);
+                        }
                       }}
                     />
                     <div className={`absolute inset-0 bg-gradient-to-t ${service.gradient} opacity-40`} />
@@ -490,12 +473,21 @@ export default function Home() {
                     src={item.image}
                     alt={item.title}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       console.error(`Failed to load portfolio image: ${item.image}`);
+                      // Fallback to gradient background
                       e.currentTarget.style.display = 'none';
+                      const parent = e.currentTarget.parentElement;
+                      if (parent) {
+                        parent.style.background = 'linear-gradient(135deg, #2A3959 0%, #F9A625 100%)';
+                      }
                     }}
                     onLoad={() => {
-                      console.log(`✅ Portfolio image loaded: ${item.title}`);
+                      if (process.env.NODE_ENV === 'development') {
+                        console.log(`✅ Portfolio image loaded: ${item.title}`);
+                      }
                     }}
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300" />
@@ -726,43 +718,31 @@ export default function Home() {
             </motion.div>
             
             <motion.div variants={fadeInUp} className="relative">
-              <div className="grid grid-cols-2 gap-6 lg:gap-8">
-                  {teamHighlights.map((member, index) => (
-                  <div key={index} className="group relative">
-                    <div className="bg-white/10 backdrop-blur-md rounded-3xl overflow-hidden transition-all duration-300 hover:bg-white/20 hover:shadow-2xl hover:scale-105">
-                      {/* Image Container - Larger and more prominent */}
-                      <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
-                        <img 
-                          src={member.image} 
-                          alt={member.name}
-                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
-                        />
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        
-                        {/* Expertise Badge - Positioned at bottom right */}
-                        <div className="absolute bottom-4 right-4">
-                          <span className="text-xs px-3 py-1 bg-[#F9A625]/90 text-black font-semibold rounded-full shadow-lg">
-                            {member.expertise}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      {/* Content Section */}
-                      <div className="p-5 lg:p-6">
-                        <h4 className="font-bold text-white mb-1 text-base lg:text-lg">
-                          {member.name}
-                        </h4>
-                        <p className="text-white/70 text-sm lg:text-base leading-relaxed">
-                          {member.position}
-                        </p>
-                      </div>
-                    </div>
+              {/* Enhanced visual elements for better balance */}
+              <div className="relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-white/10">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-[#F9A625]/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <Users className="w-8 h-8 text-[#F9A625]" />
                   </div>
-                  ))}
+                  <h3 className="text-2xl lg:text-3xl font-display text-white mb-4">
+                    Meet Our Expert Team
+                  </h3>
+                  <p className="text-white/80 mb-8 max-w-md mx-auto">
+                    Our experienced professionals are ready to bring your vision to life with strategic planning and creative excellence.
+                  </p>
+                  <Link href="/team">
+                    <Button 
+                      variant="outline"
+                      className="border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black px-8 py-4 rounded-full transition-all duration-300"
+                    >
+                      Discover Our Team
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                </div>
               </div>
               
-              {/* Optional: Add a subtle pattern or decoration */}
+              {/* Decorative elements */}
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#F9A625]/10 rounded-full blur-3xl" />
               <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-white/5 rounded-full blur-3xl" />
             </motion.div>
@@ -770,37 +750,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Team Spotlight */}
-      <section className="py-16 lg:py-20 bg-neutral-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 text-center">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp}>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-[#2A3959] leading-tight max-w-4xl mx-auto">
-                Your Vision Awaits Its <span className="text-[#F9A625]">Moment</span>
-              </h2>
-              <p className="text-lg sm:text-xl lg:text-2xl text-neutral-600 max-w-4xl mx-auto mb-12 font-body leading-relaxed">
-                Four visionaries ready to transform your boldest ideas into unforgettable experiences. Your extraordinary event starts with a single conversation.
-              </p>
-              
-              <div className="flex justify-center mb-12">
-                <Button 
-                  onClick={() => openPopup('team-section')}
-                  size="lg"
-                  className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black px-16 py-6 rounded-full text-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 font-heading"
-                >
-                  Let's Create Magic Together
-                  <ArrowRight className="ml-3 h-6 w-6" />
-                </Button>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 }

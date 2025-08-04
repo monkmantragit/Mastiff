@@ -95,12 +95,40 @@ interface FormField {
   options?: string[];
 }
 
+interface PortfolioCategory {
+  id: number;
+  name: string;
+  slug: string;
+  icon: string;
+  description?: string;
+  sort_order: number;
+  status: 'published' | 'draft';
+}
+
+interface PortfolioProject {
+  id: number;
+  status: 'published' | 'draft';
+  title: string;
+  slug: string;
+  year: number;
+  category: PortfolioCategory;
+  description: string;
+  featured_image?: any;
+  gallery?: any[];
+  client_name?: string;
+  event_date?: string;
+  location?: string;
+  sort_order: number;
+}
+
 interface DirectusSchema {
   blog: Blog[];
   pages: Page[];
   services: Service[];
   team_members: TeamMember[];
   landing_pages: LandingPage[];
+  portfolio_categories: PortfolioCategory[];
+  portfolio_projects: PortfolioProject[];
 }
 
 // Create Directus client with proper Next.js configuration
@@ -122,5 +150,7 @@ export type {
   TeamMember, 
   LandingPage, 
   FormField, 
+  PortfolioCategory,
+  PortfolioProject,
   DirectusSchema 
 }; 
