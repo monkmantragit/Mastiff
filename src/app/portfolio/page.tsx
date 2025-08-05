@@ -78,7 +78,7 @@ export default function PortfolioPage() {
   
   // Generate dynamic categories from actual data
   const generateCategories = () => {
-    const categoryCount = {};
+    const categoryCount: Record<string, number> = {};
     portfolioItems.forEach(item => {
       categoryCount[item.category] = (categoryCount[item.category] || 0) + 1;
     });
@@ -88,7 +88,7 @@ export default function PortfolioPage() {
     ];
 
     Object.entries(categoryCount).forEach(([category, count]) => {
-      const categoryMap = {
+      const categoryMap: Record<string, { name: string; icon: any }> = {
         'Corporate Event': { name: 'Corporate Events', icon: Building },
         'Corporate Celebration': { name: 'Celebrations', icon: Heart },
         'Awards Ceremony': { name: 'Awards Ceremonies', icon: Award },
@@ -355,7 +355,7 @@ export default function PortfolioPage() {
                     <div className="mb-4">
                       <h4 className="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-3">Gallery Preview</h4>
                       <div className="grid grid-cols-4 gap-2">
-                        {item.gallery.slice(0, 4).map((imageUrl, idx) => (
+                        {item.gallery.slice(0, 4).map((imageUrl: string, idx: number) => (
                           <div key={idx} className="relative aspect-square rounded-lg overflow-hidden bg-slate-100">
                             <NextImage
                               src={imageUrl}

@@ -173,33 +173,13 @@ export default function Footer() {
               className="lg:col-span-1"
             >
               <div className="mb-6">
-                <div className="flex items-center space-x-3 mb-4">
+                <div className="flex justify-center mb-4">
                   <img 
                     src="/logo.png" 
                     alt="White Massif Event Management Logo" 
                     className="w-10 h-10 object-contain brightness-0 invert"
                   />
-                  <h3 className="text-2xl font-display text-[#F9A625]">White Massif</h3>
                 </div>
-                <p className="text-white/80 leading-relaxed mb-6">
-                  Transforming visions into extraordinary experiences. We don&apos;t just organize events – we create memories that last forever.
-                </p>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="space-y-4 mb-8">
-                {trustIndicators.map((item, index) => {
-                  const IconComponent = item.icon;
-                  return (
-                    <div key={index} className="flex items-center space-x-3">
-                      <IconComponent className="w-5 h-5 text-[#F9A625] flex-shrink-0" />
-                      <div>
-                        <div className="font-semibold">{item.text}</div>
-                        <div className="text-white/60 text-sm">{item.subtext}</div>
-                      </div>
-                    </div>
-                  );
-                })}
               </div>
 
               {/* Social Links */}
@@ -264,20 +244,6 @@ export default function Footer() {
                 ))}
               </nav>
 
-              <h4 className="font-bold text-lg mb-6">Quick Actions</h4>
-              <nav className="space-y-3">
-                {contactInfo.map((contact, index) => (
-                  <Link
-                    key={index}
-                    href={contact.href}
-                    target={contact.href.startsWith('http') ? '_blank' : undefined}
-                    rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="block text-white/80 hover:text-[#F9A625] transition-colors duration-300 hover:translate-x-1 transform"
-                  >
-                    {contact.name}
-                  </Link>
-                ))}
-              </nav>
             </motion.div>
 
             {/* Contact Information */}
@@ -294,49 +260,24 @@ export default function Footer() {
                 <div className="flex items-start space-x-3">
                   <Phone className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
                   <div>
-                    <div className="font-semibold mb-1">Call Us</div>
                     <Link href="tel:+919845045466" className="text-white/80 hover:text-[#F9A625] transition-colors">
                       +91 98450 45466
                     </Link>
-                    <div className="text-white/60 text-sm">Available 24/7</div>
                   </div>
                 </div>
 
-                {/* Email */}
-                <div className="flex items-start space-x-3">
-                  <Mail className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold mb-1">Email Us</div>
-                    <Link href="mailto:info@whitemassif.com" className="text-white/80 hover:text-[#F9A625] transition-colors">
-                      info@whitemassif.com
-                    </Link>
-                    <div className="text-white/60 text-sm">Quick response guaranteed</div>
-                  </div>
-                </div>
-
-                {/* Address */}
-                <div className="flex items-start space-x-3">
-                  <MapPin className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold mb-1">Visit Us</div>
-                    <address className="text-white/80 not-italic leading-relaxed">
-                      Bangalore, Karnataka<br />
-                      India
-                    </address>
-                  </div>
-                </div>
-
-                {/* Hours */}
-                <div className="flex items-start space-x-3">
-                  <Clock className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold mb-1">Business Hours</div>
-                    <div className="text-white/80 text-sm space-y-1">
-                      <div>Mon - Fri: 9:00 AM - 7:00 PM</div>
-                      <div>Sat: 10:00 AM - 5:00 PM</div>
-                      <div>Sun: Emergency only</div>
-                    </div>
-                  </div>
+                {/* Google Maps */}
+                <div className="mt-6">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.9021361290365!2d77.5800194!3d13.0419009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae171688e704a9%3A0x893beaaafc41d513!2sWhite%20Massif%20Event%20Management!5e0!3m2!1sen!2sin!4v1754391440612!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="200" 
+                    style={{border: 0}} 
+                    allowFullScreen 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="rounded-lg"
+                  />
                 </div>
               </div>
 

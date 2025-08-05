@@ -263,18 +263,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Trust Indicators */}
-              <div className="flex items-center gap-4 text-sm text-gray-500">
-                <div className="flex items-center gap-1">
-                  <Shield className="w-4 h-4 text-[#F9A625]" />
-                  <span>Trusted Partner</span>
-                </div>
-                <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4 text-[#F9A625]" />
-                  <span>Premium Quality</span>
-                </div>
-              </div>
 
             </div>
           </div>
@@ -307,9 +295,6 @@ export default function Home() {
             className="text-center mb-12 lg:mb-16"
           >
             <motion.div variants={fadeInUp}>
-              <Badge className="mb-6 bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/30 px-6 py-2">
-                What We Do Best
-              </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-[#2A3959] leading-tight max-w-4xl mx-auto">
                 Every Event Is A <span className="text-[#F9A625]">Masterpiece</span>
               </h2>
@@ -361,12 +346,6 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    {/* Service ID */}
-                    <div className="absolute top-6 right-6">
-                      <span className="text-white/70 text-2xl font-bold">
-                        {service.id}
-                      </span>
-                    </div>
                   </div>
                   
                   {/* Content */}
@@ -492,7 +471,6 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300" />
                   <div className="absolute bottom-6 left-6 text-white">
-                    <div className="text-sm text-[#F9A625] mb-1 font-medium">{item.category}</div>
                     <div className="text-lg font-semibold">{item.title}</div>
                   </div>
                 </motion.div>

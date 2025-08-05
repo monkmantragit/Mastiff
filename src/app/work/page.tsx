@@ -40,9 +40,20 @@ const staggerContainer = {
 export default function WorkPage() {
   const [selectedCategory, setSelectedCategory] = React.useState("All");
   const [selectedYear, setSelectedYear] = React.useState("All");
+  const [portfolioItems, setPortfolioItems] = React.useState<any[]>([]);
 
   // Dynamic portfolio data from Supabase
-  const portfolioItems = WorkMediaService.getPortfolioItems();
+  React.useEffect(() => {
+    const fetchPortfolio = async () => {
+      try {
+        const items = await WorkMediaService.getPortfolioItems();
+        setPortfolioItems(items);
+      } catch (error) {
+        console.error('Failed to fetch portfolio items:', error);
+      }
+    };
+    fetchPortfolio();
+  }, []);
 
   const stats = [
     { number: "500+", label: "Events Delivered", icon: Calendar },
