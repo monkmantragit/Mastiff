@@ -49,7 +49,7 @@ const serviceCategories = [
   { id: "corporate-events", name: "Business Events", icon: Building2 },
   { id: "celebrations", name: "Celebrations Galore", icon: PartyPopper },
   { id: "inaugurations", name: "Launches", icon: Scissors },
-  { id: "hybrid-events", name: "Hybrid Events", icon: Monitor },
+  { id: "hybrid-events", name: "", icon: Monitor },
   { id: "conventions", name: "Industry Conventions", icon: Users },
   { id: "special-projects", name: "Special Projects", icon: Star }
 ];
@@ -180,7 +180,7 @@ export default function ServicesPage() {
   },
   {
     id: "hybrid-events",
-    title: "Hybrid Events",
+    title: "",
     description: "Tailor made services to seamlessly execute hybrid events, combining the best of in-person and virtual components for a dynamic and engaging experience.",
     extendedDescription: "In these unparalleled times, we have fortified ourselves with advanced technical expertise and a refined skill set to proficiently orchestrate exceptional solutions to engage your colleagues, connect with stakeholders, host rewards and recognition events, unveil new products and services, and conduct fireside chats and leadership addresses—all executed either virtually or through a hybrid model. We achieve this through cutting-edge technology, innovative approaches, and the seamless integration of multiple applications streamed via virtual platforms. Our successful track record includes managing a spectrum of virtual events, from conferences, panel discussions, fireside chats, town halls, employee engagement and annual day celebrations.",
     mainImage: serviceImages.hybridEvents,
@@ -392,7 +392,7 @@ const endToEndServices = [
 
                   {/* Event Type Badges - Mobile Optimized */}
                   <div className="flex flex-wrap gap-2 sm:gap-4 justify-center mb-8 sm:mb-12 px-4 sm:px-0">
-                    {['Corporate Conferences', 'Product Launches', 'Hybrid Events', 'Team Celebrations'].map((type, index) => (
+                    {['', '', '', ''].map((type, index) => (
                       <motion.div
                         key={type}
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -483,7 +483,6 @@ const endToEndServices = [
 
           <div className="mobile-grid">
             {serviceCategories.map((category, index) => {
-              const IconComponent = category.icon;
               return (
                 <motion.button
                   key={category.id}
@@ -500,11 +499,6 @@ const endToEndServices = [
                   <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-[#F9A625]/10 to-transparent rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
                   
                   <div className="relative z-10 text-center">
-                    {/* Icon Container - Mobile Optimized */}
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#F9A625]/20 to-[#F9A625]/10 rounded-2xl sm:rounded-3xl flex items-center justify-center mb-4 sm:mb-6 mx-auto group-hover:from-[#F9A625]/30 group-hover:to-[#F9A625]/20 transition-all duration-500 group-hover:scale-110">
-                      <IconComponent className="w-8 h-8 sm:w-10 sm:h-10 text-[#F9A625] group-hover:scale-110 transition-all duration-300" />
-                    </div>
-                    
                     {/* Content - Mobile Typography */}
                     <h3 className="text-lg sm:text-xl font-bold text-[#2A3959] mb-2 sm:mb-3 group-hover:text-[#F9A625] transition-colors duration-300 mobile-heading">
                       {category.name}
@@ -588,23 +582,6 @@ const endToEndServices = [
                   ))}
                 </div>
                 
-                {/* Success Metrics - Mobile Optimized */}
-                <div className="mobile-card bg-gray-50 mb-6 sm:mb-8">
-                  <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
-                    <div>
-                      <div className="text-lg sm:text-xl lg:text-2xl font-display text-[#F9A625] mb-1">{service.stats.events}</div>
-                      <div className="text-xs sm:text-sm text-gray-600 font-body">Events</div>
-                    </div>
-                    <div>
-                      <div className="text-lg sm:text-xl lg:text-2xl font-display text-[#F9A625] mb-1">{service.stats.satisfaction}</div>
-                      <div className="text-xs sm:text-sm text-gray-600 font-body">Satisfaction</div>
-                    </div>
-                    <div>
-                      <div className="text-lg sm:text-xl lg:text-2xl font-display text-[#F9A625] mb-1">{service.stats.clients}</div>
-                      <div className="text-xs sm:text-sm text-gray-600 font-body">Happy Clients</div>
-                    </div>
-                  </div>
-                </div>
 
                 <Button 
                   onClick={() => openPopup(`services-${service.id}`)}
