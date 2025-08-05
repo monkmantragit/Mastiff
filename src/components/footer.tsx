@@ -313,9 +313,6 @@ export default function Footer() {
                 <span className="text-white/60">
                   Bangalore, Karnataka, India
                 </span>
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                  ISO 9001:2015 Certified
-                </Badge>
               </div>
             </motion.div>
           </div>

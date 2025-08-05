@@ -368,18 +368,6 @@ export default function Home() {
                       ))}
                     </div>
                     
-                    {/* Stats */}
-                    <div className="flex items-center justify-between pt-6 border-t border-gray-100">
-                      <div className="text-center">
-                        <div className="text-xl lg:text-2xl font-bold text-[#2A3959]">{service.stats.events}</div>
-                        <div className="text-xs text-gray-500">Events</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-xl lg:text-2xl font-bold text-[#F9A625]">{service.stats.clients}</div>
-                        <div className="text-xs text-gray-500">Happy Clients</div>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#F9A625] group-hover:translate-x-1 transition-all" />
-                    </div>
                   </div>
                 </motion.div>
               );
