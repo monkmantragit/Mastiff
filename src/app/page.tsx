@@ -227,7 +227,7 @@ export default function Home() {
                   onClick={() => openPopup('hero-cta')}
                   className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
                 >
-                  Let's Create Together
+                  Request Quote
                   <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
                 

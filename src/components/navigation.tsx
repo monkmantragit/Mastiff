@@ -99,32 +99,11 @@ export default function Navigation() {
                   <img 
                     src="/logo.png"
                     alt="White Massif Event Management Logo" 
-                    className="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110"
+                    className="w-10 h-10 sm:w-8 sm:h-8 object-contain transition-all duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-[#F9A625]/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 
-                {/* Brand text */}
-                <div className="hidden sm:block">
-                  <div className={`text-lg lg:text-xl font-display font-bold transition-all duration-300 ${
-                    isHomepage 
-                      ? 'text-[#2A3959] group-hover:text-[#F9A625]' 
-                      : isDarkHeroPage
-                        ? 'text-white group-hover:text-[#F9A625]'
-                        : 'bg-gradient-to-r from-neutral-900 to-neutral-700 bg-clip-text text-transparent group-hover:from-amber-600 group-hover:to-orange-600'
-                  }`}>
-                    White Massif
-                  </div>
-                  <div className={`text-xs font-body tracking-wider transition-colors duration-300 ${
-                    isHomepage 
-                      ? 'text-gray-600' 
-                      : isDarkHeroPage
-                        ? 'text-gray-300'
-                        : 'text-neutral-500'
-                  }`}>
-                    Premium Events
-                  </div>
-                </div>
               </Link>
             </motion.div>
 
@@ -267,12 +246,6 @@ export default function Navigation() {
                   <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-gradient-to-br from-[#F9A625] to-[#2A3959] rounded-lg flex items-center justify-center">
                       <Sparkles className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-lg font-display font-bold text-white">
-                        White Massif
-                      </div>
-                      <div className="text-xs text-white/60">Premium Events</div>
                     </div>
                   </div>
                   <button
