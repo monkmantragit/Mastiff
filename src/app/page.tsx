@@ -637,10 +637,10 @@ export default function Home() {
                 Let's Talk
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 leading-tight">
-                Your Vision Awaits Its <span className="text-[#F9A625]">Moment</span>
+                Ready to Plan Your <span className="text-[#F9A625]">Event?</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed">
-                Every extraordinary event begins with a conversation. Let's start yours.
+                Get a free consultation and quote for your corporate event. Professional planning guaranteed.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
@@ -669,7 +669,7 @@ export default function Home() {
                   size="lg"
                   className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-heading px-8 py-4 rounded-full text-lg"
                 >
-                  Begin Your Journey
+                  Get Free Quote
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button 

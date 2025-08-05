@@ -223,24 +223,24 @@ export default function BlogPage() {
             <CardContent className="p-12 text-center">
               <div className="inline-flex items-center space-x-2 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full mb-8">
                 <BookOpen className="w-5 h-5 text-[#F9A625]" />
-                <span className="text-sm font-medium tracking-wide">Join The Vision</span>
+                <span className="text-sm font-medium tracking-wide">Need Event Help?</span>
               </div>
               <h3 className="text-4xl md:text-5xl font-display mb-6 leading-tight">
-                Ready to Create Your <span className="text-[#F9A625]">Legend?</span>
+                Get Professional Event <span className="text-[#F9A625]">Planning</span>
               </h3>
               <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto font-body">
-                Don&apos;t just read about legendary events. Create them. Let our insights inspire your next vision.
+                Get a free consultation and see how we can handle your corporate event from start to finish.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg">
-                  Start Your Journey
+                  Get Free Consultation
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <Button 
                   variant="outline" 
                   className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
                 >
-                  Subscribe to Insights
+                  View Our Work
                 </Button>
               </div>
             </CardContent>

@@ -837,12 +837,11 @@ const endToEndServices = [
                 </div>
                 
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-white mb-4 sm:mb-6 mobile-heading">
-                  Stop Planning Events.
-                  <span className="text-[#F9A625] block">Start Creating Legacies.</span>
+                  Need Professional Event <span className="text-[#F9A625]">Management?</span>
                 </h2>
                 
                 <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed mobile-body-text">
-                  Join the visionaries who don't settle for ordinary. Your extraordinary awaits.
+                  Get expert event planning services. From corporate conferences to celebrations - we handle everything.
                 </p>
 
                 {/* Enhanced Contact Options - Mobile Optimized */}
