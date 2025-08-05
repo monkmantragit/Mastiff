@@ -387,7 +387,7 @@ export default function TeamPage() {
                             alt={member.name}
                             width={300}
                             height={400}
-                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                             onError={(e) => {
                               console.error('Image failed to load:', e.currentTarget.src);
                               console.log('Member data:', member);

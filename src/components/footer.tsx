@@ -173,7 +173,7 @@ export default function Footer() {
               className="lg:col-span-1"
             >
               <div className="mb-6">
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-start mb-4">
                   <img 
                     src="/logo.png" 
                     alt="White Massif Event Management Logo" 
