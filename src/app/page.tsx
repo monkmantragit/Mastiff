@@ -159,7 +159,7 @@ export default function Home() {
         {/* Full Video Background - Mobile Optimized */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <video
-            className="absolute inset-0 w-full h-full object-cover sm:object-cover object-contain"
+            className="absolute inset-0 w-full h-full object-cover"
             autoPlay
             muted
             loop
@@ -212,8 +212,7 @@ export default function Home() {
               {/* Headline Section - Mobile Typography */}
               <div className="text-center lg:text-left flex-1 max-w-3xl">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] leading-tight mb-3 sm:mb-4 mobile-heading">
-                  <span className="block">Crafting Corporate</span>
-                  <span className="block">Gatherings into</span>
+                  <span className="block">Crafting Corporate Gatherings into</span>
                   <span className="text-[#F9A625] block">Remarkable Experiences</span>
                 </h1>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 font-body leading-relaxed mobile-body-text">
@@ -227,16 +226,16 @@ export default function Home() {
                   onClick={() => openPopup('hero-cta')}
                   className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
                 >
-                  Request Quote
+                  Plan Your Event
                   <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
                 
-                <Link href="/team" className="w-full sm:w-auto">
+                <Link href="/portfolio" className="w-full sm:w-auto">
                   <Button 
                     variant="outline" 
                     className="mobile-touch-target bg-white border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-[#F9A625] hover:border-[#2A3959] transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading font-semibold px-6 sm:px-8 py-3 sm:py-4 min-h-[48px] w-full sm:w-auto"
                   >
-                    View Our Story
+                    Our Work
                   </Button>
                 </Link>
               </div>
@@ -251,7 +250,7 @@ export default function Home() {
                 <div className="flex items-center gap-2 text-[#2A3959]">
                   <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
                   <MapPin className="w-4 h-4 text-[#F9A625]" />
-                  <span>11 Years of Experience</span>
+                  <span>12+ Years of Experience</span>
                 </div>
                 <div className="flex items-center gap-2 text-[#2A3959]">
                   <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
@@ -382,14 +381,15 @@ export default function Home() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <Button 
-              onClick={() => openPopup('services-section')}
-              size="lg" 
-              className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg"
-            >
-              Explore All Services
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link href="/services">
+              <Button 
+                size="lg" 
+                className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg"
+              >
+                Explore All Services
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -422,10 +422,10 @@ export default function Home() {
               const portfolioItems = [
                 { title: "Corporate Conference", category: "Business" },
                 { title: "Cultural Celebration", category: "Cultural" },
-                { title: "Grand Opening", category: "Inauguration" },
+                { title: "Hybrid Event", category: "Technology" },
                 { title: "Team Building", category: "Corporate" },
-                { title: "Product Launch", category: "Corporate" },
-                { title: "Festival Event", category: "Cultural" }
+                { title: "Annual Year Celebration", category: "Corporate" },
+                { title: "Award Ceremony", category: "Recognition" }
               ];
               const item = { image, ...portfolioItems[index] };
               return (
@@ -560,28 +560,28 @@ export default function Home() {
                 title: "Dream Discovery",
                 description: "We don't just take briefs. We uncover dreams. Deep dive into your vision, values, and victory metrics.",
                 icon: "💡",
-                color: "from-blue-500 to-cyan-500"
+                color: "from-[#F9A625] to-[#2A3959]"
               },
               {
                 step: "02", 
                 title: "Strategic Sculpting",
                 description: "Your vision meets our expertise. Strategies carved with precision. Concepts crafted with care.",
                 icon: "📋",
-                color: "from-purple-500 to-pink-500"
+                color: "from-[#2A3959] to-[#F9A625]"
               },
               {
                 step: "03",
                 title: "Flawless Execution",
                 description: "Show time. Every element orchestrated. Every moment choreographed. Perfection, delivered.",
                 icon: "⚡",
-                color: "from-orange-500 to-red-500"
+                color: "from-[#F9A625] to-[#2A3959]"
               },
               {
                 step: "04",
                 title: "Legacy Creation",
                 description: "The event ends. The impact begins. Relationships deepened. Success stories written.",
                 icon: "🎯",
-                color: "from-green-500 to-emerald-500"
+                color: "from-[#2A3959] to-[#F9A625]"
               }
             ].map((process, index) => (
               <motion.div
@@ -647,8 +647,8 @@ export default function Home() {
                 {[
                   { icon: CheckCircle, title: "500+ Projects", desc: "Successfully delivered" },
                   { icon: Users, title: "800+ Events", desc: "Executed with precision" },
-                  { icon: Trophy, title: "165+ Corporate Clients", desc: "Trusted partnerships" },
-                  { icon: Target, title: "30+ Team Size", desc: "Dedicated professionals" }
+                  { icon: Trophy, title: "175+ Corporate Clients", desc: "Trusted partnerships" },
+                  { icon: Target, title: "35+ Team Size", desc: "Dedicated professionals" }
                 ].map((feature, index) => {
                   const FeatureIcon = feature.icon;
                   return (
@@ -669,7 +669,7 @@ export default function Home() {
                   size="lg"
                   className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-heading px-8 py-4 rounded-full text-lg"
                 >
-                  Get Free Quote
+                  Plan Your Event
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button 
@@ -678,7 +678,7 @@ export default function Home() {
                   className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
                 >
                   <Phone className="mr-2 h-5 w-5" />
-                  +91 98450 45466
+                  +91 99001 41155
               </Button>
               </div>
             </motion.div>

@@ -81,14 +81,15 @@ export default function Footer() {
   const contactInfo = [
     { name: 'Get Quote', href: '/', action: 'popup' },
     { name: 'WhatsApp Us', href: 'https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.' },
-    { name: 'Call Us', href: 'tel:+919845045466' },
+    { name: 'Call Us', href: 'tel:+919900141155' },
     { name: 'Email Us', href: 'mailto:info@whitemassif.com' }
   ];
 
   const socialLinks = [
     { icon: Linkedin, href: 'https://www.linkedin.com/company/whitemassif', label: 'LinkedIn', color: 'hover:text-blue-700' },
     { icon: Instagram, href: 'https://www.instagram.com/whitemassif/', label: 'Instagram', color: 'hover:text-pink-500' },
-    { icon: Facebook, href: 'https://www.facebook.com/whitemassif', label: 'Facebook', color: 'hover:text-blue-600' }
+    { icon: Facebook, href: 'https://www.facebook.com/whitemassif', label: 'Facebook', color: 'hover:text-blue-600' },
+    { icon: Youtube, href: 'https://www.youtube.com/@whitemassif', label: 'YouTube', color: 'hover:text-red-600' }
   ];
 
   const trustIndicators = [
@@ -256,12 +257,22 @@ export default function Footer() {
               <h4 className="font-bold text-lg mb-6">Get In Touch</h4>
               
               <div className="space-y-6">
+                {/* Email */}
+                <div className="flex items-start space-x-3">
+                  <Mail className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
+                  <div>
+                    <Link href="mailto:info@whitemassif.com" className="text-white/80 hover:text-[#F9A625] transition-colors">
+                      info@whitemassif.com
+                    </Link>
+                  </div>
+                </div>
+
                 {/* Phone */}
                 <div className="flex items-start space-x-3">
                   <Phone className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
                   <div>
-                    <Link href="tel:+919845045466" className="text-white/80 hover:text-[#F9A625] transition-colors">
-                      +91 98450 45466
+                    <Link href="tel:+919900141155" className="text-white/80 hover:text-[#F9A625] transition-colors">
+                      +91 99001 41155
                     </Link>
                   </div>
                 </div>
@@ -281,16 +292,6 @@ export default function Footer() {
                 </div>
               </div>
 
-              {/* Emergency Contact */}
-              <div className="mt-8 p-4 bg-[#F9A625]/10 rounded-lg border border-[#F9A625]/20">
-                <div className="text-[#F9A625] font-semibold mb-2">Event Emergency?</div>
-                <div className="text-white/80 text-sm">
-                  24/7 support for ongoing events
-                </div>
-                <Link href="tel:+919845045466" className="text-[#F9A625] hover:underline text-sm font-medium">
-                  Call Emergency Line
-                </Link>
-              </div>
             </motion.div>
           </div>
         </div>

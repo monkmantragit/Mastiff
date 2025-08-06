@@ -44,10 +44,8 @@ export default function Navigation() {
     { name: 'Services', href: '/services' },
     { name: 'Team', href: '/team' },
     { name: 'Work', href: '/portfolio' },
-    { name: 'Blog', href: '/blog' },
     { name: 'Clients', href: '/clients' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Contact', href: '/contact' }
+    { name: 'Careers', href: '/careers' }
   ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -158,7 +156,7 @@ export default function Navigation() {
                       ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black'
                       : 'btn-primary'
                 }`}>
-                <span>Get Quote</span>
+                <span>Plan Your Event</span>
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
 
