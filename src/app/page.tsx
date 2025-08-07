@@ -159,7 +159,7 @@ export default function Home() {
         {/* Full Video Background */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <video
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-contain"
             autoPlay
             muted
             loop
