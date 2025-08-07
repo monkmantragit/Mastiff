@@ -222,13 +222,14 @@ export default function Home() {
 
               {/* CTA Section - Touch Optimized */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:flex-col xl:flex-row w-full sm:w-auto">
-                <Button 
-                  onClick={() => openPopup('hero-cta')}
-                  className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
-                >
-                  Plan Your Event
-                  <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
-                </Button>
+                <Link href="/contact" className="w-full sm:w-auto">
+                  <Button 
+                    className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
+                  >
+                    Contact Us
+                    <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
+                  </Button>
+                </Link>
                 
                 <Link href="/portfolio" className="w-full sm:w-auto">
                   <Button 
@@ -559,28 +560,24 @@ export default function Home() {
                 step: "01",
                 title: "Dream Discovery",
                 description: "We don't just take briefs. We uncover dreams. Deep dive into your vision, values, and victory metrics.",
-                icon: "💡",
                 color: "from-[#F9A625] to-[#2A3959]"
               },
               {
                 step: "02", 
                 title: "Strategic Sculpting",
                 description: "Your vision meets our expertise. Strategies carved with precision. Concepts crafted with care.",
-                icon: "📋",
                 color: "from-[#2A3959] to-[#F9A625]"
               },
               {
                 step: "03",
                 title: "Flawless Execution",
                 description: "Show time. Every element orchestrated. Every moment choreographed. Perfection, delivered.",
-                icon: "⚡",
                 color: "from-[#F9A625] to-[#2A3959]"
               },
               {
                 step: "04",
                 title: "Legacy Creation",
                 description: "The event ends. The impact begins. Relationships deepened. Success stories written.",
-                icon: "🎯",
                 color: "from-[#2A3959] to-[#F9A625]"
               }
             ].map((process, index) => (
@@ -601,8 +598,6 @@ export default function Home() {
                       <span className="text-2xl font-bold text-white">{process.step}</span>
                     </div>
                     
-                    {/* Process Icon */}
-                    <div className="text-4xl mb-4">{process.icon}</div>
                     
                     {/* Title */}
                     <h3 className="text-xl font-bold text-white mb-4 group-hover:text-[#F9A625] transition-colors duration-300">
@@ -637,7 +632,7 @@ export default function Home() {
                 Let's Talk
               </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 leading-tight">
-                Ready to Plan Your <span className="text-[#F9A625]">Event?</span>
+                Ready to <span className="text-[#F9A625]">Contact Us?</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed">
                 Get a free consultation and quote for your corporate event. Professional planning guaranteed.
@@ -664,14 +659,15 @@ export default function Home() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  onClick={() => openPopup('cta-section')}
-                  size="lg"
-                  className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-heading px-8 py-4 rounded-full text-lg"
-                >
-                  Plan Your Event
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                <Link href="/contact">
+                  <Button 
+                    size="lg"
+                    className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-heading px-8 py-4 rounded-full text-lg"
+                  >
+                    Contact Us
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
                 <Button 
                   variant="outline"
                   size="lg" 
