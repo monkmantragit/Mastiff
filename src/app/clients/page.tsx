@@ -165,11 +165,11 @@ export default function ClientsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   
   // Horizontal scroll rows for a compact, elegant browse
-  const row1Ref = useRef<HTMLDivElement>(null);
-  const row2Ref = useRef<HTMLDivElement>(null);
+  const row1Ref = useRef<HTMLDivElement | null>(null);
+  const row2Ref = useRef<HTMLDivElement | null>(null);
   const moreClientsRow1 = allClientLogos.slice(0, 18);
   const moreClientsRow2 = allClientLogos.slice(18, 36);
-  const scrollRow = (ref: React.RefObject<HTMLDivElement>, direction: 1 | -1) => {
+  const scrollRow = (ref: React.RefObject<HTMLDivElement | null>, direction: 1 | -1) => {
     const distance = 420;
     ref.current?.scrollBy({ left: direction * distance, behavior: 'smooth' });
   };
