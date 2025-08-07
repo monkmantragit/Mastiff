@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
@@ -173,6 +173,43 @@ export default function ClientsPage() {
     const distance = 420;
     ref.current?.scrollBy({ left: direction * distance, behavior: 'smooth' });
   };
+
+  // Auto-scroll rows
+  useEffect(() => {
+    let rafId1 = 0;
+    let rafId2 = 0;
+    const speed1 = 0.6; // px per frame
+    const speed2 = 0.8; // px per frame
+
+    const tick1 = () => {
+      const el = row1Ref.current;
+      if (el) {
+        el.scrollLeft += speed1;
+        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
+          el.scrollLeft = 0;
+        }
+      }
+      rafId1 = requestAnimationFrame(tick1);
+    };
+
+    const tick2 = () => {
+      const el = row2Ref.current;
+      if (el) {
+        el.scrollLeft += speed2;
+        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
+          el.scrollLeft = 0;
+        }
+      }
+      rafId2 = requestAnimationFrame(tick2);
+    };
+
+    rafId1 = requestAnimationFrame(tick1);
+    rafId2 = requestAnimationFrame(tick2);
+    return () => {
+      cancelAnimationFrame(rafId1);
+      cancelAnimationFrame(rafId2);
+    };
+  }, []);
   
   // Filter clients based on category and search
   const filteredClients = allClientLogos.filter(client => {
@@ -298,7 +335,7 @@ export default function ClientsPage() {
             </motion.div>
           </motion.div>
 
-          {/* Featured Premium Clients (tight, premium grid) */}
+          {/* Featured Premium Clients (tight, premium grid) */
           <motion.div
             initial="initial"
             whileInView="animate"
@@ -324,44 +361,21 @@ export default function ClientsPage() {
                     }}
                   />
                 </div>
-                {/* Tooltip on hover */}
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-neutral-900 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap">
-                    {client.name}
-                  </div>
-                </div>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Compact browse: horizontally scrollable logo rows */}
+          {/* Compact browse: auto-scrolling logo rows */}
           <div className="space-y-6 mb-12">
             {[{ ref: row1Ref, data: moreClientsRow1 }, { ref: row2Ref, data: moreClientsRow2 }].map((row, idx) => (
               <div key={idx} className="relative">
-                {/* Left control */}
-                <button
-                  aria-label="Scroll logos left"
-                  onClick={() => scrollRow(row.ref, -1)}
-                  className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition"
-                >
-                  <ArrowRight className="w-5 h-5 rotate-180" />
-                </button>
-                {/* Right control */}
-                <button
-                  aria-label="Scroll logos right"
-                  onClick={() => scrollRow(row.ref, 1)}
-                  className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition"
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-
                 {/* Gradient edge masks */}
                 <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-neutral-100 to-transparent" />
                 <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-neutral-100 to-transparent" />
 
                 <div
                   ref={row.ref}
-                  className="overflow-x-auto scroll-smooth no-scrollbar"
+                  className="overflow-x-auto no-scrollbar"
                 >
                   <div className="flex items-center gap-4 px-6">
                     {row.data.map((client) => (
