@@ -57,7 +57,7 @@ export default function WorkPage() {
 
   const stats = [
     { number: "500+", label: "Events Delivered", icon: Calendar },
-    { number: "160+", label: "Happy Clients", icon: Users },
+    { number: "165+", label: "Happy Clients", icon: Users },
     { number: "12+", label: "Years Experience", icon: Award },
     { number: "98%", label: "Client Satisfaction", icon: Star }
   ];

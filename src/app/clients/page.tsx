@@ -34,13 +34,13 @@ const staggerContainer = {
 
 const stats = [
   {
-    number: "160+",
+    number: "165+",
     label: "Corporate Clients",
     icon: Users,
     color: "text-amber-400"
   },
   {
-    number: "11+",
+    number: "12+",
     label: "Years Experience", 
     icon: Trophy,
     color: "text-blue-400"
@@ -176,7 +176,7 @@ export default function ClientsPage() {
                 Our <span className="kinetic-text">Clients</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
-                Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with 160+ corporate clients across various industries.
+                Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with 165+ corporate clients across various industries.
               </p>
             </motion.div>
           </motion.div>

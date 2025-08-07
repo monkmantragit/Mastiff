@@ -304,7 +304,7 @@ export default function LandingPageTemplate({ params }: LandingPageProps) {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-display text-[#2A3959] mb-4">
-              Trusted by <span className="text-[#F9A625]">160+ Companies</span>
+              Trusted by <span className="text-[#F9A625]">165+ Companies</span>
             </h2>
             <p className="text-xl text-neutral-600">
               From Fortune 500 corporations to growing startups
@@ -315,8 +315,8 @@ export default function LandingPageTemplate({ params }: LandingPageProps) {
             {[
               { icon: Users, number: "1000+", label: "Events Delivered" },
               { icon: Star, number: "99%", label: "Client Satisfaction" },
-              { icon: Award, number: "160+", label: "Happy Clients" },
-              { icon: Target, number: "11+", label: "Years Experience" }
+              { icon: Award, number: "165+", label: "Happy Clients" },
+              { icon: Target, number: "12+", label: "Years Experience" }
             ].map((stat, index) => (
               <motion.div
                 key={index}

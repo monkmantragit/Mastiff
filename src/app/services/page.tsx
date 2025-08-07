@@ -387,7 +387,7 @@ const endToEndServices = [
                   </h1>
                   
                   <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-200 mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto mobile-body-text px-4 sm:px-0">
-                    11 years of expertise. 1000+ events delivered. 165+ corporate clients. Creating extraordinary corporate experiences that inspire, educate, and propel organizations to new heights.
+                    12 years of expertise. 1000+ events delivered. 165+ corporate clients. Creating extraordinary corporate experiences that inspire, educate, and propel organizations to new heights.
                   </p>
 
                   {/* Event Type Badges - Mobile Optimized */}

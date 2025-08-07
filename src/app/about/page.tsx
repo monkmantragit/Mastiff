@@ -50,7 +50,7 @@ export default function AboutPage() {
   const heroScale = useTransform(scrollY, [0, 500], [1, 1.1]);
 
   const stats = [
-    { number: "11+", label: "Years of Excellence", icon: Calendar, color: "text-blue-500" },
+    { number: "12+", label: "Years of Excellence", icon: Calendar, color: "text-blue-500" },
     { number: "1000+", label: "Dreams Realized", icon: Trophy, color: "text-amber-500" },
     { number: "1.5M+", label: "Lives Touched", icon: Users, color: "text-emerald-500" },
     { number: "150+", label: "Creative Minds", icon: Star, color: "text-purple-500" }

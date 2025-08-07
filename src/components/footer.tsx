@@ -94,7 +94,7 @@ export default function Footer() {
 
   const trustIndicators = [
     { icon: Star, text: '1000+ Events', subtext: 'Successfully Delivered' },
-    { icon: Award, text: '11+ Years', subtext: 'Industry Experience' },
+    { icon: Award, text: '12+ Years', subtext: 'Industry Experience' },
     { icon: Users, text: '150+ Team', subtext: 'Creative Professionals' }
   ];
 
@@ -176,9 +176,9 @@ export default function Footer() {
               <div className="mb-6">
                 <div className="flex justify-start mb-4">
                   <img 
-                    src="/logo.png" 
+                    src="/WM LOGO-05.png" 
                     alt="White Massif Event Management Logo" 
-                    className="w-10 h-10 object-contain brightness-0 invert"
+                    className="h-8 w-auto object-contain brightness-0 invert"
                   />
                 </div>
               </div>

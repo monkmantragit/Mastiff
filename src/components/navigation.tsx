@@ -87,19 +87,12 @@ export default function Navigation() {
             >
               <Link href="/" className="group flex items-center space-x-4">
                 {/* Company Logo */}
-                <div className={`relative rounded-xl p-2 transition-all duration-300 ${
-                  isHomepage || isScrolled
-                    ? 'bg-gradient-to-br from-[#2A3959] to-[#1a2332] shadow-lg'
-                    : isDarkHeroPage
-                      ? 'bg-transparent'
-                      : 'bg-gradient-to-br from-[#2A3959] to-[#1a2332] shadow-lg'
-                }`}>
+                <div className="relative transition-all duration-300">
                   <img 
-                    src="/logo.png"
+                    src="/WM LOGO-01.png"
                     alt="White Massif Event Management Logo" 
-                    className="w-10 h-10 sm:w-8 sm:h-8 object-contain transition-all duration-300 group-hover:scale-110"
+                    className="h-8 sm:h-10 w-auto object-contain transition-all duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-[#F9A625]/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 
               </Link>
@@ -147,18 +140,19 @@ export default function Navigation() {
 
             {/* CTA Button & Mobile Menu */}
             <div className="flex items-center space-x-4">
-              <Button 
-                onClick={() => openPopup('header-quote')}
-                className={`hidden md:flex text-sm px-6 py-2 ${
-                  isHomepage 
-                    ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black' 
-                    : isDarkHeroPage
-                      ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black'
-                      : 'btn-primary'
-                }`}>
-                <span>Plan Your Event</span>
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
+              <Link href="/contact">
+                <Button 
+                  className={`hidden md:flex text-sm px-6 py-2 ${
+                    isHomepage 
+                      ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black' 
+                      : isDarkHeroPage
+                        ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black'
+                        : 'btn-primary'
+                  }`}>
+                  <span>Contact Us</span>
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
 
               {/* Mobile menu button - Touch Optimized */}
               <motion.button

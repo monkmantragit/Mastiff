@@ -55,7 +55,7 @@ export default function TeamPage() {
     { number: teamMembers.length.toString(), label: "Team Members", icon: Users },
     { number: "12+", label: "Years Experience", icon: Award },
     { number: "500+", label: "Events Delivered", icon: Calendar },
-    { number: "160+", label: "Happy Clients", icon: Star }
+    { number: "165+", label: "Happy Clients", icon: Star }
   ];
 
   const getDepartmentData = () => {
@@ -176,7 +176,7 @@ export default function TeamPage() {
                 Our team brings together diverse skills and experience from across the event management industry. Each member contributes specialized knowledge to ensure your corporate events achieve their strategic objectives.
               </p>
               <p className="text-lg text-neutral-600 mb-10 leading-relaxed font-body">
-                With 11+ years of experience and over 1000 events delivered, our team has the proven expertise to handle everything from intimate leadership meetings to large-scale corporate conferences.
+                With 12+ years of experience and over 1000 events delivered, our team has the proven expertise to handle everything from intimate leadership meetings to large-scale corporate conferences.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 {[
