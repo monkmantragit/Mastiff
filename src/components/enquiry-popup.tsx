@@ -168,18 +168,10 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               
               
               {/* Company Statistics */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-                {[
-                  { number: "1.5M+", label: "AUDIENCE ENGAGEMENT" },
-                  { number: "1000+", label: "EVENTS" },
-                  { number: "165+", label: "CORPORATE CLIENTS" },
-                  { number: "30+", label: "TEAM SIZE" }
-                ].map((stat, index) => (
-                  <div key={index} className="text-center p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-                    <div className="text-xl sm:text-2xl font-bold text-[#2A3959]">{stat.number}</div>
-                    <div className="text-xs text-gray-500 font-medium">{stat.label}</div>
-                  </div>
-                ))}
+              <div className="mt-4 text-center">
+                <p className="text-[#F9A625] text-sm font-medium">
+                  1.5M+ Audience Engagement • 1000+ Events • 165+ Corporate Clients • 30+ Team Size
+                </p>
               </div>
             </div>
 
