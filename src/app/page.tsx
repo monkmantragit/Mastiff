@@ -237,10 +237,8 @@ export default function Home() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.2, delay: 0.2 }}
             >
-              <span className="block">Crafting Corporate</span>
-              <span className="block">Gatherings into</span>
-              <span className="text-[#F9A625] block">Remarkable</span>
-              <span className="block">Experiences</span>
+              <span className="block">Crafting Corporate Gatherings into</span>
+              <span className="block"><span className="text-[#F9A625]">Remarkable</span> Experiences</span>
             </motion.h1>
             
             <motion.p 
