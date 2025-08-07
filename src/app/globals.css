@@ -158,7 +158,6 @@
   
   body {
     @apply bg-background text-foreground text-base font-body;
-    cursor: none; /* Hide default cursor for custom cursor */
     overflow-x: hidden;
     line-height: 1.6;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";

@@ -167,6 +167,8 @@ export default function Home() {
             poster="/assets/images/home/01-01.png"
             preload="metadata"
             style={{
+              // Ensure video is behind all content
+              zIndex: -1,
               // Optimize video performance on mobile
               willChange: 'auto',
               backfaceVisibility: 'hidden'
@@ -180,7 +182,7 @@ export default function Home() {
           </video>
           
           {/* Enhanced overlay for better mobile readability */}
-          <div className="absolute inset-0 bg-black/30 sm:bg-black/20" />
+          <div className="absolute inset-0 bg-black/30 sm:bg-black/20 z-0" />
         </div>
 
         {/* Top Badge - Mobile Optimized */}
