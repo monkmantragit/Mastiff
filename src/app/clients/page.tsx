@@ -59,7 +59,39 @@ const stats = [
   }
 ];
 
-// Using actual client logos instead of notable clients list
+// Generate array of client logos from Supabase URLs
+const generateClientLogos = () => {
+  return Array.from({length: 154}, (_, i) => {
+    const num = String(i + 1).padStart(3, '0');
+    return {
+      id: `client-${num}`,
+      src: `https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-${num}.png`,
+      alt: `Client ${num}`,
+      fallback: i < 18 ? [
+        "/assets/images/clients/ABB.png",
+        "/assets/images/clients/Amazon-Web-services.webp",
+        "/assets/images/clients/Coca-cola-1.png",
+        "/assets/images/clients/EMC.webp",
+        "/assets/images/clients/Ericsson.webp",
+        "/assets/images/clients/GSK-1.png",
+        "/assets/images/clients/Johnson-controls-1.png",
+        "/assets/images/clients/KLM-1.png",
+        "/assets/images/clients/Microsoft.webp",
+        "/assets/images/clients/NTT-Data-1.png",
+        "/assets/images/clients/Novo-Nordis.png",
+        "/assets/images/clients/The-new-york-times-1.png",
+        "/assets/images/clients/Zluri.png",
+        "/assets/images/clients/TVS.png",
+        "/assets/images/clients/Hitachi.png",
+        "/assets/images/clients/GE-1-1.png",
+        "/assets/images/clients/Finastra.webp",
+        "/assets/images/clients/Groupon.webp"
+      ][i] : null
+    };
+  });
+};
+
+const clientLogos = generateClientLogos();
 
 export default function ClientsPage() {
   const heroRef = useRef(null);
@@ -181,43 +213,149 @@ export default function ClientsPage() {
             </motion.div>
           </motion.div>
 
-          {/* Client Logos Grid */}
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
-            {[
-              "/assets/images/clients/ABB.png",
-              "/assets/images/clients/Amazon-Web-services.webp",
-              "/assets/images/clients/Coca-cola-1.png",
-              "/assets/images/clients/EMC.webp",
-              "/assets/images/clients/Ericsson.webp",
-              "/assets/images/clients/GSK-1.png",
-              "/assets/images/clients/Johnson-controls-1.png",
-              "/assets/images/clients/KLM-1.png",
-              "/assets/images/clients/Microsoft.webp",
-              "/assets/images/clients/NTT-Data-1.png",
-              "/assets/images/clients/Novo-Nordis.png",
-              "/assets/images/clients/The-new-york-times-1.png",
-              "/assets/images/clients/Zluri.png",
-              "/assets/images/clients/TVS.png",
-              "/assets/images/clients/Hitachi.png",
-              "/assets/images/clients/GE-1-1.png",
-              "/assets/images/clients/Finastra.webp",
-              "/assets/images/clients/Groupon.webp"
-            ].map((logo, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 aspect-square"
-              >
-                <img
-                  src={logo}
-                  alt={`Client ${index + 1}`}
-                  className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-              </motion.div>
-            ))}
+          {/* Premium Client Logos Carousel */}
+          <div className="relative overflow-hidden">
+            {/* First Row - Left to Right */}
+            <div className="flex animate-scroll-left mb-8 hover:pause-animation">
+              {clientLogos.slice(0, 25).concat(clientLogos.slice(0, 25)).map((logo, index) => (
+                <div
+                  key={`row1-${logo.id}-${index}`}
+                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    onError={(e) => {
+                      if (logo.fallback) {
+                        e.currentTarget.src = logo.fallback;
+                      } else {
+                        e.currentTarget.style.display = 'none';
+                      }
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Second Row - Right to Left */}
+            <div className="flex animate-scroll-right mb-8 hover:pause-animation">
+              {clientLogos.slice(25, 50).concat(clientLogos.slice(25, 50)).map((logo, index) => (
+                <div
+                  key={`row2-${logo.id}-${index}`}
+                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    onError={(e) => {
+                      if (logo.fallback) {
+                        e.currentTarget.src = logo.fallback;
+                      } else {
+                        e.currentTarget.style.display = 'none';
+                      }
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Third Row - Left to Right */}
+            <div className="flex animate-scroll-left mb-8 hover:pause-animation">
+              {clientLogos.slice(50, 75).concat(clientLogos.slice(50, 75)).map((logo, index) => (
+                <div
+                  key={`row3-${logo.id}-${index}`}
+                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    onError={(e) => {
+                      if (logo.fallback) {
+                        e.currentTarget.src = logo.fallback;
+                      } else {
+                        e.currentTarget.style.display = 'none';
+                      }
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Fourth Row - Right to Left */}
+            <div className="flex animate-scroll-right mb-8 hover:pause-animation">
+              {clientLogos.slice(75, 100).concat(clientLogos.slice(75, 100)).map((logo, index) => (
+                <div
+                  key={`row4-${logo.id}-${index}`}
+                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    onError={(e) => {
+                      if (logo.fallback) {
+                        e.currentTarget.src = logo.fallback;
+                      } else {
+                        e.currentTarget.style.display = 'none';
+                      }
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Fifth Row - Left to Right */}
+            <div className="flex animate-scroll-left mb-8 hover:pause-animation">
+              {clientLogos.slice(100, 125).concat(clientLogos.slice(100, 125)).map((logo, index) => (
+                <div
+                  key={`row5-${logo.id}-${index}`}
+                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    onError={(e) => {
+                      if (logo.fallback) {
+                        e.currentTarget.src = logo.fallback;
+                      } else {
+                        e.currentTarget.style.display = 'none';
+                      }
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Sixth Row - Right to Left */}
+            <div className="flex animate-scroll-right hover:pause-animation">
+              {clientLogos.slice(125, 154).concat(clientLogos.slice(125, 154)).map((logo, index) => (
+                <div
+                  key={`row6-${logo.id}-${index}`}
+                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    onError={(e) => {
+                      if (logo.fallback) {
+                        e.currentTarget.src = logo.fallback;
+                      } else {
+                        e.currentTarget.style.display = 'none';
+                      }
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Gradient overlays for premium effect */}
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-neutral-100 to-transparent pointer-events-none z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-neutral-100 to-transparent pointer-events-none z-10" />
           </div>
         </div>
       </section>

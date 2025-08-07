@@ -457,6 +457,29 @@
     50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
     75% { border-radius: 60% 40% 60% 30% / 60% 30% 60% 70%; }
   }
+
+  /* Client Logo Carousel Animations */
+  @keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes scroll-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 60s linear infinite;
+  }
+
+  .animate-scroll-right {
+    animation: scroll-right 60s linear infinite;
+  }
+
+  .pause-animation:hover {
+    animation-play-state: paused;
+  }
   
   /* Responsive Container System */
   .container-fluid {
