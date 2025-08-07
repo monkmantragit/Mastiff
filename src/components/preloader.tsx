@@ -30,24 +30,26 @@ export function Preloader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-purple-900"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#2A3959]"
         >
-          {/* Logo */}
+          {/* White Massif Logo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="mb-12"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white font-serif">
-              White Massif
-            </h1>
+            <img 
+              src="/WM LOGO-01.png" 
+              alt="White Massif" 
+              className="h-16 md:h-20 w-auto object-contain"
+            />
           </motion.div>
 
           {/* Progress Bar */}
-          <div className="w-80 h-0.5 bg-white/20 rounded-full overflow-hidden">
+          <div className="w-80 h-1 bg-white/20 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-gradient-to-r from-yellow-400 to-pink-500 rounded-full"
+              className="h-full bg-gradient-to-r from-[#F9A625] to-[#e8951e] rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.3 }}
