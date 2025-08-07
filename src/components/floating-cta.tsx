@@ -125,7 +125,7 @@ export default function FloatingCTA() {
             <Button
               type="button"
               onClick={handleMainClick}
-              className="w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl border-4 border-white/20 backdrop-blur-sm relative z-10"
+              className="w-14 h-14 bg-[#F9A625] hover:bg-[#e8951e] text-white rounded-full shadow-2xl border-4 border-white/20 backdrop-blur-sm relative z-10"
             >
               <MessageCircle className="w-6 h-6" />
             </Button>
@@ -147,7 +147,7 @@ export default function FloatingCTA() {
           {/* Pulse Animation for Attention */}
           {!isExpanded && (
             <motion.div
-              className="absolute inset-0 bg-green-500 rounded-full pointer-events-none"
+              className="absolute inset-0 bg-[#F9A625] rounded-full pointer-events-none"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.7, 0, 0.7],
