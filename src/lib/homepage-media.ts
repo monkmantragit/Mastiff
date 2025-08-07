@@ -9,7 +9,7 @@ export class HomepageMediaService {
       celebrationGalore: `${SUPABASE_STORAGE_URL}/massif/homepage/home page - Celebration Galore.jpg?quality=90&width=800&height=600`,
       inauguration: `${SUPABASE_STORAGE_URL}/massif/homepage/Home%20page%20-%20Inauguration_.jpg?quality=90&width=800&height=600`,
       dealersMeet: `${SUPABASE_STORAGE_URL}/massif/homepage/Home%20page%202%20-Industry%20Convention,%20Customer%20&%20Dealers%20Meet.jpg?quality=90&width=800&height=600`,
-      hybridEvents: `${SUPABASE_STORAGE_URL}/massif/homepage/Hybrid Events.jpg?quality=90&width=800&height=600`,
+      hybridEvents: `${SUPABASE_STORAGE_URL}/massif/services/Home%20page%202-%20Hybrid%20Events.jpg?quality=90&width=800&height=600`,
       specialProjects: `${SUPABASE_STORAGE_URL}/massif/homepage/Ho,e page - special events.jpg?quality=90&width=800&height=600`
     };
     

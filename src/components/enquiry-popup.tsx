@@ -150,7 +150,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                 </Button>
               </div>
               
-              <div className="flex items-center space-x-3 mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-3 mb-4">
                 <img 
                   src="/WM LOGO-05.png" 
                   alt="White Massif Logo" 

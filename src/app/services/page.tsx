@@ -538,12 +538,12 @@ const endToEndServices = [
                   ))}
                 </div>
                 
-                <button 
-                  onClick={() => openPopup(`gallery-${service.id}`)}
-                  className="mt-3 sm:mt-4 text-[#F9A625] hover:text-[#F9A625]/80 font-body text-sm transition-colors mobile-touch-target py-2"
+                <Button 
+                  onClick={() => openPopup(`services-${service.id}`)}
+                  className="mt-3 sm:mt-4 btn-primary mobile-touch-target text-white font-semibold px-4 py-2 rounded-lg text-sm w-full sm:w-auto"
                 >
-                  View Portfolio ({service.gallery.length} photos)
-                </button>
+                  Plan your event
+                </Button>
               </motion.div>
             </div>
           </div>
