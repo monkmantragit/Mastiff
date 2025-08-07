@@ -154,9 +154,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Clean Video Hero Section - Mobile Optimized */}
-      <section ref={heroRef} className="relative min-h-screen sm:min-h-[120vh] lg:min-h-screen xl:min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Full Video Background - Mobile Optimized */}
+      {/* Pure Video Section */}
+      <section className="relative h-screen overflow-hidden">
+        {/* Full Video Background */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <video
             className="absolute inset-0 w-full h-full object-cover"
@@ -167,9 +167,7 @@ export default function Home() {
             poster="/assets/images/home/01-01.png"
             preload="metadata"
             style={{
-              // Ensure video is behind all content
-              zIndex: -1,
-              // Optimize video performance on mobile
+              zIndex: 1,
               willChange: 'auto',
               backfaceVisibility: 'hidden'
             }}
@@ -181,98 +179,26 @@ export default function Home() {
             <source src={heroVideo} type="video/mp4" />
           </video>
           
-          {/* Enhanced overlay for better mobile readability */}
-          <div className="absolute inset-0 bg-black/30 sm:bg-black/20 z-0" />
+          {/* Subtle overlay for depth */}
+          <div className="absolute inset-0 bg-black/10 z-10" />
         </div>
 
-        {/* Top Badge - Mobile Optimized */}
+        {/* Minimal Top Badge */}
         <motion.div 
-          className="absolute top-4 sm:top-8 left-1/2 transform -translate-x-1/2 z-10 px-4"
+          className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
           initial={{ opacity: 0, y: -20 }}
-          animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <Badge className="bg-[#F9A625]/95 text-black border-none text-xs sm:text-sm px-3 sm:px-4 py-2 backdrop-blur-sm font-body shadow-lg mobile-touch-target">
-            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-            <span className="hidden sm:inline">Transforming Ideas Into Exceptional Experiences</span>
-            <span className="sm:hidden">Exceptional Experiences</span>
+          <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-sm px-4 py-2">
+            <MapPin className="w-4 h-4 mr-2" />
+            Bangalore's Premier Event Management
           </Badge>
-        </motion.div>
-
-        {/* Redesigned Sticky Bottom Bar - Mobile Optimized */}
-        <motion.div 
-          className="absolute bottom-0 left-0 right-0 z-20 bg-white/95 backdrop-blur-md border-t border-white/20"
-          initial={{ opacity: 0, y: 100 }}
-          animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1.2, delay: 1 }}
-        >
-          <div className="max-w-7xl mx-auto mobile-container py-6 sm:py-8">
-            
-            {/* Main Content Row - Mobile Optimized */}
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 mb-4 sm:mb-6">
-              
-              {/* Headline Section - Mobile Typography */}
-              <div className="text-center lg:text-left flex-1 max-w-3xl">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] leading-tight mb-3 sm:mb-4 mobile-heading">
-                  <span className="block">Crafting Corporate Gatherings into</span>
-                  <span className="text-[#F9A625] block">Remarkable Experiences</span>
-                </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 font-body leading-relaxed mobile-body-text">
-                  We Are Creators. Writers. Producers. Experiential Designers. Idea Generators. Visionaries. Technical Directors. Logistic Masters. Entertainment Directors. Architects of Memories. Dreamers. Doers.
-                </p>
-              </div>
-
-              {/* CTA Section - Touch Optimized */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:flex-col xl:flex-row w-full sm:w-auto">
-                <Link href="/contact" className="w-full sm:w-auto">
-                  <Button 
-                    className="btn-primary mobile-touch-target text-base sm:text-lg font-heading px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-xl transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
-                  >
-                    Contact Us
-                    <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6" />
-                  </Button>
-                </Link>
-                
-                <Link href="/portfolio" className="w-full sm:w-auto">
-                  <Button 
-                    variant="outline" 
-                    className="mobile-touch-target bg-white border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-[#F9A625] hover:border-[#2A3959] transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading font-semibold px-6 sm:px-8 py-3 sm:py-4 min-h-[48px] w-full sm:w-auto"
-                  >
-                    View Our Work
-                  </Button>
-                </Link>
-              </div>
-
-            </div>
-
-            {/* Bottom Info Bar */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200/50">
-              
-              {/* Key Highlights */}
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 lg:gap-6 text-sm font-body">
-                <div className="flex items-center gap-2 text-[#2A3959]">
-                  <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
-                  <MapPin className="w-4 h-4 text-[#F9A625]" />
-                  <span>12+ Years of Experience</span>
-                </div>
-                <div className="flex items-center gap-2 text-[#2A3959]">
-                  <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
-                  <span>1000+ Events and Counting</span>
-                </div>
-                <div className="flex items-center gap-2 text-[#2A3959]">
-                  <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
-                  <span>1.5M+ Audience Engagement</span>
-                </div>
-              </div>
-
-
-            </div>
-          </div>
         </motion.div>
 
         {/* Scroll Indicator */}
         <motion.div 
-          className="absolute bottom-32 lg:bottom-40 left-1/2 transform -translate-x-1/2 text-white z-10"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 10, 0] }}
           transition={{ delay: 2, duration: 2, repeat: Infinity }}
@@ -284,6 +210,97 @@ export default function Home() {
             <span className="text-xs mt-2 text-white/80">Scroll</span>
           </div>
         </motion.div>
+      </section>
+
+      {/* Hero Content Section */}
+      <section ref={heroRef} className="relative py-16 lg:py-24 bg-gradient-to-br from-neutral-50 via-white to-amber-50/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-center"
+          >
+            {/* Premium Badge */}
+            <motion.div 
+              className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow"
+              whileHover={{ scale: 1.05 }}
+            >
+              <Trophy className="w-5 h-5 text-amber-500" />
+              <span className="text-sm font-medium tracking-wide">Award-Winning Event Creators</span>
+            </motion.div>
+
+            {/* Main Headline */}
+            <motion.h1 
+              className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display leading-[0.9] mb-8 text-[#2A3959]"
+              initial={{ opacity: 0, y: 50 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1.2, delay: 0.2 }}
+            >
+              <span className="block">Crafting Corporate</span>
+              <span className="block">Gatherings into</span>
+              <span className="text-[#F9A625] block">Remarkable</span>
+              <span className="block">Experiences</span>
+            </motion.h1>
+            
+            <motion.p 
+              className="text-xl md:text-2xl lg:text-3xl mb-12 font-body max-w-5xl mx-auto text-neutral-600 leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.4 }}
+            >
+              We Are Creators. Writers. Producers. Experiential Designers. Idea Generators. Visionaries. Technical Directors. Logistic Masters. Entertainment Directors. Architects of Memories. Dreamers. Doers.
+            </motion.p>
+
+            {/* CTA Section */}
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.6 }}
+            >
+              <Button 
+                onClick={() => openPopup('hero-cta')}
+                className="btn-primary group px-8 py-4 text-lg"
+              >
+                <span>Start Your Event Journey</span>
+                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+              <Button 
+                onClick={() => window.open('tel:+919845012345', '_self')}
+                variant="outline"
+                className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group"
+              >
+                <Phone className="mr-2 w-5 h-5" />
+                <span>+91 99001 41155</span>
+              </Button>
+            </motion.div>
+
+            {/* Key Highlights */}
+            <motion.div 
+              className="flex flex-wrap items-center justify-center gap-8 text-sm font-body"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              <div className="flex items-center gap-2 text-[#2A3959]">
+                <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
+                <Trophy className="w-4 h-4 text-[#F9A625]" />
+                <span>12+ Years of Excellence</span>
+              </div>
+              <div className="flex items-center gap-2 text-[#2A3959]">
+                <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
+                <Users className="w-4 h-4 text-[#F9A625]" />
+                <span>1000+ Events Delivered</span>
+              </div>
+              <div className="flex items-center gap-2 text-[#2A3959]">
+                <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
+                <Star className="w-4 h-4 text-[#F9A625]" />
+                <span>1.5M+ Audience Engaged</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Our Events in Action Section */}

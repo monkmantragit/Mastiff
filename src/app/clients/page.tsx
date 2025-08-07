@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
@@ -12,7 +12,10 @@ import {
   Calendar,
   Trophy,
   Star,
-  Phone
+  Phone,
+  X,
+  Search,
+  Filter
 } from "lucide-react";
 
 // Animation variants
@@ -59,44 +62,116 @@ const stats = [
   }
 ];
 
-// Generate array of client logos from Supabase URLs
-const generateClientLogos = () => {
+// Featured premium clients for hero display
+const featuredClients = [
+  {
+    name: "Microsoft",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-010.png",
+    fallback: "/assets/images/clients/Microsoft.webp",
+    category: "Technology"
+  },
+  {
+    name: "Amazon Web Services", 
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-002.png",
+    fallback: "/assets/images/clients/Amazon-Web-services.webp",
+    category: "Technology"
+  },
+  {
+    name: "Johnson & Johnson",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-007.png",
+    fallback: "/assets/images/clients/Johnson-controls-1.png",
+    category: "Healthcare"
+  },
+  {
+    name: "GSK",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-006.png",
+    fallback: "/assets/images/clients/GSK-1.png",
+    category: "Pharmaceutical"
+  },
+  {
+    name: "Coca Cola",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-003.png",
+    fallback: "/assets/images/clients/Coca-cola-1.png",
+    category: "Consumer Goods"
+  },
+  {
+    name: "Ericsson",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-005.png",
+    fallback: "/assets/images/clients/Ericsson.webp",
+    category: "Telecommunications"
+  },
+  {
+    name: "Hitachi",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-015.png",
+    fallback: "/assets/images/clients/Hitachi.png",
+    category: "Industrial"
+  },
+  {
+    name: "TVS",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-014.png",
+    fallback: "/assets/images/clients/TVS.png",
+    category: "Automotive"
+  },
+  {
+    name: "The New York Times",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-012.png",
+    fallback: "/assets/images/clients/The-new-york-times-1.png",
+    category: "Media"
+  },
+  {
+    name: "KLM",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-008.png",
+    fallback: "/assets/images/clients/KLM-1.png",
+    category: "Aviation"
+  },
+  {
+    name: "ABB",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-001.png",
+    fallback: "/assets/images/clients/ABB.png",
+    category: "Industrial"
+  },
+  {
+    name: "EMC",
+    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-004.png",
+    fallback: "/assets/images/clients/EMC.webp",
+    category: "Technology"
+  }
+];
+
+// Generate all client logos for modal display
+const generateAllClientLogos = () => {
   return Array.from({length: 154}, (_, i) => {
     const num = String(i + 1).padStart(3, '0');
     return {
       id: `client-${num}`,
       src: `https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-${num}.png`,
       alt: `Client ${num}`,
-      fallback: i < 18 ? [
-        "/assets/images/clients/ABB.png",
-        "/assets/images/clients/Amazon-Web-services.webp",
-        "/assets/images/clients/Coca-cola-1.png",
-        "/assets/images/clients/EMC.webp",
-        "/assets/images/clients/Ericsson.webp",
-        "/assets/images/clients/GSK-1.png",
-        "/assets/images/clients/Johnson-controls-1.png",
-        "/assets/images/clients/KLM-1.png",
-        "/assets/images/clients/Microsoft.webp",
-        "/assets/images/clients/NTT-Data-1.png",
-        "/assets/images/clients/Novo-Nordis.png",
-        "/assets/images/clients/The-new-york-times-1.png",
-        "/assets/images/clients/Zluri.png",
-        "/assets/images/clients/TVS.png",
-        "/assets/images/clients/Hitachi.png",
-        "/assets/images/clients/GE-1-1.png",
-        "/assets/images/clients/Finastra.webp",
-        "/assets/images/clients/Groupon.webp"
-      ][i] : null
+      // Assign industry categories (simplified for demo)
+      category: ['Technology', 'Healthcare', 'Manufacturing', 'Finance', 'Automotive', 'Media'][i % 6]
     };
   });
 };
 
-const clientLogos = generateClientLogos();
+const allClientLogos = generateAllClientLogos();
 
 export default function ClientsPage() {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
   const { openPopup } = usePopup();
+  
+  // Modal state for client showcase
+  const [showAllClients, setShowAllClients] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  // Filter clients based on category and search
+  const filteredClients = allClientLogos.filter(client => {
+    const matchesCategory = selectedCategory === 'All' || client.category === selectedCategory;
+    const matchesSearch = client.alt.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+  
+  const categories = ['All', 'Technology', 'Healthcare', 'Manufacturing', 'Finance', 'Automotive', 'Media'];
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -213,150 +288,62 @@ export default function ClientsPage() {
             </motion.div>
           </motion.div>
 
-          {/* Premium Client Logos Carousel */}
-          <div className="relative overflow-hidden">
-            {/* First Row - Left to Right */}
-            <div className="flex animate-scroll-left mb-8 hover:pause-animation">
-              {clientLogos.slice(0, 25).concat(clientLogos.slice(0, 25)).map((logo, index) => (
-                <div
-                  key={`row1-${logo.id}-${index}`}
-                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
-                >
+          {/* Featured Premium Clients */}
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 lg:gap-8 mb-12"
+          >
+            {featuredClients.map((client, index) => (
+              <motion.div
+                key={client.name}
+                variants={fadeInUp}
+                className="group relative"
+              >
+                <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl transition-all duration-500 aspect-square flex items-center justify-center glass micro-bounce">
                   <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    src={client.logo}
+                    alt={client.name}
+                    className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                     onError={(e) => {
-                      if (logo.fallback) {
-                        e.currentTarget.src = logo.fallback;
-                      } else {
-                        e.currentTarget.style.display = 'none';
+                      if (client.fallback) {
+                        e.currentTarget.src = client.fallback;
                       }
                     }}
                   />
                 </div>
-              ))}
-            </div>
-
-            {/* Second Row - Right to Left */}
-            <div className="flex animate-scroll-right mb-8 hover:pause-animation">
-              {clientLogos.slice(25, 50).concat(clientLogos.slice(25, 50)).map((logo, index) => (
-                <div
-                  key={`row2-${logo.id}-${index}`}
-                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                    onError={(e) => {
-                      if (logo.fallback) {
-                        e.currentTarget.src = logo.fallback;
-                      } else {
-                        e.currentTarget.style.display = 'none';
-                      }
-                    }}
-                  />
+                {/* Tooltip on hover */}
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-neutral-900 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap">
+                    {client.name}
+                  </div>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
+          </motion.div>
 
-            {/* Third Row - Left to Right */}
-            <div className="flex animate-scroll-left mb-8 hover:pause-animation">
-              {clientLogos.slice(50, 75).concat(clientLogos.slice(50, 75)).map((logo, index) => (
-                <div
-                  key={`row3-${logo.id}-${index}`}
-                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                    onError={(e) => {
-                      if (logo.fallback) {
-                        e.currentTarget.src = logo.fallback;
-                      } else {
-                        e.currentTarget.style.display = 'none';
-                      }
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Fourth Row - Right to Left */}
-            <div className="flex animate-scroll-right mb-8 hover:pause-animation">
-              {clientLogos.slice(75, 100).concat(clientLogos.slice(75, 100)).map((logo, index) => (
-                <div
-                  key={`row4-${logo.id}-${index}`}
-                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                    onError={(e) => {
-                      if (logo.fallback) {
-                        e.currentTarget.src = logo.fallback;
-                      } else {
-                        e.currentTarget.style.display = 'none';
-                      }
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Fifth Row - Left to Right */}
-            <div className="flex animate-scroll-left mb-8 hover:pause-animation">
-              {clientLogos.slice(100, 125).concat(clientLogos.slice(100, 125)).map((logo, index) => (
-                <div
-                  key={`row5-${logo.id}-${index}`}
-                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                    onError={(e) => {
-                      if (logo.fallback) {
-                        e.currentTarget.src = logo.fallback;
-                      } else {
-                        e.currentTarget.style.display = 'none';
-                      }
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Sixth Row - Right to Left */}
-            <div className="flex animate-scroll-right hover:pause-animation">
-              {clientLogos.slice(125, 154).concat(clientLogos.slice(125, 154)).map((logo, index) => (
-                <div
-                  key={`row6-${logo.id}-${index}`}
-                  className="flex-shrink-0 mx-4 bg-white rounded-2xl p-6 flex items-center justify-center group hover:shadow-lg transition-all duration-300 w-32 h-24 glass hover:scale-105"
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                    onError={(e) => {
-                      if (logo.fallback) {
-                        e.currentTarget.src = logo.fallback;
-                      } else {
-                        e.currentTarget.style.display = 'none';
-                      }
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Gradient overlays for premium effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-neutral-100 to-transparent pointer-events-none z-10" />
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-neutral-100 to-transparent pointer-events-none z-10" />
-          </div>
+          {/* View All Clients CTA */}
+          <motion.div 
+            className="text-center"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <p className="text-neutral-600 mb-8 text-lg">
+              And <span className="font-semibold text-amber-600">142+ more</span> industry leaders trust us with their most important events
+            </p>
+            <Button 
+              onClick={() => setShowAllClients(true)}
+              className="btn-primary group px-8 py-4 text-lg"
+            >
+              <Users className="mr-2 w-5 h-5" />
+              <span>View All 154 Clients</span>
+              <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </Button>
+          </motion.div>
         </div>
       </section>
 
@@ -475,6 +462,132 @@ export default function ClientsPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* All Clients Modal */}
+      {showAllClients && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white rounded-3xl max-w-7xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+          >
+            {/* Modal Header */}
+            <div className="p-6 lg:p-8 border-b border-neutral-200 bg-gradient-to-r from-neutral-50 to-amber-50/30">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl lg:text-3xl font-display text-neutral-900 mb-2">
+                    Our <span className="text-amber-600">154 Clients</span>
+                  </h2>
+                  <p className="text-neutral-600">Industry leaders who trust White Massif with their most important events</p>
+                </div>
+                <Button
+                  onClick={() => setShowAllClients(false)}
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full p-2"
+                >
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+
+              {/* Search and Filter Controls */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                {/* Search */}
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
+                  <input
+                    type="text"
+                    placeholder="Search clients..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
+
+                {/* Category Filter */}
+                <div className="flex gap-2 overflow-x-auto pb-2">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                        selectedCategory === category
+                          ? 'bg-amber-500 text-white'
+                          : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 lg:p-8 overflow-y-auto max-h-[60vh]">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 lg:gap-6">
+                {filteredClients.map((client, index) => (
+                  <motion.div
+                    key={client.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="group"
+                  >
+                    <div className="bg-neutral-50 rounded-xl p-4 aspect-square flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+                      <img
+                        src={client.src}
+                        alt={client.alt}
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        onError={(e) => {
+                          // Hide failed images
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* No results message */}
+              {filteredClients.length === 0 && (
+                <div className="text-center py-12">
+                  <div className="text-neutral-400 text-lg mb-2">No clients found</div>
+                  <p className="text-neutral-500">Try adjusting your search or filter criteria</p>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 lg:p-8 border-t border-neutral-200 bg-neutral-50">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p className="text-neutral-600 text-sm">
+                  Showing {filteredClients.length} of {allClientLogos.length} clients
+                </p>
+                <div className="flex gap-4">
+                  <Button
+                    onClick={() => {
+                      setSearchTerm('');
+                      setSelectedCategory('All');
+                    }}
+                    variant="outline"
+                    size="sm"
+                  >
+                    Clear Filters
+                  </Button>
+                  <Button
+                    onClick={() => setShowAllClients(false)}
+                    className="btn-primary"
+                  >
+                    Close
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 } 
