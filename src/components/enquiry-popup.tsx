@@ -151,11 +151,11 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               </div>
               
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center p-2 shadow-lg border border-gray-200">
+                <div className="h-12 bg-gray-100 rounded-2xl flex items-center justify-center px-3 py-2 shadow-lg border border-gray-200">
                   <img 
-                    src="/logo.png" 
+                    src="/WM LOGO-01.png" 
                     alt="White Massif Logo" 
-                    className="w-full h-full object-contain brightness-0"
+                    className="h-full w-auto object-contain brightness-0"
                   />
                 </div>
                 <div>
@@ -168,17 +168,12 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                 </div>
               </div>
               
-              <div className="flex flex-wrap gap-2">
-                <Badge className="bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/20">
-                  Free Consultation • 24h Response
-                </Badge>
-              </div>
               
               {/* Company Statistics */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
                 {[
-                  { number: "500+", label: "PROJECTS" },
-                  { number: "800+", label: "EVENTS" },
+                  { number: "1.5M+", label: "AUDIENCE ENGAGEMENT" },
+                  { number: "1000+", label: "EVENTS" },
                   { number: "165+", label: "CORPORATE CLIENTS" },
                   { number: "30+", label: "TEAM SIZE" }
                 ].map((stat, index) => (

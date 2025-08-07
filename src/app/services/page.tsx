@@ -56,14 +56,11 @@ const serviceCategories = [
 
 export default function ServicesPage() {
   const heroRef = useRef(null);
-  const [currentImage, setCurrentImage] = useState(0);
   const { openPopup } = usePopup();
 
   // Get dynamic media URLs
   const serviceImages = ServicesMediaService.getServicesImages();
   
-  // Get dynamic hero images from Supabase
-  const heroImages = ServicesMediaService.getServicesHeroImages().slice(0, 6);
 
   // Detailed Service Showcases
   const serviceShowcases = [
@@ -327,12 +324,6 @@ const endToEndServices = [
   }
 ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   const scrollToService = (serviceId: string) => {
     const element = document.getElementById(serviceId);
@@ -345,27 +336,18 @@ const endToEndServices = [
     <div className="min-h-screen bg-neutral-50">
       {/* Hero Section with Event-Focused Design - Mobile Optimized */}
       <section ref={heroRef} className="relative min-h-[80vh] sm:min-h-[85vh] flex items-center overflow-hidden pt-20">
-        {/* Background Image Carousel - Mobile Optimized */}
+        {/* Background Image - Mobile Optimized */}
         <div className="absolute inset-0">
-          {heroImages.map((image, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentImage ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <Image 
-                src={image.src} 
-                alt={image.alt}
-                fill
-                className="object-cover"
-                priority={index === 0}
-                sizes="100vw"
-              />
-              {/* Enhanced gradient overlay for better mobile readability */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/70 sm:from-black/70 sm:via-black/50 sm:to-black/60"></div>
-            </div>
-          ))}
+          <Image 
+            src="https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/services/Services-%20Landing%20page_.jpg" 
+            alt="White Massif Services - Event Management"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          {/* Enhanced gradient overlay for better mobile readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/70 sm:from-black/70 sm:via-black/50 sm:to-black/60"></div>
         </div>
 
         {/* Main Hero Content - Mobile Optimized */}
@@ -411,16 +393,17 @@ const endToEndServices = [
                       onClick={() => openPopup('services-hero')}
                       className="btn-primary mobile-touch-target text-base sm:text-lg lg:text-xl font-bold px-8 sm:px-12 py-4 sm:py-5 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-102 min-h-[48px]"
                     >
-                      Get Your Custom Quote
+                      Plan your event
                       <ArrowRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
                     </Button>
                     
                     <Button 
                       variant="outline" 
+                      onClick={() => openPopup('services-cta')}
                       className="mobile-touch-target border-2 border-white text-white hover:bg-white hover:text-[#2A3959] font-semibold px-8 sm:px-12 py-4 sm:py-5 text-base sm:text-lg lg:text-xl rounded-2xl transition-all duration-300 hover:scale-102 min-h-[48px]"
                     >
-                      <Phone className="mr-2 sm:mr-3 w-5 h-5 sm:w-6 sm:h-6" />
-                      +91 98450 45466
+                      <Sparkles className="mr-2 sm:mr-3 w-5 h-5 sm:w-6 sm:h-6" />
+                      Turn your idea into reality
                     </Button>
                   </div>
                 </motion.div>
@@ -429,34 +412,7 @@ const endToEndServices = [
           </div>
         </div>
 
-        {/* Image Navigation - Mobile Optimized */}
-        <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 z-30">
-          <div className="flex space-x-2">
-            {heroImages.map((image, index) => (
-              <button
-                key={index}
-                className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 ${
-                  index === currentImage ? 'bg-[#F9A625] scale-110' : 'bg-white/60 hover:bg-white/80'
-                }`}
-                onClick={() => setCurrentImage(index)}
-                aria-label={`View ${image.category} image`}
-              />
-            ))}
-          </div>
-        </div>
 
-        {/* Event Category Indicator - Mobile Optimized */}
-        <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 z-30">
-          <motion.div
-            key={currentImage}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-black/50 backdrop-blur-sm text-white px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium"
-          >
-            {heroImages[currentImage].category}
-          </motion.div>
-        </div>
       </section>
 
       {/* Event Services Categories - Mobile Optimized */}
@@ -469,9 +425,6 @@ const endToEndServices = [
             viewport={{ once: true }}
             className="text-center mb-12 sm:mb-16"
           >
-            <Badge className="bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/30 px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold mb-4 sm:mb-6 mobile-touch-target">
-              Our Expertise
-            </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] mb-4 sm:mb-6 leading-tight mobile-heading">
               Six Specialties.
               <span className="text-[#F9A625] block">Infinite Possibilities.</span>
@@ -557,9 +510,6 @@ const endToEndServices = [
                 variants={fadeInUp}
                 className={`order-2 lg:order-none ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}
               >
-                <Badge className="mb-4 sm:mb-6 bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/20 font-body px-3 sm:px-4 py-2 text-sm mobile-touch-target">
-                  {service.title.split(' ')[0]} {service.title.split(' ')[1]}
-                </Badge>
                 
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display mb-4 sm:mb-6 text-[#2A3959] leading-tight mobile-heading">
                   {service.title}
@@ -645,7 +595,7 @@ const endToEndServices = [
       ))}
 
       {/* Enhanced Process Timeline - Mobile Optimized */}
-      <section className="mobile-section-padding bg-gradient-to-br from-[#2A3959] via-[#1a2332] to-[#0f1419]">
+      <section className="mobile-section-padding bg-gradient-to-br from-[#F9A625] to-[#e8951e]">
         <div className="max-w-7xl mx-auto mobile-container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -654,13 +604,10 @@ const endToEndServices = [
             viewport={{ once: true }}
             className="text-center mb-12 sm:mb-16"
           >
-            <Badge className="bg-[#F9A625]/20 text-[#F9A625] border-[#F9A625]/30 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium mb-4 sm:mb-6 mobile-touch-target">
-              The Method
-            </Badge>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-white mb-4 sm:mb-6 mobile-heading">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] mb-4 sm:mb-6 mobile-heading">
               Four Steps to Extraordinary
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mobile-body-text">
+            <p className="text-base sm:text-lg lg:text-xl text-[#2A3959]/80 max-w-3xl mx-auto leading-relaxed mobile-body-text">
               Proven process. Predictable excellence. Every single time.
             </p>
           </motion.div>
@@ -671,29 +618,25 @@ const endToEndServices = [
                 step: "01",
                 title: "Dream Discovery",
                 description: "We don't just take briefs. We uncover dreams. Deep dive into your vision, values, and victory metrics.",
-                icon: "💡",
-                color: "from-blue-500 to-cyan-500"
+                color: "from-[#2A3959] to-[#1a2332]"
               },
               {
                 step: "02", 
                 title: "Strategic Sculpting",
                 description: "Your vision meets our expertise. Strategies carved with precision. Concepts crafted with care.",
-                icon: "📋",
-                color: "from-purple-500 to-pink-500"
+                color: "from-[#2A3959] to-[#1a2332]"
               },
               {
                 step: "03",
                 title: "Flawless Execution",
                 description: "Show time. Every element orchestrated. Every moment choreographed. Perfection, delivered.",
-                icon: "⚡",
-                color: "from-orange-500 to-red-500"
+                color: "from-[#2A3959] to-[#1a2332]"
               },
               {
                 step: "04",
                 title: "Legacy Creation",
                 description: "The event ends. The impact begins. Relationships deepened. Success stories written.",
-                icon: "🎯",
-                color: "from-green-500 to-emerald-500"
+                color: "from-[#2A3959] to-[#1a2332]"
               }
             ].map((process, index) => (
               <motion.div
@@ -709,23 +652,21 @@ const endToEndServices = [
                   <div className="hidden lg:block absolute top-12 left-full w-8 h-0.5 bg-gradient-to-r from-[#F9A625] to-transparent z-10"></div>
                 )}
                 
-                <div className="mobile-card bg-white/10 backdrop-blur-sm border border-white/20 hover:border-[#F9A625]/50 transition-all duration-300 hover:bg-white/15 group-hover:scale-102 sm:group-hover:scale-105 h-full mobile-animation">
+                <div className="mobile-card bg-white/90 backdrop-blur-sm border border-white/30 hover:border-[#2A3959]/50 transition-all duration-300 hover:bg-white group-hover:scale-102 sm:group-hover:scale-105 h-full mobile-animation">
                   <div className="text-center">
                     {/* Step Number - Mobile Responsive */}
                     <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${process.color} flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
                       <span className="text-lg sm:text-2xl font-bold text-white">{process.step}</span>
                     </div>
                     
-                    {/* Process Icon - Mobile Sized */}
-                    <div className="text-2xl sm:text-3xl lg:text-4xl mb-3 sm:mb-4">{process.icon}</div>
                     
                     {/* Title - Mobile Typography */}
-                    <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 group-hover:text-[#F9A625] transition-colors duration-300 mobile-heading">
+                    <h3 className="text-lg sm:text-xl font-bold text-[#2A3959] mb-3 sm:mb-4 group-hover:text-[#F9A625] transition-colors duration-300 mobile-heading">
                       {process.title}
                     </h3>
                     
                     {/* Description - Mobile Typography */}
-                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mobile-body-text">
+                    <p className="text-[#2A3959]/70 text-xs sm:text-sm leading-relaxed mobile-body-text">
                       {process.description}
                     </p>
                   </div>
@@ -768,9 +709,6 @@ const endToEndServices = [
             className="text-center mb-10 sm:mb-12 lg:mb-16"
           >
             <motion.div variants={fadeInUp}>
-              <Badge className="mb-4 sm:mb-6 bg-[#F9A625]/10 text-[#F9A625] border-[#F9A625]/20 font-body px-3 sm:px-4 py-2 text-sm mobile-touch-target">
-                Complete Solutions
-              </Badge>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display mb-4 sm:mb-6 text-[#2A3959] mobile-heading">
                 End-to-End Event Management
               </h2>
@@ -806,7 +744,7 @@ const endToEndServices = [
 
 
       {/* Enhanced Footer CTA Section - Mobile Optimized */}
-      <section className="mobile-section-padding bg-gradient-to-br from-[#2A3959] via-[#1a2332] to-[#0f1419]">
+      <section className="mobile-section-padding bg-gradient-to-br from-[#F9A625] to-[#e8951e]">
         <div className="max-w-7xl mx-auto mobile-container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -815,32 +753,19 @@ const endToEndServices = [
             viewport={{ once: true }}
             className="text-center"
           >
-            <div className="mobile-card bg-white/5 backdrop-blur-sm border border-white/10 p-8 sm:p-12 lg:p-16">
+            <div className="mobile-card bg-white/90 backdrop-blur-sm border border-white/30 p-8 sm:p-12 lg:p-16">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <div className="flex justify-center mb-6 sm:mb-8">
-                  <div className="flex -space-x-2 sm:-space-x-4">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-[#F9A625] to-[#e8951e] rounded-full flex items-center justify-center">
-                      <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                    </div>
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                      <Award className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                    </div>
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
-                      <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                    </div>
-                  </div>
-                </div>
                 
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-white mb-4 sm:mb-6 mobile-heading">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display text-[#2A3959] mb-4 sm:mb-6 mobile-heading">
                   Need Professional Event <span className="text-[#F9A625]">Management?</span>
                 </h2>
                 
-                <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed mobile-body-text">
+                <p className="text-base sm:text-lg lg:text-xl text-[#2A3959]/80 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed mobile-body-text">
                   Get expert event planning services. From corporate conferences to celebrations - we handle everything.
                 </p>
 
@@ -849,12 +774,12 @@ const endToEndServices = [
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="mobile-card bg-white/10 backdrop-blur-sm border border-white/20 hover:border-[#F9A625]/50 transition-all duration-300 mobile-animation"
+                    className="mobile-card bg-[#2A3959] backdrop-blur-sm border border-[#2A3959]/30 hover:border-[#F9A625]/50 transition-all duration-300 mobile-animation"
                   >
                     <Phone className="w-10 h-10 sm:w-12 sm:h-12 text-[#F9A625] mx-auto mb-3 sm:mb-4" />
                     <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Call Us Now</h3>
-                    <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Speak directly with our event specialists</p>
-                    <Button variant="outline" className="mobile-touch-target border-white/30 text-white hover:bg-white/10 text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
+                    <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Speak directly with our event specialists</p>
+                    <Button variant="outline" className="mobile-touch-target border-[#F9A625]/50 text-[#F9A625] hover:bg-[#F9A625] hover:text-[#2A3959] text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
                       +91 98450 45466
                     </Button>
                   </motion.div>
@@ -862,12 +787,12 @@ const endToEndServices = [
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="mobile-card bg-white/10 backdrop-blur-sm border border-white/20 hover:border-[#F9A625]/50 transition-all duration-300 mobile-animation"
+                    className="mobile-card bg-[#2A3959] backdrop-blur-sm border border-[#2A3959]/30 hover:border-[#F9A625]/50 transition-all duration-300 mobile-animation"
                   >
                     <Mail className="w-10 h-10 sm:w-12 sm:h-12 text-[#F9A625] mx-auto mb-3 sm:mb-4" />
                     <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Email Us</h3>
-                    <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Get detailed proposals and answers</p>
-                    <Button variant="outline" className="mobile-touch-target border-white/30 text-white hover:bg-white/10 text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
+                    <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Get detailed proposals and answers</p>
+                    <Button variant="outline" className="mobile-touch-target border-[#F9A625]/50 text-[#F9A625] hover:bg-[#F9A625] hover:text-[#2A3959] text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
                       info@whitemassif.com
                     </Button>
                   </motion.div>
@@ -875,17 +800,16 @@ const endToEndServices = [
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="mobile-card bg-white/10 backdrop-blur-sm border border-white/20 hover:border-[#F9A625]/50 transition-all duration-300 mobile-animation"
+                    className="mobile-card bg-[#2A3959] backdrop-blur-sm border border-[#2A3959]/30 hover:border-[#F9A625]/50 transition-all duration-300 mobile-animation"
                   >
                     <Calendar className="w-10 h-10 sm:w-12 sm:h-12 text-[#F9A625] mx-auto mb-3 sm:mb-4" />
                     <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Schedule Meeting</h3>
-                    <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Book a free consultation session</p>
                     <Button 
                       onClick={() => openPopup('services-meeting')}
                       variant="outline" 
-                      className="mobile-touch-target border-white/30 text-white hover:bg-white/10 text-sm sm:text-base min-h-[44px] w-full sm:w-auto"
+                      className="mobile-touch-target border-[#F9A625]/50 text-[#F9A625] hover:bg-[#F9A625] hover:text-[#2A3959] text-sm sm:text-base min-h-[44px] w-full sm:w-auto"
                     >
-                      Book Now
+                      Plan your event
                     </Button>
                   </motion.div>
                 </div>
@@ -896,14 +820,10 @@ const endToEndServices = [
                     onClick={() => openPopup('services-final-cta')}
                     className="btn-primary mobile-touch-target text-white font-bold px-8 sm:px-10 py-4 sm:py-5 rounded-2xl text-base sm:text-lg transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
                   >
-                    Get Your Event Quote
+                    Plan your event
                     <ArrowRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
                   </Button>
                   
-                  <div className="flex items-center gap-2 text-gray-300 text-xs sm:text-sm text-center px-4 sm:px-0">
-                    <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
-                    <span>Free consultation • Zero obligation • 24hr response</span>
-                  </div>
                 </div>
 
                 {/* Trust Indicators - Mobile Optimized */}

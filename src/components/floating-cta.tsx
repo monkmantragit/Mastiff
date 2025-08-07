@@ -67,7 +67,7 @@ export default function FloatingCTA() {
                   <Button
                     asChild
                     size="sm"
-                    className="bg-green-500 hover:bg-green-600 text-white shadow-lg rounded-full px-4 py-2"
+                    className="bg-[#F9A625] hover:bg-[#e8951e] text-white shadow-lg rounded-full px-4 py-2"
                   >
                     <a href="https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                       <MessageCircle className="w-4 h-4" />
