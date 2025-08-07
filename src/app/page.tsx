@@ -236,7 +236,7 @@ export default function Home() {
                     variant="outline" 
                     className="mobile-touch-target bg-white border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-[#F9A625] hover:border-[#2A3959] transition-all duration-300 hover:scale-102 text-base sm:text-lg font-heading font-semibold px-6 sm:px-8 py-3 sm:py-4 min-h-[48px] w-full sm:w-auto"
                   >
-                    Our Work
+                    View Our Work
                   </Button>
                 </Link>
               </div>

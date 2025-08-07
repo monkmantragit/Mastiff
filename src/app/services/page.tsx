@@ -372,20 +372,6 @@ const endToEndServices = [
                     12 years of expertise. 1000+ events delivered. 165+ corporate clients. Creating extraordinary corporate experiences that inspire, educate, and propel organizations to new heights.
                   </p>
 
-                  {/* Event Type Badges - Mobile Optimized */}
-                  <div className="flex flex-wrap gap-2 sm:gap-4 justify-center mb-8 sm:mb-12 px-4 sm:px-0">
-                    {['', '', '', ''].map((type, index) => (
-                      <motion.div
-                        key={type}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                        className="bg-white/20 backdrop-blur-sm text-white px-3 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium border border-white/30 hover:bg-white/30 transition-all duration-300 mobile-touch-target"
-                      >
-                        {type}
-                      </motion.div>
-                    ))}
-                  </div>
 
                   {/* CTA Buttons - Touch Optimized */}
                   <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4 sm:px-0">
@@ -393,7 +379,7 @@ const endToEndServices = [
                       onClick={() => openPopup('services-hero')}
                       className="btn-primary mobile-touch-target text-base sm:text-lg lg:text-xl font-bold px-8 sm:px-12 py-4 sm:py-5 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-102 min-h-[48px]"
                     >
-                      Plan your event
+                      Turn your idea into reality
                       <ArrowRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
                     </Button>
                     
@@ -809,7 +795,7 @@ const endToEndServices = [
                       variant="outline" 
                       className="mobile-touch-target border-[#F9A625]/50 text-[#F9A625] hover:bg-[#F9A625] hover:text-[#2A3959] text-sm sm:text-base min-h-[44px] w-full sm:w-auto"
                     >
-                      Plan your event
+                      Book corporate entertainment
                     </Button>
                   </motion.div>
                 </div>
@@ -820,7 +806,7 @@ const endToEndServices = [
                     onClick={() => openPopup('services-final-cta')}
                     className="btn-primary mobile-touch-target text-white font-bold px-8 sm:px-10 py-4 sm:py-5 rounded-2xl text-base sm:text-lg transition-all duration-300 hover:scale-102 hover:shadow-2xl min-h-[48px] w-full sm:w-auto"
                   >
-                    Plan your event
+                    Streamline Event Logistics
                     <ArrowRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" />
                   </Button>
                   

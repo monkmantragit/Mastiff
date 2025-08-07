@@ -151,13 +151,11 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               </div>
               
               <div className="flex items-center space-x-3 mb-4">
-                <div className="h-12 bg-gray-100 rounded-2xl flex items-center justify-center px-3 py-2 shadow-lg border border-gray-200">
-                  <img 
-                    src="/WM LOGO-01.png" 
-                    alt="White Massif Logo" 
-                    className="h-full w-auto object-contain brightness-0"
-                  />
-                </div>
+                <img 
+                  src="/WM LOGO-05.png" 
+                  alt="White Massif Logo" 
+                  className="h-8 w-auto object-contain"
+                />
                 <div>
                   <h2 className="text-2xl sm:text-3xl font-display text-[#2A3959] mb-1">
                     Let&apos;s Create Something Amazing

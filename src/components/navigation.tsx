@@ -281,16 +281,6 @@ export default function Navigation() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                   >
-                    <Button 
-                      onClick={() => {
-                        openPopup('mobile-header-quote');
-                        toggleMenu();
-                      }}
-                      className="w-full btn-primary">
-                      <span>Get Free Quote</span>
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                    
                     <div className="space-y-3 pt-4 border-t border-white/10">
                       <a
                         href="tel:+91-990-0141-155"
