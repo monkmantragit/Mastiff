@@ -350,6 +350,15 @@
     background: linear-gradient(135deg, var(--brand-primary-dark), var(--brand-primary));
     box-shadow: var(--glow-primary);
   }
+
+  /* Utility to hide scrollbars where needed */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
   
   /* Premium Button System - Mobile Optimized */
   .btn-primary {

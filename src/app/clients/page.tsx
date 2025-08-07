@@ -174,12 +174,12 @@ export default function ClientsPage() {
     ref.current?.scrollBy({ left: direction * distance, behavior: 'smooth' });
   };
 
-  // Auto-scroll rows
+  // Auto-scroll rows with opposite directions and smooth, slow speed
   useEffect(() => {
     let rafId1 = 0;
     let rafId2 = 0;
-    const speed1 = 0.6; // px per frame
-    const speed2 = 0.8; // px per frame
+    const speed1 = 0.3; // px per frame (slow)
+    const speed2 = -0.3; // px per frame (opposite direction)
 
     const tick1 = () => {
       const el = row1Ref.current;
@@ -187,6 +187,9 @@ export default function ClientsPage() {
         el.scrollLeft += speed1;
         if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
           el.scrollLeft = 0;
+        }
+        if (el.scrollLeft <= 0 && speed1 < 0) {
+          el.scrollLeft = el.scrollWidth - el.clientWidth - 1;
         }
       }
       rafId1 = requestAnimationFrame(tick1);
@@ -196,8 +199,11 @@ export default function ClientsPage() {
       const el = row2Ref.current;
       if (el) {
         el.scrollLeft += speed2;
-        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
+        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1 && speed2 > 0) {
           el.scrollLeft = 0;
+        }
+        if (el.scrollLeft <= 0 && speed2 < 0) {
+          el.scrollLeft = el.scrollWidth - el.clientWidth - 1;
         }
       }
       rafId2 = requestAnimationFrame(tick2);
