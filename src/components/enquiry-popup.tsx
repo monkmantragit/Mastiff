@@ -373,23 +373,6 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                 </Button>
               </div>
 
-              {/* Trust Elements */}
-              <div className="bg-gray-50 rounded-xl p-4 -mx-2">
-                <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
-                  <div className="flex items-center space-x-2 text-green-700">
-                    <CheckCircle className="w-4 h-4" />
-                    <span className="font-medium">100% Secure</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-blue-700">
-                    <Shield className="w-4 h-4" />
-                    <span className="font-medium">No Spam</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-[#F9A625]">
-                    <Sparkles className="w-4 h-4" />
-                    <span className="font-medium">Free Consultation</span>
-                  </div>
-                </div>
-              </div>
             </form>
           </motion.div>
         </motion.div>
