@@ -159,7 +159,7 @@ export default function Home() {
         {/* Full Video Background */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <video
-            className="absolute inset-0 w-full h-full object-contain"
+            className="absolute inset-0 w-full h-full object-cover"
             autoPlay
             muted
             loop
@@ -232,7 +232,7 @@ export default function Home() {
 
             {/* Main Headline */}
             <motion.h1 
-              className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display leading-[0.9] mb-8 text-[#2A3959]"
+              className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-display leading-[0.9] mb-8 text-[#2A3959]"
               initial={{ opacity: 0, y: 50 }}
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.2, delay: 0.2 }}
@@ -244,7 +244,7 @@ export default function Home() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl md:text-2xl lg:text-3xl mb-12 font-body max-w-5xl mx-auto text-neutral-600 leading-relaxed"
+              className="text-base md:text-lg lg:text-xl mb-12 font-body max-w-5xl mx-auto text-neutral-600 leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.4 }}
