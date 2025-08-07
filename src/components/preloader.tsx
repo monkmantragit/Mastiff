@@ -30,7 +30,7 @@ export function Preloader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#2A3959]"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white"
         >
           {/* White Massif Logo */}
           <motion.div
@@ -47,7 +47,7 @@ export function Preloader() {
           </motion.div>
 
           {/* Progress Bar */}
-          <div className="w-80 h-1 bg-white/20 rounded-full overflow-hidden">
+          <div className="w-80 h-1 bg-gray-200 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-[#F9A625] to-[#e8951e] rounded-full"
               initial={{ width: 0 }}
@@ -61,7 +61,7 @@ export function Preloader() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-4 text-white/70 text-sm"
+            className="mt-4 text-gray-600 text-sm"
           >
             Loading Premium Experience...
           </motion.p>
