@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
@@ -164,58 +164,9 @@ export default function ClientsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   
-  // Horizontal scroll rows for a compact, elegant browse
-  const row1Ref = useRef<HTMLDivElement | null>(null);
-  const row2Ref = useRef<HTMLDivElement | null>(null);
+  // Logo data slices for compact rows
   const moreClientsRow1 = allClientLogos.slice(0, 18);
   const moreClientsRow2 = allClientLogos.slice(18, 36);
-  const scrollRow = (ref: React.RefObject<HTMLDivElement | null>, direction: 1 | -1) => {
-    const distance = 420;
-    ref.current?.scrollBy({ left: direction * distance, behavior: 'smooth' });
-  };
-
-  // Auto-scroll rows with opposite directions and smooth, slow speed
-  useEffect(() => {
-    let rafId1 = 0;
-    let rafId2 = 0;
-    const speed1 = 0.3; // px per frame (slow)
-    const speed2 = -0.3; // px per frame (opposite direction)
-
-    const tick1 = () => {
-      const el = row1Ref.current;
-      if (el) {
-        el.scrollLeft += speed1;
-        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1) {
-          el.scrollLeft = 0;
-        }
-        if (el.scrollLeft <= 0 && speed1 < 0) {
-          el.scrollLeft = el.scrollWidth - el.clientWidth - 1;
-        }
-      }
-      rafId1 = requestAnimationFrame(tick1);
-    };
-
-    const tick2 = () => {
-      const el = row2Ref.current;
-      if (el) {
-        el.scrollLeft += speed2;
-        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 1 && speed2 > 0) {
-          el.scrollLeft = 0;
-        }
-        if (el.scrollLeft <= 0 && speed2 < 0) {
-          el.scrollLeft = el.scrollWidth - el.clientWidth - 1;
-        }
-      }
-      rafId2 = requestAnimationFrame(tick2);
-    };
-
-    rafId1 = requestAnimationFrame(tick1);
-    rafId2 = requestAnimationFrame(tick2);
-    return () => {
-      cancelAnimationFrame(rafId1);
-      cancelAnimationFrame(rafId2);
-    };
-  }, []);
   
   // Filter clients based on category and search
   const filteredClients = allClientLogos.filter(client => {
@@ -373,33 +324,49 @@ export default function ClientsPage() {
 
           {/* Compact browse: auto-scrolling logo rows */}
           <div className="space-y-6 mb-12">
-            {[{ ref: row1Ref, data: moreClientsRow1 }, { ref: row2Ref, data: moreClientsRow2 }].map((row, idx) => (
-              <div key={idx} className="relative">
-                {/* Gradient edge masks */}
-                <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-neutral-100 to-transparent" />
-                <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-neutral-100 to-transparent" />
-
-                <div
-                  ref={row.ref}
-                  className="overflow-x-auto no-scrollbar"
-                >
-                  <div className="flex items-center gap-4 px-6">
-                    {row.data.map((client) => (
-                      <div key={client.id} className="shrink-0 bg-white rounded-xl p-4 aspect-[4/3] w-[160px] max-w-[160px] flex items-center justify-center hover:shadow-md transition">
-                        <img
-                          src={client.src}
-                          alt={client.alt}
-                          className="max-w-full max-h-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </div>
+            {/* Row 1 - leftward scroll */}
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-neutral-100 to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-neutral-100 to-transparent" />
+              <div className="overflow-hidden">
+                <div className="flex items-center gap-4 px-6 animate-scroll-left will-change-transform">
+                  {[...moreClientsRow1, ...moreClientsRow1].map((client, idx) => (
+                    <div key={`${client.id}-${idx}`} className="shrink-0 bg-white rounded-xl p-4 aspect-[4/3] w-[160px] max-w-[160px] flex items-center justify-center hover:shadow-md transition">
+                      <img
+                        src={client.src}
+                        alt={client.alt}
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Row 2 - rightward scroll (opposite) */}
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-neutral-100 to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-neutral-100 to-transparent" />
+              <div className="overflow-hidden">
+                <div className="flex items-center gap-4 px-6 animate-scroll-right will-change-transform">
+                  {[...moreClientsRow2, ...moreClientsRow2].map((client, idx) => (
+                    <div key={`${client.id}-${idx}`} className="shrink-0 bg-white rounded-xl p-4 aspect-[4/3] w-[160px] max-w-[160px] flex items-center justify-center hover:shadow-md transition">
+                      <img
+                        src={client.src}
+                        alt={client.alt}
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* View All Clients CTA */}
