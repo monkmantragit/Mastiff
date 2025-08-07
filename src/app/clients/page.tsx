@@ -335,7 +335,7 @@ export default function ClientsPage() {
             </motion.div>
           </motion.div>
 
-          {/* Featured Premium Clients (tight, premium grid) */
+          {/* Featured Premium Clients (tight, premium grid) */}
           <motion.div
             initial="initial"
             whileInView="animate"
