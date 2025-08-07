@@ -164,6 +164,16 @@ export default function ClientsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   
+  // Horizontal scroll rows for a compact, elegant browse
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
+  const moreClientsRow1 = allClientLogos.slice(0, 18);
+  const moreClientsRow2 = allClientLogos.slice(18, 36);
+  const scrollRow = (ref: React.RefObject<HTMLDivElement>, direction: 1 | -1) => {
+    const distance = 420;
+    ref.current?.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  };
+  
   // Filter clients based on category and search
   const filteredClients = allClientLogos.filter(client => {
     const matchesCategory = selectedCategory === 'All' || client.category === selectedCategory;
@@ -288,13 +298,13 @@ export default function ClientsPage() {
             </motion.div>
           </motion.div>
 
-          {/* Featured Premium Clients */}
+          {/* Featured Premium Clients (tight, premium grid) */}
           <motion.div
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 lg:gap-8 mb-12"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 mb-12"
           >
             {featuredClients.map((client, index) => (
               <motion.div
@@ -324,6 +334,54 @@ export default function ClientsPage() {
             ))}
           </motion.div>
 
+          {/* Compact browse: horizontally scrollable logo rows */}
+          <div className="space-y-6 mb-12">
+            {[{ ref: row1Ref, data: moreClientsRow1 }, { ref: row2Ref, data: moreClientsRow2 }].map((row, idx) => (
+              <div key={idx} className="relative">
+                {/* Left control */}
+                <button
+                  aria-label="Scroll logos left"
+                  onClick={() => scrollRow(row.ref, -1)}
+                  className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition"
+                >
+                  <ArrowRight className="w-5 h-5 rotate-180" />
+                </button>
+                {/* Right control */}
+                <button
+                  aria-label="Scroll logos right"
+                  onClick={() => scrollRow(row.ref, 1)}
+                  className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-white/80 shadow hover:bg-white transition"
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+
+                {/* Gradient edge masks */}
+                <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-neutral-100 to-transparent" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-neutral-100 to-transparent" />
+
+                <div
+                  ref={row.ref}
+                  className="overflow-x-auto scroll-smooth no-scrollbar"
+                >
+                  <div className="flex items-center gap-4 px-6">
+                    {row.data.map((client) => (
+                      <div key={client.id} className="shrink-0 bg-white rounded-xl p-4 aspect-[4/3] w-[160px] max-w-[160px] flex items-center justify-center hover:shadow-md transition">
+                        <img
+                          src={client.src}
+                          alt={client.alt}
+                          className="max-w-full max-h-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           {/* View All Clients CTA */}
           <motion.div 
             className="text-center"
@@ -333,14 +391,14 @@ export default function ClientsPage() {
             viewport={{ once: true }}
           >
             <p className="text-neutral-600 mb-8 text-lg">
-              And <span className="font-semibold text-amber-600">142+ more</span> industry leaders trust us with their most important events
+              Explore more of our client partnerships across industries
             </p>
             <Button 
               onClick={() => setShowAllClients(true)}
               className="btn-primary group px-8 py-4 text-lg"
             >
               <Users className="mr-2 w-5 h-5" />
-              <span>View All 154 Clients</span>
+              <span>View All Clients</span>
               <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </motion.div>
@@ -526,7 +584,7 @@ export default function ClientsPage() {
 
             {/* Modal Content */}
             <div className="p-6 lg:p-8 overflow-y-auto max-h-[60vh]">
-              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 lg:gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
                 {filteredClients.map((client, index) => (
                   <motion.div
                     key={client.id}
@@ -535,7 +593,7 @@ export default function ClientsPage() {
                     transition={{ duration: 0.3, delay: index * 0.05 }}
                     className="group"
                   >
-                    <div className="bg-neutral-50 rounded-xl p-4 aspect-square flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <div className="bg-neutral-50 rounded-xl p-6 aspect-[4/3] flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105">
                       <img
                         src={client.src}
                         alt={client.alt}
