@@ -1,8 +1,8 @@
 'use client';
 
-import React from "react";
-import { motion, useInView } from "framer-motion";
+import * as React from "react";
 import { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
