@@ -66,16 +66,16 @@ export default function ContactPage() {
   const contactInfo = [
     {
       icon: Phone,
-      title: "Call The Legends",
-      details: ["+91 98450 45466", "Direct Line"],
+      title: "Call The Experts",
+      details: ["Prakash: +91 99001 41155", "Vinay: +91 99001 41177"],
       description: "Available when inspiration strikes",
       gradient: "from-blue-500 to-indigo-600"
     },
     {
       icon: Mail,
       title: "Start The Conversation",
-      details: ["info@whitemassif.com", "Where legends begin"],
-      description: "Response within 2 hours, guaranteed",
+      details: ["info@whitemassif.com", "Where excellence begins"],
+      description: "We're here when you need us",
       gradient: "from-emerald-500 to-teal-600"
     },
     {
@@ -307,7 +307,7 @@ export default function ContactPage() {
                 Connection Points
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-6 text-neutral-900 leading-tight">
-                <span className="kinetic-text">Every Legend</span> Starts With Hello
+                <span className="kinetic-text">Every Vision</span> Starts With Hello
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
                 Every extraordinary journey begins with a single step. Choose yours.
@@ -357,7 +357,7 @@ export default function ContactPage() {
                   Tell Us About Your <span className="kinetic-text">Vision</span>
                 </h2>
                 <p className="text-lg text-neutral-600 mb-8 font-body">
-                  Share your event details and we'll get back to you with a customized proposal within 24 hours.
+                  Share your event details and we'll get back to you with a customized proposal tailored to your vision.
                 </p>
               </motion.div>
 
@@ -555,7 +555,7 @@ export default function ContactPage() {
                         </div>
                         <div>
                           <h4 className="font-medium text-neutral-900">Quick Response</h4>
-                          <p className="text-sm text-neutral-600">We respond to all inquiries within 2 hours</p>
+                          <p className="text-sm text-neutral-600">We respond promptly to all inquiries</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
@@ -573,7 +573,7 @@ export default function ContactPage() {
                         </div>
                         <div>
                           <h4 className="font-medium text-neutral-900">Custom Proposal</h4>
-                          <p className="text-sm text-neutral-600">Tailored solutions within 24 hours</p>
+                          <p className="text-sm text-neutral-600">Tailored solutions for your event</p>
                         </div>
                       </div>
                     </div>
@@ -589,12 +589,20 @@ export default function ContactPage() {
                     </div>
                     <h3 className="text-xl font-heading text-neutral-900 mb-2">Urgent Inquiry?</h3>
                     <p className="text-neutral-600 mb-4">Call us directly for immediate assistance</p>
-                    <a 
-                      href="tel:+91-98450-45466"
-                      className="text-2xl font-bold text-amber-600 hover:text-amber-700 transition-colors"
-                    >
-                      +91 98450 45466
-                    </a>
+                    <div className="space-y-2">
+                      <a 
+                        href="tel:+91-99001-41155"
+                        className="block text-lg font-bold text-amber-600 hover:text-amber-700 transition-colors"
+                      >
+                        Prakash: +91 99001 41155
+                      </a>
+                      <a 
+                        href="tel:+91-99001-41177"
+                        className="block text-lg font-bold text-amber-600 hover:text-amber-700 transition-colors"
+                      >
+                        Vinay: +91 99001 41177
+                      </a>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>

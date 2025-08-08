@@ -2,6 +2,7 @@ import {
   type Blog, 
   type Page, 
   type Service, 
+  type Testimonial,
   type TeamMember, 
   type LandingPage 
 } from './directus';
@@ -231,7 +232,75 @@ export class DirectusService {
     }
   }
 
+  /**
+   * Get all published testimonials
+   */
+  static async getTestimonials(): Promise<Testimonial[]> {
+    try {
+      console.log('🔍 Fetching testimonials from Directus...');
+      
+      const url = process.env.NEXT_PUBLIC_DIRECTUS_URL;
+      const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
+      
+      console.log('🔗 URL:', url);
+      console.log('🔑 Token:', token ? `${token.substring(0, 10)}...` : 'NOT FOUND');
+      
+      const response = await fetch(`${url}/items/testimonials?fields=*&filter={"status":{"_eq":"published"}}&sort=sort_order,-date_created`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      console.log('📡 Response status:', response.status);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('✅ Testimonials data received:', data);
+      
+      const testimonials = data.data || data;
+      console.log(`📊 Found ${testimonials.length} testimonials`);
+      
+      return testimonials || [];
+    } catch (error) {
+      console.error('❌ Error fetching testimonials:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Get featured testimonials only
+   */
+  static async getFeaturedTestimonials(): Promise<Testimonial[]> {
+    try {
+      const url = process.env.NEXT_PUBLIC_DIRECTUS_URL;
+      const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
+      
+      const response = await fetch(`${url}/items/testimonials?fields=*&filter={"status":{"_eq":"published"},"is_featured":{"_eq":true}}&sort=sort_order,-date_created`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const testimonials = data.data || data;
+      
+      return testimonials || [];
+    } catch (error) {
+      console.error('Error fetching featured testimonials:', error);
+      return [];
+    }
+  }
+
 }
 
 // Export types for easy import
-export type { Blog, Page, Service, TeamMember, LandingPage }; 
+export type { Blog, Page, Service, Testimonial, TeamMember, LandingPage }; 

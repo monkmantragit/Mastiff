@@ -93,7 +93,7 @@ export default function Home() {
       icon: Award,
       gradient: "from-[#F9A625] to-[#2A3959]",
       features: ["Office Launches", "Plant Inaugurations", "Ribbon Cutting Ceremonies", "Facility Tours & Walkthroughs", "Brand Showcases", "CEO / Leadership Addresses", "Media & Press Briefings", "VIP Guest Management", "Customized Stage & Tech Setups", "Cultural & Entertainment Segments"],
-      stats: { events: "150+", clients: "Industry Leaders" },
+      stats: { events: "200+", clients: "Industry Leaders" },
       image: serviceImages.inauguration
     },
     {
@@ -265,12 +265,11 @@ export default function Home() {
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
               <Button 
-                onClick={() => window.open('tel:+919845012345', '_self')}
+                onClick={() => openPopup('hero-contact')}
                 variant="outline"
                 className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group"
               >
-                <Phone className="mr-2 w-5 h-5" />
-                <span>+91 99001 41155</span>
+                <span>Contact Us</span>
               </Button>
             </motion.div>
 
@@ -294,7 +293,7 @@ export default function Home() {
               <div className="flex items-center gap-2 text-[#2A3959]">
                 <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
                 <Star className="w-4 h-4 text-[#F9A625]" />
-                <span>1.5M+ Audience Engaged</span>
+                <span>2M+ Audience Engaged</span>
               </div>
             </motion.div>
           </motion.div>
@@ -658,8 +657,8 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                 {[
                   { icon: CheckCircle, title: "500+ Projects", desc: "Successfully delivered" },
-                  { icon: Users, title: "800+ Events", desc: "Executed with precision" },
-                  { icon: Trophy, title: "175+ Corporate Clients", desc: "Trusted partnerships" },
+                  { icon: Users, title: "1000+ Events", desc: "Executed with precision" },
+                  { icon: Trophy, title: "165+ Corporate Clients", desc: "Trusted partnerships" },
                   { icon: Target, title: "35+ Team Size", desc: "Dedicated professionals" }
                 ].map((feature, index) => {
                   const FeatureIcon = feature.icon;
@@ -686,12 +685,12 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Button 
+                  onClick={() => openPopup('cta-contact')}
                   variant="outline"
                   size="lg" 
                   className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
                 >
-                  <Phone className="mr-2 h-5 w-5" />
-                  +91 99001 41155
+                  Get Quote
               </Button>
               </div>
             </motion.div>

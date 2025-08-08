@@ -160,7 +160,7 @@ export default function ServicesPage() {
       }
     ],
     stats: {
-      events: "150+",
+      events: "200+",
       satisfaction: "97%",
       clients: "Industry Leaders"
     }
@@ -353,7 +353,7 @@ const endToEndServices = [
                   </h1>
                   
                   <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-200 mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto mobile-body-text px-4 sm:px-0">
-                    12 years of expertise. 1000+ events delivered. 165+ corporate clients. Creating extraordinary corporate experiences that inspire, educate, and propel organizations to new heights.
+                    12+ years of expertise. 1000+ events delivered. 165+ corporate clients. 35+ team size. 2M+ audience engaged. Creating extraordinary corporate experiences that inspire, educate, and propel organizations to new heights.
                   </p>
 
 
@@ -730,10 +730,14 @@ const endToEndServices = [
                     className="mobile-card bg-[#2A3959] backdrop-blur-sm border border-[#2A3959]/30 hover:border-[#F9A625]/50 transition-all duration-300 mobile-animation"
                   >
                     <Phone className="w-10 h-10 sm:w-12 sm:h-12 text-[#F9A625] mx-auto mb-3 sm:mb-4" />
-                    <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Call Us Now</h3>
-                    <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Speak directly with our event specialists</p>
-                    <Button variant="outline" className="mobile-touch-target border-[#F9A625]/50 text-[#F9A625] hover:bg-[#F9A625] hover:text-[#2A3959] text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
-                      +91 99001 41155
+                    <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Contact Us Now</h3>
+                    <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Get in touch with our event specialists</p>
+                    <Button 
+                      onClick={() => openPopup('services-contact')}
+                      variant="outline" 
+                      className="mobile-touch-target border-[#F9A625]/50 text-[#F9A625] hover:bg-[#F9A625] hover:text-[#2A3959] text-sm sm:text-base min-h-[44px] w-full sm:w-auto"
+                    >
+                      Get Quote
                     </Button>
                   </motion.div>
 

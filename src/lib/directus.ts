@@ -26,6 +26,22 @@ interface Page {
   featured_image?: string;
 }
 
+interface Testimonial {
+  id: number;
+  client_name: string;
+  company_name: string;
+  job_title?: string;
+  testimonial_image: string | { id: string };
+  image_alt_text?: string;
+  company_logo?: string | { id: string };
+  industry?: string;
+  sort_order?: number;
+  is_featured?: boolean;
+  status: 'published' | 'draft' | 'archived';
+  date_created?: string;
+  date_updated?: string;
+}
+
 interface Service {
   id: number;
   title: string;
@@ -125,6 +141,7 @@ interface DirectusSchema {
   blog: Blog[];
   pages: Page[];
   services: Service[];
+  testimonials: Testimonial[];
   team_members: TeamMember[];
   landing_pages: LandingPage[];
   portfolio_categories: PortfolioCategory[];
@@ -147,6 +164,7 @@ export type {
   Service, 
   ServiceFeature, 
   ServiceStats, 
+  Testimonial,
   TeamMember, 
   LandingPage, 
   FormField, 

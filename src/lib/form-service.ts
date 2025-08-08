@@ -225,7 +225,7 @@ export class FormService {
     if (isSuccess) {
       switch (formType) {
         case 'contact':
-          return 'Thank you for contacting us! We&apos;ll get back to you within 24 hours.';
+          return 'Thank you for contacting us! We&apos;ll get back to you soon.';
         case 'enquiry':
           return 'Thank you for your enquiry! Our team will contact you soon to discuss your event.';
         case 'newsletter':

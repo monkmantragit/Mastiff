@@ -147,11 +147,12 @@ export default function ServicePage({ params }: ServicePageProps) {
                 </Button>
                 
                 <Button 
+                  onClick={() => openPopup('service-contact')}
                   variant="outline" 
                   className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
                 >
                   <Phone className="mr-2 w-5 h-5" />
-                  +91-990-0141-155
+                  Get Quote
                 </Button>
               </div>
             </div>
@@ -417,11 +418,14 @@ export default function ServicePage({ params }: ServicePageProps) {
             </p>
 
             <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div className="text-center">
+              <Button
+                onClick={() => openPopup('service-detail-contact')}
+                className="text-center bg-transparent border-0 p-0 hover:bg-[#F9A625]/10 rounded-xl transition-colors"
+              >
                 <Phone className="w-12 h-12 text-[#F9A625] mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Call Us Now</h3>
-                <p className="text-white/80">+91-990-0141-155</p>
-              </div>
+                <h3 className="text-lg font-semibold mb-2">Get Quote</h3>
+                <p className="text-white/80">Contact Our Team</p>
+              </Button>
               
               <div className="text-center">
                 <Mail className="w-12 h-12 text-[#F9A625] mx-auto mb-4" />

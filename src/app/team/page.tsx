@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { DirectusService, type TeamMember } from '@/lib/directus-service';
+import { usePopup } from '@/components/popup-provider';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -38,6 +39,7 @@ export default function TeamPage() {
   const [selectedCategory, setSelectedCategory] = React.useState("All");
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
+  const { openPopup } = usePopup();
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -57,35 +59,6 @@ export default function TeamPage() {
     { number: "500+", label: "Events Delivered", icon: Calendar },
     { number: "165+", label: "Happy Clients", icon: Star }
   ];
-
-  const getDepartmentData = () => {
-    const departmentMap = new Map();
-    const iconMap = {
-      "Leadership": Target,
-      "Creative": Lightbulb, 
-      "Operations": Zap,
-      "Client Relations": Users,
-      "Production": Trophy,
-      "Finance": Award,
-      "HR": Users,
-      "Marketing": Star
-    };
-    
-    teamMembers.forEach(member => {
-      if (member.department) {
-        departmentMap.set(member.department, (departmentMap.get(member.department) || 0) + 1);
-      }
-    });
-    
-    return Array.from(departmentMap.entries()).map(([name, count], index) => ({
-      name,
-      count,
-      icon: iconMap[name as keyof typeof iconMap] || Star,
-      color: index % 2 === 0 ? "bg-brand-blue" : "bg-brand-yellow"
-    }));
-  };
-
-  const departments = getDepartmentData();
 
   const categories = ["All", ...Array.from(new Set(teamMembers.map(member => member.department).filter(Boolean)))];
 
@@ -176,7 +149,7 @@ export default function TeamPage() {
                 Our team brings together diverse skills and experience from across the event management industry. Each member contributes specialized knowledge to ensure your corporate events achieve their strategic objectives.
               </p>
               <p className="text-lg text-neutral-600 mb-10 leading-relaxed font-body">
-                With 12+ years of experience and over 1000 events delivered, our team has the proven expertise to handle everything from intimate leadership meetings to large-scale corporate conferences.
+                With 12+ years of experience and over 1000+ events delivered, our 35+ team members have the proven expertise to handle everything from intimate leadership meetings to large-scale corporate conferences.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 {[
@@ -247,64 +220,6 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* Departments Section - Minimalist */}
-      <section className="py-32 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-20"
-          >
-            <motion.div variants={fadeInUp}>
-              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
-                <Zap className="w-5 h-5 text-amber-500" />
-                <span className="text-sm font-medium tracking-wide text-amber-600">Excellence Architects</span>
-              </div>
-              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
-                <span className="kinetic-text">Specialized</span> Expertise
-              </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body">
-                Our departments work seamlessly together to deliver comprehensive event management solutions that drive business results.
-              </p>
-            </motion.div>
-          </motion.div>
-
-          {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <div className="w-8 h-8 border-4 border-brand-yellow border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          ) : departments.length === 0 ? (
-            <div className="text-center py-20">
-              <Zap className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-display text-neutral-600 mb-2">No departments found</h3>
-              <p className="text-neutral-500">Department information will be available once team data is loaded.</p>
-            </div>
-          ) : (
-            <motion.div
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {departments.map((dept, index) => (
-                <motion.div key={index} variants={fadeInUp}>
-                  <div className="bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300">
-                    <div className={`w-12 h-12 ${dept.color} rounded-xl flex items-center justify-center mx-auto mb-4`}>
-                      <dept.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-lg font-medium text-black mb-2">{dept.name}</h3>
-                    <p className="text-2xl font-light text-brand-yellow mb-1">{dept.count}</p>
-                    <p className="text-xs text-gray-500">Team Members</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-        </div>
-      </section>
 
       {/* Team Members Section - Clean Grid */}
       <section className="py-32 bg-white">
@@ -447,13 +362,16 @@ export default function TeamPage() {
               </p>
               
               <div className="grid md:grid-cols-3 gap-8 mb-12 text-sm">
-                <div className="text-center">
+                <Button
+                  onClick={() => openPopup('team-contact')}
+                  className="text-center bg-transparent border-0 p-0 hover:bg-white/10 rounded-xl transition-colors"
+                >
                   <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-3">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <p className="text-white/60 mb-1">Call Us</p>
-                  <p>+91 98450 45466</p>
-                </div>
+                  <p className="text-white/60 mb-1">Contact Us</p>
+                  <p>Get Quote</p>
+                </Button>
                 
                 <div className="text-center">
                   <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-3">

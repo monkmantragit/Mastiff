@@ -65,11 +65,11 @@ export default function BlogPage() {
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display leading-tight mb-8 text-[#2A3959]">
             Where Ideas
             <br />
-            <span className="text-[#F9A625]">Become Legends</span>
+            <span className="text-[#F9A625]">Achieve Excellence</span>
           </h1>
           
           <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed">
-            Behind every legendary event lies a revolutionary idea. Explore the insights, strategies, and visionary thinking 
+            Behind every exceptional event lies a revolutionary idea. Explore the insights, strategies, and visionary thinking 
             that transform ordinary occasions into extraordinary legacies.
           </p>
         </motion.div>

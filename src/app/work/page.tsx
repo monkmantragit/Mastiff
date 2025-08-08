@@ -94,7 +94,7 @@ export default function WorkPage() {
           >
             <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow">
               <Eye className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide text-white">Legendary Showcase</span>
+              <span className="text-sm font-medium tracking-wide text-white">Premier Showcase</span>
             </div>
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
               <span className="kinetic-text text-white">
@@ -106,7 +106,7 @@ export default function WorkPage() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-white/90 leading-relaxed">
-              Step into our hall of legends. Every project here represents an impossible vision made inevitable, 
+              Step into our portfolio of excellence. Every project here represents an ambitious vision made reality, 
               a bold dream transformed into unforgettable reality. This is where extraordinary happens.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -115,7 +115,7 @@ export default function WorkPage() {
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
               <Button className="btn-secondary group">
-                <span>Create Your Legend</span>
+                <span>Create Your Masterpiece</span>
                 <Trophy className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </div>
@@ -161,10 +161,10 @@ export default function WorkPage() {
             <motion.div variants={fadeInUp}>
               <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
                 <Trophy className="w-5 h-5 text-amber-500" />
-                <span className="text-sm font-medium tracking-wide text-amber-600">Hall of Legends</span>
+                <span className="text-sm font-medium tracking-wide text-amber-600">Portfolio Excellence</span>
               </div>
               <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
-                Every Project. <span className="kinetic-text">A Legend.</span>
+                Every Project. <span className="kinetic-text">Excellence.</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-4xl mx-auto font-body leading-relaxed">
                 From Fortune 500 summits to industry-defining celebrations, witness the events that didn&apos;t just meet expectations—they redefined them. 
@@ -331,7 +331,7 @@ export default function WorkPage() {
               {
                 step: "01",
                 title: "Vision Discovery",
-                description: "We don&apos;t just take briefs—we uncover dreams. Every legendary event begins with understanding your impossible vision.",
+                description: "We don&apos;t just take briefs—we uncover dreams. Every exceptional event begins with understanding your ambitious vision."
                 icon: Target
               },
               {
@@ -349,7 +349,7 @@ export default function WorkPage() {
               {
                 step: "04",
                 title: "Legacy Assurance",
-                description: "The event ends. The legend begins. We ensure your experience creates ripples that last long after the final applause.",
+                description: "The event ends. The impact begins. We ensure your experience creates ripples that last long after the final applause."
                 icon: Award
               }
             ].map((process, index) => (
@@ -383,24 +383,26 @@ export default function WorkPage() {
             <motion.div variants={fadeInUp}>
               <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
                 <Trophy className="w-5 h-5 text-amber-500" />
-                <span className="text-sm font-medium tracking-wide text-amber-600">Begin Your Legend</span>
+                <span className="text-sm font-medium tracking-wide text-amber-600">Begin Your Journey</span>
               </div>
               <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
-                Ready to Create Your <span className="kinetic-text">Legendary Moment?</span>
+                Ready to Create Your <span className="kinetic-text">Extraordinary Moment?</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-12 font-body leading-relaxed">
-                Your vision deserves more than an event—it deserves to become a legend. Let&apos;s transform your impossible dream into an inevitable reality.
+                Your vision deserves more than an event—it deserves to become exceptional. Let&apos;s transform your ambitious dream into an extraordinary reality.
               </p>
               
               <div className="grid md:grid-cols-3 gap-8 mb-12">
-                <div className="text-center">
+                <Button
+                  onClick={() => openPopup('work-contact')}
+                  className="text-center bg-transparent border-0 p-0 hover:bg-brand-yellow/10 rounded-xl transition-colors"
+                >
                   <div className="w-16 h-16 bg-brand-yellow rounded-full flex items-center justify-center mx-auto mb-4">
                     <Phone className="w-8 h-8 text-brand-blue" />
                   </div>
-                  <h3 className="text-lg font-heading mb-2 text-brand-blue">Call Us</h3>
-                  <p className="text-brand-gray font-body">Prakash: +91-990-0141-155</p>
-                  <p className="text-brand-gray font-body">Vinay: +91-990-0141-177</p>
-                </div>
+                  <h3 className="text-lg font-heading mb-2 text-brand-blue">Get Quote</h3>
+                  <p className="text-brand-gray font-body">Contact Our Team</p>
+                </Button>
                 
                 <div className="text-center">
                   <div className="w-16 h-16 bg-brand-yellow rounded-full flex items-center justify-center mx-auto mb-4">

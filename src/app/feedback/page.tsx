@@ -393,8 +393,8 @@ export default function FeedbackPage() {
             </h1>
             
             <p className="text-xl text-neutral-600 mb-8 font-body leading-relaxed">
-              Your legendary insights are now part of our evolution. Every word you&apos;ve shared brings us closer to creating 
-              the extraordinary digital experience that WhiteMassif deserves. Thank you for helping us perfect the legend.
+              Your valuable insights are now part of our evolution. Every word you&apos;ve shared brings us closer to creating 
+              the extraordinary digital experience that WhiteMassif deserves. Thank you for helping us achieve excellence.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -402,7 +402,7 @@ export default function FeedbackPage() {
                 onClick={() => window.location.href = '/'}
                 className="btn-primary group"
               >
-                <span>Experience The Legend</span>
+                <span>Experience Excellence</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
               <Button 
@@ -480,8 +480,8 @@ export default function FeedbackPage() {
                   </h1>
                   
                   <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed">
-                    Every legend listens to the voices that matter most. Your insights don&apos;t just improve our website—they shape the future 
-                    of how WhiteMassif creates legendary experiences. Help us perfect what promises to be extraordinary.
+                    Every great company listens to the voices that matter most. Your insights don&apos;t just improve our website—they shape the future 
+                    of how WhiteMassif creates exceptional experiences. Help us perfect what promises to be extraordinary.
                   </p>
                 </motion.div>
 
@@ -493,7 +493,7 @@ export default function FeedbackPage() {
                 >
                   <Card className="p-8 glass rounded-3xl border-neutral-200 hover:shadow-lg transition-all duration-300">
                     <Timer className="w-10 h-10 text-amber-500 mb-6" />
-                    <h3 className="text-xl font-heading font-semibold mb-3 text-neutral-900">5 Legendary Minutes</h3>
+                    <h3 className="text-xl font-heading font-semibold mb-3 text-neutral-900">5 Valuable Minutes</h3>
                     <p className="text-neutral-600 font-body">Precision questions that matter</p>
                   </Card>
                   
@@ -506,7 +506,7 @@ export default function FeedbackPage() {
                   <Card className="p-8 glass rounded-3xl border-neutral-200 hover:shadow-lg transition-all duration-300">
                     <Heart className="w-10 h-10 text-amber-500 mb-6" />
                     <h3 className="text-xl font-heading font-semibold mb-3 text-neutral-900">Direct Impact</h3>
-                    <p className="text-neutral-600 font-body">Shape legendary experiences</p>
+                    <p className="text-neutral-600 font-body">Shape exceptional experiences</p>
                   </Card>
                 </motion.div>
 
@@ -690,7 +690,7 @@ function QuestionCard({
               <Textarea
                 value={selectedValue}
                 onChange={(e) => setSelectedValue(e.target.value)}
-                placeholder="Your expert perspective helps us create something truly legendary. Share your vision, insights, and recommendations..."
+                placeholder="Your expert perspective helps us create something truly extraordinary. Share your vision, insights, and recommendations..."
                 className="w-full min-h-[150px] resize-none"
               />
             </motion.div>

@@ -331,10 +331,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <Card className="bg-gradient-to-r from-[#2A3959] via-[#1a2332] to-[#2A3959] text-white border-0 rounded-3xl">
             <CardContent className="p-12 text-center">
               <h3 className="text-4xl md:text-5xl font-display mb-6 leading-tight">
-                Ready to Create Your <span className="text-[#F9A625]">Legend?</span>
+                Ready to Create Your <span className="text-[#F9A625]">Masterpiece?</span>
               </h3>
               <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-                Don&apos;t just read about legendary events. Create them. Let our insights inspire your next vision.
+                Don&apos;t just read about exceptional events. Create them. Let our insights inspire your next vision.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg">

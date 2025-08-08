@@ -282,15 +282,15 @@ export default function Navigation() {
                     transition={{ delay: 0.5 }}
                   >
                     <div className="space-y-3 pt-4 border-t border-white/10">
-                      <a
-                        href="tel:+91-990-0141-155"
+                      <button
+                        onClick={() => openPopup('nav-contact')}
                         className="flex items-center space-x-3 text-white/70 hover:text-white transition-colors"
                       >
                         <div className="w-8 h-8 glass rounded-lg flex items-center justify-center">
                           <Phone className="w-4 h-4" />
                         </div>
-                        <span className="text-sm">+91-990-0141-155</span>
-                      </a>
+                        <span className="text-sm">Get Quote</span>
+                      </button>
                       
                       <a
                         href="mailto:info@whitemassif.com"

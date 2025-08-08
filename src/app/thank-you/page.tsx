@@ -62,26 +62,26 @@ export default function ThankYouPage() {
     {
       icon: Phone,
       title: "We&apos;ll Call You",
-      description: "Our event specialist will contact you within 24 hours to discuss your requirements in detail.",
-      timeline: "Within 24 hours"
+      description: "Our event specialist will contact you soon to discuss your requirements in detail.",
+      timeline: "Next Step"
     },
     {
       icon: Calendar,
       title: "Free Consultation",
       description: "Schedule a personalized consultation to explore ideas, budget, and timeline for your event.",
-      timeline: "Within 48 hours"
+      timeline: "Following Step"
     },
     {
       icon: MessageCircle,
       title: "Proposal & Quote",
       description: "Receive a detailed proposal with creative concepts, timeline, and transparent pricing.",
-      timeline: "Within 72 hours"
+      timeline: "Final Step"
     }
   ];
 
   const whyChooseUs = [
     { icon: Star, title: "1000+ Events", description: "Successfully executed" },
-    { icon: Users, title: "150+ Specialists", description: "Creative professionals" },
+    { icon: Users, title: "35+ Specialists", description: "Creative professionals" },
     { icon: CheckCircle, title: "100% Satisfaction", description: "Guaranteed results" }
   ];
 
@@ -170,10 +170,12 @@ export default function ThankYouPage() {
               variants={fadeInUp}
               className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
             >
-              <Button className="btn-primary mobile-touch-target text-base font-semibold px-8">
-                <Phone className="mr-2 h-5 w-5" />
-                Call Us Now: +91 98450 45466
-              </Button>
+              <Link href="/contact">
+                <Button className="btn-primary mobile-touch-target text-base font-semibold px-8">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Contact Us
+                </Button>
+              </Link>
               
               <Button 
                 variant="outline" 
@@ -258,7 +260,7 @@ export default function ThankYouPage() {
           >
             <motion.div variants={fadeInUp}>
               <h3 className="text-2xl lg:text-3xl font-display text-white mb-8">
-                Why 1000+ Clients <span className="text-[#F9A625]">Trust Us</span>
+                Why 165+ Clients <span className="text-[#F9A625]">Trust Us</span>
               </h3>
             </motion.div>
           </motion.div>

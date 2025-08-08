@@ -52,8 +52,8 @@ export default function AboutPage() {
   const stats = [
     { number: "12+", label: "Years of Excellence", icon: Calendar, color: "text-blue-500" },
     { number: "1000+", label: "Dreams Realized", icon: Trophy, color: "text-amber-500" },
-    { number: "1.5M+", label: "Lives Touched", icon: Users, color: "text-emerald-500" },
-    { number: "150+", label: "Creative Minds", icon: Star, color: "text-purple-500" }
+    { number: "2M+", label: "Lives Touched", icon: Users, color: "text-emerald-500" },
+    { number: "35+", label: "Creative Minds", icon: Star, color: "text-purple-500" }
   ];
 
   const values = [
@@ -567,7 +567,7 @@ export default function AboutPage() {
                 Your Story <span className="kinetic-text">Starts Here</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-12 font-body leading-relaxed">
-                Every legendary event begins with a conversation. Every transformation starts with trust. 
+                Every exceptional event begins with a conversation. Every transformation starts with trust. 
                 Let's write your next chapter together.
               </p>
               
@@ -578,12 +578,15 @@ export default function AboutPage() {
                 </Button>
                 
                 <div className="flex items-center space-x-6">
-                  <a href="tel:+91-98450-45466" className="group flex items-center space-x-3 text-neutral-600 hover:text-amber-600 transition-colors">
+                  <Button 
+                    onClick={() => openPopup('about-contact')}
+                    className="group flex items-center space-x-3 text-neutral-600 hover:text-amber-600 transition-colors bg-transparent border-0 p-0 hover:bg-transparent"
+                  >
                     <div className="w-12 h-12 glass rounded-full flex items-center justify-center group-hover:bg-amber-100 transition-colors">
                       <Phone className="w-5 h-5" />
                     </div>
-                    <span className="font-medium">+91 98450 45466</span>
-                  </a>
+                    <span className="font-medium">Get Quote</span>
+                  </Button>
                   
                   <a href="mailto:info@whitemassif.com" className="group flex items-center space-x-3 text-neutral-600 hover:text-amber-600 transition-colors">
                     <div className="w-12 h-12 glass rounded-full flex items-center justify-center group-hover:bg-amber-100 transition-colors">

@@ -44,11 +44,11 @@ export default function CareersPage() {
       subtitle: "(Senior Event Manager)",
       department: "Operations",
       location: "Bangalore",
-      type: "Full-time Legend",
+      type: "Full-time Professional",
       experience: "3-5 years of magic",
-      description: "Transform impossible client visions into inevitable realities. Lead Fortune 500 events that become industry legends and set new standards for excellence.",
-      requirements: ["Proven track record of delivering the impossible", "3+ years turning visions into legendary experiences", "Master of crisis-to-opportunity transformation", "Ability to inspire teams and clients alike"],
-      salary: "₹6-10 LPA + Legend Bonus",
+      description: "Transform ambitious client visions into exceptional realities. Lead Fortune 500 events that set new industry standards and create lasting impact."
+      requirements: ["Proven track record of delivering complex projects", "3+ years creating extraordinary experiences", "Expert in crisis-to-opportunity transformation", "Ability to inspire teams and clients alike"]
+      salary: "₹6-10 LPA + Performance Bonus"
       impact: "Direct impact on 50+ Fortune 500 events annually"
     },
     {
@@ -58,19 +58,19 @@ export default function CareersPage() {
       location: "Bangalore",
       type: "Full-time Visionary",
       experience: "2-4 years of brilliance",
-      description: "Design experiences that don&apos;t just look beautiful—they feel legendary. Create visual stories that transform spaces into emotional journeys.",
+      description: "Design experiences that don&apos;t just look beautiful—they feel extraordinary. Create visual stories that transform spaces into emotional journeys."
       requirements: ["Portfolio that makes hearts skip beats", "Master of design tools and creative thinking", "Ability to translate emotions into visuals", "Obsession with perfection and innovation"],
       salary: "₹4-7 LPA + Creative Incentives",
       impact: "Your designs will be seen by millions across global events"
     },
     {
-      title: "Client Legend Liaison",
+      title: "Client Experience Specialist"
       subtitle: "(Client Relations Executive)",
       department: "Client Relations",
       location: "Bangalore",
       type: "Full-time Relationship Builder",
       experience: "1-3 years of connection",
-      description: "Be the bridge between client dreams and legendary realities. Transform one-time clients into lifelong advocates and co-creators of legends.",
+      description: "Be the bridge between client visions and exceptional realities. Transform one-time clients into lifelong advocates and strategic partners."
       requirements: ["Natural gift for human connection", "Ability to read between the lines of client needs", "Passion for exceeding every expectation", "Fluent in both empathy and excellence"],
       salary: "₹3-5 LPA + Performance Recognition",
       impact: "Build relationships that span decades and continents"
@@ -123,7 +123,7 @@ export default function CareersPage() {
               whileHover={{ scale: 1.05 }}
             >
               <Users className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide">Legend Makers Wanted</span>
+              <span className="text-sm font-medium tracking-wide">Visionaries Wanted</span>
             </motion.div>
             
             {/* Main Headline */}
@@ -138,7 +138,7 @@ export default function CareersPage() {
               </span>
               <br />
               <span className="text-neutral-800">
-                Create Legends.
+                Create Excellence.
               </span>
             </motion.h1>
             
@@ -149,7 +149,7 @@ export default function CareersPage() {
               transition={{ duration: 1, delay: 0.4 }}
             >
               Ordinary careers create ordinary outcomes. At WhiteMassif, we don&apos;t hire employees—we forge visionaries. 
-              Join the team that turns impossible visions into inevitable realities. Your legend starts here.
+              Join the team that turns impossible visions into inevitable realities. Your journey to excellence begins here.
             </motion.p>
 
             <motion.div
@@ -159,11 +159,11 @@ export default function CareersPage() {
               transition={{ duration: 1, delay: 0.6 }}
             >
               <Button className="btn-primary group">
-                <span>Begin Your Legend</span>
+                <span>Start Your Journey</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
               <Button className="btn-secondary group">
-                <span>Meet The Legends</span>
+                <span>Meet The Visionaries</span>
                 <Users className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </motion.div>
@@ -217,13 +217,13 @@ export default function CareersPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
-                Legend Openings
+                Career Opportunities
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900">
-                Your <span className="kinetic-text">Legendary Role</span> Awaits
+                Your <span className="kinetic-text">Exceptional Role</span> Awaits
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body mb-12">
-                These aren&apos;t just jobs—they&apos;re invitations to join an elite team of visionaries. Find your perfect match and begin your legend.
+                These aren&apos;t just jobs—they&apos;re invitations to join an elite team of visionaries. Find your perfect match and begin your journey to excellence.
               </p>
             </motion.div>
           </motion.div>
@@ -316,19 +316,19 @@ export default function CareersPage() {
           >
             <motion.div variants={fadeInUp}>
               <Badge className="mb-6 glass-dark px-6 py-2 text-amber-400 border-amber-400/20">
-                Create Your Own Legend
+                Create Your Own Path
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-6 text-white leading-tight">
-                Don&apos;t See Your <span className="kinetic-text text-amber-400">Legendary Role?</span>
+                Don&apos;t See Your <span className="kinetic-text text-amber-400">Ideal Role?</span>
               </h2>
               <p className="text-xl text-white/90 mb-12 max-w-3xl mx-auto font-body">
-                True legends aren&apos;t defined by job descriptions—they define their own paths. If you&apos;re a visionary who doesn&apos;t fit in boxes, 
+                Exceptional professionals aren&apos;t defined by job descriptions—they define their own paths. If you&apos;re a visionary who doesn&apos;t fit in boxes, 
                 let&apos;s create a role as unique as your talent.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button 
-                  onClick={() => window.open('mailto:jobs@whitemassif.com?subject=Creating My Own Legendary Role&body=Dear WhiteMassif Team,%0D%0A%0D%0AI am a visionary professional interested in creating a unique role that aligns with my skills and your company\'s mission.%0D%0A%0D%0APlease find my CV and cover letter attached outlining my vision for contributing to WhiteMassif.%0D%0A%0D%0ABest regards', '_blank')}
+                  onClick={() => window.open('mailto:jobs@whitemassif.com?subject=Creating My Own Exceptional Role&body=Dear WhiteMassif Team,%0D%0A%0D%0AI am a visionary professional interested in creating a unique role that aligns with my skills and your company\'s mission.%0D%0A%0D%0APlease find my CV and cover letter attached outlining my vision for contributing to WhiteMassif.%0D%0A%0D%0ABest regards', '_blank')}
                   className="btn-primary group"
                 >
                   <Mail className="mr-2 w-5 h-5" />

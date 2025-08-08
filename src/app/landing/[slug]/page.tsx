@@ -256,7 +256,7 @@ export default function LandingPageTemplate({ params }: LandingPageProps) {
                           </div>
                           <div className="flex items-center gap-1">
                             <CheckCircle className="w-4 h-4 text-green-500" />
-                            <span>24hr response</span>
+                            <span>Quick response</span>
                           </div>
                         </div>
                       </div>
@@ -266,13 +266,16 @@ export default function LandingPageTemplate({ params }: LandingPageProps) {
                       <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                       <h3 className="text-2xl font-display text-[#2A3959] mb-2">Thank You!</h3>
                       <p className="text-neutral-600 mb-6">
-                        We&apos;ve received your inquiry and will contact you within 24 hours.
+                        We&apos;ve received your inquiry and will contact you soon.
                       </p>
                       <div className="flex items-center justify-center gap-4 text-sm text-neutral-500">
-                        <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => openPopup('landing-contact')}
+                          className="flex items-center gap-1 hover:text-amber-600 transition-colors"
+                        >
                           <Phone className="w-4 h-4" />
-                          <span>+91-990-0141-155</span>
-                        </div>
+                          <span>Get Quote</span>
+                        </button>
                         <div className="flex items-center gap-1">
                           <Mail className="w-4 h-4" />
                           <span>info@whitemassif.com</span>

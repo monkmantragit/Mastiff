@@ -1,10 +1,12 @@
 'use client';
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
+import { DirectusService, type Testimonial } from '@/lib/directus-service';
+import Image from 'next/image';
 import { 
   ArrowRight, 
   Sparkles,
@@ -55,7 +57,7 @@ const stats = [
     color: "text-purple-400"
   },
   {
-    number: "1.5M+",
+    number: "2M+",
     label: "Audience Engagement",
     icon: Star,
     color: "text-emerald-400"
@@ -159,23 +161,34 @@ export default function ClientsPage() {
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
   const { openPopup } = usePopup();
   
-  // Modal state for client showcase
+  // State for testimonials and client showcase
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showAllClients, setShowAllClients] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Fetch testimonials from Directus
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      setLoading(true);
+      const fetchedTestimonials = await DirectusService.getTestimonials();
+      console.log('Fetched testimonials:', fetchedTestimonials);
+      setTestimonials(fetchedTestimonials);
+      setLoading(false);
+    };
+
+    fetchTestimonials();
+  }, []);
   
   // Logo data slices for compact rows
   const moreClientsRow1 = allClientLogos.slice(0, 18);
   const moreClientsRow2 = allClientLogos.slice(18, 36);
   
-  // Filter clients based on category and search
+  // Filter clients based on search only
   const filteredClients = allClientLogos.filter(client => {
-    const matchesCategory = selectedCategory === 'All' || client.category === selectedCategory;
     const matchesSearch = client.alt.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesSearch;
   });
-  
-  const categories = ['All', 'Technology', 'Healthcare', 'Manufacturing', 'Finance', 'Automotive', 'Media'];
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -392,8 +405,8 @@ export default function ClientsPage() {
         </div>
       </section>
 
-      {/* Client Testimonials Section */}
-      <section className="section-padding">
+      {/* Premium Testimonials Scroller Section - "When Visionaries Speak" */}
+      <section className="section-padding bg-gradient-to-br from-neutral-50 via-amber-50/20 to-orange-50/20">
         <div className="container-fluid mx-auto">
           <motion.div
             initial="initial"
@@ -407,61 +420,178 @@ export default function ClientsPage() {
                 Voices of Excellence
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900">
-                When <span className="kinetic-text">Legends</span> Speak
+                When <span className="kinetic-text">Visionaries</span> Speak
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body mb-12">
-                Don&apos;t just take our word for it. Hear from the visionaries who&apos;ve experienced the WhiteMassif difference.
+                Don&apos;t just take our word for it. Hear from the visionaries who&apos;ve experienced the White Massif difference.
               </p>
             </motion.div>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                quote: "WhiteMassif didn&apos;t just deliver an event—they crafted an experience that redefined what we thought was possible. Our stakeholders are still talking about it months later.",
-                author: "Sarah Chen, VP Global Events",
-                company: "Fortune 500 Technology Company",
-                industry: "Silicon Valley Giant",
-                rating: 5
-              },
-              {
-                quote: "When you&apos;re launching a product that will change an industry, you need partners who understand the stakes. WhiteMassif turned our vision into a moment that made history.",
-                author: "Michael Rodriguez, CMO",
-                company: "Industry-Leading Manufacturer",
-                industry: "Global Innovation Leader",
-                rating: 5
-              },
-              {
-                quote: "In healthcare, perfection isn&apos;t optional—it&apos;s essential. WhiteMassif delivered flawless execution that honored both our scientific rigor and our human mission.",
-                author: "Dr. Priya Sharma, Director",
-                company: "Pharmaceutical Pioneer",
-                industry: "Life Sciences Leader",
-                rating: 5
-              }
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="glass rounded-3xl p-8 group hover:shadow-lg transition-all duration-300"
-              >
-                <div className="mb-6">
-                  <div className="flex mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-amber-500 fill-current" />
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="w-8 h-8 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : testimonials.length === 0 ? (
+            <div className="text-center py-20">
+              <Star className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-display text-neutral-600 mb-2">No testimonials found</h3>
+              <p className="text-neutral-500">Check back later as we add more client testimonials.</p>
+            </div>
+          ) : (
+            <div className="relative space-y-12">
+              {/* Row 1 - Premium Left to Right Scroll */}
+              <div className="premium-pause relative">
+                {/* Premium fade gradients */}
+                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-neutral-50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-neutral-50 to-transparent z-10 pointer-events-none" />
+                
+                <div className="overflow-hidden">
+                  <div className="flex gap-8 animate-scroll-premium-left will-change-transform">
+                    {/* Original testimonials for row 1 */}
+                    {[...testimonials, ...testimonials].map((testimonial, index) => (
+                      <div key={`premium-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-[380px] sm:w-[420px] group">
+                        <div className="premium-card rounded-3xl shadow-lg h-[500px] overflow-hidden relative">
+                          {/* Premium testimonial image */}
+                          <div className="relative h-full overflow-hidden">
+                            <Image
+                              src={typeof testimonial.testimonial_image === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover`
+                              }
+                              alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                              width={420}
+                              height={500}
+                              className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-[1200ms] ease-out"
+                              onError={(e) => {
+                                console.error('Premium testimonial image failed to load:', e.currentTarget.src);
+                              }}
+                            />
+                        
+                        {/* Enhanced gradient overlay */}
+                        <div className="absolute inset-0 testimonial-gradient-overlay"></div>
+                        
+                        {/* Client information overlay */}
+                        <div className="absolute bottom-0 left-0 right-0 p-6">
+                          <div className="testimonial-client-name">{testimonial.client_name}</div>
+                          <div className="testimonial-client-title">
+                            {testimonial.job_title && `${testimonial.job_title}, `}{testimonial.company_name}
+                          </div>
+                          {testimonial.industry && (
+                            <div className="testimonial-client-company">{testimonial.industry}</div>
+                          )}
+                        </div>
+                        
+                        {/* Company logo badge */}
+                        {testimonial.company_logo && (
+                          <div className="testimonial-company-logo">
+                            <Image
+                              src={typeof testimonial.company_logo === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.company_logo}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.company_logo.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                              }
+                              alt={`${testimonial.company_name} logo`}
+                              width={32}
+                              height={32}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 2 - Premium Right to Left Scroll */}
+              <div className="premium-pause relative">
+                {/* Premium fade gradients */}
+                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-neutral-50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-neutral-50 to-transparent z-10 pointer-events-none" />
+                
+                <div className="overflow-hidden">
+                  <div className="flex gap-8 animate-scroll-premium-right will-change-transform">
+                    {/* Reversed testimonials for opposite direction */}
+                    {[...testimonials.slice().reverse(), ...testimonials.slice().reverse()].map((testimonial, index) => (
+                      <div key={`premium-row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-[380px] sm:w-[420px] group">
+                        <div className="premium-card rounded-3xl shadow-lg h-[500px] overflow-hidden relative">
+                          {/* Premium testimonial image */}
+                          <div className="relative h-full overflow-hidden">
+                            <Image
+                              src={typeof testimonial.testimonial_image === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover`
+                              }
+                              alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                              width={420}
+                              height={500}
+                              className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-[1200ms] ease-out"
+                              onError={(e) => {
+                                console.error('Premium testimonial image failed to load:', e.currentTarget.src);
+                              }}
+                            />
+                            
+                            {/* Premium gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                            
+                            {/* Subtle premium glow - different direction */}
+                            <div className="absolute inset-0 bg-gradient-to-bl from-blue-500/15 via-transparent to-amber-500/10 group-hover:from-blue-500/25 group-hover:to-amber-500/15 transition-all duration-700"></div>
+                            
+                            {/* Premium client info */}
+                            <div className="absolute bottom-6 left-6 right-6 text-white">
+                              <div className="backdrop-blur-sm bg-white/15 rounded-2xl p-6 border border-white/25">
+                                <div className="font-bold text-xl mb-2 tracking-wide">{testimonial.client_name}</div>
+                                <div className="text-amber-300 font-semibold mb-2 text-lg">
+                                  {testimonial.job_title && `${testimonial.job_title}, `}{testimonial.company_name}
+                                </div>
+                                {testimonial.industry && (
+                                  <div className="text-white/90 text-sm uppercase tracking-widest font-medium">{testimonial.industry}</div>
+                                )}
+                              </div>
+                            </div>
+                            
+                            {/* Premium company logo */}
+                            {testimonial.company_logo && (
+                              <div className="absolute top-6 right-6 w-16 h-16 bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-white/30">
+                                <Image
+                                  src={typeof testimonial.company_logo === 'string' 
+                                    ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.company_logo}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                                    : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.company_logo.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                                  }
+                                  alt={`${testimonial.company_name} logo`}
+                                  width={40}
+                                  height={40}
+                                  className="w-full h-full object-contain"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
-                  <p className="text-lg text-neutral-700 font-body leading-relaxed italic mb-6">
-                    &ldquo;{testimonial.quote}&rdquo;
-                  </p>
                 </div>
-                <div className="border-t border-neutral-200 pt-6">
-                  <div className="font-heading text-neutral-900 mb-1">{testimonial.author}</div>
-                  <div className="font-medium text-amber-600 mb-1">{testimonial.company}</div>
-                  <div className="text-sm text-neutral-500">{testimonial.industry}</div>
+              </div>
+
+              {/* Premium interaction hint */}
+              <motion.div 
+                className="text-center mt-16"
+                variants={fadeInUp}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+              >
+                <div className="inline-flex items-center gap-3 px-6 py-3 glass rounded-full">
+                  <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
+                  <span className="text-neutral-600 font-medium text-sm tracking-wide">
+                    Hover to pause • Scroll to explore • Click to discover
+                  </span>
+                  <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
                 </div>
               </motion.div>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -479,11 +609,11 @@ export default function ClientsPage() {
                 Join The Legacy
               </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-6 text-white leading-tight">
-                Ready to Become <span className="kinetic-text text-amber-400">Legendary?</span>
+                Ready to Become <span className="kinetic-text text-amber-400">Exceptional?</span>
               </h2>
               <p className="text-xl text-white/90 mb-12 max-w-3xl mx-auto font-body">
                 The world&apos;s most ambitious companies don&apos;t settle for ordinary events. They choose the partners who&apos;ve proven 
-                that impossible is just another word for opportunity. Your legend begins with a single conversation.
+                that impossible is just another word for opportunity. Your success story begins with a single conversation.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -495,12 +625,12 @@ export default function ClientsPage() {
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
                 <Button 
-                  onClick={() => window.open('tel:+919845012345', '_self')}
+                  onClick={() => openPopup('clients-contact')}
                   variant="outline"
                   className="border-2 border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group"
                 >
-                  <span>Call Us Now</span>
-                  <Phone className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <span>Contact Us</span>
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
               </div>
             </motion.div>
@@ -522,7 +652,7 @@ export default function ClientsPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl lg:text-3xl font-display text-neutral-900 mb-2">
-                    Our <span className="text-amber-600">154 Clients</span>
+                    Our <span className="text-amber-600">165+ Clients</span>
                   </h2>
                   <p className="text-neutral-600">Industry leaders who trust White Massif with their most important events</p>
                 </div>
@@ -550,22 +680,6 @@ export default function ClientsPage() {
                   />
                 </div>
 
-                {/* Category Filter */}
-                <div className="flex gap-2 overflow-x-auto pb-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => setSelectedCategory(category)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
-                        selectedCategory === category
-                          ? 'bg-amber-500 text-white'
-                          : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
               </div>
             </div>
 
@@ -599,7 +713,7 @@ export default function ClientsPage() {
               {filteredClients.length === 0 && (
                 <div className="text-center py-12">
                   <div className="text-neutral-400 text-lg mb-2">No clients found</div>
-                  <p className="text-neutral-500">Try adjusting your search or filter criteria</p>
+                  <p className="text-neutral-500">Try adjusting your search criteria</p>
                 </div>
               )}
             </div>
@@ -612,14 +726,11 @@ export default function ClientsPage() {
                 </p>
                 <div className="flex gap-4">
                   <Button
-                    onClick={() => {
-                      setSearchTerm('');
-                      setSelectedCategory('All');
-                    }}
+                    onClick={() => setSearchTerm('')}
                     variant="outline"
                     size="sm"
                   >
-                    Clear Filters
+                    Clear Search
                   </Button>
                   <Button
                     onClick={() => setShowAllClients(false)}

@@ -154,7 +154,7 @@ export default function PortfolioPage() {
             </h1>
             <p className="text-xl md:text-2xl mb-12 text-white/90 max-w-4xl mx-auto leading-relaxed font-body">
               1000+ success stories. Zero compromises. Infinite possibilities. 
-              Step into our hall of legends where extraordinary events come to life.
+              Step into our portfolio where extraordinary events come to life.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -163,8 +163,10 @@ export default function PortfolioPage() {
                 <span>Explore Portfolio</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
-              <Button className="bg-white/10 backdrop-blur-xl text-white px-8 py-4 text-lg rounded-full border border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 group">
-                <Phone className="mr-2 w-5 h-5" />
+              <Button 
+                onClick={() => openPopup('portfolio-start')}
+                className="bg-white/10 backdrop-blur-xl text-white px-8 py-4 text-lg rounded-full border border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 group"
+              >
                 <span>Start Your Project</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
@@ -226,11 +228,11 @@ export default function PortfolioPage() {
               <h2 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900 leading-tight">
                 <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Not Just Events.</span>
                 <br />
-                <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Legends.</span>
+                <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">Excellence.</span>
               </h2>
               <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
                 Step inside our hall of fame. Where ordinary becomes extraordinary. 
-                Where moments become milestones. Where events become legends.
+                Where moments become milestones. Where events become extraordinary.
               </p>
             </motion.div>
           </motion.div>
@@ -408,14 +410,16 @@ export default function PortfolioPage() {
               </p>
               
               <div className="grid md:grid-cols-3 gap-8 mb-12 text-sm">
-                <div className="text-center">
+                <Button
+                  onClick={() => openPopup('portfolio-contact')}
+                  className="text-center bg-transparent border-0 p-0 hover:bg-white/10 rounded-xl transition-colors"
+                >
                   <div className="w-16 h-16 bg-[#F9A625] rounded-full flex items-center justify-center mx-auto mb-4">
                     <Phone className="w-8 h-8 text-[#2A3959]" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">Call Us</h3>
-                  <p className="text-white/70">Prakash: +91-990-0141-155</p>
-                  <p className="text-white/70">Vinay: +91-990-0141-177</p>
-                </div>
+                  <h3 className="text-lg font-semibold mb-2">Get Quote</h3>
+                  <p className="text-white/70">Contact Our Team</p>
+                </Button>
                 
                 <div className="text-center">
                   <div className="w-16 h-16 bg-[#F9A625] rounded-full flex items-center justify-center mx-auto mb-4">

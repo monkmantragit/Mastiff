@@ -105,7 +105,7 @@ Transform contact page from information exchange into vision activation center. 
 
 2. **"Start The Conversation"** (not Email Us)
    - "info@whitemassif.com, Where legends begin"
-   - "Response within 2 hours, guaranteed"
+   - "We're here when you need us"
 
 3. **"Meet The Visionaries"** (not Visit Us)
    - "Bangalore, Karnataka, Where dreams take shape"

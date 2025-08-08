@@ -81,7 +81,6 @@ export default function Footer() {
   const contactInfo = [
     { name: 'Get Quote', href: '/', action: 'popup' },
     { name: 'WhatsApp Us', href: 'https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.' },
-    { name: 'Call Us', href: 'tel:+919900141155' },
     { name: 'Email Us', href: 'mailto:info@whitemassif.com' }
   ];
 
@@ -95,7 +94,7 @@ export default function Footer() {
   const trustIndicators = [
     { icon: Star, text: '1000+ Events', subtext: 'Successfully Delivered' },
     { icon: Award, text: '12+ Years', subtext: 'Industry Experience' },
-    { icon: Users, text: '150+ Team', subtext: 'Creative Professionals' }
+    { icon: Users, text: '35+ Team', subtext: 'Creative Professionals' }
   ];
 
   return (
@@ -267,13 +266,16 @@ export default function Footer() {
                   </div>
                 </div>
 
-                {/* Phone */}
+                {/* Contact */}
                 <div className="flex items-start space-x-3">
                   <Phone className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
                   <div>
-                    <Link href="tel:+919900141155" className="text-white/80 hover:text-[#F9A625] transition-colors">
-                      +91 99001 41155
-                    </Link>
+                    <button 
+                      onClick={() => openPopup('footer-contact')}
+                      className="text-white/80 hover:text-[#F9A625] transition-colors"
+                    >
+                      Get Quote
+                    </button>
                   </div>
                 </div>
 
