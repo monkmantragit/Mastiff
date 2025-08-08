@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from "react";
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -159,7 +158,7 @@ const allClientLogos = generateAllClientLogos();
 
 export default function ClientsPage() {
   const heroRef = useRef(null);
-  const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
+  const isHeroInView = useInView(heroRef, { once: true });
   const { openPopup } = usePopup();
   
   // State for testimonials and client showcase
