@@ -58,19 +58,19 @@ export default function CareersPage() {
       location: "Bangalore",
       type: "Full-time Visionary",
       experience: "2-4 years of brilliance",
-      description: "Design experiences that don&apos;t just look beautiful—they feel extraordinary. Create visual stories that transform spaces into emotional journeys."
+      description: "Design experiences that don&apos;t just look beautiful—they feel extraordinary. Create visual stories that transform spaces into emotional journeys.",
       requirements: ["Portfolio that makes hearts skip beats", "Master of design tools and creative thinking", "Ability to translate emotions into visuals", "Obsession with perfection and innovation"],
       salary: "₹4-7 LPA + Creative Incentives",
       impact: "Your designs will be seen by millions across global events"
     },
     {
-      title: "Client Experience Specialist"
+      title: "Client Experience Specialist",
       subtitle: "(Client Relations Executive)",
       department: "Client Relations",
       location: "Bangalore",
       type: "Full-time Relationship Builder",
       experience: "1-3 years of connection",
-      description: "Be the bridge between client visions and exceptional realities. Transform one-time clients into lifelong advocates and strategic partners."
+      description: "Be the bridge between client visions and exceptional realities. Transform one-time clients into lifelong advocates and strategic partners.",
       requirements: ["Natural gift for human connection", "Ability to read between the lines of client needs", "Passion for exceeding every expectation", "Fluent in both empathy and excellence"],
       salary: "₹3-5 LPA + Performance Recognition",
       impact: "Build relationships that span decades and continents"
