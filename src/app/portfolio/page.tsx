@@ -1,6 +1,8 @@
 'use client';
 
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { usePopup } from "@/components/popup-provider";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -29,7 +31,6 @@ import {
   Layers,
   Play
 } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
 import { WorkMediaService } from "@/lib/work-media";
 import NextImage from "next/image";
 
@@ -55,6 +56,7 @@ const scaleIn = {
 
 export default function PortfolioPage() {
   const heroRef = useRef(null);
+  const { openPopup } = usePopup();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [portfolioItems, setPortfolioItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { usePopup } from '@/components/popup-provider';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
@@ -20,10 +22,10 @@ import {
   Send
 } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
 import { FormService } from '@/lib/form-service';
 
 export default function Footer() {
+  const { openPopup } = usePopup();
   const [email, setEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
 

@@ -2,6 +2,7 @@
 
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { usePopup } from "@/components/popup-provider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { 
@@ -43,6 +44,7 @@ export default function AboutPage() {
   const { scrollY } = useScroll();
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
+  const { openPopup } = usePopup();
   
   // Advanced parallax effects
   const heroY = useTransform(scrollY, [0, 500], [0, -150]);
