@@ -10,10 +10,10 @@ export default function WorkPage() {
   const { openPopup } = usePopup();
 
   const stats = [
-    { number: "500+", label: "Events Delivered", icon: Calendar },
+    { number: "1000+", label: "Events Delivered", icon: Calendar },
     { number: "165+", label: "Happy Clients", icon: Users },
     { number: "12+", label: "Years Experience", icon: Award },
-    { number: "98%", label: "Client Satisfaction", icon: Star }
+    { number: "2M+", label: "Audience Engagement", icon: Star }
   ];
 
   return (
