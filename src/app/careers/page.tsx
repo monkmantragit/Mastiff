@@ -46,9 +46,9 @@ export default function CareersPage() {
       location: "Bangalore",
       type: "Full-time Professional",
       experience: "3-5 years of magic",
-      description: "Transform ambitious client visions into exceptional realities. Lead Fortune 500 events that set new industry standards and create lasting impact."
-      requirements: ["Proven track record of delivering complex projects", "3+ years creating extraordinary experiences", "Expert in crisis-to-opportunity transformation", "Ability to inspire teams and clients alike"]
-      salary: "₹6-10 LPA + Performance Bonus"
+      description: "Transform ambitious client visions into exceptional realities. Lead Fortune 500 events that set new industry standards and create lasting impact.",
+      requirements: ["Proven track record of delivering complex projects", "3+ years creating extraordinary experiences", "Expert in crisis-to-opportunity transformation", "Ability to inspire teams and clients alike"],
+      salary: "₹6-10 LPA + Performance Bonus",
       impact: "Direct impact on 50+ Fortune 500 events annually"
     },
     {
