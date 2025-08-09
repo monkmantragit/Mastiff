@@ -403,8 +403,8 @@ export default function ClientsPage() {
       </section>
 
       {/* Premium Testimonials Scroller Section - "When Visionaries Speak" */}
-      <section className="section-padding bg-gradient-to-br from-neutral-50 via-amber-50/20 to-orange-50/20">
-        <div className="container-fluid mx-auto">
+      <section className="py-24 bg-black overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial="initial"
             whileInView="animate"
@@ -413,13 +413,13 @@ export default function ClientsPage() {
             className="text-center mb-16"
           >
             <motion.div variants={fadeInUp}>
-              <Badge className="mb-6 glass px-6 py-2 text-amber-600 border-amber-200">
+              <Badge className="mb-6 glass-dark px-6 py-2 text-amber-400 border-amber-400/20">
                 Voices of Excellence
               </Badge>
-              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900">
-                When <span className="kinetic-text">Visionaries</span> Speak
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-white">
+                When <span className="kinetic-text text-amber-400">Visionaries</span> Speak
               </h2>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body mb-12">
+              <p className="text-xl text-white/80 max-w-3xl mx-auto font-body mb-12">
                 Don&apos;t just take our word for it. Hear from the visionaries who&apos;ve experienced the White Massif difference.
               </p>
             </motion.div>
@@ -427,52 +427,70 @@ export default function ClientsPage() {
 
           {loading ? (
             <div className="flex items-center justify-center py-20">
-              <div className="w-8 h-8 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-8 h-8 border-4 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : testimonials.length === 0 ? (
             <div className="text-center py-20">
-              <Star className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-display text-neutral-600 mb-2">No testimonials found</h3>
-              <p className="text-neutral-500">Check back later as we add more client testimonials.</p>
+              <Star className="w-16 h-16 text-white/40 mx-auto mb-4" />
+              <h3 className="text-2xl font-display text-white/80 mb-2">No testimonials found</h3>
+              <p className="text-white/60">Check back later as we add more client testimonials.</p>
             </div>
           ) : (
-            <div className="relative">
-              {/* Static Testimonials Grid */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {testimonials.map((testimonial, index) => (
-                  <motion.div 
-                    key={`testimonial-${testimonial.id}`}
-                    variants={fadeInUp}
-                    className="group"
-                  >
-                    <div className="bg-white rounded-3xl shadow-lg h-[500px] overflow-hidden relative">
-                      <div className="relative h-full overflow-hidden">
+            <div className="space-y-8">
+              {/* Row 1 - Left to Right Scroll */}
+              <div className="relative overflow-hidden">
+                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                
+                <div className="flex gap-6 animate-scroll-left will-change-transform">
+                  {[...testimonials.slice(0, 8), ...testimonials.slice(0, 8)].map((testimonial, index) => (
+                    <div key={`row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48">
+                      <div className="relative w-full h-full rounded-xl overflow-hidden">
                         {testimonial.testimonial_image && (
                           <Image
                             src={typeof testimonial.testimonial_image === 'string' 
-                              ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover` 
-                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover`
+                              ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
                             }
                             alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
-                            width={420}
-                            height={500}
+                            width={256}
+                            height={192}
                             className="w-full h-full object-cover object-center"
+                            sizes="256px"
                           />
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <div className="text-white text-xl font-semibold mb-1">{testimonial.client_name}</div>
-                          <div className="text-white/90 text-sm">
-                            {testimonial.job_title && `${testimonial.job_title}, `}{testimonial.company_name}
-                          </div>
-                          {testimonial.industry && (
-                            <div className="text-white/70 text-sm mt-1">{testimonial.industry}</div>
-                          )}
-                        </div>
                       </div>
                     </div>
-                  </motion.div>
-                ))}
+                  ))}
+                </div>
+              </div>
+
+              {/* Row 2 - Right to Left Scroll */}
+              <div className="relative overflow-hidden">
+                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                
+                <div className="flex gap-6 animate-scroll-right will-change-transform">
+                  {[...testimonials.slice(8, 16), ...testimonials.slice(8, 16)].map((testimonial, index) => (
+                    <div key={`row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48">
+                      <div className="relative w-full h-full rounded-xl overflow-hidden">
+                        {testimonial.testimonial_image && (
+                          <Image
+                            src={typeof testimonial.testimonial_image === 'string' 
+                              ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                            }
+                            alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                            width={256}
+                            height={192}
+                            className="w-full h-full object-cover object-center"
+                            sizes="256px"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
