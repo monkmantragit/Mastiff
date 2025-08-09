@@ -512,13 +512,16 @@ export default function ClientsPage() {
                 </div>
               </div>
 
-              {/* Mobile Layout - 4 rows, scrollable */}
+              {/* Mobile Layout - 4 rows, auto-sliding */}
               <div className="md:hidden space-y-6">
-                {/* Row 1 */}
-                <div className="overflow-x-auto scrollbar-hide">
-                  <div className="flex gap-4 w-max px-6">
-                    {testimonials.slice(0, 4).map((testimonial, index) => (
-                      <div key={`mobile-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-48 h-36">
+                {/* Row 1 - Left to Right */}
+                <div className="relative overflow-hidden">
+                  <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                  <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                  
+                  <div className="flex gap-4 animate-scroll-left will-change-transform">
+                    {[...testimonials.slice(0, 4), ...testimonials.slice(0, 4), ...testimonials.slice(0, 4)].map((testimonial, index) => (
+                      <div key={`mobile-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-58 h-44">
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
                           {testimonial.testimonial_image && (
                             <Image
@@ -527,10 +530,10 @@ export default function ClientsPage() {
                                 : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
                               }
                               alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
-                              width={192}
-                              height={144}
+                              width={232}
+                              height={176}
                               className="w-full h-full object-cover object-center"
-                              sizes="192px"
+                              sizes="232px"
                             />
                           )}
                         </div>
@@ -539,11 +542,14 @@ export default function ClientsPage() {
                   </div>
                 </div>
 
-                {/* Row 2 */}
-                <div className="overflow-x-auto scrollbar-hide">
-                  <div className="flex gap-4 w-max px-6">
-                    {testimonials.slice(4, 8).map((testimonial, index) => (
-                      <div key={`mobile-row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-48 h-36">
+                {/* Row 2 - Right to Left */}
+                <div className="relative overflow-hidden">
+                  <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                  <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                  
+                  <div className="flex gap-4 animate-scroll-right will-change-transform">
+                    {[...testimonials.slice(4, 8), ...testimonials.slice(4, 8), ...testimonials.slice(4, 8)].map((testimonial, index) => (
+                      <div key={`mobile-row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-58 h-44">
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
                           {testimonial.testimonial_image && (
                             <Image
@@ -552,10 +558,10 @@ export default function ClientsPage() {
                                 : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
                               }
                               alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
-                              width={192}
-                              height={144}
+                              width={232}
+                              height={176}
                               className="w-full h-full object-cover object-center"
-                              sizes="192px"
+                              sizes="232px"
                             />
                           )}
                         </div>
@@ -564,11 +570,14 @@ export default function ClientsPage() {
                   </div>
                 </div>
 
-                {/* Row 3 */}
-                <div className="overflow-x-auto scrollbar-hide">
-                  <div className="flex gap-4 w-max px-6">
-                    {testimonials.slice(8, 12).map((testimonial, index) => (
-                      <div key={`mobile-row3-${testimonial.id}-${index}`} className="flex-shrink-0 w-48 h-36">
+                {/* Row 3 - Left to Right */}
+                <div className="relative overflow-hidden">
+                  <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                  <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                  
+                  <div className="flex gap-4 animate-scroll-left will-change-transform">
+                    {[...testimonials.slice(8, 12), ...testimonials.slice(8, 12), ...testimonials.slice(8, 12)].map((testimonial, index) => (
+                      <div key={`mobile-row3-${testimonial.id}-${index}`} className="flex-shrink-0 w-58 h-44">
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
                           {testimonial.testimonial_image && (
                             <Image
@@ -577,10 +586,10 @@ export default function ClientsPage() {
                                 : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
                               }
                               alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
-                              width={192}
-                              height={144}
+                              width={232}
+                              height={176}
                               className="w-full h-full object-cover object-center"
-                              sizes="192px"
+                              sizes="232px"
                             />
                           )}
                         </div>
@@ -589,11 +598,14 @@ export default function ClientsPage() {
                   </div>
                 </div>
 
-                {/* Row 4 */}
-                <div className="overflow-x-auto scrollbar-hide">
-                  <div className="flex gap-4 w-max px-6">
-                    {testimonials.slice(12, 16).map((testimonial, index) => (
-                      <div key={`mobile-row4-${testimonial.id}-${index}`} className="flex-shrink-0 w-48 h-36">
+                {/* Row 4 - Right to Left */}
+                <div className="relative overflow-hidden">
+                  <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                  <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                  
+                  <div className="flex gap-4 animate-scroll-right will-change-transform">
+                    {[...testimonials.slice(12, 16), ...testimonials.slice(12, 16), ...testimonials.slice(12, 16)].map((testimonial, index) => (
+                      <div key={`mobile-row4-${testimonial.id}-${index}`} className="flex-shrink-0 w-58 h-44">
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
                           {testimonial.testimonial_image && (
                             <Image
@@ -602,10 +614,10 @@ export default function ClientsPage() {
                                 : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
                               }
                               alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
-                              width={192}
-                              height={144}
+                              width={232}
+                              height={176}
                               className="w-full h-full object-cover object-center"
-                              sizes="192px"
+                              sizes="232px"
                             />
                           )}
                         </div>
