@@ -445,7 +445,7 @@ export default function ClientsPage() {
                   <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                   
                   <div className="flex gap-6 animate-scroll-left will-change-transform">
-                    {[...testimonials.slice(0, 8), ...testimonials.slice(0, 8)].map((testimonial, index) => (
+                    {[...testimonials.slice(0, 8), ...testimonials.slice(0, 8), ...testimonials.slice(0, 8)].map((testimonial, index) => (
                       <div key={`desktop-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48 hover:scale-105 transition-transform duration-300">
                         <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                           {testimonial.testimonial_image && (
@@ -474,7 +474,7 @@ export default function ClientsPage() {
                   <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                   
                   <div className="flex gap-6 animate-scroll-right will-change-transform">
-                    {[...testimonials.slice(8, 16), ...testimonials.slice(8, 16)].map((testimonial, index) => (
+                    {[...testimonials.slice(8, 16), ...testimonials.slice(8, 16), ...testimonials.slice(8, 16)].map((testimonial, index) => (
                       <div key={`desktop-row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48 hover:scale-105 transition-transform duration-300">
                         <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                           {testimonial.testimonial_image && (

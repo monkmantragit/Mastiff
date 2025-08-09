@@ -470,12 +470,12 @@
   /* Premium Infinite Scroll Animations - GPU Accelerated */
   @keyframes scroll-left {
     0% { transform: translateX(0) translateZ(0); }
-    100% { transform: translateX(-50%) translateZ(0); }
+    100% { transform: translateX(-33.333%) translateZ(0); }
   }
 
   @keyframes scroll-right {
-    0% { transform: translateX(0) translateZ(0); }
-    100% { transform: translateX(50%) translateZ(0); }
+    0% { transform: translateX(-33.333%) translateZ(0); }
+    100% { transform: translateX(0) translateZ(0); }
   }
 
   /* Premium Testimonial Scroll Animations */
