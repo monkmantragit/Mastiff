@@ -436,63 +436,185 @@ export default function ClientsPage() {
               <p className="text-white/60">Check back later as we add more client testimonials.</p>
             </div>
           ) : (
-            <div className="space-y-8">
-              {/* Row 1 - Left to Right Scroll */}
-              <div className="relative overflow-hidden">
-                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
-                
-                <div className="flex gap-6 animate-scroll-left will-change-transform">
-                  {[...testimonials.slice(0, 8), ...testimonials.slice(0, 8)].map((testimonial, index) => (
-                    <div key={`row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48">
-                      <div className="relative w-full h-full rounded-xl overflow-hidden">
-                        {testimonial.testimonial_image && (
-                          <Image
-                            src={typeof testimonial.testimonial_image === 'string' 
-                              ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
-                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
-                            }
-                            alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
-                            width={256}
-                            height={192}
-                            className="w-full h-full object-cover object-center"
-                            sizes="256px"
-                          />
-                        )}
+            <>
+              {/* Desktop Layout - No animations, 2 rows */}
+              <div className="hidden md:block space-y-8">
+                {/* Row 1 */}
+                <div className="relative overflow-hidden">
+                  <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                  <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                  
+                  <div className="flex gap-6 justify-center">
+                    {testimonials.slice(0, 8).map((testimonial, index) => (
+                      <div key={`desktop-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48 hover:scale-105 transition-transform duration-300">
+                        <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                          {testimonial.testimonial_image && (
+                            <Image
+                              src={typeof testimonial.testimonial_image === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                              }
+                              alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                              width={256}
+                              height={192}
+                              className="w-full h-full object-cover object-center"
+                              sizes="256px"
+                            />
+                          )}
+                          
+                          {/* Hover overlay with company info */}
+                          <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <div className="text-white">
+                              <p className="text-sm font-semibold">{testimonial.company_name}</p>
+                              <p className="text-xs text-white/80">{testimonial.industry}</p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                </div>
+
+                {/* Row 2 */}
+                <div className="relative overflow-hidden">
+                  <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+                  <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+                  
+                  <div className="flex gap-6 justify-center">
+                    {testimonials.slice(8, 16).map((testimonial, index) => (
+                      <div key={`desktop-row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48 hover:scale-105 transition-transform duration-300">
+                        <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                          {testimonial.testimonial_image && (
+                            <Image
+                              src={typeof testimonial.testimonial_image === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                              }
+                              alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                              width={256}
+                              height={192}
+                              className="w-full h-full object-cover object-center"
+                              sizes="256px"
+                            />
+                          )}
+                          
+                          {/* Hover overlay with company info */}
+                          <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <div className="text-white">
+                              <p className="text-sm font-semibold">{testimonial.company_name}</p>
+                              <p className="text-xs text-white/80">{testimonial.industry}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Row 2 - Right to Left Scroll */}
-              <div className="relative overflow-hidden">
-                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
-                
-                <div className="flex gap-6 animate-scroll-right will-change-transform">
-                  {[...testimonials.slice(8, 16), ...testimonials.slice(8, 16)].map((testimonial, index) => (
-                    <div key={`row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48">
-                      <div className="relative w-full h-full rounded-xl overflow-hidden">
-                        {testimonial.testimonial_image && (
-                          <Image
-                            src={typeof testimonial.testimonial_image === 'string' 
-                              ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
-                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
-                            }
-                            alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
-                            width={256}
-                            height={192}
-                            className="w-full h-full object-cover object-center"
-                            sizes="256px"
-                          />
-                        )}
+              {/* Mobile Layout - 4 rows, scrollable */}
+              <div className="md:hidden space-y-6">
+                {/* Row 1 */}
+                <div className="overflow-x-auto scrollbar-hide">
+                  <div className="flex gap-4 w-max px-6">
+                    {testimonials.slice(0, 4).map((testimonial, index) => (
+                      <div key={`mobile-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-48 h-36">
+                        <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
+                          {testimonial.testimonial_image && (
+                            <Image
+                              src={typeof testimonial.testimonial_image === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                              }
+                              alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                              width={192}
+                              height={144}
+                              className="w-full h-full object-cover object-center"
+                              sizes="192px"
+                            />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                </div>
+
+                {/* Row 2 */}
+                <div className="overflow-x-auto scrollbar-hide">
+                  <div className="flex gap-4 w-max px-6">
+                    {testimonials.slice(4, 8).map((testimonial, index) => (
+                      <div key={`mobile-row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-48 h-36">
+                        <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
+                          {testimonial.testimonial_image && (
+                            <Image
+                              src={typeof testimonial.testimonial_image === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                              }
+                              alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                              width={192}
+                              height={144}
+                              className="w-full h-full object-cover object-center"
+                              sizes="192px"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Row 3 */}
+                <div className="overflow-x-auto scrollbar-hide">
+                  <div className="flex gap-4 w-max px-6">
+                    {testimonials.slice(8, 12).map((testimonial, index) => (
+                      <div key={`mobile-row3-${testimonial.id}-${index}`} className="flex-shrink-0 w-48 h-36">
+                        <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
+                          {testimonial.testimonial_image && (
+                            <Image
+                              src={typeof testimonial.testimonial_image === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                              }
+                              alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                              width={192}
+                              height={144}
+                              className="w-full h-full object-cover object-center"
+                              sizes="192px"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Row 4 */}
+                <div className="overflow-x-auto scrollbar-hide">
+                  <div className="flex gap-4 w-max px-6">
+                    {testimonials.slice(12, 16).map((testimonial, index) => (
+                      <div key={`mobile-row4-${testimonial.id}-${index}`} className="flex-shrink-0 w-48 h-36">
+                        <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
+                          {testimonial.testimonial_image && (
+                            <Image
+                              src={typeof testimonial.testimonial_image === 'string' 
+                                ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}` 
+                                : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`
+                              }
+                              alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                              width={192}
+                              height={144}
+                              className="w-full h-full object-cover object-center"
+                              sizes="192px"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </section>
