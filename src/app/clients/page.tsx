@@ -462,13 +462,6 @@ export default function ClientsPage() {
                             />
                           )}
                           
-                          {/* Hover overlay with company info */}
-                          <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                            <div className="text-white">
-                              <p className="text-sm font-semibold">{testimonial.company_name}</p>
-                              <p className="text-xs text-white/80">{testimonial.industry}</p>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     ))}
@@ -498,13 +491,6 @@ export default function ClientsPage() {
                             />
                           )}
                           
-                          {/* Hover overlay with company info */}
-                          <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                            <div className="text-white">
-                              <p className="text-sm font-semibold">{testimonial.company_name}</p>
-                              <p className="text-xs text-white/80">{testimonial.industry}</p>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     ))}
