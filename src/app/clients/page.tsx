@@ -437,48 +437,15 @@ export default function ClientsPage() {
             </div>
           ) : (
             <div className="space-y-8">
-              {/* Row 1 - Left to Right Scroll with Touch Support */}
-              <div className="relative overflow-hidden testimonial-pause group">
+              {/* Row 1 - Left to Right Scroll */}
+              <div className="relative overflow-hidden">
                 <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
                 <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                 
-                {/* Mobile touch hint */}
-                <div className="absolute top-4 right-4 z-20 md:hidden">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 text-xs text-white/70 flex items-center gap-1">
-                    <span>👈</span> Swipe
-                  </div>
-                </div>
-                
-                <div 
-                  className="flex gap-6 animate-scroll-left will-change-transform overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
-                  style={{
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none',
-                  }}
-                  onMouseDown={(e) => {
-                    const slider = e.currentTarget;
-                    slider.style.animationPlayState = 'paused';
-                  }}
-                  onMouseUp={(e) => {
-                    const slider = e.currentTarget;
-                    setTimeout(() => {
-                      slider.style.animationPlayState = 'running';
-                    }, 2000);
-                  }}
-                  onTouchStart={(e) => {
-                    const slider = e.currentTarget;
-                    slider.style.animationPlayState = 'paused';
-                  }}
-                  onTouchEnd={(e) => {
-                    const slider = e.currentTarget;
-                    setTimeout(() => {
-                      slider.style.animationPlayState = 'running';
-                    }, 3000);
-                  }}
-                >
+                <div className="flex gap-6 animate-scroll-left will-change-transform">
                   {[...testimonials.slice(0, 8), ...testimonials.slice(0, 8)].map((testimonial, index) => (
-                    <div key={`row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48 transform hover:scale-105 transition-transform duration-300">
-                      <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <div key={`row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48">
+                      <div className="relative w-full h-full rounded-xl overflow-hidden">
                         {testimonial.testimonial_image && (
                           <Image
                             src={typeof testimonial.testimonial_image === 'string' 
@@ -488,67 +455,25 @@ export default function ClientsPage() {
                             alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
                             width={256}
                             height={192}
-                            className="w-full h-full object-cover object-center select-none"
+                            className="w-full h-full object-cover object-center"
                             sizes="256px"
-                            draggable={false}
                           />
                         )}
-                        
-                        {/* Subtle hover overlay with client info */}
-                        <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                          <div className="text-white">
-                            <p className="text-sm font-semibold">{testimonial.company_name}</p>
-                            <p className="text-xs text-white/80">{testimonial.industry}</p>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Row 2 - Right to Left Scroll with Touch Support */}
-              <div className="relative overflow-hidden testimonial-pause group">
+              {/* Row 2 - Right to Left Scroll */}
+              <div className="relative overflow-hidden">
                 <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
                 <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                 
-                {/* Mobile touch hint */}
-                <div className="absolute top-4 left-4 z-20 md:hidden">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 text-xs text-white/70 flex items-center gap-1">
-                    Swipe <span>👉</span>
-                  </div>
-                </div>
-                
-                <div 
-                  className="flex gap-6 animate-scroll-right will-change-transform overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
-                  style={{
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none',
-                  }}
-                  onMouseDown={(e) => {
-                    const slider = e.currentTarget;
-                    slider.style.animationPlayState = 'paused';
-                  }}
-                  onMouseUp={(e) => {
-                    const slider = e.currentTarget;
-                    setTimeout(() => {
-                      slider.style.animationPlayState = 'running';
-                    }, 2000);
-                  }}
-                  onTouchStart={(e) => {
-                    const slider = e.currentTarget;
-                    slider.style.animationPlayState = 'paused';
-                  }}
-                  onTouchEnd={(e) => {
-                    const slider = e.currentTarget;
-                    setTimeout(() => {
-                      slider.style.animationPlayState = 'running';
-                    }, 3000);
-                  }}
-                >
+                <div className="flex gap-6 animate-scroll-right will-change-transform">
                   {[...testimonials.slice(8, 16), ...testimonials.slice(8, 16)].map((testimonial, index) => (
-                    <div key={`row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48 transform hover:scale-105 transition-transform duration-300">
-                      <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <div key={`row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48">
+                      <div className="relative w-full h-full rounded-xl overflow-hidden">
                         {testimonial.testimonial_image && (
                           <Image
                             src={typeof testimonial.testimonial_image === 'string' 
@@ -558,19 +483,10 @@ export default function ClientsPage() {
                             alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
                             width={256}
                             height={192}
-                            className="w-full h-full object-cover object-center select-none"
+                            className="w-full h-full object-cover object-center"
                             sizes="256px"
-                            draggable={false}
                           />
                         )}
-                        
-                        {/* Subtle hover overlay with client info */}
-                        <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                          <div className="text-white">
-                            <p className="text-sm font-semibold">{testimonial.company_name}</p>
-                            <p className="text-xs text-white/80">{testimonial.industry}</p>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   ))}
