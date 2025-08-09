@@ -436,64 +436,44 @@ export default function ClientsPage() {
               <p className="text-neutral-500">Check back later as we add more client testimonials.</p>
             </div>
           ) : (
-            <div className="relative space-y-12">
-              {/* Row 1 - Premium Left to Right Scroll */}
-              <div className="premium-pause relative">
-                <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-neutral-50 to-transparent z-10 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-neutral-50 to-transparent z-10 pointer-events-none" />
-                
-                <div className="overflow-hidden">
-                  <div className="flex gap-8 animate-scroll-premium-left will-change-transform">
-                    {[...testimonials, ...testimonials].map((testimonial, index) => (
-                      <div key={`premium-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-[380px] sm:w-[420px] group">
-                        <div className="premium-card rounded-3xl shadow-lg h-[500px] overflow-hidden relative">
-                          <div className="relative h-full overflow-hidden">
-                            {testimonial.testimonial_image && (
-                              <Image
-                                src={typeof testimonial.testimonial_image === 'string' 
-                                  ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover` 
-                                  : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover`
-                                }
-                                alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
-                                width={420}
-                                height={500}
-                                className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-[1200ms] ease-out"
-                              />
-                            )}
-                            <div className="absolute inset-0 testimonial-gradient-overlay"></div>
-                            <div className="absolute bottom-0 left-0 right-0 p-6">
-                              <div className="testimonial-client-name">{testimonial.client_name}</div>
-                              <div className="testimonial-client-title">
-                                {testimonial.job_title && `${testimonial.job_title}, `}{testimonial.company_name}
-                              </div>
-                              {testimonial.industry && (
-                                <div className="testimonial-client-company">{testimonial.industry}</div>
-                              )}
-                            </div>
+            <div className="relative">
+              {/* Static Testimonials Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {testimonials.map((testimonial, index) => (
+                  <motion.div 
+                    key={`testimonial-${testimonial.id}`}
+                    variants={fadeInUp}
+                    className="group"
+                  >
+                    <div className="bg-white rounded-3xl shadow-lg h-[500px] overflow-hidden relative">
+                      <div className="relative h-full overflow-hidden">
+                        {testimonial.testimonial_image && (
+                          <Image
+                            src={typeof testimonial.testimonial_image === 'string' 
+                              ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover` 
+                              : `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${testimonial.testimonial_image.id}?access_token=${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}&key=system-large-cover`
+                            }
+                            alt={testimonial.image_alt_text || `Testimonial from ${testimonial.client_name}, ${testimonial.company_name}`}
+                            width={420}
+                            height={500}
+                            className="w-full h-full object-cover object-center"
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className="absolute bottom-0 left-0 right-0 p-6">
+                          <div className="text-white text-xl font-semibold mb-1">{testimonial.client_name}</div>
+                          <div className="text-white/90 text-sm">
+                            {testimonial.job_title && `${testimonial.job_title}, `}{testimonial.company_name}
                           </div>
+                          {testimonial.industry && (
+                            <div className="text-white/70 text-sm mt-1">{testimonial.industry}</div>
+                          )}
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-
-              {/* Premium interaction hint */}
-              <motion.div 
-                className="text-center mt-16"
-                variants={fadeInUp}
-                initial="initial"
-                whileInView="animate"
-                viewport={{ once: true }}
-              >
-                <div className="inline-flex items-center gap-3 px-6 py-3 glass rounded-full">
-                  <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
-                  <span className="text-neutral-600 font-medium text-sm tracking-wide">
-                    Hover to pause • Scroll to explore • Click to discover
-                  </span>
-                  <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
-                </div>
-              </motion.div>
             </div>
           )}
         </div>
