@@ -61,9 +61,10 @@ export default function CareersPage() {
     fetchJobs();
   }, []);
 
-  // Fallback jobs data (same as before but moved here)
-  const fallbackJobs = [
+  // Fallback jobs data that matches Job interface
+  const fallbackJobs: Job[] = [
     {
+      id: 1,
       title: "Master of Event Alchemy",
       subtitle: "(Senior Event Manager)",
       department: "Operations",
@@ -73,9 +74,12 @@ export default function CareersPage() {
       description: "Transform ambitious client visions into exceptional realities. Lead Fortune 500 events that set new industry standards and create lasting impact.",
       requirements: ["Proven track record of delivering complex projects", "3+ years creating extraordinary experiences", "Expert in crisis-to-opportunity transformation", "Ability to inspire teams and clients alike"],
       salary: "₹6-10 LPA + Performance Bonus",
-      impact: "Direct impact on 50+ Fortune 500 events annually"
+      impact: "Direct impact on 50+ Fortune 500 events annually",
+      status: "published" as const,
+      sort_order: 1
     },
     {
+      id: 2,
       title: "Visionary Experience Architect",
       subtitle: "(Creative Designer)",
       department: "Creative",
@@ -85,9 +89,12 @@ export default function CareersPage() {
       description: "Design experiences that don&apos;t just look beautiful—they feel extraordinary. Create visual stories that transform spaces into emotional journeys.",
       requirements: ["Portfolio that makes hearts skip beats", "Master of design tools and creative thinking", "Ability to translate emotions into visuals", "Obsession with perfection and innovation"],
       salary: "₹4-7 LPA + Creative Incentives",
-      impact: "Your designs will be seen by millions across global events"
+      impact: "Your designs will be seen by millions across global events",
+      status: "published" as const,
+      sort_order: 2
     },
     {
+      id: 3,
       title: "Client Experience Specialist",
       subtitle: "(Client Relations Executive)",
       department: "Client Relations",
@@ -97,9 +104,12 @@ export default function CareersPage() {
       description: "Be the bridge between client visions and exceptional realities. Transform one-time clients into lifelong advocates and strategic partners.",
       requirements: ["Natural gift for human connection", "Ability to read between the lines of client needs", "Passion for exceeding every expectation", "Fluent in both empathy and excellence"],
       salary: "₹3-5 LPA + Performance Recognition",
-      impact: "Build relationships that span decades and continents"
+      impact: "Build relationships that span decades and continents",
+      status: "published" as const,
+      sort_order: 3
     },
     {
+      id: 4,
       title: "Flawless Execution Maestro",
       subtitle: "(Production Coordinator)",
       department: "Production",
@@ -109,7 +119,9 @@ export default function CareersPage() {
       description: "Be the invisible force that makes impossible events look effortless. Coordinate complex productions where every detail matters and every moment counts.",
       requirements: ["Proven ability to make chaos look like choreography", "Expert in production logistics and vendor symphonies", "Grace under pressure, excellence under deadlines", "Technical knowledge meets creative vision"],
       salary: "₹4-6 LPA + Excellence Rewards",
-      impact: "Enable flawless execution of 100+ events annually"
+      impact: "Enable flawless execution of 100+ events annually",
+      status: "published" as const,
+      sort_order: 4
     }
   ];
 
