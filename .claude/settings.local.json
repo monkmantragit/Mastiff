@@ -13,7 +13,9 @@
       "Bash(git push origin nextjs-schema)",
       "Bash(git commit:*)",
       "mcp__supabase__query",
-      "Bash(tail:*)"
+      "Bash(tail:*)",
+      "mcp__directus__create-field",
+      "mcp__directus__create-item"
     ],
     "deny": []
   },
