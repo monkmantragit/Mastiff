@@ -188,21 +188,6 @@ export default function CareersPage() {
               Join the team that turns impossible visions into inevitable realities. Your journey to excellence begins here.
             </motion.p>
 
-            <motion.div
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1, delay: 0.6 }}
-            >
-              <Button className="btn-primary group">
-                <span>Start Your Journey</span>
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-              <Button className="btn-secondary group">
-                <span>Meet The Visionaries</span>
-                <Users className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-            </motion.div>
           </motion.div>
         </div>
       </section>

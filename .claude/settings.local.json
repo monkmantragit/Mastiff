@@ -15,7 +15,8 @@
       "mcp__supabase__query",
       "Bash(tail:*)",
       "mcp__directus__create-field",
-      "mcp__directus__create-item"
+      "mcp__directus__create-item",
+      "mcp__directus__read-items"
     ],
     "deny": []
   },
