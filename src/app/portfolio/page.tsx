@@ -112,10 +112,10 @@ export default function PortfolioPage() {
   const categories = generateCategories();
 
   const stats = [
-    { number: "500+", label: "Events Delivered", icon: Calendar },
-    { number: "165+", label: "Happy Clients", icon: Users },
-    { number: "12+", label: "Years Experience", icon: Award },
-    { number: "98%", label: "Client Satisfaction", icon: Star }
+    { number: "1000+", label: "Events", icon: Calendar },
+    { number: "165+", label: "Clients", icon: Users },
+    { number: "35+", label: "Team Size", icon: Award },
+    { number: "2M+", label: "Audience Engaged", icon: Star }
   ];
 
   const filteredItems = selectedCategory === 'all' 
@@ -140,12 +140,7 @@ export default function PortfolioPage() {
             transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="text-center max-w-4xl mx-auto text-white"
           >
-            <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow">
-              <Eye className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide">Portfolio Showcase</span>
-            </div>
-            
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8 mt-16">
               <span className="kinetic-text">
                 Where Vision
               </span>
@@ -160,14 +155,9 @@ export default function PortfolioPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black px-8 py-4 text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-0 group">
-                <Image className="mr-2 w-5 h-5" />
-                <span>Explore Portfolio</span>
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
               <Button 
                 onClick={() => openPopup('portfolio-start')}
-                className="bg-white/10 backdrop-blur-xl text-white px-8 py-4 text-lg rounded-full border border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 group"
+                className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black px-8 py-4 text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-0 group"
               >
                 <span>Start Your Project</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -224,9 +214,6 @@ export default function PortfolioPage() {
             className="text-center mb-20"
           >
             <motion.div variants={fadeInUp}>
-              <Badge className="mb-6 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 px-6 py-3 text-base border-amber-200">
-                Hall of Fame
-              </Badge>
               <h2 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900 leading-tight">
                 <span className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Not Just Events.</span>
                 <br />
@@ -411,18 +398,7 @@ export default function PortfolioPage() {
                 with the same excellence showcased in our portfolio.
               </p>
               
-              <div className="grid md:grid-cols-3 gap-8 mb-12 text-sm">
-                <Button
-                  onClick={() => openPopup('portfolio-contact')}
-                  className="text-center bg-transparent border-0 p-0 hover:bg-white/10 rounded-xl transition-colors"
-                >
-                  <div className="w-16 h-16 bg-[#F9A625] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Phone className="w-8 h-8 text-[#2A3959]" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">Get Quote</h3>
-                  <p className="text-white/70">Contact Our Team</p>
-                </Button>
-                
+              <div className="grid md:grid-cols-2 gap-8 mb-12 text-sm">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-[#F9A625] rounded-full flex items-center justify-center mx-auto mb-4">
                     <Mail className="w-8 h-8 text-[#2A3959]" />

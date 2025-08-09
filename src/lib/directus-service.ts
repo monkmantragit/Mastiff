@@ -3,7 +3,8 @@ import {
   type Page, 
   type Service, 
   type Testimonial,
-  type TeamMember, 
+  type TeamMember,
+  type Job, 
   type LandingPage 
 } from './directus';
 
@@ -300,7 +301,38 @@ export class DirectusService {
     }
   }
 
+  /**
+   * Get all published job openings
+   */
+  static async getJobs(): Promise<Job[]> {
+    try {
+      const url = process.env.NEXT_PUBLIC_DIRECTUS_URL;
+      const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
+      
+      const response = await fetch(`${url}/items/jobs?fields=*&filter={"status":{"_eq":"published"}}&sort=sort_order,date_created`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        console.error('❌ Error fetching jobs:', response.status, response.statusText);
+        return [];
+      }
+
+      const data = await response.json();
+      const jobs = data.data || data;
+      
+      console.log('✅ Fetched jobs:', jobs?.length || 0);
+      return jobs || [];
+    } catch (error) {
+      console.error('❌ Error fetching jobs:', error);
+      return [];
+    }
+  }
+
 }
 
 // Export types for easy import
-export type { Blog, Page, Service, Testimonial, TeamMember, LandingPage }; 
+export type { Blog, Page, Service, Testimonial, TeamMember, Job, LandingPage }; 

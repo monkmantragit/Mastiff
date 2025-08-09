@@ -29,7 +29,7 @@ export default function FloatingCTA() {
       setIsExpanded(false);
     } else {
       // Open WhatsApp chat
-      const whatsappUrl = 'https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.';
+      const whatsappUrl = 'https://wa.me/919620257941?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.';
       console.log('Opening WhatsApp:', whatsappUrl);
       window.location.href = whatsappUrl;
     }
@@ -69,7 +69,7 @@ export default function FloatingCTA() {
                     size="sm"
                     className="bg-[#F9A625] hover:bg-[#e8951e] text-white shadow-lg rounded-full px-4 py-2"
                   >
-                    <a href="https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                    <a href="https://wa.me/919620257941?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                       <MessageCircle className="w-4 h-4" />
                       <span className="hidden sm:inline">WhatsApp</span>
                     </a>

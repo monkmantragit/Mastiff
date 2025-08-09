@@ -149,7 +149,7 @@ const generateAllClientLogos = () => {
       alt: `Client ${num}`,
       category: ['Technology', 'Healthcare', 'Manufacturing', 'Finance', 'Automotive', 'Media'][i % 6]
     };
-  });
+  }).filter((_, index) => index + 1 !== 120); // Remove logo wm-120
 };
 
 const allClientLogos = generateAllClientLogos();
@@ -180,9 +180,9 @@ export default function ClientsPage() {
     fetchTestimonials();
   }, []);
   
-  // Logo data slices for compact rows
-  const moreClientsRow1 = allClientLogos.slice(0, 18);
-  const moreClientsRow2 = allClientLogos.slice(18, 36);
+  // Logo data slices for animated rows - using different sets from 1-140
+  const moreClientsRow1 = allClientLogos.slice(36, 56); // Logos 37-56
+  const moreClientsRow2 = allClientLogos.slice(70, 90); // Logos 71-90
   
   // Filter clients based on search only
   const filteredClients = allClientLogos.filter((client) => {
@@ -334,9 +334,54 @@ export default function ClientsPage() {
             ))}
           </motion.div>
 
+          {/* Infinite Scrolling Logo Sections */}
+          <div className="space-y-8 mt-16">
+            {/* Row 1 - Left to Right Scroll */}
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-neutral-100 to-transparent z-10 pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-neutral-100 to-transparent z-10 pointer-events-none" />
+              
+              <div className="flex gap-8 animate-scroll-left will-change-transform">
+                {[...moreClientsRow1, ...moreClientsRow1, ...moreClientsRow1].map((client, index) => (
+                  <div key={`row1-${client.id}-${index}`} className="flex-shrink-0 w-40 h-24 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center group">
+                    <img
+                      src={client.src}
+                      alt={client.alt}
+                      className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Row 2 - Right to Left Scroll */}
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-neutral-100 to-transparent z-10 pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-neutral-100 to-transparent z-10 pointer-events-none" />
+              
+              <div className="flex gap-8 animate-scroll-right will-change-transform">
+                {[...moreClientsRow2, ...moreClientsRow2, ...moreClientsRow2].map((client, index) => (
+                  <div key={`row2-${client.id}-${index}`} className="flex-shrink-0 w-40 h-24 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center group">
+                    <img
+                      src={client.src}
+                      alt={client.alt}
+                      className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* View All Clients CTA */}
           <motion.div 
-            className="text-center"
+            className="text-center mt-16"
             variants={fadeInUp}
             initial="initial"
             whileInView="animate"
@@ -464,9 +509,6 @@ export default function ClientsPage() {
             variants={staggerContainer}
           >
             <motion.div variants={fadeInUp}>
-              <Badge className="mb-6 glass-dark px-6 py-2 text-amber-400 border-amber-400/20">
-                Join The Legacy
-              </Badge>
               <h2 className="text-5xl md:text-6xl font-display mb-6 text-white leading-tight">
                 Ready to Become <span className="kinetic-text text-amber-400">Exceptional?</span>
               </h2>

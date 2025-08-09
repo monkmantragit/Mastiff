@@ -54,10 +54,10 @@ export default function TeamPage() {
   }, []);
 
   const stats = [
-    { number: teamMembers.length.toString(), label: "Team Members", icon: Users },
-    { number: "12+", label: "Years Experience", icon: Award },
-    { number: "500+", label: "Events Delivered", icon: Calendar },
-    { number: "165+", label: "Happy Clients", icon: Star }
+    { number: "1000+", label: "Events", icon: Calendar },
+    { number: "165+", label: "Clients", icon: Star },
+    { number: "35+", label: "Team Size", icon: Users },
+    { number: "2M+", label: "Audience Engaged", icon: Trophy }
   ];
 
   const categories = ["All", ...Array.from(new Set(teamMembers.map(member => member.department).filter(Boolean)))];
@@ -138,18 +138,14 @@ export default function TeamPage() {
             className="grid lg:grid-cols-2 gap-20 items-center"
           >
             <motion.div variants={fadeInUp}>
-              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
-                <Trophy className="w-5 h-5 text-amber-500" />
-                <span className="text-sm font-medium tracking-wide text-amber-600">The WhiteMassif Way</span>
-              </div>
-              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
+              <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight max-w-3xl">
                 Where <span className="kinetic-text">Expertise</span> Meets Excellence
               </h2>
               <p className="text-xl mb-8 text-neutral-700 leading-relaxed font-body">
                 Our team brings together diverse skills and experience from across the event management industry. Each member contributes specialized knowledge to ensure your corporate events achieve their strategic objectives.
               </p>
               <p className="text-lg text-neutral-600 mb-10 leading-relaxed font-body">
-                With 12+ years of experience and over 1000+ events delivered, our 35+ team members have the proven expertise to handle everything from intimate leadership meetings to large-scale corporate conferences.
+                With 12+ years since inception and over 1000+ events delivered, our 35+ team members have engaged 2 million+ audience and served 165+ clients with the proven expertise to handle everything from intimate leadership meetings to large-scale corporate conferences.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 {[
@@ -232,10 +228,6 @@ export default function TeamPage() {
             className="text-center mb-20"
           >
             <motion.div variants={fadeInUp}>
-              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
-                <Award className="w-5 h-5 text-amber-500" />
-                <span className="text-sm font-medium tracking-wide text-amber-600">The Dream Makers</span>
-              </div>
               <h2 className="text-5xl md:text-6xl font-display mb-8 text-neutral-900 leading-tight">
                 Our <span className="kinetic-text">Professional</span> Team
               </h2>
@@ -347,10 +339,6 @@ export default function TeamPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <motion.div variants={fadeInUp}>
-              <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
-                <Lightbulb className="w-5 h-5 text-amber-500" />
-                <span className="text-sm font-medium tracking-wide">Join The Vision</span>
-              </div>
               <h2 className="text-5xl md:text-6xl font-display mb-8 leading-tight">
                 Ready to Work with
                 <br />
@@ -361,34 +349,6 @@ export default function TeamPage() {
                 Let's create exceptional experiences together.
               </p>
               
-              <div className="grid md:grid-cols-3 gap-8 mb-12 text-sm">
-                <Button
-                  onClick={() => openPopup('team-contact')}
-                  className="text-center bg-transparent border-0 p-0 hover:bg-white/10 rounded-xl transition-colors"
-                >
-                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <p className="text-white/60 mb-1">Contact Us</p>
-                  <p>Get Quote</p>
-                </Button>
-                
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <p className="text-white/60 mb-1">Email Us</p>
-                  <p>info@whitemassif.com</p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <p className="text-white/60 mb-1">Visit Us</p>
-                  <p>Bangalore, Karnataka</p>
-                </div>
-              </div>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button className="btn-primary group">

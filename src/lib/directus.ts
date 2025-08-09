@@ -85,6 +85,24 @@ interface TeamMember {
   sort_order?: number;
 }
 
+interface Job {
+  id: number;
+  title: string;
+  subtitle?: string;
+  department: string;
+  location: string;
+  type: string;
+  experience: string;
+  description: string;
+  requirements: string[];
+  salary: string;
+  impact?: string;
+  status: 'published' | 'draft' | 'archived';
+  sort_order?: number;
+  date_created?: string;
+  date_updated?: string;
+}
+
 interface LandingPage {
   id: number;
   title: string;
@@ -143,6 +161,7 @@ interface DirectusSchema {
   services: Service[];
   testimonials: Testimonial[];
   team_members: TeamMember[];
+  jobs: Job[];
   landing_pages: LandingPage[];
   portfolio_categories: PortfolioCategory[];
   portfolio_projects: PortfolioProject[];
@@ -165,7 +184,8 @@ export type {
   ServiceFeature, 
   ServiceStats, 
   Testimonial,
-  TeamMember, 
+  TeamMember,
+  Job, 
   LandingPage, 
   FormField, 
   PortfolioCategory,

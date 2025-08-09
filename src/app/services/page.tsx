@@ -353,7 +353,7 @@ const endToEndServices = [
                   </h1>
                   
                   <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-200 mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto mobile-body-text px-4 sm:px-0">
-                    12+ years of expertise. 1000+ events delivered. 165+ corporate clients. 35+ team size. 2M+ audience engaged. Creating extraordinary corporate experiences that inspire, educate, and propel organizations to new heights.
+                    Creating extraordinary corporate experiences that inspire, educate, and propel organizations to new heights.
                   </p>
 
 
@@ -636,7 +636,7 @@ const endToEndServices = [
             viewport={{ once: true }}
             className="text-center mt-12 sm:mt-16"
           >
-            <div className="mobile-card bg-gradient-to-r from-[#F9A625] to-[#e8951e] max-w-2xl mx-auto">
+            <div className="mobile-card bg-gradient-to-r from-[#2A3959] to-[#1a2332] max-w-2xl mx-auto">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 mobile-heading">Ready to Get Started?</h3>
               <p className="text-white/90 mb-4 sm:mb-6 mobile-body-text">Let's discuss your event and create something extraordinary together</p>
               <Button 
@@ -783,23 +783,6 @@ const endToEndServices = [
                   
                 </div>
 
-                {/* Trust Indicators - Mobile Optimized */}
-                <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10">
-                  <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 sm:gap-8 text-gray-400">
-                    <div className="flex items-center gap-2">
-                      <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
-                      <span className="text-xs sm:text-sm">Fully Insured & Licensed</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Award className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
-                      <span className="text-xs sm:text-sm">Award-Winning Service</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
-                      <span className="text-xs sm:text-sm">99% Client Satisfaction</span>
-                    </div>
-                  </div>
-                </div>
               </motion.div>
             </div>
           </motion.div>

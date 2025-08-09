@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, useInView } from "framer-motion";
+import { DirectusService, type Job } from '@/lib/directus-service';
 import { 
   ArrowRight, 
   Users, 
@@ -17,7 +18,8 @@ import {
   Coffee,
   TrendingUp,
   Mail,
-  Sparkles
+  Sparkles,
+  CheckCircle
 } from "lucide-react";
 
 const fadeInUp = {
@@ -37,8 +39,30 @@ const staggerContainer = {
 export default function CareersPage() {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const jobOpenings = [
+  // Fetch jobs from Directus
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const fetchedJobs = await DirectusService.getJobs();
+        setJobs(fetchedJobs);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+        // Fallback to hardcoded jobs if Directus fails
+        setJobs(fallbackJobs);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  // Fallback jobs data (same as before but moved here)
+  const fallbackJobs = [
     {
       title: "Master of Event Alchemy",
       subtitle: "(Senior Event Manager)",
@@ -183,10 +207,10 @@ export default function CareersPage() {
             className="grid grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {[
-              { number: "26", label: "Team Members", icon: Users, color: "text-amber-400" },
-              { number: "12+", label: "Years Growing", icon: TrendingUp, color: "text-emerald-400" },
-              { number: "95%", label: "Employee Satisfaction", icon: Heart, color: "text-rose-400" },
-              { number: "5+", label: "Open Positions", icon: Briefcase, color: "text-blue-400" }
+              { number: "1000+", label: "Events", icon: Trophy, color: "text-amber-400" },
+              { number: "165+", label: "Clients", icon: Users, color: "text-emerald-400" },
+              { number: "35+", label: "Team Size", icon: TrendingUp, color: "text-rose-400" },
+              { number: "2M+", label: "Audience Engaged", icon: Heart, color: "text-blue-400" }
             ].map((stat, index) => (
               <motion.div key={index} variants={fadeInUp} className="text-center group">
                 <div className="glass-dark rounded-3xl p-8 micro-bounce">
@@ -228,24 +252,23 @@ export default function CareersPage() {
             </motion.div>
           </motion.div>
 
-          <div className="space-y-6">
-            {jobOpenings.map((job, index) => (
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {(loading ? [] : jobs.length > 0 ? jobs : fallbackJobs).map((job, index) => (
               <motion.div
-                key={index}
+                key={job.id || index}
                 variants={fadeInUp}
-                className="glass rounded-3xl p-8 group hover:shadow-lg transition-all duration-300"
+                className="group"
               >
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                  <div className="flex-1 mb-6 lg:mb-0">
-                    <div className="flex flex-wrap items-center gap-4 mb-4">
-                      <div>
-                        <h3 className="text-2xl font-heading text-neutral-900 group-hover:text-amber-600 transition-colors">
-                          {job.title}
-                        </h3>
-                        {job.subtitle && (
-                          <p className="text-sm text-neutral-500 mt-1">{job.subtitle}</p>
-                        )}
-                      </div>
+                <div className="glass rounded-3xl p-8 h-full flex flex-col hover:shadow-xl transition-all duration-500 micro-bounce">
+                  {/* Job Header */}
+                  <div className="mb-6">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       <Badge className="bg-amber-100 text-amber-700 border-amber-200">
                         {job.department}
                       </Badge>
@@ -254,46 +277,57 @@ export default function CareersPage() {
                       </Badge>
                     </div>
                     
-                    <p className="text-neutral-600 font-body leading-relaxed mb-4">
+                    <h3 className="text-xl font-heading text-neutral-900 group-hover:text-amber-600 transition-colors mb-2">
+                      {job.title}
+                    </h3>
+                    {job.subtitle && (
+                      <p className="text-sm text-neutral-500">{job.subtitle}</p>
+                    )}
+                  </div>
+                  
+                  {/* Job Details */}
+                  <div className="flex-1 mb-6">
+                    <p className="text-neutral-600 font-body leading-relaxed mb-4 text-sm line-clamp-3">
                       {job.description}
                     </p>
                     
-                    <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-500 mb-4">
+                    <div className="space-y-2 text-sm text-neutral-500 mb-4">
                       <div className="flex items-center">
-                        <Briefcase className="w-4 h-4 mr-2" />
-                        {job.experience}
+                        <Briefcase className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span>{job.experience}</span>
                       </div>
                       <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-2" />
-                        {job.location}
+                        <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span>{job.location}</span>
                       </div>
                       <div className="flex items-center">
-                        <TrendingUp className="w-4 h-4 mr-2" />
-                        {job.salary}
+                        <TrendingUp className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span>{job.salary}</span>
                       </div>
                     </div>
                     
                     {job.impact && (
-                      <div className="glass bg-amber-50 border-amber-200 rounded-xl p-4">
-                        <div className="flex items-center">
-                          <Trophy className="w-4 h-4 mr-2 text-amber-600" />
-                          <span className="text-sm font-medium text-amber-700">Impact: {job.impact}</span>
+                      <div className="glass bg-amber-50 border-amber-200 rounded-xl p-3 mb-4">
+                        <div className="flex items-start">
+                          <Trophy className="w-4 h-4 mr-2 text-amber-600 mt-0.5 flex-shrink-0" />
+                          <span className="text-xs font-medium text-amber-700 leading-relaxed">{job.impact}</span>
                         </div>
                       </div>
                     )}
                   </div>
                   
-                  <div className="flex flex-col sm:flex-row gap-4 lg:flex-col lg:w-48">
+                  {/* Action Buttons */}
+                  <div className="flex flex-col gap-3">
                     <Button 
                       onClick={() => window.open('mailto:jobs@whitemassif.com?subject=Application for ' + job.title + '&body=Dear WhiteMassif Team,%0D%0A%0D%0AI am writing to express my interest in the ' + job.title + ' position.%0D%0A%0D%0APlease find my CV attached. I would be happy to discuss how my experience aligns with your requirements.%0D%0A%0D%0ABest regards', '_blank')}
-                      className="btn-primary group"
+                      className="btn-primary group w-full"
                     >
                       <span>Apply Now</span>
                       <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Button>
                     <Button 
                       onClick={() => window.open('mailto:jobs@whitemassif.com?subject=Inquiry about ' + job.title + ' role', '_blank')}
-                      className="btn-outline group"
+                      className="btn-outline group w-full"
                     >
                       <span>Ask Questions</span>
                     </Button>
@@ -301,7 +335,32 @@ export default function CareersPage() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
+
+          {/* Loading State */}
+          {loading && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-16"
+            >
+              <div className="w-8 h-8 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-neutral-600 font-body">Loading positions from Directus...</p>
+            </motion.div>
+          )}
+
+          {/* No Jobs State */}
+          {!loading && jobs.length === 0 && fallbackJobs.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-16"
+            >
+              <Users className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+              <h3 className="text-2xl font-display text-neutral-600 mb-2">No Open Positions</h3>
+              <p className="text-neutral-500 max-w-md mx-auto">We're not actively hiring right now, but exceptional talent is always welcome. Feel free to reach out!</p>
+            </motion.div>
+          )}
         </div>
       </section>
 

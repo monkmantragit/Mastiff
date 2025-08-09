@@ -237,8 +237,8 @@ export default function Home() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.2, delay: 0.2 }}
             >
-              <span className="block">Crafting Corporate Gatherings into</span>
-              <span className="block"><span className="text-[#F9A625]">Remarkable</span> Experiences</span>
+              <span className="block">Crafting Corporate Gatherings</span>
+              <span className="block">into <span className="text-[#F9A625]">Remarkable</span> Experiences</span>
             </motion.h1>
             
             <motion.p 
@@ -422,9 +422,6 @@ export default function Home() {
             className="text-center mb-12 lg:mb-16"
           >
             <motion.div variants={fadeInUp}>
-              <Badge className="mb-6 bg-[#F9A625]/20 text-[#F9A625] border-[#F9A625]/30 px-6 py-2">
-                Portfolio
-              </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-white leading-tight max-w-4xl mx-auto">
                 Where Vision Meets <span className="text-[#F9A625]">Precision</span>
               </h2>
@@ -558,9 +555,6 @@ export default function Home() {
             className="text-center mb-12 lg:mb-16"
           >
             <motion.div variants={fadeInUp}>
-              <Badge className="bg-[#F9A625]/20 text-[#F9A625] border-[#F9A625]/30 px-6 py-2 mb-6">
-                The Method
-              </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-white mb-6 leading-tight">
                 Four Steps to <span className="text-[#F9A625]">Extraordinary</span>
               </h2>
@@ -644,9 +638,6 @@ export default function Home() {
             className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"
           >
             <motion.div variants={fadeInUp} className="text-white">
-              <Badge className="mb-6 glass-dark px-6 py-2 text-amber-400 border-amber-400/20">
-                Let's Talk
-              </Badge>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 leading-tight">
                 Ready to <span className="text-[#F9A625]">Contact Us?</span>
               </h2>
@@ -656,8 +647,8 @@ export default function Home() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                 {[
-                  { icon: CheckCircle, title: "500+ Projects", desc: "Successfully delivered" },
                   { icon: Users, title: "1000+ Events", desc: "Executed with precision" },
+                  { icon: Star, title: "2M+ Audience Engaged", desc: "Memorable experiences" },
                   { icon: Trophy, title: "165+ Corporate Clients", desc: "Trusted partnerships" },
                   { icon: Target, title: "35+ Team Size", desc: "Dedicated professionals" }
                 ].map((feature, index) => {
