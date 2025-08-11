@@ -487,14 +487,16 @@ export default function Home() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <Button 
-              variant="outline"
-              size="lg" 
-              className="border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black px-8 py-4 rounded-full text-lg"
-            >
-              View Portfolio
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link href="/work">
+              <Button 
+                variant="outline"
+                size="lg" 
+                className="border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black px-8 py-4 rounded-full text-lg"
+              >
+                View Portfolio
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
