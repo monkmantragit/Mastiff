@@ -566,31 +566,6 @@ export default function ContactPage() {
                 </Card>
               </motion.div>
 
-              <motion.div variants={fadeInUp}>
-                <Card className="glass border-neutral-200 bg-gradient-to-br from-amber-50 to-orange-50">
-                  <CardContent className="p-8 text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center">
-                      <Phone className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-xl font-heading text-neutral-900 mb-2">Urgent Inquiry?</h3>
-                    <p className="text-neutral-600 mb-4">Call us directly for immediate assistance</p>
-                    <div className="space-y-2">
-                      <a 
-                        href="tel:+91-99001-41155"
-                        className="block text-lg font-bold text-amber-600 hover:text-amber-700 transition-colors"
-                      >
-                        Prakash: +91 99001 41155
-                      </a>
-                      <a 
-                        href="tel:+91-99001-41177"
-                        className="block text-lg font-bold text-amber-600 hover:text-amber-700 transition-colors"
-                      >
-                        Vinay: +91 99001 41177
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
             </motion.div>
           </div>
         </div>
