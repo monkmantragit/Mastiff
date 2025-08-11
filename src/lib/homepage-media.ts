@@ -9,7 +9,7 @@ export class HomepageMediaService {
       celebrationGalore: `${SUPABASE_STORAGE_URL}/massif/homepage/home page - Celebration Galore.jpg?quality=90&width=800&height=600`,
       inauguration: `${SUPABASE_STORAGE_URL}/massif/homepage/Home%20page%20-%20Inauguration_.jpg?quality=90&width=800&height=600`,
       dealersMeet: `${SUPABASE_STORAGE_URL}/massif/homepage/Home%20page%202%20-Industry%20Convention,%20Customer%20&%20Dealers%20Meet.jpg?quality=90&width=800&height=600`,
-      hybridEvents: `${SUPABASE_STORAGE_URL}/massif/services/Home%20page%202-%20Hybrid%20Events.jpg?quality=90&width=800&height=600`,
+      hybridEvents: `${SUPABASE_STORAGE_URL}/massif/homepage/Home%20page%203%20hybrid%20events%20.jpg?quality=90&width=800&height=600`,
       specialProjects: `${SUPABASE_STORAGE_URL}/massif/homepage/Ho,e page - special events.jpg?quality=90&width=800&height=600`
     };
     
@@ -23,7 +23,7 @@ export class HomepageMediaService {
   static getPortfolioImages() {
     // Get the numbered home page images for portfolio with optimized quality
     const portfolioImages = [
-      `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3.jpg?quality=85&width=600&height=450`,
+      `${SUPABASE_STORAGE_URL}/massif/homepage/Home%20page%203%20-%20corporate%20events.jpg?quality=85&width=600&height=450`,
       `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3_.jpg?quality=85&width=600&height=450`,
       `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3(1).jpg?quality=85&width=600&height=450`,
       `${SUPABASE_STORAGE_URL}/massif/homepage/home page 3(2).jpg?quality=85&width=600&height=450`,
