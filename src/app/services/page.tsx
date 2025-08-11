@@ -45,12 +45,12 @@ const staggerContainer = {
 
 // Service Categories for Quick Navigation
 const serviceCategories = [
-  { id: "corporate-events", name: "Business Events", icon: Building2 },
-  { id: "celebrations", name: "Celebrations Galore", icon: PartyPopper },
-  { id: "inaugurations", name: "Launches", icon: Scissors },
-  { id: "hybrid-events", name: "", icon: Monitor },
-  { id: "conventions", name: "Industry Conventions", icon: Users },
-  { id: "special-projects", name: "Special Projects", icon: Star }
+  { id: "corporate-events", name: "Business Events", icon: Building2, description: "Professional business events planning and execution with attention to every detail" },
+  { id: "celebrations", name: "Celebrations Galore", icon: PartyPopper, description: "Professional celebrations galore planning and execution with attention to every detail" },
+  { id: "inaugurations", name: "Launches", icon: Scissors, description: "Professional launches planning and execution with attention to every detail" },
+  { id: "hybrid-events", name: "Hybrid Events", icon: Monitor, description: "Professional planning and execution with attention to every detail" },
+  { id: "conventions", name: "Industry Conventions", icon: Users, description: "Professional industry conventions planning and execution with attention to every detail" },
+  { id: "special-projects", name: "Special Projects", icon: Star, description: "Professional special projects planning and execution with attention to every detail" }
 ];
 
 export default function ServicesPage() {
@@ -167,7 +167,7 @@ export default function ServicesPage() {
   },
   {
     id: "hybrid-events",
-    title: "",
+    title: "Hybrid Events",
     description: "Tailor made services to seamlessly execute hybrid events, combining the best of in-person and virtual components for a dynamic and engaging experience.",
     buttonText: "Let's customise a theme for your event",
     extendedDescription: "In these unparalleled times, we have fortified ourselves with advanced technical expertise and a refined skill set to proficiently orchestrate exceptional solutions to engage your colleagues, connect with stakeholders, host rewards and recognition events, unveil new products and services, and conduct fireside chats and leadership addresses—all executed either virtually or through a hybrid model. We achieve this through cutting-edge technology, innovative approaches, and the seamless integration of multiple applications streamed via virtual platforms. Our successful track record includes managing a spectrum of virtual events, from conferences, panel discussions, fireside chats, town halls, employee engagement and annual day celebrations.",
@@ -420,7 +420,7 @@ const endToEndServices = [
                     </h3>
                     
                     <p className="text-gray-600 text-sm leading-relaxed mb-3 sm:mb-4 mobile-body-text">
-                      Professional {category.name.toLowerCase()} planning and execution with attention to every detail
+                      {category.description}
                     </p>
                     
                     {/* CTA - Touch Optimized */}
