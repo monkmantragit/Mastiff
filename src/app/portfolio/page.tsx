@@ -114,7 +114,7 @@ export default function PortfolioPage() {
   const stats = [
     { number: "1000+", label: "Events", icon: Calendar },
     { number: "165+", label: "Clients", icon: Users },
-    { number: "35+", label: "Team Size", icon: Award },
+    { number: "60+", label: "Destinations", icon: Award },
     { number: "2M+", label: "Audience Engaged", icon: Star }
   ];
 
@@ -344,7 +344,7 @@ export default function PortfolioPage() {
                     
                     {/* Gallery Preview */}
                     <div className="mb-4">
-                      <h4 className="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-3">Gallery Preview</h4>
+                      <h4 className="text-xs font-semibold text-blue-600 hover:text-blue-800 uppercase tracking-wide mb-3 cursor-pointer transition-colors duration-200 underline">Gallery Preview</h4>
                       <div className="grid grid-cols-4 gap-2">
                         {item.gallery.slice(0, 4).map((imageUrl: string, idx: number) => (
                           <div key={idx} className="relative aspect-square rounded-lg overflow-hidden bg-slate-100">
