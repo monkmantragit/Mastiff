@@ -487,7 +487,7 @@ export default function Home() {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <Link href="/work">
+            <Link href="/portfolio">
               <Button 
                 variant="outline"
                 size="lg" 
