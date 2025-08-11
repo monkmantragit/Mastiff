@@ -379,26 +379,6 @@ export default function ClientsPage() {
             </div>
           </div>
 
-          {/* View All Clients CTA */}
-          <motion.div 
-            className="text-center mt-16"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            <p className="text-neutral-600 mb-8 text-lg">
-              Explore more of our client partnerships across industries
-            </p>
-            <Button 
-              onClick={() => setShowAllClients(true)}
-              className="btn-primary group px-8 py-4 text-lg"
-            >
-              <Users className="mr-2 w-5 h-5" />
-              <span>View All Clients</span>
-              <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Button>
-          </motion.div>
         </div>
       </section>
 
