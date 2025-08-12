@@ -264,13 +264,15 @@ export default function Home() {
                 <span>Start Your Event Journey</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
-              <Button 
-                onClick={() => openPopup('hero-contact')}
-                variant="outline"
-                className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group"
-              >
-                <span>Contact Us</span>
-              </Button>
+              <Link href="/portfolio">
+                <Button 
+                  variant="outline"
+                  className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group"
+                >
+                  <span>View our work</span>
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+              </Link>
             </motion.div>
 
             {/* Key Highlights */}

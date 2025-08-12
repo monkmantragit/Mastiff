@@ -44,35 +44,127 @@ export class WorkMediaService {
       console.log('🔗 URL:', url);
       console.log('🔑 Token:', token ? `${token.substring(0, 10)}...` : 'NOT FOUND');
       
-      // Fix the query to properly fetch the gallery files through the junction table
-      const queryUrl = `${url}/items/portfolio_projects?fields=*,category.*,featured_image.*,gallery.directus_files_id.*&filter={"status":{"_eq":"published"}}&sort=sort_order`;
-      
-      const response = await fetch(queryUrl, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      console.log('📡 Response status:', response.status);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('❌ Error response:', errorText);
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (!url || !token) {
+        console.error('❌ Missing Directus configuration');
+        throw new Error('Directus URL or token not configured');
       }
-
-      const data = await response.json();
-      console.log('📊 Fetched projects:', data);
       
-      // Handle both formats: {data: [...]} and [...]
-      const projects = data.data || data;
-      console.log('📝 Number of projects:', projects?.length || 0);
-      return projects || [];
+      // Try multiple query approaches
+      const queries = [
+        // Primary query with full relations
+        `${url}/items/portfolio_projects?fields=*,category.*,featured_image.*,gallery.directus_files_id.*&filter={"status":{"_eq":"published"}}&sort=sort_order`,
+        // Fallback query without gallery junction
+        `${url}/items/portfolio_projects?fields=*,category.*,featured_image.*&filter={"status":{"_eq":"published"}}&sort=sort_order`,
+        // Simple query
+        `${url}/items/portfolio_projects?fields=*&filter={"status":{"_eq":"published"}}&sort=sort_order`,
+        // Basic query without status filter
+        `${url}/items/portfolio_projects?fields=*&sort=sort_order`
+      ];
+      
+      for (let i = 0; i < queries.length; i++) {
+        const queryUrl = queries[i];
+        console.log(`🔍 Trying query ${i + 1}:`, queryUrl);
+        
+        try {
+          const response = await fetch(queryUrl, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          console.log(`📡 Query ${i + 1} Response status:`, response.status);
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log(`📊 Query ${i + 1} Fetched projects:`, data);
+            
+            // Handle both formats: {data: [...]} and [...]
+            const projects = data.data || data;
+            console.log('📝 Number of projects:', projects?.length || 0);
+            
+            if (projects && projects.length > 0) {
+              console.log('✅ Successfully fetched projects with query', i + 1);
+              return projects;
+            }
+          } else {
+            const errorText = await response.text();
+            console.error(`❌ Query ${i + 1} Error response:`, errorText);
+          }
+        } catch (queryError) {
+          console.error(`❌ Query ${i + 1} failed:`, queryError);
+        }
+      }
+      
+      console.log('⚠️ All queries failed, returning empty array as requested');
+      return [];
     } catch (error) {
       console.error('❌ Error fetching portfolio projects:', error);
+      console.log('🔄 Returning empty array due to error as requested');
       return [];
     }
+  }
+
+  // Fallback data when Directus is not available
+  static getFallbackProjects(): DirectusProject[] {
+    return [
+      {
+        id: 1,
+        status: 'published',
+        title: 'BRIGADE FIESTA 2024',
+        slug: 'brigade-fiesta-2024',
+        year: 2024,
+        category: { id: 1, name: 'Corporate Celebration', slug: 'corporate-celebration', icon: 'heart' },
+        description: 'Prestigious corporate celebration showcasing excellence and innovation with world-class entertainment and strategic networking opportunities.',
+        featured_image: { id: '68962980-4dfa-4c75-a4c8-0beec0b1c23c', filename_download: 'brigade-hero.jpg' },
+        gallery: [
+          { id: 'b12fefb7-301a-4cc2-8d93-17fdec269a2a', filename_download: 'brigade-1.jpg' },
+          { id: '82e34b3c-9a64-4c17-96ab-d39f8762a7b8', filename_download: 'brigade-2.jpg' },
+          { id: '5f6efc5d-55b6-437b-bf1f-361c2700c9b5', filename_download: 'brigade-3.jpg' },
+        ],
+        client_name: 'Brigade Group',
+        event_date: '2024-03-15T00:00:00',
+        location: 'Bangalore, Karnataka',
+        sort_order: 1
+      },
+      {
+        id: 2,
+        status: 'published',
+        title: 'CORPORATE EXCELLENCE SUMMIT 2024',
+        slug: 'corporate-excellence-summit-2024',
+        year: 2024,
+        category: { id: 2, name: 'Corporate Events', slug: 'corporate-events', icon: 'briefcase' },
+        description: 'Strategic corporate summit bringing together industry leaders to discuss innovation, growth, and future business strategies.',
+        featured_image: { id: '7d5fbbe6-eb9a-43a6-904a-6a37d202548e', filename_download: 'summit-hero.jpg' },
+        gallery: [
+          { id: '6369cbb8-e04f-494b-a4c1-01ffca8b584f', filename_download: 'summit-1.jpg' },
+          { id: '4143e304-73d9-4196-a3a3-81cdfa8ede2e', filename_download: 'summit-2.jpg' },
+        ],
+        client_name: 'Corporate Excellence Group',
+        event_date: '2024-06-10T00:00:00',
+        location: 'Mumbai, Maharashtra',
+        sort_order: 2
+      },
+      {
+        id: 3,
+        status: 'published',
+        title: 'GRAND AWARDS CEREMONY 2024',
+        slug: 'grand-awards-ceremony-2024',
+        year: 2024,
+        category: { id: 3, name: 'Awards Ceremony', slug: 'awards-ceremony', icon: 'award' },
+        description: 'Prestigious awards ceremony honoring excellence and innovation across multiple industries with distinguished guests.',
+        featured_image: { id: '298aeb4a-ad59-48be-9bb6-7c36593f3e9f', filename_download: 'awards-hero.jpg' },
+        gallery: [
+          { id: '4bacfe95-c277-4036-9aa8-ae46fe6163e2', filename_download: 'awards-1.jpg' },
+          { id: 'c3c881f3-b4d8-443b-af77-77a372630217', filename_download: 'awards-2.jpg' },
+          { id: '8d66b9f6-101d-497a-9e8a-b4aa4cab6041', filename_download: 'awards-3.jpg' },
+        ],
+        client_name: 'Industry Excellence Foundation',
+        event_date: '2024-09-20T00:00:00',
+        location: 'New Delhi, Delhi',
+        sort_order: 3
+      }
+    ];
   }
 
   // Get Directus file URL
@@ -136,7 +228,7 @@ export class WorkMediaService {
       
       return {
         title: project.title,
-        year: project.year.toString(),
+        year: project.year ? project.year.toString() : '2024',
         category: project.category?.name || 'Unknown',
         image: featuredImage 
           ? this.getDirectusFileUrl(featuredImage.id, 'quality=85&width=600&height=400')

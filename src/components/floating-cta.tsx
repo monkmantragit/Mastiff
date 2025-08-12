@@ -116,18 +116,19 @@ export default function FloatingCTA() {
             )}
           </AnimatePresence>
 
-          {/* Main CTA Button */}
+          {/* Main CTA Button with Text */}
           <motion.div
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="relative"
           >
             <Button
               type="button"
               onClick={handleMainClick}
-              className="w-14 h-14 bg-[#F9A625] hover:bg-[#e8951e] text-white rounded-full shadow-2xl border-4 border-white/20 backdrop-blur-sm relative z-10"
+              className="bg-[#F9A625] hover:bg-[#e8951e] text-white rounded-full shadow-2xl border-4 border-white/20 backdrop-blur-sm relative z-10 flex items-center gap-2 px-4 py-3 h-auto"
             >
-              <MessageCircle className="w-6 h-6" />
+              <MessageCircle className="w-5 h-5" />
+              <span className="font-semibold text-sm">Need help?</span>
             </Button>
 
             {/* Expand/Collapse Toggle */}

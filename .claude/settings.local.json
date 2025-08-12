@@ -16,7 +16,9 @@
       "Bash(tail:*)",
       "mcp__directus__create-field",
       "mcp__directus__create-item",
-      "mcp__directus__read-items"
+      "mcp__directus__read-items",
+      "mcp__directus__system-prompt",
+      "mcp__directus__read-collections"
     ],
     "deny": []
   },
