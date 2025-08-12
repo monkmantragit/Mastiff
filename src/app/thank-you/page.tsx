@@ -82,7 +82,7 @@ export default function ThankYouPage() {
   const whyChooseUs = [
     { icon: Star, title: "1000+ Events", description: "Successfully executed" },
     { icon: Users, title: "35+ Specialists", description: "Creative professionals" },
-    { icon: CheckCircle, title: "100% Satisfaction", description: "Guaranteed results" }
+    { icon: CheckCircle, title: "12+ Years", description: "In industry" }
   ];
 
   return (
@@ -298,8 +298,50 @@ export default function ThankYouPage() {
                 While You Wait, Explore More
               </h3>
               <p className="text-gray-600 mb-8 leading-relaxed">
-                Discover our portfolio, meet our team, or learn more about our services.
+                Watch our event highlights and get inspired by our work.
               </p>
+            </motion.div>
+
+            {/* YouTube Videos Grid */}
+            <motion.div 
+              variants={fadeInUp}
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
+            >
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <iframe 
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/hponiJNMci4?si=Kr3YatQ7HvA_GeuP" 
+                  title="Event Highlight 1" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                />
+              </div>
+              
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <iframe 
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/jpa8mcB7E1w?si=Zk8uj3oXX6VR-TyA" 
+                  title="Event Highlight 2" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                />
+              </div>
+              
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <iframe 
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/1eIJiqC2i3s?si=AWFmlR9rtE3dZ6-i" 
+                  title="Event Highlight 3" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                />
+              </div>
             </motion.div>
 
             <motion.div 

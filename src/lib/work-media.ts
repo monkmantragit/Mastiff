@@ -1,3 +1,5 @@
+import { GalleryImage, PortfolioItem } from '@/types/gallery';
+
 const DIRECTUS_URL = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055';
 
 // Types for Directus data
@@ -42,7 +44,10 @@ export class WorkMediaService {
       console.log('🔗 URL:', url);
       console.log('🔑 Token:', token ? `${token.substring(0, 10)}...` : 'NOT FOUND');
       
-      const response = await fetch(`${url}/items/portfolio_projects?fields=*,category.*,featured_image.*,gallery.*&filter={"status":{"_eq":"published"}}&sort=sort_order`, {
+      // Fix the query to properly fetch the gallery files through the junction table
+      const queryUrl = `${url}/items/portfolio_projects?fields=*,category.*,featured_image.*,gallery.directus_files_id.*&filter={"status":{"_eq":"published"}}&sort=sort_order`;
+      
+      const response = await fetch(queryUrl, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -50,7 +55,6 @@ export class WorkMediaService {
       });
 
       console.log('📡 Response status:', response.status);
-      console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -106,7 +110,7 @@ export class WorkMediaService {
     })).filter(item => item.src);
   }
   
-  static async getPortfolioItems() {
+  static async getPortfolioItems(): Promise<PortfolioItem[]> {
     const projects = await this.fetchPortfolioProjects();
     console.log('Processing projects:', projects);
     
@@ -114,6 +118,21 @@ export class WorkMediaService {
       console.log('Processing project:', project.title, project);
       
       const featuredImage = project.featured_image;
+      
+      // Process gallery images - handle the junction table structure
+      const galleryImages: GalleryImage[] = project.gallery && Array.isArray(project.gallery) 
+        ? project.gallery.map((item: any): GalleryImage => {
+            // Handle junction table structure: gallery.directus_files_id.*
+            const file = item.directus_files_id || item;
+            return {
+              id: file.id,
+              url: this.getDirectusFileUrl(file.id, 'quality=85&width=1200&height=800'),
+              thumbnail: this.getDirectusFileUrl(file.id, 'quality=75&width=300&height=200'),
+              title: file.title || project.title,
+              alt: file.title || `${project.title} gallery image`
+            };
+          })
+        : [];
       
       return {
         title: project.title,
@@ -123,8 +142,9 @@ export class WorkMediaService {
           ? this.getDirectusFileUrl(featuredImage.id, 'quality=85&width=600&height=400')
           : '/placeholder-image.jpg',
         description: project.description,
-        gallery: [], // Simplified for now until we fix gallery structure
-        totalImages: 0, // Will fix after we understand gallery structure
+        gallery: galleryImages.map(img => img.url), // For backwards compatibility
+        galleryData: galleryImages, // Full gallery data for modal
+        totalImages: galleryImages.length,
         client_name: project.client_name,
         event_date: project.event_date,
         location: project.location

@@ -668,12 +668,12 @@ export default function Home() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/contact">
+                <Link href="/portfolio">
                   <Button 
                     size="lg"
                     className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-heading px-8 py-4 rounded-full text-lg"
                   >
-                    Contact Us
+                    View our work
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>

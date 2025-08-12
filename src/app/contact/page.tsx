@@ -23,6 +23,7 @@ import {
   Star
 } from "lucide-react";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { FormService } from "@/lib/form-service";
 
 const fadeInUp = {
@@ -40,6 +41,7 @@ const staggerContainer = {
 };
 
 export default function ContactPage() {
+  const router = useRouter();
   const { scrollY } = useScroll();
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
@@ -49,6 +51,7 @@ export default function ContactPage() {
     phone: '',
     company: '',
     eventType: '',
+    otherEventType: '',
     message: ''
   });
 
@@ -133,30 +136,34 @@ export default function ContactPage() {
         return;
       }
 
+      // Prepare event type (use otherEventType if eventType is 'other')
+      const finalEventType = formData.eventType === 'other' ? formData.otherEventType : formData.eventType;
+
       // Submit form using FormService
       const result = await FormService.submitContactForm({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         company: formData.company,
-        eventType: formData.eventType,
+        eventType: finalEventType,
         message: formData.message
       });
 
-      setSubmitStatus({
-        success: result.success,
-        message: result.message
-      });
-
-      // Reset form on success
       if (result.success) {
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          company: '',
-          eventType: '',
-          message: ''
+        // Store success data for thank you page
+        localStorage.setItem('contactData', JSON.stringify({
+          ...formData,
+          eventType: finalEventType,
+          submissionId: result.id,
+          timestamp: new Date().toISOString()
+        }));
+        
+        // Navigate to thank you page
+        router.push('/thank-you');
+      } else {
+        setSubmitStatus({
+          success: false,
+          message: result.message
         });
       }
 
@@ -428,8 +435,27 @@ export default function ContactPage() {
                     <option value="hybrid">Hybrid Events</option>
                     <option value="convention">Conventions</option>
                     <option value="special">Special Projects</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
+
+                {/* Other Event Type Input */}
+                {formData.eventType === 'other' && (
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                      Please specify your event type
+                    </label>
+                    <Input
+                      type="text"
+                      name="otherEventType"
+                      value={formData.otherEventType || ''}
+                      onChange={handleInputChange}
+                      placeholder="Please describe your event type"
+                      className="glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500"
+                      required
+                    />
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-sm font-medium text-neutral-700 mb-2">

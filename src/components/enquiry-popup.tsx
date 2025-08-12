@@ -24,6 +24,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
     email: '',
     phone: '',
     eventType: '',
+    otherEventType: '',
     eventDate: '',
     location: '',
     message: '',
@@ -79,12 +80,15 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
         return;
       }
 
+      // Prepare event type (use otherEventType if eventType is 'Other')
+      const finalEventType = formData.eventType === 'Other' ? formData.otherEventType : formData.eventType;
+
       // Submit form using FormService
       const result = await FormService.submitEnquiryForm({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        eventType: formData.eventType,
+        eventType: finalEventType,
         eventDate: formData.eventDate,
         location: formData.location,
         message: formData.message,
@@ -95,6 +99,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
         // Store success data for thank you page
         localStorage.setItem('enquiryData', JSON.stringify({
           ...formData,
+          eventType: finalEventType,
           submissionId: result.id,
           timestamp: new Date().toISOString()
         }));
@@ -251,6 +256,26 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                     ))}
                   </select>
                 </div>
+
+                {/* Other Event Type Input */}
+                {formData.eventType === 'Other' && (
+                  <div className="space-y-2">
+                    <Label htmlFor="otherEventType" className="text-sm font-medium text-gray-700 flex items-center">
+                      <Sparkles className="w-4 h-4 mr-2 text-[#F9A625]" />
+                      Please specify your event type
+                    </Label>
+                    <Input
+                      id="otherEventType"
+                      name="otherEventType"
+                      type="text"
+                      required
+                      value={formData.otherEventType}
+                      onChange={handleInputChange}
+                      className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
+                      placeholder="Please describe your event type"
+                    />
+                  </div>
+                )}
 
                 <div className="space-y-2">
                   <Label htmlFor="eventDate" className="text-sm font-medium text-gray-700 flex items-center">
