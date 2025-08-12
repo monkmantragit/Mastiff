@@ -61,7 +61,7 @@ export default function ThankYouPage() {
   const nextSteps = [
     {
       icon: Phone,
-      title: "We&apos;ll Call You",
+      title: "We'll Call You",
       description: "Our event specialist will contact you soon to discuss your requirements in detail.",
       timeline: "Next Step"
     },
@@ -168,22 +168,17 @@ export default function ThankYouPage() {
             {/* Quick Actions */}
             <motion.div 
               variants={fadeInUp}
-              className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+              className="flex justify-center mb-16"
             >
-              <Link href="/contact">
-                <Button className="btn-primary mobile-touch-target text-base font-semibold px-8">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Contact Us
+              <a href="mailto:info@whitemassif.com">
+                <Button 
+                  className="mobile-touch-target border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white bg-white text-base font-semibold px-8 py-4"
+                  variant="outline"
+                >
+                  <Mail className="mr-2 h-5 w-5" />
+                  Email Us
                 </Button>
-              </Link>
-              
-              <Button 
-                variant="outline" 
-                className="mobile-touch-target border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white"
-              >
-                <Mail className="mr-2 h-5 w-5" />
-                Email Us
-              </Button>
+              </a>
             </motion.div>
           </motion.div>
         </div>
