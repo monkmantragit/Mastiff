@@ -4,6 +4,9 @@ export interface GalleryImage {
   thumbnail: string;
   title: string;
   alt: string;
+  type: 'image' | 'video';
+  mimeType?: string;
+  filename?: string;
 }
 
 export interface PortfolioItem {

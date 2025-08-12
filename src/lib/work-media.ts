@@ -172,6 +172,20 @@ export class WorkMediaService {
     const queryParams = params ? `?${params}` : '';
     return `${DIRECTUS_URL}/assets/${fileId}${queryParams}`;
   }
+
+  // Helper method to detect video files
+  static isVideoFile(mimeType: string, filename: string): boolean {
+    // Check by MIME type first
+    if (mimeType && mimeType.startsWith('video/')) {
+      return true;
+    }
+    
+    // Fallback to file extension check
+    const videoExtensions = ['.mp4', '.webm', '.ogg', '.avi', '.mov', '.wmv', '.flv', '.mkv'];
+    const lowercaseFilename = filename.toLowerCase();
+    
+    return videoExtensions.some(ext => lowercaseFilename.endsWith(ext));
+  }
   
   static async getWorkImages() {
     const projects = await this.fetchPortfolioProjects();
@@ -211,17 +225,26 @@ export class WorkMediaService {
       
       const featuredImage = project.featured_image;
       
-      // Process gallery images - handle the junction table structure
+      // Process gallery items - handle both images and videos from the junction table structure
       const galleryImages: GalleryImage[] = project.gallery && Array.isArray(project.gallery) 
         ? project.gallery.map((item: any): GalleryImage => {
             // Handle junction table structure: gallery.directus_files_id.*
             const file = item.directus_files_id || item;
+            const mimeType = file.type || '';
+            const filename = file.filename_download || '';
+            const isVideo = this.isVideoFile(mimeType, filename);
+            
             return {
               id: file.id,
-              url: this.getDirectusFileUrl(file.id, 'quality=85&width=1200&height=800'),
-              thumbnail: this.getDirectusFileUrl(file.id, 'quality=75&width=300&height=200'),
+              url: this.getDirectusFileUrl(file.id),
+              thumbnail: isVideo 
+                ? this.getDirectusFileUrl(file.id, 'quality=75&width=300&height=200&format=jpg') // Video thumbnail
+                : this.getDirectusFileUrl(file.id, 'quality=75&width=300&height=200'),
               title: file.title || project.title,
-              alt: file.title || `${project.title} gallery image`
+              alt: file.title || `${project.title} ${isVideo ? 'video' : 'image'}`,
+              type: isVideo ? 'video' : 'image',
+              mimeType,
+              filename
             };
           })
         : [];

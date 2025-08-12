@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import NextImage from 'next/image';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
 import { GalleryImage } from '@/types/gallery';
 
 interface GalleryModalProps {
@@ -26,6 +26,7 @@ export default function GalleryModal({
   const [imageError, setImageError] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
 
   // Reset states when modal opens/closes
   useEffect(() => {
@@ -71,18 +72,21 @@ export default function GalleryModal({
   const goToNext = () => {
     setImageLoading(true);
     setImageError(false);
+    setVideoPlaying(false);
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };
 
   const goToPrevious = () => {
     setImageLoading(true);
     setImageError(false);
+    setVideoPlaying(false);
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
   const goToImage = (index: number) => {
     setImageLoading(true);
     setImageError(false);
+    setVideoPlaying(false);
     setCurrentIndex(index);
   };
 
@@ -173,20 +177,41 @@ export default function GalleryModal({
                     transition={{ duration: 0.3 }}
                     className="relative w-full h-full"
                   >
-                    <NextImage
-                      src={currentImage.url}
-                      alt={currentImage.alt}
-                      fill
-                      className={`object-contain transition-opacity duration-300 ${
-                        imageLoading ? 'opacity-0' : 'opacity-100'
-                      }`}
-                      onLoad={() => setImageLoading(false)}
-                      onError={() => {
-                        setImageLoading(false);
-                        setImageError(true);
-                      }}
-                      priority
-                    />
+                    {currentImage.type === 'video' ? (
+                      <video
+                        src={currentImage.url}
+                        className={`w-full h-full object-contain transition-opacity duration-300 ${
+                          imageLoading ? 'opacity-0' : 'opacity-100'
+                        }`}
+                        controls
+                        preload="metadata"
+                        onLoadedData={() => setImageLoading(false)}
+                        onError={() => {
+                          setImageLoading(false);
+                          setImageError(true);
+                        }}
+                        onPlay={() => setVideoPlaying(true)}
+                        onPause={() => setVideoPlaying(false)}
+                        poster={currentImage.thumbnail}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <NextImage
+                        src={currentImage.url}
+                        alt={currentImage.alt}
+                        fill
+                        className={`object-contain transition-opacity duration-300 ${
+                          imageLoading ? 'opacity-0' : 'opacity-100'
+                        }`}
+                        onLoad={() => setImageLoading(false)}
+                        onError={() => {
+                          setImageLoading(false);
+                          setImageError(true);
+                        }}
+                        priority
+                      />
+                    )}
                     
                     {/* Loading indicator */}
                     {imageLoading && (
@@ -199,7 +224,7 @@ export default function GalleryModal({
                     {imageError && (
                       <div className="absolute inset-0 flex items-center justify-center text-white">
                         <div className="text-center">
-                          <p className="text-lg mb-2">Failed to load image</p>
+                          <p className="text-lg mb-2">Failed to load {currentImage.type}</p>
                           <p className="text-sm text-gray-300">{currentImage.title}</p>
                         </div>
                       </div>
@@ -258,6 +283,11 @@ export default function GalleryModal({
                           className="object-cover"
                           sizes="80px"
                         />
+                        {image.type === 'video' && (
+                          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <Play className="w-4 h-4 text-white" />
+                          </div>
+                        )}
                       </button>
                     ))}
                   </div>

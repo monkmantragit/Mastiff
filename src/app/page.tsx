@@ -267,10 +267,10 @@ export default function Home() {
               <Link href="/portfolio">
                 <Button 
                   variant="outline"
-                  className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group"
+                  className="border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white hover:border-[#2A3959] font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group shadow-lg hover:shadow-xl"
                 >
-                  <span>View our work</span>
-                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <span className="relative z-10">View our work</span>
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 relative z-10" />
                 </Button>
               </Link>
             </motion.div>

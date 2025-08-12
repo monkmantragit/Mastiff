@@ -339,7 +339,12 @@ export default function PortfolioPage() {
                         <div className="text-white">
                           <div className="text-sm font-medium flex items-center gap-2">
                             <Camera className="w-4 h-4" />
-                            {item.totalImages} Photos
+                            {item.galleryData ? 
+                              `${item.galleryData.filter(g => g.type === 'image').length} Photos` +
+                              (item.galleryData.filter(g => g.type === 'video').length > 0 ? 
+                                ` • ${item.galleryData.filter(g => g.type === 'video').length} Videos` : '')
+                              : `${item.totalImages} Items`
+                            }
                           </div>
                           {item.location && (
                             <div className="text-xs text-white/80 mt-1">{item.location}</div>
@@ -393,7 +398,32 @@ export default function PortfolioPage() {
                       </div>
                       {item.totalImages > 0 ? (
                         <div className="grid grid-cols-4 gap-2">
-                          {item.gallery.slice(0, 4).map((imageUrl: string, idx: number) => (
+                          {item.galleryData ? item.galleryData.slice(0, 4).map((galleryItem, idx: number) => (
+                          <div 
+                            key={idx} 
+                            className="relative aspect-square rounded-xl overflow-hidden bg-slate-100 cursor-pointer group/thumb"
+                          >
+                            <NextImage
+                              src={galleryItem.thumbnail}
+                              alt={`${item.title} preview ${idx + 1}`}
+                              fill
+                              className="object-cover group-hover/thumb:scale-110 transition-transform duration-300"
+                              sizes="100px"
+                            />
+                            <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                              {galleryItem.type === 'video' ? (
+                                <Play className="w-4 h-4 text-white opacity-80 group-hover/thumb:opacity-100 transition-opacity duration-300" />
+                              ) : (
+                                <Eye className="w-4 h-4 text-white opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300" />
+                              )}
+                            </div>
+                            {idx === 3 && item.galleryData.length > 4 && (
+                              <div className="absolute inset-0 bg-black/70 flex items-center justify-center rounded-xl">
+                                <span className="text-white text-xs font-bold">+{item.galleryData.length - 4}</span>
+                              </div>
+                            )}
+                          </div>
+                        )) : item.gallery.slice(0, 4).map((imageUrl: string, idx: number) => (
                           <div 
                             key={idx} 
                             className="relative aspect-square rounded-xl overflow-hidden bg-slate-100 cursor-pointer group/thumb"
