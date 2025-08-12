@@ -172,8 +172,7 @@ export default function ThankYouPage() {
             >
               <a href="mailto:info@whitemassif.com">
                 <Button 
-                  className="mobile-touch-target border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white bg-white text-base font-semibold px-8 py-4"
-                  variant="outline"
+                  className="mobile-touch-target bg-white border-2 border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white text-base font-semibold px-8 py-4 transition-all duration-300"
                 >
                   <Mail className="mr-2 h-5 w-5" />
                   Email Us
