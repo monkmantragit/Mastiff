@@ -171,27 +171,6 @@ export default function TeamPage() {
               </div>
             )}
             
-            {/* Department Badge */}
-            {member.department && (
-              <div className="absolute top-4 right-4">
-                <Badge className={`${
-                  isLeadership 
-                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white' 
-                    : 'bg-black/80 text-white'
-                } backdrop-blur-sm border-none`}>
-                  {member.department}
-                </Badge>
-              </div>
-            )}
-
-            {/* Experience Badge */}
-            {member.years_experience && (
-              <div className="absolute top-4 left-4">
-                <Badge variant="secondary" className="bg-white/90 text-neutral-700 backdrop-blur-sm">
-                  {member.years_experience}+ years
-                </Badge>
-              </div>
-            )}
 
             {/* Leadership Crown */}
             {isLeadership && (
@@ -212,15 +191,9 @@ export default function TeamPage() {
           </h3>
           <p className={`${
             isLeadership ? 'text-base' : 'text-sm'
-          } text-neutral-600 leading-relaxed mb-3`}>
+          } text-neutral-600 leading-relaxed`}>
             {member.position}
           </p>
-          
-          {member.bio && isLeadership && (
-            <p className="text-sm text-neutral-500 leading-relaxed line-clamp-3">
-              {member.bio}
-            </p>
-          )}
         </CardContent>
       </Card>
     </motion.div>
