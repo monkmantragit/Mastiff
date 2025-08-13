@@ -422,6 +422,7 @@ export default function ClientsPage() {
             </motion.div>
           ) : clientLogos.length > 0 ? (
             <motion.div
+              key={`client-grid-${selectedIndustry}-${clientLogos.length}`}
               initial="initial"
               whileInView="animate"
               viewport={{ once: true }}
@@ -470,7 +471,7 @@ export default function ClientsPage() {
           )}
 
           {/* Infinite Scrolling Logo Sections */}
-          <div className="space-y-8 mt-16">
+          <div key={`scrolling-logos-${selectedIndustry}-${clientLogos.length}`} className="space-y-8 mt-16">
             {/* Row 1 - Left to Right Scroll */}
             <div className="relative overflow-hidden">
               <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-neutral-100 to-transparent z-10 pointer-events-none" />
