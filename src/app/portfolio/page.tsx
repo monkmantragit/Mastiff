@@ -160,7 +160,6 @@ export default function PortfolioPage() {
             loop
             playsInline
             preload="none"
-            loading="lazy"
             style={{
               zIndex: 1,
               willChange: 'auto',

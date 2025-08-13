@@ -38,7 +38,6 @@ export default function WorkPage() {
             loop
             playsInline
             preload="none"
-            loading="lazy"
             style={{
               zIndex: 1,
               willChange: 'auto',
