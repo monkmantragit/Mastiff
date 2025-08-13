@@ -65,96 +65,6 @@ const stats = [
   }
 ];
 
-// Featured premium clients for hero display
-const featuredClients = [
-  {
-    name: "Microsoft",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-010.png",
-    fallback: "/assets/images/clients/Microsoft.webp",
-    category: "Technology"
-  },
-  {
-    name: "Amazon Web Services", 
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-002.png",
-    fallback: "/assets/images/clients/Amazon-Web-services.webp",
-    category: "Technology"
-  },
-  {
-    name: "Johnson & Johnson",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-007.png",
-    fallback: "/assets/images/clients/Johnson-controls-1.png",
-    category: "Healthcare"
-  },
-  {
-    name: "GSK",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-006.png",
-    fallback: "/assets/images/clients/GSK-1.png",
-    category: "Pharmaceutical"
-  },
-  {
-    name: "Coca Cola",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-003.png",
-    fallback: "/assets/images/clients/Coca-cola-1.png",
-    category: "Consumer Goods"
-  },
-  {
-    name: "Ericsson",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-005.png",
-    fallback: "/assets/images/clients/Ericsson.webp",
-    category: "Telecommunications"
-  },
-  {
-    name: "Hitachi",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-015.png",
-    fallback: "/assets/images/clients/Hitachi.png",
-    category: "Industrial"
-  },
-  {
-    name: "TVS",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-014.png",
-    fallback: "/assets/images/clients/TVS.png",
-    category: "Automotive"
-  },
-  {
-    name: "The New York Times",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-012.png",
-    fallback: "/assets/images/clients/The-new-york-times-1.png",
-    category: "Media"
-  },
-  {
-    name: "KLM",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-008.png",
-    fallback: "/assets/images/clients/KLM-1.png",
-    category: "Aviation"
-  },
-  {
-    name: "ABB",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-001.png",
-    fallback: "/assets/images/clients/ABB.png",
-    category: "Industrial"
-  },
-  {
-    name: "EMC",
-    logo: "https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-004.png",
-    fallback: "/assets/images/clients/EMC.webp",
-    category: "Technology"
-  }
-];
-
-// Generate all client logos for modal display
-const generateAllClientLogos = () => {
-  return Array.from({length: 154}, (_, i) => {
-    const num = String(i + 1).padStart(3, '0');
-    return {
-      id: `client-${num}`,
-      src: `https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Clients%20Logo-%20wm-${num}.png`,
-      alt: `Client ${num}`,
-      category: ['Technology', 'Healthcare', 'Manufacturing', 'Finance', 'Automotive', 'Media'][i % 6]
-    };
-  }).filter((_, index) => index + 1 !== 120); // Remove logo wm-120
-};
-
-const allClientLogos = generateAllClientLogos();
 
 export default function ClientsPage() {
   const heroRef = useRef(null);
@@ -385,50 +295,95 @@ export default function ClientsPage() {
             whileInView="animate"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="mb-12"
+            className="mb-16"
           >
             <motion.div variants={fadeInUp} className="text-center">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-                <div className="flex items-center gap-2 text-neutral-600">
-                  <Filter className="w-4 h-4" />
-                  <span className="text-sm font-medium">Filter by Industry:</span>
-                </div>
-                <div className="relative">
-                  <select
-                    value={selectedIndustry}
-                    onChange={(e) => setSelectedIndustry(e.target.value)}
-                    className="appearance-none bg-white border border-neutral-300 rounded-full px-6 py-2 pr-10 text-sm font-medium text-neutral-700 focus:ring-2 focus:ring-amber-500 focus:border-transparent cursor-pointer hover:border-amber-400 transition-colors"
-                  >
-                    <option value="All">All Industries ({totalClientCount || 0})</option>
-                    {industryCategories.map((category) => (
-                      <option key={category.category} value={category.category}>
-                        {category.category} ({category.count})
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-500 pointer-events-none" />
-                </div>
+              <div className="flex items-center justify-center gap-2 mb-8">
+                <Sparkles className="w-5 h-5 text-amber-500" />
+                <span className="text-lg font-medium text-neutral-700">Explore by Industry</span>
               </div>
 
-              {/* Industry Stats */}
-              {!clientsLoading && industryCategories.length > 0 && (
-                <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-neutral-500">
-                  {industryCategories.map((category, index) => (
-                    <span key={category.category} className="inline-flex items-center">
-                      <span 
-                        className={`cursor-pointer transition-colors ${
-                          selectedIndustry === category.category 
-                            ? 'text-amber-600 font-semibold' 
-                            : 'hover:text-neutral-700'
+              {/* Premium Tag Buttons */}
+              <div className="flex flex-wrap items-center justify-center gap-3 max-w-5xl mx-auto">
+                {/* All Industries Button */}
+                <motion.button
+                  onClick={() => setSelectedIndustry('All')}
+                  className={`group relative px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                    selectedIndustry === 'All'
+                      ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/25 scale-105'
+                      : 'bg-white text-neutral-700 border border-neutral-200 hover:border-amber-400 hover:shadow-md hover:scale-105'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className="flex items-center gap-2">
+                    <Trophy className="w-4 h-4" />
+                    <span>All Industries</span>
+                    <Badge 
+                      className={`ml-1 text-xs ${
+                        selectedIndustry === 'All'
+                          ? 'bg-white/20 text-white border-white/30'
+                          : 'bg-amber-100 text-amber-700 border-amber-200'
+                      }`}
+                    >
+                      {totalClientCount || 0}
+                    </Badge>
+                  </div>
+                </motion.button>
+
+                {/* Industry Category Buttons */}
+                {industryCategories.map((category) => (
+                  <motion.button
+                    key={category.category}
+                    onClick={() => setSelectedIndustry(category.category)}
+                    className={`group relative px-5 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                      selectedIndustry === category.category
+                        ? 'bg-gradient-to-r from-neutral-800 to-neutral-900 text-white shadow-lg shadow-neutral-800/25 scale-105'
+                        : 'bg-white text-neutral-700 border border-neutral-200 hover:border-neutral-400 hover:shadow-md hover:scale-105'
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span>{category.category}</span>
+                      <Badge 
+                        className={`ml-1 text-xs ${
+                          selectedIndustry === category.category
+                            ? 'bg-white/20 text-white border-white/30'
+                            : 'bg-neutral-100 text-neutral-600 border-neutral-200'
                         }`}
-                        onClick={() => setSelectedIndustry(category.category)}
                       >
-                        {category.category}: {category.count}
-                      </span>
-                      {index < industryCategories.length - 1 && <span className="mx-2 text-neutral-300">•</span>}
-                    </span>
-                  ))}
+                        {category.count}
+                      </Badge>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+
+              {/* Loading State */}
+              {clientsLoading && (
+                <div className="flex items-center justify-center mt-8">
+                  <div className="w-6 h-6 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+                  <span className="ml-3 text-sm text-neutral-500">Loading industries...</span>
                 </div>
+              )}
+
+              {/* Active Filter Info */}
+              {selectedIndustry !== 'All' && !clientsLoading && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full text-sm text-amber-700"
+                >
+                  <Target className="w-4 h-4" />
+                  <span>Showing {clientLogos.length} clients in <strong>{selectedIndustry}</strong></span>
+                  <button
+                    onClick={() => setSelectedIndustry('All')}
+                    className="ml-2 text-amber-500 hover:text-amber-700 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </motion.div>
               )}
             </motion.div>
           </motion.div>
@@ -441,23 +396,27 @@ export default function ClientsPage() {
             variants={staggerContainer}
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 mb-12"
           >
-            {featuredClients.map((client, index) => (
+            {clientLogos.slice(0, 12).map((client, index) => (
               <motion.div
-                key={client.name}
+                key={client.id}
                 variants={fadeInUp}
                 className="group relative"
               >
                 <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl transition-all duration-500 aspect-square flex items-center justify-center glass micro-bounce">
-                  <img
-                    src={client.logo}
-                    alt={client.name}
-                    className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                    onError={(e) => {
-                      if (client.fallback) {
-                        e.currentTarget.src = client.fallback;
-                      }
-                    }}
-                  />
+                  {ClientLogosService.getBestLogoUrl(client) ? (
+                    <img
+                      src={ClientLogosService.getBestLogoUrl(client) || ''}
+                      alt={client.client_name}
+                      className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center text-xs font-medium text-neutral-400 text-center">
+                      {client.client_name}
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
