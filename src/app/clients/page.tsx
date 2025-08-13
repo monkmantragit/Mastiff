@@ -126,12 +126,22 @@ export default function ClientsPage() {
   // Filter clients by industry when selection changes
   useEffect(() => {
     const fetchFilteredClients = async () => {
-      if (selectedIndustry === 'All') {
-        const allLogos = await ClientLogosService.getAllClientLogos();
-        setClientLogos(allLogos);
-      } else {
-        const filteredLogos = await ClientLogosService.getClientLogosByIndustry(selectedIndustry);
-        setClientLogos(filteredLogos);
+      console.log('🔍 Fetching clients for industry:', selectedIndustry);
+      setClientsLoading(true);
+      try {
+        if (selectedIndustry === 'All') {
+          const allLogos = await ClientLogosService.getAllClientLogos();
+          console.log('📋 All logos fetched:', allLogos.length);
+          setClientLogos(allLogos);
+        } else {
+          const filteredLogos = await ClientLogosService.getClientLogosByIndustry(selectedIndustry);
+          console.log(`🏭 ${selectedIndustry} logos fetched:`, filteredLogos.length);
+          setClientLogos(filteredLogos);
+        }
+      } catch (error) {
+        console.error('❌ Error fetching filtered clients:', error);
+      } finally {
+        setClientsLoading(false);
       }
     };
 
