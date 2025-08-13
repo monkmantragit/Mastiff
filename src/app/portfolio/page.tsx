@@ -149,58 +149,8 @@ export default function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-neutral-50">
-      {/* Hero Video Section */}
-      <section className="relative h-screen overflow-hidden">
-        {/* Full Video Background */}
-        <div className="absolute inset-0 z-0 bg-neutral-900">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            style={{
-              zIndex: 1,
-              willChange: 'auto',
-              backfaceVisibility: 'hidden'
-            }}
-          >
-            <source src="https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/work/Aditi%20WM%20version%202025.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          
-          {/* Subtle overlay for depth */}
-          <div className="absolute inset-0 bg-black/20 z-10" />
-        </div>
-
-        {/* Top Badge */}
-        <motion.div 
-          className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-sm px-4 py-2">
-            <Eye className="w-4 h-4 mr-2" />
-            Our Work Portfolio
-          </Badge>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 10, 0] }}
-          transition={{ delay: 2, duration: 2, repeat: Infinity }}
-        >
-          <div className="text-sm mb-2">Scroll to Explore</div>
-          <div className="w-0.5 h-8 bg-white/60 mx-auto"></div>
-        </motion.div>
-      </section>
-
-      {/* Compact Hero Content Section */}
-      <section ref={heroRef} className="relative py-16 overflow-hidden bg-gradient-to-br from-[#2A3959] via-[#1A2340] to-[#0F1826]">
+      {/* Hero Section */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#2A3959] via-[#1A2340] to-[#0F1826]">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-[#F9A625]/10 via-transparent to-[#F9A625]/5"></div>
         </div>
