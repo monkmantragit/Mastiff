@@ -34,12 +34,12 @@ export class ClientLogosService {
   }
 
   /**
-   * Get all published client logos
+   * Get all client logos (both published and draft)
    */
   static async getAllClientLogos(): Promise<ClientLogo[]> {
     try {
       const response = await fetch(
-        `${this.BASE_URL}/items/client_logos?fields=id,client_name,Category,client_logo,status,sort&filter[status][_eq]=published&sort=sort`,
+        `${this.BASE_URL}/items/client_logos?fields=id,client_name,Category,client_logo,status,sort&sort=sort`,
         {
           headers: this.getHeaders(),
           next: { revalidate: 3600 } // Cache for 1 hour
@@ -64,7 +64,7 @@ export class ClientLogosService {
   static async getClientLogosByIndustry(industry: string): Promise<ClientLogo[]> {
     try {
       const response = await fetch(
-        `${this.BASE_URL}/items/client_logos?fields=id,client_name,Category,client_logo,status,sort&filter[status][_eq]=published&filter[Category][_eq]=${encodeURIComponent(industry)}&sort=sort`,
+        `${this.BASE_URL}/items/client_logos?fields=id,client_name,Category,client_logo,status,sort&filter[Category][_eq]=${encodeURIComponent(industry)}&sort=sort`,
         {
           headers: this.getHeaders(),
           next: { revalidate: 3600 } // Cache for 1 hour
@@ -89,7 +89,7 @@ export class ClientLogosService {
   static async getIndustryCategories(): Promise<Array<{ category: string; count: number }>> {
     try {
       const response = await fetch(
-        `${this.BASE_URL}/items/client_logos?aggregate[count]=Category&groupBy=Category&filter[status][_eq]=published&sort=Category`,
+        `${this.BASE_URL}/items/client_logos?aggregate[count]=Category&groupBy=Category&sort=Category`,
         {
           headers: this.getHeaders(),
           next: { revalidate: 3600 } // Cache for 1 hour
@@ -125,7 +125,7 @@ export class ClientLogosService {
   static async getTotalClientCount(): Promise<number> {
     try {
       const response = await fetch(
-        `${this.BASE_URL}/items/client_logos?aggregate[count]=id&filter[status][_eq]=published`,
+        `${this.BASE_URL}/items/client_logos?aggregate[count]=id`,
         {
           headers: this.getHeaders(),
           next: { revalidate: 3600 } // Cache for 1 hour
@@ -150,7 +150,7 @@ export class ClientLogosService {
   static async searchClients(searchTerm: string): Promise<ClientLogo[]> {
     try {
       const response = await fetch(
-        `${this.BASE_URL}/items/client_logos?fields=id,client_name,Category,client_logo,status,sort&filter[status][_eq]=published&filter[client_name][_icontains]=${encodeURIComponent(searchTerm)}&sort=sort`,
+        `${this.BASE_URL}/items/client_logos?fields=id,client_name,Category,client_logo,status,sort&filter[client_name][_icontains]=${encodeURIComponent(searchTerm)}&sort=sort`,
         {
           headers: this.getHeaders(),
           next: { revalidate: 3600 } // Cache for 1 hour
@@ -167,5 +167,45 @@ export class ClientLogosService {
       console.error('Error searching clients:', error);
       return [];
     }
+  }
+
+  /**
+   * Get fallback logo URL for clients without Directus logos
+   * Maps client names to Supabase URLs as fallback
+   */
+  static getFallbackLogoUrl(clientName: string): string | null {
+    // Create a mapping for known clients to their Supabase URLs
+    const fallbackLogos: Record<string, string> = {
+      'Microsoft': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Microsoft.webp',
+      'Amazon Web Services': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Amazon-Web-services.webp',
+      'GSK': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/GSK-1.png',
+      'Coca-Cola': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Coca-cola-1.png',
+      'Ericsson': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Ericsson.webp',
+      'Hitachi': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Hitachi.png',
+      'TVS': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/TVS.png',
+      'The New York Times': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/The-new-york-times-1.png',
+      'KLM': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/KLM-1.png',
+      'ABB': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/ABB.png',
+      'EMC': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/EMC.webp',
+      'NetApp': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Netapp.webp',
+      'Envestnet Yodlee': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Envestnet-Yodlee.webp',
+      'Microchip': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Microchip.webp',
+      'Tekion': 'https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/clients/Tekion.png'
+    };
+
+    return fallbackLogos[clientName] || null;
+  }
+
+  /**
+   * Get the best available logo URL (Directus first, then fallback)
+   */
+  static getBestLogoUrl(client: ClientLogo): string | null {
+    // First try Directus logo
+    if (client.client_logo) {
+      return this.getClientLogoUrl(client.client_logo);
+    }
+    
+    // Fallback to Supabase URL for known clients
+    return this.getFallbackLogoUrl(client.client_name);
   }
 }

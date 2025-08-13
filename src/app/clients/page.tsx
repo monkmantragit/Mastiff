@@ -473,9 +473,9 @@ export default function ClientsPage() {
               <div className="flex gap-8 animate-scroll-left will-change-transform">
                 {[...moreClientsRow1, ...moreClientsRow1, ...moreClientsRow1].map((client, index) => (
                   <div key={`row1-${client.id}-${index}`} className="flex-shrink-0 w-40 h-24 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center group">
-                    {client.client_logo ? (
+                    {ClientLogosService.getBestLogoUrl(client) ? (
                       <img
-                        src={ClientLogosService.getClientLogoUrl(client.client_logo) || ''}
+                        src={ClientLogosService.getBestLogoUrl(client) || ''}
                         alt={client.client_name}
                         className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                         onError={(e) => {
@@ -500,9 +500,9 @@ export default function ClientsPage() {
               <div className="flex gap-8 animate-scroll-right will-change-transform">
                 {[...moreClientsRow2, ...moreClientsRow2, ...moreClientsRow2].map((client, index) => (
                   <div key={`row2-${client.id}-${index}`} className="flex-shrink-0 w-40 h-24 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center group">
-                    {client.client_logo ? (
+                    {ClientLogosService.getBestLogoUrl(client) ? (
                       <img
-                        src={ClientLogosService.getClientLogoUrl(client.client_logo) || ''}
+                        src={ClientLogosService.getBestLogoUrl(client) || ''}
                         alt={client.client_name}
                         className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                         onError={(e) => {
@@ -838,9 +838,9 @@ export default function ClientsPage() {
                       className="group"
                     >
                       <div className="bg-neutral-50 rounded-xl p-6 aspect-[4/3] flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        {client.client_logo ? (
+                        {ClientLogosService.getBestLogoUrl(client) ? (
                           <img
-                            src={ClientLogosService.getClientLogoUrl(client.client_logo) || ''}
+                            src={ClientLogosService.getBestLogoUrl(client) || ''}
                             alt={client.client_name}
                             className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                             onError={(e) => {
