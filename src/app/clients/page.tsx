@@ -390,38 +390,74 @@ export default function ClientsPage() {
           </motion.div>
 
           {/* Featured Premium Clients */}
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 mb-12"
-          >
-            {clientLogos.slice(0, 12).map((client, index) => (
-              <motion.div
-                key={client.id}
-                variants={fadeInUp}
-                className="group relative"
-              >
-                <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl transition-all duration-500 aspect-square flex items-center justify-center glass micro-bounce">
-                  {ClientLogosService.getBestLogoUrl(client) ? (
-                    <img
-                      src={ClientLogosService.getBestLogoUrl(client) || ''}
-                      alt={client.client_name}
-                      className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center text-xs font-medium text-neutral-400 text-center">
-                      {client.client_name}
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+          {clientsLoading ? (
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 mb-12"
+            >
+              {Array.from({ length: 12 }).map((_, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  className="group relative"
+                >
+                  <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm aspect-square flex items-center justify-center animate-pulse">
+                    <div className="w-20 h-20 bg-neutral-200 rounded-lg"></div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : clientLogos.length > 0 ? (
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 mb-12"
+            >
+              {clientLogos.slice(0, 12).map((client, index) => (
+                <motion.div
+                  key={client.id}
+                  variants={fadeInUp}
+                  className="group relative"
+                >
+                  <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl transition-all duration-500 aspect-square flex items-center justify-center glass micro-bounce">
+                    {ClientLogosService.getBestLogoUrl(client) ? (
+                      <img
+                        src={ClientLogosService.getBestLogoUrl(client) || ''}
+                        alt={client.client_name}
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center text-xs font-medium text-neutral-400 text-center">
+                        {client.client_name}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="text-center py-12 mb-12"
+            >
+              <div className="w-16 h-16 bg-neutral-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-neutral-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-neutral-600 mb-2">No Client Logos Found</h3>
+              <p className="text-neutral-500">Please check the Directus connection or try refreshing the page.</p>
+            </motion.div>
+          )}
 
           {/* Infinite Scrolling Logo Sections */}
           <div className="space-y-8 mt-16">
