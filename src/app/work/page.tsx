@@ -28,7 +28,7 @@ export default function WorkPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Video Section */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative h-screen min-h-[500px] overflow-hidden">
         {/* Full Video Background */}
         <div className="absolute inset-0 z-0 bg-neutral-900">
           <video
@@ -53,26 +53,27 @@ export default function WorkPage() {
 
         {/* Top Badge */}
         <motion.div 
-          className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
+          className="absolute top-6 md:top-8 left-1/2 transform -translate-x-1/2 z-20 px-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-sm px-4 py-2">
-            <Eye className="w-4 h-4 mr-2" />
-            Premier Portfolio Showcase
+          <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-xs md:text-sm px-3 md:px-4 py-2">
+            <Eye className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
+            <span className="hidden sm:inline">Premier Portfolio Showcase</span>
+            <span className="sm:hidden">Portfolio</span>
           </Badge>
         </motion.div>
 
         {/* Scroll Indicator */}
         <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20 text-center"
+          className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 10, 0] }}
           transition={{ delay: 2, duration: 2, repeat: Infinity }}
         >
-          <div className="text-sm mb-2">Scroll to Explore</div>
-          <div className="w-0.5 h-8 bg-white/60 mx-auto"></div>
+          <div className="text-xs md:text-sm mb-2">Scroll to Explore</div>
+          <div className="w-0.5 h-6 md:h-8 bg-white/60 mx-auto"></div>
         </motion.div>
       </section>
 

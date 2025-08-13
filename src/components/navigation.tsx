@@ -178,13 +178,7 @@ export default function Navigation() {
                       exit={{ rotate: 90, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <X className={`w-5 h-5 ${
-                        isHomepage 
-                          ? 'text-[#2A3959]' 
-                          : isDarkHeroPage
-                            ? 'text-white'
-                            : 'text-neutral-700'
-                      }`} />
+                      <X className="w-5 h-5 text-white" />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -194,13 +188,7 @@ export default function Navigation() {
                       exit={{ rotate: -90, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Menu className={`w-5 h-5 ${
-                        isHomepage 
-                          ? 'text-[#2A3959]' 
-                          : isDarkHeroPage
-                            ? 'text-white'
-                            : 'text-neutral-700'
-                      }`} />
+                      <Menu className="w-5 h-5 text-white" />
                     </motion.div>
                   )}
                 </AnimatePresence>
