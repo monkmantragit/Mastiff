@@ -2,12 +2,21 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { usePopup } from "@/components/popup-provider";
 import { motion } from "framer-motion";
-import { ArrowRight, Trophy, Eye, Users, Calendar, Award, Star } from "lucide-react";
+import { ArrowRight, Trophy, Eye, Users, Calendar, Award, Star, MapPin } from "lucide-react";
 
 export default function WorkPage() {
   const { openPopup } = usePopup();
+
+  // Get hero video from Directus
+  const getDirectusVideoUrl = () => {
+    const baseUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL;
+    const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
+    const videoId = '7a5bad64-b0b0-496c-94df-7e4a12436696';
+    return `${baseUrl}/assets/${videoId}?access_token=${token}`;
+  };
 
   const stats = [
     { number: "1000+", label: "Events Delivered", icon: Calendar },
@@ -17,22 +26,67 @@ export default function WorkPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-20">
-      {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white overflow-hidden">
+    <div className="min-h-screen bg-white">
+      {/* Hero Video Section */}
+      <section className="relative h-screen overflow-hidden">
+        {/* Full Video Background */}
+        <div className="absolute inset-0 z-0 bg-neutral-900">
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            style={{
+              zIndex: 1,
+              willChange: 'auto',
+              backfaceVisibility: 'hidden'
+            }}
+          >
+            <source src={getDirectusVideoUrl()} type="video/mp4" />
+          </video>
+          
+          {/* Subtle overlay for depth */}
+          <div className="absolute inset-0 bg-black/20 z-10" />
+        </div>
+
+        {/* Top Badge */}
+        <motion.div 
+          className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-sm px-4 py-2">
+            <Eye className="w-4 h-4 mr-2" />
+            Premier Portfolio Showcase
+          </Badge>
+        </motion.div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, y: [0, 10, 0] }}
+          transition={{ delay: 2, duration: 2, repeat: Infinity }}
+        >
+          <div className="text-sm mb-2">Scroll to Explore</div>
+          <div className="w-0.5 h-8 bg-white/60 mx-auto"></div>
+        </motion.div>
+      </section>
+
+      {/* Compact Hero Content Section */}
+      <section className="relative py-16 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white">
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <div className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8">
-              <Eye className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-medium tracking-wide text-white">Premier Showcase</span>
-            </div>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
-              <span className="kinetic-text text-white">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display leading-tight mb-6">
+              <span className="text-white">
                 Where Dreams
               </span>
               <br />
@@ -40,24 +94,25 @@ export default function WorkPage() {
                 Become Reality
               </span>
             </h1>
-            <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-white/90 leading-relaxed">
+            <p className="text-lg md:text-xl mb-8 font-body max-w-3xl mx-auto text-white/90 leading-relaxed">
               Step into our portfolio of excellence. Every project here represents an ambitious vision made reality, 
-              a bold dream transformed into unforgettable experiences. This is where extraordinary happens.
+              a bold dream transformed into unforgettable experiences.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
                 onClick={() => openPopup('work-portfolio')}
-                className="btn-primary group"
+                className="bg-amber-500 hover:bg-amber-600 text-neutral-900 font-semibold px-6 py-3 rounded-full transition-all duration-300 group"
               >
                 <span>Explore The Portfolio</span>
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
               <Button 
                 onClick={() => openPopup('work-contact')}
-                className="btn-secondary group"
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white hover:text-neutral-900 font-semibold px-6 py-3 rounded-full transition-all duration-300 group"
               >
                 <span>Create Your Masterpiece</span>
-                <Trophy className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                <Trophy className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </div>
           </motion.div>
