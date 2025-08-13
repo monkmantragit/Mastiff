@@ -19,7 +19,8 @@ import {
   X,
   Search,
   Filter,
-  ChevronDown
+  ChevronDown,
+  Target
 } from "lucide-react";
 
 // Animation variants
