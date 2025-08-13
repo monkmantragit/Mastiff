@@ -172,14 +172,6 @@ export default function TeamPage() {
             )}
             
 
-            {/* Leadership Crown */}
-            {isLeadership && (
-              <div className="absolute bottom-4 right-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
-                  <Crown className="w-5 h-5 text-white" />
-                </div>
-              </div>
-            )}
           </div>
         </div>
         
@@ -278,28 +270,6 @@ export default function TeamPage() {
               Our diverse team combines strategic thinking, creative brilliance, and operational excellence.
             </p>
 
-            {/* Stats Preview */}
-            {stats && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="flex flex-wrap justify-center gap-8 text-center"
-              >
-                <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold text-amber-400">{stats.totalMembers}+</div>
-                  <div className="text-white/60 text-sm">Team Members</div>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold text-amber-400">{stats.averageExperience}+</div>
-                  <div className="text-white/60 text-sm">Avg. Experience</div>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold text-amber-400">{Object.keys(stats.departmentCounts).length}</div>
-                  <div className="text-white/60 text-sm">Departments</div>
-                </div>
-              </motion.div>
-            )}
           </motion.div>
         </div>
       </section>
