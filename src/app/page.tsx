@@ -283,17 +283,14 @@ export default function Home() {
               transition={{ duration: 1, delay: 0.8 }}
             >
               <div className="flex items-center gap-2 text-[#2A3959]">
-                <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
                 <Trophy className="w-4 h-4 text-[#F9A625]" />
                 <span>12+ Years of Excellence</span>
               </div>
               <div className="flex items-center gap-2 text-[#2A3959]">
-                <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
                 <Users className="w-4 h-4 text-[#F9A625]" />
                 <span>1000+ Events Delivered</span>
               </div>
               <div className="flex items-center gap-2 text-[#2A3959]">
-                <div className="w-2 h-2 bg-[#F9A625] rounded-full"></div>
                 <Star className="w-4 h-4 text-[#F9A625]" />
                 <span>2M+ Audience Engaged</span>
               </div>

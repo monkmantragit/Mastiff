@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
 import { DirectusService, type Testimonial } from '@/lib/directus-service';
+import { ClientLogosService, type ClientLogo } from '@/lib/client-logos-service';
 import Image from 'next/image';
 import { 
   ArrowRight, 
@@ -17,7 +18,8 @@ import {
   Phone,
   X,
   Search,
-  Filter
+  Filter,
+  ChevronDown
 } from "lucide-react";
 
 // Animation variants
@@ -160,8 +162,13 @@ export default function ClientsPage() {
   const { openPopup } = usePopup();
   const [showAllClients, setShowAllClients] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedIndustry, setSelectedIndustry] = useState<string>('All');
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [clientLogos, setClientLogos] = useState<ClientLogo[]>([]);
+  const [industryCategories, setIndustryCategories] = useState<Array<{ category: string; count: number }>>([]);
+  const [totalClientCount, setTotalClientCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
+  const [clientsLoading, setClientsLoading] = useState(true);
 
   // Fetch testimonials from Directus
   useEffect(() => {
@@ -179,16 +186,84 @@ export default function ClientsPage() {
 
     fetchTestimonials();
   }, []);
+
+  // Fetch client data from Directus
+  useEffect(() => {
+    const fetchClientData = async () => {
+      setClientsLoading(true);
+      try {
+        // Fetch all data concurrently
+        const [logos, categories, totalCount] = await Promise.all([
+          ClientLogosService.getAllClientLogos(),
+          ClientLogosService.getIndustryCategories(),
+          ClientLogosService.getTotalClientCount()
+        ]);
+
+        setClientLogos(logos);
+        setIndustryCategories(categories);
+        setTotalClientCount(totalCount);
+      } catch (error) {
+        console.error('Error fetching client data:', error);
+      } finally {
+        setClientsLoading(false);
+      }
+    };
+
+    fetchClientData();
+  }, []);
+
+  // Filter clients by industry when selection changes
+  useEffect(() => {
+    const fetchFilteredClients = async () => {
+      if (selectedIndustry === 'All') {
+        const allLogos = await ClientLogosService.getAllClientLogos();
+        setClientLogos(allLogos);
+      } else {
+        const filteredLogos = await ClientLogosService.getClientLogosByIndustry(selectedIndustry);
+        setClientLogos(filteredLogos);
+      }
+    };
+
+    fetchFilteredClients();
+  }, [selectedIndustry]);
   
-  // Logo data slices for animated rows - using different sets from 1-140
-  const moreClientsRow1 = allClientLogos.slice(36, 56); // Logos 37-56
-  const moreClientsRow2 = allClientLogos.slice(70, 90); // Logos 71-90
+  // Logo data slices for animated rows using Directus data
+  const moreClientsRow1 = clientLogos.slice(0, Math.min(20, clientLogos.length)); 
+  const moreClientsRow2 = clientLogos.slice(20, Math.min(40, clientLogos.length));
   
-  // Filter clients based on search only
-  const filteredClients = allClientLogos.filter((client) => {
-    const matchesSearch = client.alt.toLowerCase().includes(searchTerm.toLowerCase());
+  // Filter clients based on search and selected industry
+  const filteredClients = clientLogos.filter((client) => {
+    const matchesSearch = searchTerm === '' || client.client_name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesSearch;
   });
+
+  // Update stats with dynamic total count
+  const dynamicStats = [
+    {
+      number: `${totalClientCount}+`,
+      label: "Corporate Clients",
+      icon: Users,
+      color: "text-amber-400"
+    },
+    {
+      number: "12+",
+      label: "Years Experience", 
+      icon: Trophy,
+      color: "text-blue-400"
+    },
+    {
+      number: "1000+",
+      label: "Events Delivered",
+      icon: Calendar,
+      color: "text-purple-400"
+    },
+    {
+      number: "2M+",
+      label: "Audience Engagement",
+      icon: Star,
+      color: "text-emerald-400"
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -264,7 +339,7 @@ export default function ClientsPage() {
             variants={staggerContainer}
             className="grid grid-cols-2 lg:grid-cols-4 gap-8"
           >
-            {stats.map((stat, index) => (
+            {dynamicStats.map((stat, index) => (
               <motion.div key={index} variants={fadeInUp} className="text-center group">
                 <div className="glass-dark rounded-3xl p-8 micro-bounce">
                   <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center ${stat.color}`}>
@@ -299,8 +374,62 @@ export default function ClientsPage() {
                 Our <span className="kinetic-text">Clients</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
-                Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with 165+ corporate clients across various industries.
+                Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with {totalClientCount || '165'}+ corporate clients across various industries.
               </p>
+            </motion.div>
+          </motion.div>
+
+          {/* Industry Filter */}
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="mb-12"
+          >
+            <motion.div variants={fadeInUp} className="text-center">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                <div className="flex items-center gap-2 text-neutral-600">
+                  <Filter className="w-4 h-4" />
+                  <span className="text-sm font-medium">Filter by Industry:</span>
+                </div>
+                <div className="relative">
+                  <select
+                    value={selectedIndustry}
+                    onChange={(e) => setSelectedIndustry(e.target.value)}
+                    className="appearance-none bg-white border border-neutral-300 rounded-full px-6 py-2 pr-10 text-sm font-medium text-neutral-700 focus:ring-2 focus:ring-amber-500 focus:border-transparent cursor-pointer hover:border-amber-400 transition-colors"
+                  >
+                    <option value="All">All Industries ({totalClientCount || 0})</option>
+                    {industryCategories.map((category) => (
+                      <option key={category.category} value={category.category}>
+                        {category.category} ({category.count})
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-500 pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Industry Stats */}
+              {!clientsLoading && industryCategories.length > 0 && (
+                <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-neutral-500">
+                  {industryCategories.map((category, index) => (
+                    <span key={category.category} className="inline-flex items-center">
+                      <span 
+                        className={`cursor-pointer transition-colors ${
+                          selectedIndustry === category.category 
+                            ? 'text-amber-600 font-semibold' 
+                            : 'hover:text-neutral-700'
+                        }`}
+                        onClick={() => setSelectedIndustry(category.category)}
+                      >
+                        {category.category}: {category.count}
+                      </span>
+                      {index < industryCategories.length - 1 && <span className="mx-2 text-neutral-300">•</span>}
+                    </span>
+                  ))}
+                </div>
+              )}
             </motion.div>
           </motion.div>
 
@@ -344,14 +473,20 @@ export default function ClientsPage() {
               <div className="flex gap-8 animate-scroll-left will-change-transform">
                 {[...moreClientsRow1, ...moreClientsRow1, ...moreClientsRow1].map((client, index) => (
                   <div key={`row1-${client.id}-${index}`} className="flex-shrink-0 w-40 h-24 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center group">
-                    <img
-                      src={client.src}
-                      alt={client.alt}
-                      className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
+                    {client.client_logo ? (
+                      <img
+                        src={ClientLogosService.getClientLogoUrl(client.client_logo) || ''}
+                        alt={client.client_name}
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center text-xs font-medium text-neutral-400 text-center">
+                        {client.client_name}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -365,14 +500,20 @@ export default function ClientsPage() {
               <div className="flex gap-8 animate-scroll-right will-change-transform">
                 {[...moreClientsRow2, ...moreClientsRow2, ...moreClientsRow2].map((client, index) => (
                   <div key={`row2-${client.id}-${index}`} className="flex-shrink-0 w-40 h-24 bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center group">
-                    <img
-                      src={client.src}
-                      alt={client.alt}
-                      className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
+                    {client.client_logo ? (
+                      <img
+                        src={ClientLogosService.getClientLogoUrl(client.client_logo) || ''}
+                        alt={client.client_name}
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center text-xs font-medium text-neutral-400 text-center">
+                        {client.client_name}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -651,7 +792,7 @@ export default function ClientsPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl lg:text-3xl font-display text-neutral-900 mb-2">
-                    Our <span className="text-amber-600">165+ Clients</span>
+                    Our <span className="text-amber-600">{totalClientCount || '165'}+ Clients</span>
                   </h2>
                   <p className="text-neutral-600">Industry leaders who trust White Massif with their most important events</p>
                 </div>
@@ -682,28 +823,44 @@ export default function ClientsPage() {
 
             {/* Modal Content */}
             <div className="p-6 lg:p-8 overflow-y-auto max-h-[60vh]">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-                {filteredClients.map((client, index) => (
-                  <motion.div
-                    key={client.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className="group"
-                  >
-                    <div className="bg-neutral-50 rounded-xl p-6 aspect-[4/3] flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105">
-                      <img
-                        src={client.src}
-                        alt={client.alt}
-                        className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              {clientsLoading ? (
+                <div className="flex items-center justify-center py-20">
+                  <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                  {filteredClients.map((client, index) => (
+                    <motion.div
+                      key={client.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      className="group"
+                    >
+                      <div className="bg-neutral-50 rounded-xl p-6 aspect-[4/3] flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105">
+                        {client.client_logo ? (
+                          <img
+                            src={ClientLogosService.getClientLogoUrl(client.client_logo) || ''}
+                            alt={client.client_name}
+                            className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center text-xs font-medium text-neutral-400 text-center">
+                            {client.client_name}
+                          </div>
+                        )}
+                      </div>
+                      <div className="text-center mt-2">
+                        <p className="text-xs font-medium text-neutral-600">{client.client_name}</p>
+                        <p className="text-xs text-neutral-400">{client.Category}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
 
               {/* No results message */}
               {filteredClients.length === 0 && (
@@ -718,7 +875,8 @@ export default function ClientsPage() {
             <div className="p-6 lg:p-8 border-t border-neutral-200 bg-neutral-50">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p className="text-neutral-600 text-sm">
-                  Showing {filteredClients.length} of {allClientLogos.length} clients
+                  Showing {filteredClients.length} of {totalClientCount || clientLogos.length} clients
+                  {selectedIndustry !== 'All' && ` in ${selectedIndustry}`}
                 </p>
                 <div className="flex gap-4">
                   <Button
