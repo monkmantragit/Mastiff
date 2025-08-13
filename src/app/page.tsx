@@ -22,6 +22,7 @@ import {
 import { useRef } from "react";
 import { usePopup } from "@/components/popup-provider";
 import { HomepageMediaService } from "@/lib/homepage-media";
+import ProgressiveVideo from "@/components/ui/progressive-video";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -158,14 +159,10 @@ export default function Home() {
       <section className="relative h-screen overflow-hidden">
         {/* Full Video Background */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
+          <ProgressiveVideo
+            src={heroVideo}
             poster="/assets/images/home/01-01.png"
-            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover"
             style={{
               zIndex: 1,
               willChange: 'auto',
@@ -173,11 +170,9 @@ export default function Home() {
             }}
             onLoadStart={() => console.log('🎬 Video load started:', heroVideo)}
             onCanPlay={() => console.log('✅ Video can play:', heroVideo)}
-            onError={(e) => console.error('❌ Video error:', heroVideo, e)}
+            onError={(error) => console.error('❌ Video error:', heroVideo, error)}
             onLoadedData={() => console.log('📹 Video data loaded:', heroVideo)}
-          >
-            <source src={heroVideo} type="video/mp4" />
-          </video>
+          />
           
           {/* Subtle overlay for depth */}
           <div className="absolute inset-0 bg-black/10 z-10" />

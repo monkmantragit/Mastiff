@@ -159,7 +159,8 @@ export default function PortfolioPage() {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
+            loading="lazy"
             style={{
               zIndex: 1,
               willChange: 'auto',
@@ -167,6 +168,7 @@ export default function PortfolioPage() {
             }}
           >
             <source src="https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/work/Aditi%20WM%20version%202025.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
           
           {/* Subtle overlay for depth */}

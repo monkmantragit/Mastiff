@@ -37,7 +37,8 @@ export default function WorkPage() {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
+            loading="lazy"
             style={{
               zIndex: 1,
               willChange: 'auto',
@@ -45,6 +46,7 @@ export default function WorkPage() {
             }}
           >
             <source src={getDirectusVideoUrl()} type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
           
           {/* Subtle overlay for depth */}
