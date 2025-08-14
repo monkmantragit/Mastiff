@@ -158,10 +158,10 @@ export default function ClientsPage() {
     return matchesSearch;
   });
 
-  // Update stats with dynamic total count
+  // Update stats with static total count
   const dynamicStats = [
     {
-      number: `${totalClientCount}+`,
+      number: "165+",
       label: "Corporate Clients",
       icon: Users,
       color: "text-amber-400"
@@ -295,7 +295,7 @@ export default function ClientsPage() {
                 Our <span className="kinetic-text">Clients</span>
               </h2>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto font-body leading-relaxed">
-                Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with {totalClientCount || '165'}+ corporate clients across various industries.
+                Our clients trust has made us one of the leading event management companies in Bangalore. We are delighted to be associated with 165+ corporate clients across various industries.
               </p>
             </motion.div>
           </motion.div>
@@ -337,7 +337,7 @@ export default function ClientsPage() {
                           : 'bg-amber-100 text-amber-700 border-amber-200'
                       }`}
                     >
-                      {totalClientCount || 0}
+                      165
                     </Badge>
                   </div>
                 </motion.button>
@@ -799,7 +799,7 @@ export default function ClientsPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-2xl lg:text-3xl font-display text-neutral-900 mb-2">
-                    Our <span className="text-amber-600">{totalClientCount || '165'}+ Clients</span>
+                    Our <span className="text-amber-600">165+ Clients</span>
                   </h2>
                   <p className="text-neutral-600">Industry leaders who trust White Massif with their most important events</p>
                 </div>
@@ -882,7 +882,7 @@ export default function ClientsPage() {
             <div className="p-6 lg:p-8 border-t border-neutral-200 bg-neutral-50">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p className="text-neutral-600 text-sm">
-                  Showing {filteredClients.length} of {totalClientCount || clientLogos.length} clients
+                  Showing {filteredClients.length} of 165 clients
                   {selectedIndustry !== 'All' && ` in ${selectedIndustry}`}
                 </p>
                 <div className="flex gap-4">
