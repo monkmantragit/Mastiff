@@ -319,6 +319,15 @@ export default function PortfolioPage() {
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      onError={(e) => {
+                        // If main image fails, try to use first gallery image as fallback
+                        if (item.galleryData && item.galleryData.length > 0) {
+                          const firstImage = item.galleryData.find(g => g.type === 'image');
+                          if (firstImage) {
+                            e.currentTarget.src = firstImage.url;
+                          }
+                        }
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                     
@@ -339,12 +348,7 @@ export default function PortfolioPage() {
                         <div className="text-white">
                           <div className="text-sm font-medium flex items-center gap-2">
                             <Camera className="w-4 h-4" />
-                            {item.galleryData ? 
-                              `${item.galleryData.filter(g => g.type === 'image').length} Photos` +
-                              (item.galleryData.filter(g => g.type === 'video').length > 0 ? 
-                                ` • ${item.galleryData.filter(g => g.type === 'video').length} Videos` : '')
-                              : `${item.totalImages} Items`
-                            }
+                            Gallery
                           </div>
                           {item.location && (
                             <div className="text-xs text-white/80 mt-1">{item.location}</div>
@@ -376,10 +380,6 @@ export default function PortfolioPage() {
                           )}
                         </div>
                       </div>
-                      <div className="text-right ml-4 flex-shrink-0">
-                        <div className="text-2xl font-bold text-amber-600">{item.totalImages}</div>
-                        <div className="text-xs text-slate-500 font-medium uppercase tracking-wide">Images</div>
-                      </div>
                     </div>
                     
                     <p className="text-slate-600 leading-relaxed mb-6 font-light text-sm line-clamp-3">
@@ -393,7 +393,7 @@ export default function PortfolioPage() {
                           Gallery Preview
                         </h4>
                         <span className="text-xs text-amber-600 font-medium">
-                          Click to view all {item.totalImages} images
+                          Click to view gallery
                         </span>
                       </div>
                       {item.totalImages > 0 ? (
@@ -409,6 +409,12 @@ export default function PortfolioPage() {
                               fill
                               className="object-cover group-hover/thumb:scale-110 transition-transform duration-300"
                               sizes="100px"
+                              onError={(e) => {
+                                // If video thumbnail fails and we have a fallback, use it
+                                if (galleryItem.fallbackThumbnail && galleryItem.type === 'video') {
+                                  e.currentTarget.src = galleryItem.fallbackThumbnail;
+                                }
+                              }}
                             />
                             <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/20 transition-all duration-300 flex items-center justify-center">
                               {galleryItem.type === 'video' ? (

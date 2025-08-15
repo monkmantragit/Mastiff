@@ -7,6 +7,7 @@ export interface GalleryImage {
   type: 'image' | 'video';
   mimeType?: string;
   filename?: string;
+  fallbackThumbnail?: string; // For videos that can't generate thumbnails
 }
 
 export interface PortfolioItem {

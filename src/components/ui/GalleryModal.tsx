@@ -186,9 +186,13 @@ export default function GalleryModal({
                         controls
                         preload="metadata"
                         onLoadedData={() => setImageLoading(false)}
-                        onError={() => {
+                        onError={(e) => {
                           setImageLoading(false);
                           setImageError(true);
+                          // Try fallback poster if available
+                          if (currentImage.fallbackThumbnail && !e.currentTarget.poster.includes('data:image/svg')) {
+                            e.currentTarget.poster = currentImage.fallbackThumbnail;
+                          }
                         }}
                         onPlay={() => setVideoPlaying(true)}
                         onPause={() => setVideoPlaying(false)}
@@ -282,6 +286,12 @@ export default function GalleryModal({
                           fill
                           className="object-cover"
                           sizes="80px"
+                          onError={(e) => {
+                            // If video thumbnail fails and we have a fallback, use it
+                            if (image.fallbackThumbnail && image.type === 'video') {
+                              e.currentTarget.src = image.fallbackThumbnail;
+                            }
+                          }}
                         />
                         {image.type === 'video' && (
                           <div className="absolute inset-0 bg-black/30 flex items-center justify-center">

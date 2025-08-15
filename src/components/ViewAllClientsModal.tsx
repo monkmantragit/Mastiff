@@ -11,17 +11,20 @@ interface ViewAllClientsModalProps {
   onClose: () => void;
 }
 
-const ITEMS_PER_PAGE = 24;
+interface GroupedClients {
+  [industry: string]: ClientLogo[];
+}
+
+const ITEMS_PER_INDUSTRY = 12;
 
 export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProps) {
   const [clients, setClients] = useState<ClientLogo[]>([]);
-  const [filteredClients, setFilteredClients] = useState<ClientLogo[]>([]);
-  const [displayedClients, setDisplayedClients] = useState<ClientLogo[]>([]);
+  const [groupedClients, setGroupedClients] = useState<GroupedClients>({});
+  const [displayedGroups, setDisplayedGroups] = useState<GroupedClients>({});
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState<{ [industry: string]: number }>({});
   const observer = useRef<IntersectionObserver | null>(null);
 
   // Fetch all clients on modal open
@@ -31,16 +34,41 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
     }
   }, [isOpen]);
 
-  // Filter clients based on search term
+  // Group clients by industry and handle search
   useEffect(() => {
     const filtered = clients.filter(client =>
       client.client_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       client.Category.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredClients(filtered);
-    setPage(1);
-    setDisplayedClients(filtered.slice(0, ITEMS_PER_PAGE));
-    setHasMore(filtered.length > ITEMS_PER_PAGE);
+
+    const grouped = filtered.reduce((acc: GroupedClients, client) => {
+      const industry = client.Category || 'Other';
+      if (!acc[industry]) {
+        acc[industry] = [];
+      }
+      acc[industry].push(client);
+      return acc;
+    }, {});
+
+    // Sort industries alphabetically
+    const sortedGrouped: GroupedClients = {};
+    Object.keys(grouped).sort().forEach(key => {
+      sortedGrouped[key] = grouped[key];
+    });
+
+    setGroupedClients(sortedGrouped);
+    
+    // Initialize displayed groups with first batch
+    const initialDisplayed: GroupedClients = {};
+    const initialCounts: { [industry: string]: number } = {};
+    
+    Object.keys(sortedGrouped).forEach(industry => {
+      initialDisplayed[industry] = sortedGrouped[industry].slice(0, ITEMS_PER_INDUSTRY);
+      initialCounts[industry] = Math.min(ITEMS_PER_INDUSTRY, sortedGrouped[industry].length);
+    });
+    
+    setDisplayedGroups(initialDisplayed);
+    setVisibleCount(initialCounts);
   }, [clients, searchTerm]);
 
   const fetchAllClients = async () => {
@@ -48,9 +76,6 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
     try {
       const allClients = await ClientLogosService.getAllClientLogos();
       setClients(allClients);
-      setFilteredClients(allClients);
-      setDisplayedClients(allClients.slice(0, ITEMS_PER_PAGE));
-      setHasMore(allClients.length > ITEMS_PER_PAGE);
     } catch (error) {
       console.error('Error fetching clients:', error);
     } finally {
@@ -58,41 +83,53 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
     }
   };
 
-  const loadMoreClients = useCallback(() => {
-    if (loadingMore || !hasMore) return;
+  const loadMoreForIndustry = useCallback((industry: string) => {
+    if (loadingMore) return;
 
     setLoadingMore(true);
     setTimeout(() => {
-      const startIndex = page * ITEMS_PER_PAGE;
-      const endIndex = startIndex + ITEMS_PER_PAGE;
-      const newClients = filteredClients.slice(startIndex, endIndex);
+      const currentCount = visibleCount[industry] || 0;
+      const newCount = Math.min(currentCount + ITEMS_PER_INDUSTRY, groupedClients[industry].length);
       
-      setDisplayedClients(prev => [...prev, ...newClients]);
-      setPage(prev => prev + 1);
-      setHasMore(endIndex < filteredClients.length);
+      setDisplayedGroups(prev => ({
+        ...prev,
+        [industry]: groupedClients[industry].slice(0, newCount)
+      }));
+      
+      setVisibleCount(prev => ({
+        ...prev,
+        [industry]: newCount
+      }));
+      
       setLoadingMore(false);
-    }, 500); // Simulate loading delay for better UX
-  }, [page, filteredClients, loadingMore, hasMore]);
+    }, 300);
+  }, [groupedClients, visibleCount, loadingMore]);
 
-  // Infinite scroll observer
-  const lastClientRef = useCallback((node: HTMLDivElement) => {
+  // Infinite scroll observer for each industry
+  const createIndustryRef = useCallback((industry: string) => (node: HTMLDivElement) => {
     if (loadingMore) return;
     if (observer.current) observer.current.disconnect();
+    
+    const hasMore = (visibleCount[industry] || 0) < (groupedClients[industry]?.length || 0);
+    if (!hasMore) return;
+    
     observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        loadMoreClients();
+      if (entries[0].isIntersecting) {
+        loadMoreForIndustry(industry);
       }
     });
     if (node) observer.current.observe(node);
-  }, [loadingMore, hasMore, loadMoreClients]);
+  }, [loadingMore, visibleCount, groupedClients, loadMoreForIndustry]);
 
   const handleClose = () => {
     setSearchTerm('');
-    setPage(1);
     onClose();
   };
 
   if (!isOpen) return null;
+
+  const totalClients = Object.values(groupedClients).reduce((sum, clients) => sum + clients.length, 0);
+  const totalDisplayed = Object.values(displayedGroups).reduce((sum, clients) => sum + clients.length, 0);
 
   return (
     <AnimatePresence>
@@ -145,7 +182,7 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
                 <Loader2 className="w-8 h-8 text-amber-500 animate-spin mb-4" />
                 <p className="text-neutral-600 font-body">Loading all clients...</p>
               </div>
-            ) : displayedClients.length === 0 && !loading ? (
+            ) : Object.keys(displayedGroups).length === 0 && !loading ? (
               <div className="text-center py-20">
                 <Users className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
                 <h3 className="text-xl font-display text-neutral-600 mb-2">
@@ -158,76 +195,96 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
             ) : (
               <>
                 {/* Results Count */}
-                <div className="mb-6">
+                <div className="mb-8">
                   <p className="text-sm text-neutral-600 font-body">
-                    Showing {displayedClients.length} of {filteredClients.length} clients
+                    Showing {totalDisplayed} of {totalClients} clients across {Object.keys(groupedClients).length} industries
                     {searchTerm && ` matching "${searchTerm}"`}
                   </p>
                 </div>
 
-                {/* Clients Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-6">
-                  {displayedClients.map((client, index) => {
-                    const isLast = index === displayedClients.length - 1;
-                    return (
-                      <motion.div
-                        key={client.id}
-                        ref={isLast ? lastClientRef : undefined}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ 
-                          duration: 0.3, 
-                          delay: (index % ITEMS_PER_PAGE) * 0.02 
-                        }}
-                        className="group"
-                      >
-                        <div className="bg-neutral-50 rounded-xl p-4 lg:p-6 aspect-[4/3] flex items-center justify-center hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 hover:scale-105 border border-transparent hover:border-amber-200">
-                          {ClientLogosService.getBestLogoUrl(client) ? (
-                            <img
-                              src={ClientLogosService.getBestLogoUrl(client) || ''}
-                              alt={client.client_name}
-                              className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                              onError={(e) => {
-                                e.currentTarget.style.display = 'none';
-                                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                {/* Industry Groups */}
+                <div className="space-y-10">
+                  {Object.entries(displayedGroups).map(([industry, clients]) => (
+                    <motion.div
+                      key={industry}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {/* Industry Header */}
+                      <div className="flex items-center mb-6">
+                        <h3 className="text-lg lg:text-xl font-display text-neutral-800 mr-4">
+                          {industry}
+                        </h3>
+                        <div className="flex-1 h-px bg-gradient-to-r from-amber-200 to-transparent"></div>
+                        <span className="ml-4 text-sm text-amber-600 font-medium bg-amber-50 px-3 py-1 rounded-full">
+                          {groupedClients[industry]?.length || 0} clients
+                        </span>
+                      </div>
+
+                      {/* Clients Grid for this Industry */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 lg:gap-6">
+                        {clients.map((client, index) => {
+                          const isLastInIndustry = index === clients.length - 1;
+                          const hasMoreInIndustry = (visibleCount[industry] || 0) < (groupedClients[industry]?.length || 0);
+                          
+                          return (
+                            <motion.div
+                              key={client.id}
+                              ref={isLastInIndustry && hasMoreInIndustry ? createIndustryRef(industry) : undefined}
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ 
+                                duration: 0.3, 
+                                delay: index * 0.05 
                               }}
-                            />
-                          ) : null}
-                          <div className="flex items-center justify-center text-xs font-medium text-neutral-400 text-center font-body">
-                            {client.client_name}
-                          </div>
+                              className="group"
+                            >
+                              <div className="bg-neutral-50 rounded-lg p-3 lg:p-4 aspect-square flex items-center justify-center hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 hover:scale-105 border border-transparent hover:border-amber-200">
+                                {ClientLogosService.getBestLogoUrl(client) ? (
+                                  <img
+                                    src={ClientLogosService.getBestLogoUrl(client) || ''}
+                                    alt={client.client_name}
+                                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                                    onError={(e) => {
+                                      e.currentTarget.style.display = 'none';
+                                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                                    }}
+                                  />
+                                ) : null}
+                                <div className="hidden flex items-center justify-center text-xs font-medium text-neutral-400 text-center font-body">
+                                  {client.client_name}
+                                </div>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Load More for this Industry */}
+                      {(visibleCount[industry] || 0) < (groupedClients[industry]?.length || 0) && (
+                        <div className="text-center mt-6">
+                          <Button
+                            onClick={() => loadMoreForIndustry(industry)}
+                            variant="outline"
+                            size="sm"
+                            disabled={loadingMore}
+                            className="text-amber-600 border-amber-300 hover:bg-amber-50 hover:border-amber-400"
+                          >
+                            {loadingMore ? (
+                              <>
+                                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                                Loading...
+                              </>
+                            ) : (
+                              `Load More ${industry} (${(groupedClients[industry]?.length || 0) - (visibleCount[industry] || 0)} remaining)`
+                            )}
+                          </Button>
                         </div>
-                        <div className="text-center mt-3">
-                          <p className="text-xs font-medium text-neutral-700 font-body truncate">
-                            {client.client_name}
-                          </p>
-                          <p className="text-xs text-amber-600 font-body mt-1">
-                            {client.Category}
-                          </p>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                      )}
+                    </motion.div>
+                  ))}
                 </div>
-
-                {/* Loading More Indicator */}
-                {loadingMore && (
-                  <div className="flex items-center justify-center py-8">
-                    <Loader2 className="w-6 h-6 text-amber-500 animate-spin mr-2" />
-                    <span className="text-neutral-600 font-body">Loading more clients...</span>
-                  </div>
-                )}
-
-                {/* End of Results */}
-                {!hasMore && displayedClients.length > 0 && (
-                  <div className="text-center py-8">
-                    <div className="inline-flex items-center px-4 py-2 bg-amber-50 border border-amber-200 rounded-full">
-                      <span className="text-sm text-amber-700 font-body">
-                        You've seen all {filteredClients.length} clients
-                      </span>
-                    </div>
-                  </div>
-                )}
               </>
             )}
           </div>
@@ -236,10 +293,12 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
           <div className="sticky bottom-0 p-6 lg:p-8 border-t border-neutral-200 bg-white/95 backdrop-blur-md">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-neutral-600 text-sm font-body">
-                {searchTerm && (
+                {searchTerm ? (
                   <>
-                    <span className="text-amber-600 font-medium">{filteredClients.length}</span> results found
+                    <span className="text-amber-600 font-medium">{totalClients}</span> results found across {Object.keys(groupedClients).length} industries
                   </>
+                ) : (
+                  `${totalClients} clients across ${Object.keys(groupedClients).length} industries`
                 )}
               </p>
               <div className="flex gap-3">

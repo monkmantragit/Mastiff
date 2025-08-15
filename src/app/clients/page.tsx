@@ -462,28 +462,6 @@ export default function ClientsPage() {
             </motion.div>
           )}
 
-          {/* View All Clients Button */}
-          {!clientsLoading && clientLogos.length > 0 && (
-            <motion.div
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="text-center mt-12 mb-8"
-            >
-              <Button
-                onClick={() => setShowAllClientsModal(true)}
-                className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/40 hover:scale-105"
-              >
-                <span>View All Clients</span>
-                <Users className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
-              </Button>
-              <p className="text-neutral-600 text-sm mt-3 font-body">
-                Explore our complete portfolio of 165+ trusted partners
-              </p>
-            </motion.div>
-          )}
-
           {/* Infinite Scrolling Logo Sections */}
           <div key={`scrolling-logos-${selectedIndustry}-${clientLogos.length}`} className="space-y-8 mt-16">
             {/* Row 1 - Left to Right Scroll */}
@@ -540,6 +518,28 @@ export default function ClientsPage() {
               </div>
             </div>
           </div>
+
+          {/* View All Clients Button */}
+          {!clientsLoading && clientLogos.length > 0 && (
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="text-center mt-16 mb-8"
+            >
+              <Button
+                onClick={() => setShowAllClientsModal(true)}
+                className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/40 hover:scale-105"
+              >
+                <span>View All Clients</span>
+                <Users className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+              </Button>
+              <p className="text-neutral-600 text-sm mt-3 font-body">
+                Explore our complete portfolio of 165+ trusted partners
+              </p>
+            </motion.div>
+          )}
 
         </div>
       </section>

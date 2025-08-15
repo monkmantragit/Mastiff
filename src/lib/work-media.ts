@@ -186,6 +186,19 @@ export class WorkMediaService {
     
     return videoExtensions.some(ext => lowercaseFilename.endsWith(ext));
   }
+
+  // Generate video thumbnail URL - Directus can extract first frame as JPG
+  static getVideoThumbnailUrl(fileId: string): string {
+    // Try to use Directus video thumbnail extraction (if supported)
+    // Otherwise use a static video thumbnail placeholder
+    return `${DIRECTUS_URL}/assets/${fileId}?time=1&format=jpg&quality=75&width=300&height=200`;
+  }
+
+  // Get fallback thumbnail for videos that can't generate thumbnails
+  static getVideoFallbackThumbnail(): string {
+    // Create a data URL for a simple video thumbnail placeholder
+    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9IjEwMCIgcj0iMzAiIGZpbGw9IiNGOUE2MjUiLz4KPHA+bHlnb24gcG9pbnRzPSIxNDAsODUgMTQwLDExNSAxNjUsMTAwIiBmaWxsPSJ3aGl0ZSIvPgo8dGV4dCB4PSIxNTAiIHk9IjE2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNjc3NDgzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5WaWRlbyBDbGlwPC90ZXh0Pgo8L3N2Zz4K";
+  }
   
   static async getWorkImages() {
     const projects = await this.fetchPortfolioProjects();
@@ -238,13 +251,14 @@ export class WorkMediaService {
               id: file.id,
               url: this.getDirectusFileUrl(file.id),
               thumbnail: isVideo 
-                ? this.getDirectusFileUrl(file.id, 'quality=75&width=300&height=200&format=jpg') // Video thumbnail
+                ? this.getVideoThumbnailUrl(file.id) // Use special video thumbnail method
                 : this.getDirectusFileUrl(file.id, 'quality=75&width=300&height=200'),
               title: file.title || project.title,
               alt: file.title || `${project.title} ${isVideo ? 'video' : 'image'}`,
               type: isVideo ? 'video' : 'image',
               mimeType,
-              filename
+              filename,
+              fallbackThumbnail: isVideo ? this.getVideoFallbackThumbnail() : undefined
             };
           })
         : [];
