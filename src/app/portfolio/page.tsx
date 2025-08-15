@@ -10,25 +10,12 @@ import {
   ArrowRight, 
   Users, 
   Trophy, 
-  Target,
-  Phone,
   Mail,
   Globe,
   Award,
-  Lightbulb,
-  Building,
-  Sparkles,
   Star,
-  Heart,
-  CheckCircle,
   Calendar,
-  Eye,
   Camera,
-  Zap,
-  Palette,
-  Image,
-  MousePointer,
-  Layers,
   Play
 } from "lucide-react";
 import { WorkMediaService } from "@/lib/work-media";
@@ -59,7 +46,6 @@ const scaleIn = {
 export default function PortfolioPage() {
   const heroRef = useRef(null);
   const { openPopup } = usePopup();
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -99,39 +85,6 @@ export default function PortfolioPage() {
     setSelectedGallery([]);
     setSelectedProjectTitle('');
   };
-  
-  // Generate dynamic categories from actual data
-  const generateCategories = () => {
-    const categoryCount: Record<string, number> = {};
-    portfolioItems.forEach(item => {
-      categoryCount[item.category] = (categoryCount[item.category] || 0) + 1;
-    });
-
-    const categories = [
-      { id: 'all', name: 'All Projects', count: portfolioItems.length, icon: Layers }
-    ];
-
-    Object.entries(categoryCount).forEach(([category, count]) => {
-      const categoryMap: Record<string, { name: string; icon: any }> = {
-        'Corporate Event': { name: 'Corporate Events', icon: Building },
-        'Corporate Celebration': { name: 'Celebrations', icon: Heart },
-        'Awards Ceremony': { name: 'Awards Ceremonies', icon: Award },
-        'Summit': { name: 'Summits', icon: Globe }
-      };
-      
-      const categoryInfo = categoryMap[category] || { name: category, icon: Users };
-      categories.push({
-        id: category.toLowerCase().replace(/\s+/g, '-'),
-        name: categoryInfo.name,
-        count: count,
-        icon: categoryInfo.icon
-      });
-    });
-
-    return categories;
-  };
-
-  const categories = generateCategories();
 
   const stats = [
     { number: "1000+", label: "Events", icon: Calendar },
@@ -139,13 +92,6 @@ export default function PortfolioPage() {
     { number: "60+", label: "Destinations", icon: Award },
     { number: "2M+", label: "Audience Engaged", icon: Star }
   ];
-
-  const filteredItems = selectedCategory === 'all' 
-    ? portfolioItems 
-    : portfolioItems.filter(item => {
-        const itemCategoryId = item.category.toLowerCase().replace(/\s+/g, '-');
-        return itemCategoryId === selectedCategory;
-      });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-neutral-50">
@@ -248,33 +194,6 @@ export default function PortfolioPage() {
             </motion.div>
           </motion.div>
 
-          {/* Enhanced Category Filter */}
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="flex flex-wrap justify-center gap-4 mb-16"
-          >
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                variants={scaleIn}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`flex items-center space-x-3 px-6 py-4 rounded-2xl font-medium text-sm transition-all duration-300 border ${
-                  selectedCategory === category.id
-                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xl border-amber-300 scale-105'
-                    : 'bg-white/50 backdrop-blur-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 border-slate-200 hover:border-amber-200 hover:scale-105'
-                }`}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <category.icon className="w-4 h-4" />
-                <span>{category.name}</span>
-                <span className="text-xs opacity-70 bg-white/20 px-2 py-1 rounded-full">({category.count})</span>
-              </motion.button>
-            ))}
-          </motion.div>
 
           {/* Enhanced Portfolio Grid */}
           <motion.div
@@ -293,18 +212,18 @@ export default function PortfolioPage() {
                 <h3 className="text-2xl font-semibold text-slate-600 mb-2">Loading Portfolio...</h3>
                 <p className="text-slate-500">Fetching our amazing event gallery from Directus...</p>
               </motion.div>
-            ) : filteredItems.length === 0 ? (
+            ) : portfolioItems.length === 0 ? (
               <motion.div
                 variants={fadeInUp}
                 className="col-span-full text-center py-20"
               >
                 <Camera className="w-16 h-16 text-slate-400 mx-auto mb-4" />
                 <h3 className="text-2xl font-semibold text-slate-600 mb-2">No Projects Found</h3>
-                <p className="text-slate-500">No projects match the selected category.</p>
+                <p className="text-slate-500">Please check back later for our portfolio showcase.</p>
               </motion.div>
-            ) : filteredItems.map((item, index) => (
+            ) : portfolioItems.map((item, index) => (
               <motion.div
-                key={item.title}
+                key={`${item.title}-${index}-${item.category || 'default'}`}
                 variants={fadeInUp}
                 className="group cursor-pointer"
                 whileHover={{ y: -8, scale: 1.02 }}
@@ -419,7 +338,10 @@ export default function PortfolioPage() {
                 </div>
               </div>
               
-              <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-[#2A3959] px-8 py-4 text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-0 group font-medium">
+              <Button 
+                onClick={() => openPopup('portfolio-start')}
+                className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-[#2A3959] px-8 py-4 text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border-0 group font-medium"
+              >
                 <span>Start Your Project</span>
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -67,6 +68,7 @@ export default function TeamPage() {
     averageExperience: number;
   } | null>(null);
   const { openPopup } = usePopup();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTeamData = async () => {
@@ -372,6 +374,7 @@ export default function TeamPage() {
                 </Button>
                 
                 <Button 
+                  onClick={() => router.push('/careers')}
                   variant="outline"
                   size="lg"
                   className="border-2 border-white text-white hover:bg-white hover:text-neutral-900 font-semibold px-8 py-4 rounded-full transition-all duration-300 group"
