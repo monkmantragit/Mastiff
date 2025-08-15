@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
 import { DirectusService, type Testimonial } from '@/lib/directus-service';
 import { ClientLogosService, type ClientLogo } from '@/lib/client-logos-service';
+import { ViewAllClientsModal } from '@/components/ViewAllClientsModal';
 import Image from 'next/image';
 import { 
   ArrowRight, 
@@ -17,8 +18,6 @@ import {
   Star,
   Phone,
   X,
-  Search,
-  Filter,
   ChevronDown,
   Target
 } from "lucide-react";
@@ -71,8 +70,7 @@ export default function ClientsPage() {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
   const { openPopup } = usePopup();
-  const [showAllClients, setShowAllClients] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [showAllClientsModal, setShowAllClientsModal] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string>('All');
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [clientLogos, setClientLogos] = useState<ClientLogo[]>([]);
@@ -151,12 +149,6 @@ export default function ClientsPage() {
   // Logo data slices for animated rows using Directus data
   const moreClientsRow1 = clientLogos.slice(0, Math.min(20, clientLogos.length)); 
   const moreClientsRow2 = clientLogos.slice(20, Math.min(40, clientLogos.length));
-  
-  // Filter clients based on search and selected industry
-  const filteredClients = clientLogos.filter((client) => {
-    const matchesSearch = searchTerm === '' || client.client_name.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesSearch;
-  });
 
   // Update stats with static total count
   const dynamicStats = [
@@ -467,6 +459,28 @@ export default function ClientsPage() {
               </div>
               <h3 className="text-xl font-semibold text-neutral-600 mb-2">No Client Logos Found</h3>
               <p className="text-neutral-500">Please check the Directus connection or try refreshing the page.</p>
+            </motion.div>
+          )}
+
+          {/* View All Clients Button */}
+          {!clientsLoading && clientLogos.length > 0 && (
+            <motion.div
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="text-center mt-12 mb-8"
+            >
+              <Button
+                onClick={() => setShowAllClientsModal(true)}
+                className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 group shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/40 hover:scale-105"
+              >
+                <span>View All Clients</span>
+                <Users className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+              </Button>
+              <p className="text-neutral-600 text-sm mt-3 font-body">
+                Explore our complete portfolio of 165+ trusted partners
+              </p>
             </motion.div>
           )}
 
@@ -785,126 +799,11 @@ export default function ClientsPage() {
         </div>
       </section>
 
-      {/* All Clients Modal */}
-      {showAllClients && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-white rounded-3xl max-w-7xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
-          >
-            {/* Modal Header */}
-            <div className="p-6 lg:p-8 border-b border-neutral-200 bg-gradient-to-r from-neutral-50 to-amber-50/30">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-2xl lg:text-3xl font-display text-neutral-900 mb-2">
-                    Our <span className="text-amber-600">165+ Clients</span>
-                  </h2>
-                  <p className="text-neutral-600">Industry leaders who trust White Massif with their most important events</p>
-                </div>
-                <Button
-                  onClick={() => setShowAllClients(false)}
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full p-2"
-                >
-                  <X className="w-5 h-5" />
-                </Button>
-              </div>
-
-              {/* Search Controls */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
-                  <input
-                    type="text"
-                    placeholder="Search clients..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Modal Content */}
-            <div className="p-6 lg:p-8 overflow-y-auto max-h-[60vh]">
-              {clientsLoading ? (
-                <div className="flex items-center justify-center py-20">
-                  <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-                  {filteredClients.map((client, index) => (
-                    <motion.div
-                      key={client.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                      className="group"
-                    >
-                      <div className="bg-neutral-50 rounded-xl p-6 aspect-[4/3] flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        {ClientLogosService.getBestLogoUrl(client) ? (
-                          <img
-                            src={ClientLogosService.getBestLogoUrl(client) || ''}
-                            alt={client.client_name}
-                            className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                            }}
-                          />
-                        ) : (
-                          <div className="flex items-center justify-center text-xs font-medium text-neutral-400 text-center">
-                            {client.client_name}
-                          </div>
-                        )}
-                      </div>
-                      <div className="text-center mt-2">
-                        <p className="text-xs font-medium text-neutral-600">{client.client_name}</p>
-                        <p className="text-xs text-neutral-400">{client.Category}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-
-              {/* No results message */}
-              {filteredClients.length === 0 && (
-                <div className="text-center py-12">
-                  <div className="text-neutral-400 text-lg mb-2">No clients found</div>
-                  <p className="text-neutral-500">Try adjusting your search criteria</p>
-                </div>
-              )}
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-6 lg:p-8 border-t border-neutral-200 bg-neutral-50">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p className="text-neutral-600 text-sm">
-                  Showing {filteredClients.length} of 165 clients
-                  {selectedIndustry !== 'All' && ` in ${selectedIndustry}`}
-                </p>
-                <div className="flex gap-4">
-                  <Button
-                    onClick={() => setSearchTerm('')}
-                    variant="outline"
-                    size="sm"
-                  >
-                    Clear Search
-                  </Button>
-                  <Button
-                    onClick={() => setShowAllClients(false)}
-                    className="btn-primary"
-                  >
-                    Close
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
+      {/* View All Clients Modal */}
+      <ViewAllClientsModal 
+        isOpen={showAllClientsModal} 
+        onClose={() => setShowAllClientsModal(false)} 
+      />
     </div>
   );
 }
