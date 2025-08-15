@@ -87,7 +87,7 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { icon: Linkedin, href: 'https://www.linkedin.com/company/whitemassif', label: 'LinkedIn', color: 'hover:text-blue-700' },
+    { icon: Linkedin, href: 'https://in.linkedin.com/company/white-massif-event-management-co', label: 'LinkedIn', color: 'hover:text-blue-700' },
     { icon: Instagram, href: 'https://www.instagram.com/whitemassif/', label: 'Instagram', color: 'hover:text-pink-500' },
     { icon: Facebook, href: 'https://www.facebook.com/whitemassif', label: 'Facebook', color: 'hover:text-blue-600' },
     { icon: Youtube, href: 'https://www.youtube.com/@whitemassif', label: 'YouTube', color: 'hover:text-red-600' }
