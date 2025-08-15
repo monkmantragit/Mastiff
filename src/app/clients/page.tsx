@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -149,6 +149,28 @@ export default function ClientsPage() {
   // Logo data slices for animated rows using Directus data
   const moreClientsRow1 = clientLogos.slice(0, Math.min(20, clientLogos.length)); 
   const moreClientsRow2 = clientLogos.slice(20, Math.min(40, clientLogos.length));
+
+  // Memoize testimonial data to prevent flickering
+  const memoizedTestimonialRows = useMemo(() => {
+    // Create stable data for each row with consistent indices
+    const createRow = (slice: any[], rowName: string) => {
+      if (slice.length === 0) return [];
+      const tripleData = [...slice, ...slice, ...slice];
+      return tripleData.map((testimonial, index) => ({
+        ...testimonial,
+        stableKey: `${rowName}-${testimonial.id}-${Math.floor(index / slice.length)}`
+      }));
+    };
+
+    return {
+      desktopRow1: createRow(testimonials.slice(0, 8), 'desktop-row1'),
+      desktopRow2: createRow(testimonials.slice(8, 16), 'desktop-row2'),
+      mobileRow1: createRow(testimonials.slice(0, 4), 'mobile-row1'),
+      mobileRow2: createRow(testimonials.slice(4, 8), 'mobile-row2'),
+      mobileRow3: createRow(testimonials.slice(8, 12), 'mobile-row3'),
+      mobileRow4: createRow(testimonials.slice(12, 16), 'mobile-row4')
+    };
+  }, [testimonials]);
 
   // Update stats with static total count
   const dynamicStats = [
@@ -587,8 +609,8 @@ export default function ClientsPage() {
                   <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                   
                   <div className="flex gap-6 animate-scroll-left will-change-transform">
-                    {[...testimonials.slice(0, 8), ...testimonials.slice(0, 8), ...testimonials.slice(0, 8)].map((testimonial, index) => (
-                      <div key={`desktop-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48 hover:scale-105 transition-transform duration-300">
+                    {memoizedTestimonialRows.desktopRow1.map((testimonial) => (
+                      <div key={testimonial.stableKey} className="flex-shrink-0 w-64 h-48 hover:scale-105 transition-transform duration-300">
                         <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                           {testimonial.testimonial_image && (
                             <Image
@@ -616,8 +638,8 @@ export default function ClientsPage() {
                   <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                   
                   <div className="flex gap-6 animate-scroll-right will-change-transform">
-                    {[...testimonials.slice(8, 16), ...testimonials.slice(8, 16), ...testimonials.slice(8, 16)].map((testimonial, index) => (
-                      <div key={`desktop-row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-64 h-48 hover:scale-105 transition-transform duration-300">
+                    {memoizedTestimonialRows.desktopRow2.map((testimonial) => (
+                      <div key={testimonial.stableKey} className="flex-shrink-0 w-64 h-48 hover:scale-105 transition-transform duration-300">
                         <div className="relative w-full h-full rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                           {testimonial.testimonial_image && (
                             <Image
@@ -648,8 +670,8 @@ export default function ClientsPage() {
                   <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                   
                   <div className="flex gap-4 animate-scroll-left will-change-transform">
-                    {[...testimonials.slice(0, 4), ...testimonials.slice(0, 4), ...testimonials.slice(0, 4)].map((testimonial, index) => (
-                      <div key={`mobile-row1-${testimonial.id}-${index}`} className="flex-shrink-0 w-58 h-44">
+                    {memoizedTestimonialRows.mobileRow1.map((testimonial) => (
+                      <div key={testimonial.stableKey} className="flex-shrink-0 w-58 h-44">
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
                           {testimonial.testimonial_image && (
                             <Image
@@ -676,8 +698,8 @@ export default function ClientsPage() {
                   <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                   
                   <div className="flex gap-4 animate-scroll-right will-change-transform">
-                    {[...testimonials.slice(4, 8), ...testimonials.slice(4, 8), ...testimonials.slice(4, 8)].map((testimonial, index) => (
-                      <div key={`mobile-row2-${testimonial.id}-${index}`} className="flex-shrink-0 w-58 h-44">
+                    {memoizedTestimonialRows.mobileRow2.map((testimonial) => (
+                      <div key={testimonial.stableKey} className="flex-shrink-0 w-58 h-44">
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
                           {testimonial.testimonial_image && (
                             <Image
@@ -704,8 +726,8 @@ export default function ClientsPage() {
                   <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                   
                   <div className="flex gap-4 animate-scroll-left will-change-transform">
-                    {[...testimonials.slice(8, 12), ...testimonials.slice(8, 12), ...testimonials.slice(8, 12)].map((testimonial, index) => (
-                      <div key={`mobile-row3-${testimonial.id}-${index}`} className="flex-shrink-0 w-58 h-44">
+                    {memoizedTestimonialRows.mobileRow3.map((testimonial) => (
+                      <div key={testimonial.stableKey} className="flex-shrink-0 w-58 h-44">
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
                           {testimonial.testimonial_image && (
                             <Image
@@ -732,8 +754,8 @@ export default function ClientsPage() {
                   <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
                   
                   <div className="flex gap-4 animate-scroll-right will-change-transform">
-                    {[...testimonials.slice(12, 16), ...testimonials.slice(12, 16), ...testimonials.slice(12, 16)].map((testimonial, index) => (
-                      <div key={`mobile-row4-${testimonial.id}-${index}`} className="flex-shrink-0 w-58 h-44">
+                    {memoizedTestimonialRows.mobileRow4.map((testimonial) => (
+                      <div key={testimonial.stableKey} className="flex-shrink-0 w-58 h-44">
                         <div className="relative w-full h-full rounded-lg overflow-hidden shadow-md">
                           {testimonial.testimonial_image && (
                             <Image

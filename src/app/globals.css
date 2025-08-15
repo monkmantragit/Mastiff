@@ -491,34 +491,34 @@
 
   /* Smooth Client Logo Animations */
   .animate-scroll-left {
-    animation: scroll-left 60s linear infinite;
+    animation: scroll-left 30s linear infinite;
     will-change: transform;
   }
 
   .animate-scroll-right {
-    animation: scroll-right 60s linear infinite;
+    animation: scroll-right 30s linear infinite;
     will-change: transform;
   }
 
   /* Premium Testimonial Scroll Classes */
   .testimonial-scroll-left {
-    animation: testimonial-scroll-left 30s linear infinite;
+    animation: testimonial-scroll-left 20s linear infinite;
     will-change: transform;
   }
 
   .testimonial-scroll-right {
-    animation: testimonial-scroll-right 30s linear infinite;
+    animation: testimonial-scroll-right 20s linear infinite;
     will-change: transform;
   }
 
   /* Ultra-Premium Smooth Scroll Animations */
   .animate-scroll-premium-left {
-    animation: premium-scroll-left 40s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: premium-scroll-left 25s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     will-change: transform;
   }
 
   .animate-scroll-premium-right {
-    animation: premium-scroll-right 40s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: premium-scroll-right 25s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     will-change: transform;
   }
 

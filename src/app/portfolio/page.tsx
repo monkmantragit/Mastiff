@@ -331,35 +331,22 @@ export default function PortfolioPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                     
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-white/95 backdrop-blur-xl text-slate-700 border border-white/50 text-xs font-medium">
-                        {item.category}
-                      </Badge>
-                    </div>
                     
-                    <div className="absolute top-4 right-4">
-                      <Badge className="bg-[#F9A625]/95 backdrop-blur-xl text-white border-0 text-xs font-medium">
-                        {item.year}
-                      </Badge>
-                    </div>
-                    
-                    <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200">
-                      <div className="flex items-center justify-between">
-                        <div className="text-white">
-                          <div className="text-sm font-medium flex items-center gap-2">
-                            <Camera className="w-4 h-4" />
-                            Gallery
-                          </div>
-                          {item.location && (
-                            <div className="text-xs text-white/80 mt-1">{item.location}</div>
-                          )}
-                        </div>
-                        <Button size="sm" className="bg-white/20 backdrop-blur-xl text-white border-white/30 hover:bg-white/30 hover:scale-105 transition-all duration-300 text-xs">
-                          <Play className="w-3 h-3 mr-1" />
-                          View Gallery
-                        </Button>
+                    {/* Prominent Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <div className="w-16 h-16 bg-[#F9A625] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all duration-300 cursor-pointer">
+                        <Play className="w-8 h-8 text-white ml-1" />
                       </div>
                     </div>
+                    
+                    {/* Location info in bottom corner */}
+                    {item.location && (
+                      <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200">
+                        <div className="text-white text-xs bg-black/40 backdrop-blur-sm px-2 py-1 rounded">
+                          {item.location}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   
                   <CardContent className="p-6">
@@ -368,100 +355,17 @@ export default function PortfolioPage() {
                         <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-2 leading-tight">
                           {item.title}
                         </h3>
-                        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 mb-2">
-                          <span className="font-medium">{item.category}</span>
-                          <span>•</span>
-                          <span>{item.year}</span>
-                          {item.client_name && (
-                            <>
-                              <span>•</span>
-                              <span className="text-amber-600 font-medium">{item.client_name}</span>
-                            </>
-                          )}
-                        </div>
+                        {item.client_name && (
+                          <div className="text-sm text-amber-600 font-medium mb-2">
+                            {item.client_name}
+                          </div>
+                        )}
                       </div>
                     </div>
                     
-                    <p className="text-slate-600 leading-relaxed mb-6 font-light text-sm line-clamp-3">
+                    <p className="text-slate-600 leading-relaxed font-light text-sm line-clamp-3">
                       {item.description}
                     </p>
-                    
-                    {/* Enhanced Gallery Preview */}
-                    <div className="mb-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-700">
-                          Gallery Preview
-                        </h4>
-                        <span className="text-xs text-amber-600 font-medium">
-                          Click to view gallery
-                        </span>
-                      </div>
-                      {item.totalImages > 0 ? (
-                        <div className="grid grid-cols-4 gap-2">
-                          {item.galleryData ? item.galleryData.slice(0, 4).map((galleryItem, idx: number) => (
-                          <div 
-                            key={idx} 
-                            className="relative aspect-square rounded-xl overflow-hidden bg-slate-100 cursor-pointer group/thumb"
-                          >
-                            <NextImage
-                              src={galleryItem.thumbnail}
-                              alt={`${item.title} preview ${idx + 1}`}
-                              fill
-                              className="object-cover group-hover/thumb:scale-110 transition-transform duration-300"
-                              sizes="100px"
-                              onError={(e) => {
-                                // If video thumbnail fails and we have a fallback, use it
-                                if (galleryItem.fallbackThumbnail && galleryItem.type === 'video') {
-                                  e.currentTarget.src = galleryItem.fallbackThumbnail;
-                                }
-                              }}
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                              {galleryItem.type === 'video' ? (
-                                <Play className="w-4 h-4 text-white opacity-80 group-hover/thumb:opacity-100 transition-opacity duration-300" />
-                              ) : (
-                                <Eye className="w-4 h-4 text-white opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300" />
-                              )}
-                            </div>
-                            {idx === 3 && item.galleryData.length > 4 && (
-                              <div className="absolute inset-0 bg-black/70 flex items-center justify-center rounded-xl">
-                                <span className="text-white text-xs font-bold">+{item.galleryData.length - 4}</span>
-                              </div>
-                            )}
-                          </div>
-                        )) : item.gallery.slice(0, 4).map((imageUrl: string, idx: number) => (
-                          <div 
-                            key={idx} 
-                            className="relative aspect-square rounded-xl overflow-hidden bg-slate-100 cursor-pointer group/thumb"
-                          >
-                            <NextImage
-                              src={imageUrl}
-                              alt={`${item.title} preview ${idx + 1}`}
-                              fill
-                              className="object-cover group-hover/thumb:scale-110 transition-transform duration-300"
-                              sizes="100px"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover/thumb:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                              <Eye className="w-4 h-4 text-white opacity-0 group-hover/thumb:opacity-100 transition-opacity duration-300" />
-                            </div>
-                            {idx === 3 && item.gallery.length > 4 && (
-                              <div className="absolute inset-0 bg-black/70 flex items-center justify-center rounded-xl">
-                                <span className="text-white text-xs font-bold">+{item.gallery.length - 4}</span>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-4 gap-2">
-                          {[...Array(4)].map((_, idx) => (
-                            <div key={idx} className="relative aspect-square rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
-                              <Image className="w-6 h-6 text-gray-300" />
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
