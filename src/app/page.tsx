@@ -156,7 +156,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Pure Video Section */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative h-[56.25vw] max-h-screen md:h-screen overflow-hidden">
         {/* Full Video Background */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <ProgressiveVideo
