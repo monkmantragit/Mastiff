@@ -161,8 +161,9 @@ export default function Home() {
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <ProgressiveVideo
             src={heroVideo}
-            poster="/assets/images/home/01-01.png"
-            className="absolute inset-0 w-full h-full object-cover"
+            poster="/assets/images/services/DSC02447-scaled-1.jpg"
+            fallbackImage="/assets/images/services/DSC02447-scaled-1.jpg"
+            className="absolute inset-0 w-full h-full"
             style={{
               zIndex: 1,
               willChange: 'auto',

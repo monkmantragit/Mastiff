@@ -90,7 +90,7 @@ export default function ProgressiveVideo({
       {/* Video Element */}
       <video
         ref={videoRef}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+        className={`absolute inset-0 w-full h-full object-contain md:object-cover transition-opacity duration-500 ${
           canPlay ? 'opacity-100' : 'opacity-0'
         } ${className}`}
         autoPlay={autoPlay}
@@ -112,13 +112,13 @@ export default function ProgressiveVideo({
             <img 
               src={poster} 
               alt="Video poster"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-contain md:object-cover"
             />
           ) : fallbackImage ? (
             <img 
               src={fallbackImage} 
               alt="Video fallback"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-contain md:object-cover"
             />
           ) : (
             <div className="bg-gradient-to-br from-neutral-800 to-neutral-900 w-full h-full" />
@@ -139,7 +139,7 @@ export default function ProgressiveVideo({
             <img 
               src={fallbackImage} 
               alt="Video fallback"
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-contain md:object-cover"
             />
           ) : (
             <div className="bg-gradient-to-br from-neutral-800 to-neutral-900 w-full h-full" />
