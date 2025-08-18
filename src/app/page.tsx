@@ -672,14 +672,16 @@ export default function Home() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Button 
-                  onClick={() => openPopup('cta-contact')}
-                  variant="outline"
-                  size="lg" 
-                  className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
-                >
-                  Get Quote
-              </Button>
+                <Link href="tel:+919900141155">
+                  <Button 
+                    variant="outline"
+                    size="lg" 
+                    className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg flex items-center"
+                  >
+                    <Phone className="mr-2 h-5 w-5" />
+                    Call us
+                  </Button>
+                </Link>
               </div>
             </motion.div>
             
