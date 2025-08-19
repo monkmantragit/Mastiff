@@ -6,6 +6,7 @@ import { Preloader } from "@/components/preloader";
 import Footer from "@/components/footer";
 import { PopupProvider } from "@/components/popup-provider";
 import FloatingCTA from "@/components/floating-cta";
+import Script from "next/script";
 import "./globals.css";
 
 // Brand primary font: Using Inter as closest alternative to Sinkin Sans
@@ -39,6 +40,9 @@ export const metadata: Metadata = {
     shortcut: '/favicon.svg',
     apple: '/favicon.svg',
   },
+  verification: {
+    google: "wOFjHqwzvXVXcQ9xP0zeZCMDoj0s30z23U8QL10Avuc",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -64,6 +68,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-3JZS3H8914"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-3JZS3H8914');
+          `}
+        </Script>
+      </head>
       <body
         className={`${sinkinSans.variable} ${raleway.variable} antialiased`}
       >
