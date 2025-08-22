@@ -309,7 +309,7 @@ export class DirectusService {
       const url = process.env.NEXT_PUBLIC_DIRECTUS_URL;
       const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
       
-      const response = await fetch(`${url}/items/jobs?fields=*&filter={"status":{"_eq":"published"}}&sort=sort_order,date_created`, {
+      const response = await fetch(`${url}/items/jobs?fields=*&filter={"status":{"_eq":"published"}}&sort=sort_order`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
