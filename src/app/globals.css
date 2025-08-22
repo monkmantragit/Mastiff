@@ -803,6 +803,54 @@
     }
   }
   
+  /* Disable default cursor on all interactive elements to keep custom cursor */
+  /* Only apply on devices that support hover (desktop/laptop) */
+  @media (hover: hover) and (pointer: fine) {
+    a,
+    button,
+    [role="button"],
+    input,
+    textarea,
+    select,
+    [data-cursor="pointer"],
+    .cursor-pointer,
+    [type="button"],
+    [type="submit"],
+    [type="reset"],
+    label[for],
+    details > summary,
+    [tabindex]:not([tabindex="-1"]) {
+      cursor: none !important;
+    }
+    
+    /* Also disable cursor pointer on hover states */
+    a:hover,
+    button:hover,
+    [role="button"]:hover,
+    .cursor-pointer:hover {
+      cursor: none !important;
+    }
+    
+    /* Ensure cursor is none globally when custom cursor is active */
+    body {
+      cursor: none;
+    }
+    
+    /* Disable cursor on all elements to prevent any default cursor */
+    * {
+      cursor: none !important;
+    }
+  }
+  
+  /* Fallback for touch devices - use default cursor behavior */
+  @media (hover: none) and (pointer: coarse) {
+    a,
+    button,
+    [role="button"] {
+      cursor: pointer;
+    }
+  }
+  
   /* Focus States */
   *:focus-visible {
     outline: 2px solid var(--brand-primary);
