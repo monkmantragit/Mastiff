@@ -17,7 +17,7 @@ export class HomepageMediaService {
   }
   
   static getHeroVideo() {
-    return `${SUPABASE_STORAGE_URL}/massif/homepage/Landing page - intro video of wm_.mp4`;
+    return `https://qkzwdwhnbzrlyijluxdg.supabase.co/storage/v1/object/public/massif/homepage/Main%20Scene%20e_1.mp4`;
   }
   
   static getPortfolioImages() {
