@@ -88,7 +88,7 @@ export default function PortfolioPage() {
 
   const stats = [
     { number: "1000+", label: "Events", icon: Calendar },
-    { number: "165+", label: "Clients", icon: Users },
+    { number: "175+", label: "Clients", icon: Users },
     { number: "60+", label: "Destinations", icon: Award },
     { number: "2M+", label: "Audience Engaged", icon: Star }
   ];

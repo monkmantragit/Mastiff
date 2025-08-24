@@ -646,7 +646,7 @@ export default function Home() {
                 {[
                   { icon: Users, title: "1000+ Events", desc: "Executed with precision" },
                   { icon: Star, title: "2M+ Audience Engaged", desc: "Memorable experiences" },
-                  { icon: Trophy, title: "165+ Corporate Clients", desc: "Trusted partnerships" },
+                  { icon: Trophy, title: "175+ Corporate Clients", desc: "Trusted partnerships" },
                   { icon: Target, title: "60+ Destinations", desc: "Across India & Beyond" }
                 ].map((feature, index) => {
                   const FeatureIcon = feature.icon;

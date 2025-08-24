@@ -146,7 +146,7 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-2xl lg:text-3xl font-display text-neutral-900 mb-2">
-                  Our <span className="text-amber-600">165+ Clients</span>
+                  Our <span className="text-amber-600">175+ Clients</span>
                 </h2>
                 <p className="text-neutral-600 font-body">
                   Industry leaders who trust White Massif with their most important events

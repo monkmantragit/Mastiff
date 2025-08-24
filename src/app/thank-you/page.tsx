@@ -254,7 +254,7 @@ export default function ThankYouPage() {
           >
             <motion.div variants={fadeInUp}>
               <h3 className="text-2xl lg:text-3xl font-display text-white mb-8">
-                Why 165+ Clients <span className="text-[#F9A625]">Trust Us</span>
+                Why 175+ Clients <span className="text-[#F9A625]">Trust Us</span>
               </h3>
             </motion.div>
           </motion.div>

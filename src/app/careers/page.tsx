@@ -205,7 +205,7 @@ export default function CareersPage() {
           >
             {[
               { number: "1000+", label: "Events", icon: Trophy, color: "text-amber-400" },
-              { number: "165+", label: "Clients", icon: Users, color: "text-emerald-400" },
+              { number: "175+", label: "Clients", icon: Users, color: "text-emerald-400" },
               { number: "35+", label: "Team Size", icon: TrendingUp, color: "text-rose-400" },
               { number: "2M+", label: "Audience Engaged", icon: Heart, color: "text-blue-400" }
             ].map((stat, index) => (

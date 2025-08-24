@@ -175,7 +175,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               {/* Company Statistics */}
               <div className="mt-4 text-center">
                 <p className="text-[#F9A625] text-sm font-medium">
-                  2M+ Audience Engagement • 1000+ Events • 165+ Corporate Clients • 35+ Team Size
+                  2M+ Audience Engagement • 1000+ Events • 175+ Corporate Clients • 35+ Team Size
                 </p>
               </div>
             </div>
