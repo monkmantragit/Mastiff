@@ -2,8 +2,39 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
-    domains: ['directus-production-bc75.up.railway.app'],
+    unoptimized: false,
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 31536000, // 1 year
+    dangerouslyAllowSVG: false,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    domains: [
+      'directus-production-bc75.up.railway.app',
+      'whitemassif.com',
+      'www.whitemassif.com',
+      'directus.whitemassif.com'
+    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'directus-production-bc75.up.railway.app',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'whitemassif.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'directus.whitemassif.com',
+        port: '',
+        pathname: '/**',
+      }
+    ]
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if

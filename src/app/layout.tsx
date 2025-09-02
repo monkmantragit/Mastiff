@@ -6,6 +6,8 @@ import { Preloader } from "@/components/preloader";
 import Footer from "@/components/footer";
 import { PopupProvider } from "@/components/popup-provider";
 import FloatingCTA from "@/components/floating-cta";
+import SchemaMarkup from "@/components/schema-markup";
+import { generateOrganizationSchema, generateLocalBusinessSchema, generateWebSiteSchema, companyInfo, generatePageMetadata } from "@/lib/seo-utils";
 import Script from "next/script";
 import "./globals.css";
 
@@ -25,41 +27,33 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "White Massif Event Management - Creating Moments That Matter",
-  description: "Premier event management company in Bangalore specializing in corporate events, celebrations, inaugurations, and hybrid experiences. Creating extraordinary moments that matter since 2012.",
-  keywords: ["Event Management", "Corporate Events", "Bangalore Events", "Event Planning", "Celebrations", "Inaugurations", "Hybrid Events", "Business Events"],
-  authors: [{ name: "White Massif Event Management" }],
-  creator: "White Massif Event Management",
-  publisher: "White Massif Event Management",
-  icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/assets/images/favicon.ico', type: 'image/x-icon' }
-    ],
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
-  },
-  verification: {
-    google: "wOFjHqwzvXVXcQ9xP0zeZCMDoj0s30z23U8QL10Avuc",
-  },
+export const metadata: Metadata = generatePageMetadata({
+  title: "White Massif Event Management - Premier Corporate Event Managers in India",
+  description: "Leading corporate event management company in India with 175+ successful events across Bangalore, Mumbai, Delhi, Chennai. Specializing in product launches, annual day celebrations, team building, conferences & brand activations.",
+  keywords: [
+    "corporate event management company in India",
+    "event management companies in Bangalore",
+    "corporate event planners Bangalore",
+    "best event management company Karnataka",
+    "corporate event organizers India",
+    "team building activities Bangalore",
+    "product launch event management India",
+    "annual day celebration organizers",
+    "conference management services India",
+    "virtual event management India",
+    "hybrid event solutions Bangalore",
+    "employee engagement event planners",
+    "brand activation events Mumbai",
+    "corporate events Delhi NCR",
+    "event management HSR Layout"
+  ],
   openGraph: {
     type: "website",
-    locale: "en_US",
-    title: "White Massif Event Management - Creating Moments That Matter",
-    description: "Premier event management company in Bangalore creating extraordinary experiences for corporate events, celebrations, and special occasions.",
-    siteName: "White Massif Event Management",
+    locale: "en_IN",
+    images: [companyInfo.logo]
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "White Massif Event Management - Creating Moments That Matter",
-    description: "Premier event management company in Bangalore creating extraordinary experiences for corporate events, celebrations, and special occasions.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+  images: [companyInfo.logo]
+});
 
 export default function RootLayout({
   children,
@@ -67,8 +61,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-IN" suppressHydrationWarning>
       <head>
+        {/* Essential SEO Schemas for Organization & Local Business */}
+        <SchemaMarkup schema={[
+          generateOrganizationSchema(),
+          generateLocalBusinessSchema(),
+          generateWebSiteSchema()
+        ]} />
+        
+        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-3JZS3H8914"
           strategy="afterInteractive"
@@ -78,9 +80,36 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-3JZS3H8914');
+            gtag('config', 'G-3JZS3H8914', {
+              page_title: document.title,
+              page_location: window.location.href,
+              content_group1: 'Corporate Events',
+              content_group2: 'India',
+              custom_map: {'custom_parameter_1': 'business_type'},
+              business_type: 'event_management'
+            });
           `}
         </Script>
+        
+        {/* Microsoft Clarity */}
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "placeholder");
+          `}
+        </Script>
+        
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://www.clarity.ms" />
+        
+        {/* DNS prefetch for better performance */}
+        <link rel="dns-prefetch" href="https://directus.whitemassif.com" />
       </head>
       <body
         className={`${sinkinSans.variable} ${raleway.variable} antialiased`}
