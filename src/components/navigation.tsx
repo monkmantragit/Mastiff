@@ -45,6 +45,7 @@ export default function Navigation() {
     { name: 'Team', href: '/team' },
     { name: 'Work', href: '/portfolio' },
     { name: 'Clients', href: '/clients' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Careers', href: '/careers' }
   ];
 
