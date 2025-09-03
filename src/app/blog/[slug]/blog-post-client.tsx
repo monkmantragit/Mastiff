@@ -17,6 +17,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { type Blog } from '@/lib/directus-service';
+import { getDirectusAssetUrl } from '@/lib/directus-utils';
 
 interface BlogPostClientProps {
   post: Blog;
@@ -102,10 +103,10 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
             </div>
 
             {/* Featured Image */}
-            {post.featured_image && (
+            {getDirectusAssetUrl(post.featured_image) && (
               <div className="relative rounded-2xl overflow-hidden shadow-xl mb-12">
                 <Image
-                  src={post.featured_image}
+                  src={getDirectusAssetUrl(post.featured_image)!}
                   alt={post.title}
                   width={800}
                   height={400}
@@ -220,9 +221,9 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
                 <Card key={relatedPost.id} className="glass rounded-2xl hover:shadow-xl transition-all duration-500 group cursor-pointer">
                   <Link href={`/blog/${relatedPost.slug || relatedPost.id}`}>
                     <div className="aspect-video overflow-hidden rounded-t-2xl relative">
-                      {relatedPost.featured_image ? (
+                      {getDirectusAssetUrl(relatedPost.featured_image) ? (
                         <Image
-                          src={relatedPost.featured_image}
+                          src={getDirectusAssetUrl(relatedPost.featured_image)!}
                           alt={relatedPost.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"

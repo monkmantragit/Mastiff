@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { DirectusService, type Blog } from '@/lib/directus-service';
+import { getDirectusAssetUrl } from '@/lib/directus-utils';
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Blog[]>([]);
@@ -117,9 +118,9 @@ export default function BlogPage() {
                 <Card className="h-full glass rounded-3xl hover:shadow-xl transition-all duration-500 group cursor-pointer border-neutral-200">
                   <Link href={`/blog/${post.slug || post.id}`}>
                     <div className="aspect-video overflow-hidden rounded-t-3xl relative">
-                      {post.featured_image ? (
+                      {getDirectusAssetUrl(post.featured_image) ? (
                         <Image
-                          src={post.featured_image}
+                          src={getDirectusAssetUrl(post.featured_image)!}
                           alt={post.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"

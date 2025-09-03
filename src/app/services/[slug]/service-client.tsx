@@ -23,6 +23,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { type Service } from '@/lib/directus-service';
 import { usePopup } from "@/components/popup-provider";
+import { getDirectusAssetUrl, getDirectusAssetUrls } from '@/lib/directus-utils';
 
 interface ServiceClientProps {
   service: Service;
@@ -32,6 +33,10 @@ interface ServiceClientProps {
 export default function ServiceClient({ service, relatedServices }: ServiceClientProps) {
   const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
   const { openPopup } = usePopup();
+  
+  // Process images to get full URLs
+  const featuredImageUrl = getDirectusAssetUrl(service.featured_image);
+  const galleryUrls = getDirectusAssetUrls(service.gallery);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100">
@@ -186,13 +191,13 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
             )}
 
             {/* Service Gallery */}
-            {service.gallery && service.gallery.length > 0 && (
+            {galleryUrls && galleryUrls.length > 0 && (
               <div className="mb-16">
                 <h2 className="text-3xl font-display text-[#2A3959] mb-8 text-center">
                   See Our {service.title} in Action
                 </h2>
                 <div className="grid md:grid-cols-3 gap-6">
-                  {service.gallery.slice(0, 6).map((image, index) => (
+                  {galleryUrls.slice(0, 6).map((image, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, scale: 0.9 }}
@@ -241,9 +246,9 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
                   <Card key={relatedService.id} className="glass rounded-2xl hover:shadow-2xl transition-all duration-500 group cursor-pointer">
                     <Link href={`/services/${relatedService.slug || relatedService.id}`}>
                       <div className="aspect-video overflow-hidden rounded-t-2xl relative">
-                        {relatedService.featured_image ? (
+                        {getDirectusAssetUrl(relatedService.featured_image) ? (
                           <Image
-                            src={relatedService.featured_image}
+                            src={getDirectusAssetUrl(relatedService.featured_image)!}
                             alt={relatedService.title}
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
