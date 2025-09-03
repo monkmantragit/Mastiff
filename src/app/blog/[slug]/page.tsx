@@ -85,7 +85,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     content: post.content || post.excerpt || '',
     author: post.author || 'White Massif Team',
     publishDate: post.published_date,
-    modifiedDate: post.updated_at || post.published_date,
+    modifiedDate: post.published_date, // Use published_date as Blog type doesn't have updated_at
     image: post.featured_image,
     url: `/blog/${post.slug || post.id}`,
     keywords: post.tags

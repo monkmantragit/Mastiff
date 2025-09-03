@@ -66,7 +66,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
               </Link>
               <span className="text-neutral-400">/</span>
               <span className="text-[#2A3959] font-medium">
-                {service.name}
+                {service.title}
               </span>
             </nav>
 
@@ -91,7 +91,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
               transition={{ delay: 0.3, duration: 0.8 }}
               className="text-5xl md:text-6xl lg:text-7xl font-display text-[#2A3959] mb-8 leading-tight"
             >
-              {service.name}
+              {service.title}
             </motion.h1>
 
             {/* Service Description */}
@@ -156,7 +156,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
             {service.features && service.features.length > 0 && (
               <div className="grid md:grid-cols-2 gap-8 mb-16">
                 <h2 className="text-3xl font-display text-[#2A3959] mb-8 md:col-span-2">
-                  What Makes Our {service.name} Special?
+                  What Makes Our {service.title} Special?
                 </h2>
                 {service.features.map((feature, index) => (
                   <motion.div
@@ -171,9 +171,14 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
                       <CheckCircle className="w-6 h-6 text-[#F9A625]" />
                     </div>
                     <div>
-                      <p className="text-neutral-800 leading-relaxed">
-                        {feature}
-                      </p>
+                      <h3 className="font-semibold text-neutral-900 mb-2">
+                        {typeof feature === 'string' ? feature : feature.title}
+                      </h3>
+                      {typeof feature !== 'string' && feature.description && (
+                        <p className="text-neutral-700 leading-relaxed">
+                          {feature.description}
+                        </p>
+                      )}
                     </div>
                   </motion.div>
                 ))}
@@ -184,7 +189,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
             {service.gallery && service.gallery.length > 0 && (
               <div className="mb-16">
                 <h2 className="text-3xl font-display text-[#2A3959] mb-8 text-center">
-                  See Our {service.name} in Action
+                  See Our {service.title} in Action
                 </h2>
                 <div className="grid md:grid-cols-3 gap-6">
                   {service.gallery.slice(0, 6).map((image, index) => (
@@ -200,7 +205,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
                       <div className="relative aspect-video">
                         <Image
                           src={image}
-                          alt={`${service.name} gallery image ${index + 1}`}
+                          alt={`${service.title} gallery image ${index + 1}`}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
@@ -239,7 +244,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
                         {relatedService.featured_image ? (
                           <Image
                             src={relatedService.featured_image}
-                            alt={relatedService.name}
+                            alt={relatedService.title}
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                           />
@@ -259,7 +264,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
                       
                       <CardContent className="p-6">
                         <h3 className="font-heading text-xl text-[#2A3959] mb-3 group-hover:text-[#F9A625] transition-colors line-clamp-2">
-                          {relatedService.name}
+                          {relatedService.title}
                         </h3>
                         
                         {relatedService.description && (
@@ -297,7 +302,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
             className="max-w-4xl mx-auto text-center"
           >
             <h3 className="text-4xl md:text-5xl font-display mb-6 leading-tight">
-              Ready for Exceptional <span className="text-[#F9A625]">{service.name}?</span>
+              Ready for Exceptional <span className="text-[#F9A625]">{service.title}?</span>
             </h3>
             <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
               Let our experts bring your vision to life with unmatched creativity and flawless execution.

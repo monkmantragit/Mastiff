@@ -41,11 +41,11 @@ export async function generateMetadata({
   }
 
   const keywords = [
-    `${service.name.toLowerCase()} in India`,
-    `${service.name.toLowerCase()} Bangalore`,
-    `${service.name.toLowerCase()} event management`,
-    `corporate ${service.name.toLowerCase()}`,
-    `professional ${service.name.toLowerCase()} services`,
+    `${service.title.toLowerCase()} in India`,
+    `${service.title.toLowerCase()} Bangalore`,
+    `${service.title.toLowerCase()} event management`,
+    `corporate ${service.title.toLowerCase()}`,
+    `professional ${service.title.toLowerCase()} services`,
     service.category?.toLowerCase() || 'event services',
     'event management company India',
     'White Massif services',
@@ -54,15 +54,15 @@ export async function generateMetadata({
   ];
 
   return generatePageMetadata({
-    title: `${service.name} Services in India - White Massif Event Management`,
-    description: service.description || `Professional ${service.name.toLowerCase()} services by White Massif - India's leading event management company. Specializing in corporate events, conferences, and brand experiences across major Indian cities.`,
+    title: `${service.title} Services in India - White Massif Event Management`,
+    description: service.description || `Professional ${service.title.toLowerCase()} services by White Massif - India's leading event management company. Specializing in corporate events, conferences, and brand experiences across major Indian cities.`,
     keywords,
     path: `/services/${service.slug || service.id}`,
     images: service.featured_image ? [service.featured_image] : [],
     openGraph: {
       type: 'article',
       section: 'Services',
-      tags: [service.name, service.category || 'Event Management']
+      tags: [service.title, service.category || 'Event Management']
     }
   });
 }
@@ -92,7 +92,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   // Generate schemas for SEO
   const serviceSchema = generateServiceSchema({
-    name: service.name,
+    name: service.title,
     description: service.description || '',
     image: service.featured_image,
     serviceType: service.category || 'Event Management',
@@ -102,7 +102,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: '/' },
     { name: 'Services', url: '/services' },
-    { name: service.name, url: `/services/${service.slug || service.id}` }
+    { name: service.title, url: `/services/${service.slug || service.id}` }
   ]);
 
   return (
