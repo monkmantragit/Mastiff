@@ -27,33 +27,45 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "White Massif Event Management - Premier Corporate Event Managers in India",
-  description: "Leading corporate event management company in India with 175+ successful events across Bangalore, Mumbai, Delhi, Chennai. Specializing in product launches, annual day celebrations, team building, conferences & brand activations.",
-  keywords: [
-    "corporate event management company in India",
-    "event management companies in Bangalore",
-    "corporate event planners Bangalore",
-    "best event management company Karnataka",
-    "corporate event organizers India",
-    "team building activities Bangalore",
-    "product launch event management India",
-    "annual day celebration organizers",
-    "conference management services India",
-    "virtual event management India",
-    "hybrid event solutions Bangalore",
-    "employee engagement event planners",
-    "brand activation events Mumbai",
-    "corporate events Delhi NCR",
-    "event management HSR Layout"
-  ],
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
+export const metadata: Metadata = {
+  ...generatePageMetadata({
+    title: "White Massif Event Management - Premier Corporate Event Managers in India",
+    description: "Leading corporate event management company in India with 175+ successful events across Bangalore, Mumbai, Delhi, Chennai. Specializing in product launches, annual day celebrations, team building, conferences & brand activations.",
+    keywords: [
+      "corporate event management company in India",
+      "event management companies in Bangalore",
+      "corporate event planners Bangalore",
+      "best event management company Karnataka",
+      "corporate event organizers India",
+      "team building activities Bangalore",
+      "product launch event management India",
+      "annual day celebration organizers",
+      "conference management services India",
+      "virtual event management India",
+      "hybrid event solutions Bangalore",
+      "employee engagement event planners",
+      "brand activation events Mumbai",
+      "corporate events Delhi NCR",
+      "event management HSR Layout"
+    ],
+    openGraph: {
+      type: "website",
+      locale: "en_IN",
+      images: [companyInfo.logo]
+    },
     images: [companyInfo.logo]
-  },
-  images: [companyInfo.logo]
-});
+  }),
+  icons: {
+    icon: [
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      }
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  }
+};
 
 export default function RootLayout({
   children,
@@ -62,11 +74,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-IN" suppressHydrationWarning>
-      <head>
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        
+      <head>        
         {/* Essential SEO Schemas for Organization & Local Business */}
         <SchemaMarkup schema={[
           generateOrganizationSchema(),
