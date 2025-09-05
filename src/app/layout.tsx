@@ -55,16 +55,17 @@ export const metadata: Metadata = {
     },
     images: [companyInfo.logo]
   }),
-  icons: {
-    icon: [
-      {
-        url: '/favicon.svg',
-        type: 'image/svg+xml',
-      }
-    ],
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
-  }
+  icons: [
+    {
+      rel: 'icon',
+      url: '/favicon.svg',
+      type: 'image/svg+xml',
+    },
+    {
+      rel: 'shortcut icon',
+      url: '/favicon.svg',
+    }
+  ]
 };
 
 export default function RootLayout({
@@ -74,7 +75,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-IN" suppressHydrationWarning>
-      <head>        
+      <head>
+        {/* Favicon - Force override Vercel default */}
+        <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+        <link rel="shortcut icon" href="/favicon.svg?v=2" />
+        <link rel="apple-touch-icon" href="/favicon.svg?v=2" />
+        
         {/* Essential SEO Schemas for Organization & Local Business */}
         <SchemaMarkup schema={[
           generateOrganizationSchema(),
