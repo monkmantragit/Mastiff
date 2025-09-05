@@ -13,7 +13,8 @@ const nextConfig: NextConfig = {
       'directus-production-bc75.up.railway.app',
       'whitemassif.com',
       'www.whitemassif.com',
-      'directus.whitemassif.com'
+      'directus.whitemassif.com',
+      'qkzwdwhnbzrlyijluxdg.supabase.co'
     ],
     remotePatterns: [
       {
@@ -31,6 +32,12 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'directus.whitemassif.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'qkzwdwhnbzrlyijluxdg.supabase.co',
         port: '',
         pathname: '/**',
       }
