@@ -58,12 +58,12 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: 'icon',
-      url: '/favicon.svg',
-      type: 'image/svg+xml',
+      url: '/favicon.png',
+      type: 'image/png',
     },
     {
       rel: 'shortcut icon',
-      url: '/favicon.svg',
+      url: '/favicon.png',
     }
   ]
 };
@@ -77,9 +77,9 @@ export default function RootLayout({
     <html lang="en-IN" suppressHydrationWarning>
       <head>
         {/* Favicon - Force override Vercel default */}
-        <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
-        <link rel="shortcut icon" href="/favicon.svg?v=2" />
-        <link rel="apple-touch-icon" href="/favicon.svg?v=2" />
+        <link rel="icon" href="/favicon.png?v=2" type="image/png" />
+        <link rel="shortcut icon" href="/favicon.png?v=2" />
+        <link rel="apple-touch-icon" href="/favicon.png?v=2" />
         
         {/* Essential SEO Schemas for Organization & Local Business */}
         <SchemaMarkup schema={[
