@@ -134,7 +134,7 @@ export default function RootLayout({
       >
         <PopupProvider>
           <Preloader />
-          <CustomCursor />
+          {/* <CustomCursor /> */}
           <Navigation />
           <main>{children}</main>
           <Footer />

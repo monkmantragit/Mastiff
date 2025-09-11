@@ -316,14 +316,14 @@ export default function CareersPage() {
                   {/* Action Buttons */}
                   <div className="flex flex-col gap-3">
                     <Button 
-                      onClick={() => window.open('mailto:works@whitemassif.com?subject=Application for ' + job.title + '&body=Dear WhiteMassif Team,%0D%0A%0D%0AI am writing to express my interest in the ' + job.title + ' position.%0D%0A%0D%0APlease find my CV attached. I would be happy to discuss how my experience aligns with your requirements.%0D%0A%0D%0ABest regards', '_blank')}
+                      onClick={() => window.open('https://mail.google.com/mail/?view=cm&to=works@whitemassif.com&subject=Application for ' + encodeURIComponent(job.title) + '&body=' + encodeURIComponent('Dear WhiteMassif Team,\n\nI am writing to express my interest in the ' + job.title + ' position.\n\nPlease find my CV attached. I would be happy to discuss how my experience aligns with your requirements.\n\nBest regards'), '_blank')}
                       className="btn-primary group w-full"
                     >
                       <span>Apply Now</span>
                       <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Button>
                     <Button 
-                      onClick={() => window.open('mailto:works@whitemassif.com?subject=Inquiry about ' + job.title + ' role', '_blank')}
+                      onClick={() => window.open('https://mail.google.com/mail/?view=cm&to=works@whitemassif.com&subject=Inquiry about ' + encodeURIComponent(job.title) + ' role', '_blank')}
                       className="btn-outline group w-full"
                     >
                       <span>Ask Questions</span>
@@ -384,7 +384,7 @@ export default function CareersPage() {
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button 
-                  onClick={() => window.open('mailto:works@whitemassif.com?subject=Creating My Own Exceptional Role&body=Dear WhiteMassif Team,%0D%0A%0D%0AI am a visionary professional interested in creating a unique role that aligns with my skills and your company\'s mission.%0D%0A%0D%0APlease find my CV and cover letter attached outlining my vision for contributing to WhiteMassif.%0D%0A%0D%0ABest regards', '_blank')}
+                  onClick={() => window.open('https://mail.google.com/mail/?view=cm&to=works@whitemassif.com&subject=Creating My Own Exceptional Role&body=' + encodeURIComponent('Dear WhiteMassif Team,\n\nI am a visionary professional interested in creating a unique role that aligns with my skills and your company\'s mission.\n\nPlease find my CV and cover letter attached outlining my vision for contributing to WhiteMassif.\n\nBest regards'), '_blank')}
                   className="btn-primary group"
                 >
                   <Mail className="mr-2 w-5 h-5" />

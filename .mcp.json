@@ -1,7 +1,7 @@
 {
   "mcpServers": {
       "directus": {
-          "command": "npx",
+          "command": "cmd /c npx",
           "args": ["@directus/content-mcp@latest"],
           "env": {
               "DIRECTUS_URL": "https://directus-production-bc75.up.railway.app/",

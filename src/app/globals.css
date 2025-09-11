@@ -805,6 +805,7 @@
   
   /* Disable default cursor on all interactive elements to keep custom cursor */
   /* Only apply on devices that support hover (desktop/laptop) */
+  /* 
   @media (hover: hover) and (pointer: fine) {
     a,
     button,
@@ -841,6 +842,7 @@
       cursor: none !important;
     }
   }
+  */
   
   /* Fallback for touch devices - use default cursor behavior */
   @media (hover: none) and (pointer: coarse) {
