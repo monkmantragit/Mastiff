@@ -9,13 +9,6 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 31536000, // 1 year
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    domains: [
-      'directus-production-bc75.up.railway.app',
-      'whitemassif.com',
-      'www.whitemassif.com',
-      'directus.whitemassif.com',
-      'qkzwdwhnbzrlyijluxdg.supabase.co'
-    ],
     remotePatterns: [
       {
         protocol: 'https',
@@ -26,6 +19,12 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'whitemassif.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.whitemassif.com',
         port: '',
         pathname: '/**',
       },
