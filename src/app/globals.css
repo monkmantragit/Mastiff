@@ -3,7 +3,6 @@
 @tailwind utilities;
 /* Fonts are now loaded via Next.js font optimization in layout.tsx */
 
-@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
