@@ -23,7 +23,7 @@ export class DirectusService {
       console.log('🔑 Token:', token ? `${token.substring(0, 10)}...` : 'NOT FOUND');
       
       // Include content and slug fields now that they're available
-      const response = await fetch(`${url}/items/blog?fields=id,title,slug,content,featured_image,published_date,status,excerpt,tags,category,author,read_time&filter={"status":{"_eq":"published"}}&sort=-published_date&limit=10`, {
+      const response = await fetch(`${url}/items/blog?fields=id,title,slug,content,featured_image,main_image,published_date,status,excerpt,tags,category,author,read_time&filter={"status":{"_eq":"published"}}&sort=-published_date&limit=10`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ export class DirectusService {
   static async getBlogPost(slug: string): Promise<Blog | null> {
     try {
       // Include content and slug fields and filter by slug
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/blog?fields=id,title,slug,content,featured_image,published_date,status,excerpt,tags,category,author,read_time&filter={"slug":{"_eq":"${slug}"},"status":{"_eq":"published"}}&limit=1`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/blog?fields=id,title,slug,content,featured_image,main_image,published_date,status,excerpt,tags,category,author,read_time&filter={"slug":{"_eq":"${slug}"},"status":{"_eq":"published"}}&limit=1`, {
         headers: {
           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
           'Content-Type': 'application/json'

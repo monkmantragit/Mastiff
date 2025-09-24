@@ -7,6 +7,7 @@ interface Blog {
   content?: string;
   slug?: string;
   featured_image?: string;
+  main_image?: string;
   published_date: string;
   status: 'published' | 'draft' | 'active';
   excerpt?: string;

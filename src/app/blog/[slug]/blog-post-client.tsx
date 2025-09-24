@@ -103,10 +103,10 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
             </div>
 
             {/* Featured Image */}
-            {getDirectusAssetUrl(post.featured_image) && (
+            {(getDirectusAssetUrl(post.main_image) || getDirectusAssetUrl(post.featured_image)) && (
               <div className="relative rounded-2xl overflow-hidden shadow-xl mb-12">
                 <Image
-                  src={getDirectusAssetUrl(post.featured_image)!}
+                  src={getDirectusAssetUrl(post.main_image) || getDirectusAssetUrl(post.featured_image)!}
                   alt={post.title}
                   width={800}
                   height={400}
@@ -221,9 +221,9 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
                 <Card key={relatedPost.id} className="glass rounded-2xl hover:shadow-xl transition-all duration-500 group cursor-pointer">
                   <Link href={`/blog/${relatedPost.slug || relatedPost.id}`}>
                     <div className="aspect-video overflow-hidden rounded-t-2xl relative">
-                      {getDirectusAssetUrl(relatedPost.featured_image) ? (
+                      {(getDirectusAssetUrl(relatedPost.main_image) || getDirectusAssetUrl(relatedPost.featured_image)) ? (
                         <Image
-                          src={getDirectusAssetUrl(relatedPost.featured_image)!}
+                          src={getDirectusAssetUrl(relatedPost.main_image) || getDirectusAssetUrl(relatedPost.featured_image)!}
                           alt={relatedPost.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
