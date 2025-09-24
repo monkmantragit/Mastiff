@@ -118,9 +118,9 @@ export default function BlogPage() {
                 <Card className="h-full glass rounded-3xl hover:shadow-xl transition-all duration-500 group cursor-pointer border-neutral-200">
                   <Link href={`/blog/${post.slug || post.id}`}>
                     <div className="aspect-video overflow-hidden rounded-t-3xl relative">
-                      {getDirectusAssetUrl(post.featured_image) ? (
+                      {(getDirectusAssetUrl(post.main_image) || getDirectusAssetUrl(post.featured_image)) ? (
                         <Image
-                          src={getDirectusAssetUrl(post.featured_image)!}
+                          src={getDirectusAssetUrl(post.main_image) || getDirectusAssetUrl(post.featured_image)!}
                           alt={post.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
