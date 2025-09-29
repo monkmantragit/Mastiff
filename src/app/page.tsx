@@ -3,8 +3,8 @@ import { generatePageMetadata } from "@/lib/seo-utils";
 import HomeClient from "./home-client";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "White Massif Event Management - Premier Corporate Events India",
-  description: "Leading corporate event management company with 1000+ successful events across Bangalore, Mumbai, Delhi, Chennai. Specializing in conferences, celebrations, product launches, team building & brand experiences.",
+  title: "White Massif - Trusted Corporate Event Management Company",
+  description: "White Massif is a leading corporate event management company delivering seamless events, conferences, and celebrations tailored for businesses.",
   keywords: [
     "corporate event management company India",
     "event management companies Bangalore",

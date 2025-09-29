@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { EmailService } from '../../../lib/email-service';
 
 // Helper function to get client IP
 function getClientIP(request: NextRequest): string {
@@ -98,6 +99,25 @@ export async function POST(request: NextRequest) {
         };
 
         result = await submitToDirectus('form_submissions', submissionData);
+        
+        // Send email notification
+        try {
+          let emailData;
+          if (formType === 'contact') {
+            emailData = EmailService.generateContactFormEmail(formData);
+          } else if (formType === 'enquiry') {
+            emailData = EmailService.generateEnquiryFormEmail(formData);
+          } else {
+            // For other form types, use contact form template
+            emailData = EmailService.generateContactFormEmail(formData);
+          }
+          
+          await EmailService.sendEmail(emailData);
+        } catch (emailError) {
+          console.error('Failed to send email notification:', emailError);
+          // Continue execution even if email fails
+        }
+        
         break;
       }
 

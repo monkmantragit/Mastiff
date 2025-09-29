@@ -60,6 +60,9 @@ export default function ContactClient() {
     success: boolean;
     message: string;
   } | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{
+    [key: string]: string;
+  }>({});
   
   // Advanced parallax effects
   const heroY = useTransform(scrollY, [0, 500], [0, -150]);
@@ -107,40 +110,90 @@ export default function ContactClient() {
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+    
+    // Clear field error when user starts typing
+    if (fieldErrors[name]) {
+      setFieldErrors({
+        ...fieldErrors,
+        [name]: ''
+      });
+    }
+    
+    // Clear general error when user makes changes
+    if (submitStatus && !submitStatus.success) {
+      setSubmitStatus(null);
+    }
+  };
+
+  // Comprehensive form validation function
+  const validateForm = () => {
+    const errors: { [key: string]: string } = {};
+    
+    // Name validation
+    if (!formData.name.trim()) {
+      errors.name = 'Full name is required';
+    } else if (formData.name.trim().length < 2) {
+      errors.name = 'Name must be at least 2 characters long';
+    }
+    
+    // Email validation
+    if (!formData.email.trim()) {
+      errors.email = 'Email address is required';
+    } else if (!FormService.validateEmail(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    // Phone validation (optional but if provided, should be valid)
+    if (formData.phone.trim() && !FormService.validatePhone(formData.phone)) {
+      errors.phone = 'Please enter a valid phone number';
+    }
+    
+    // Message validation
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required';
+    } else if (formData.message.trim().length < 10) {
+      errors.message = 'Message must be at least 10 characters long';
+    }
+    
+    // Other event type validation
+    if (formData.eventType === 'other' && !formData.otherEventType.trim()) {
+      errors.otherEventType = 'Please specify your event type';
+    }
+    
+    return errors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+    setFieldErrors({});
 
     try {
-      // Validate required fields
-      if (!formData.email) {
+      // Validate form fields
+      const validationErrors = validateForm();
+      
+      if (Object.keys(validationErrors).length > 0) {
+        setFieldErrors(validationErrors);
         setSubmitStatus({
           success: false,
-          message: 'Email address is required.'
+          message: 'Please fix the errors below and try again.'
         });
-        return;
-      }
-
-      if (!FormService.validateEmail(formData.email)) {
-        setSubmitStatus({
-          success: false,
-          message: 'Please enter a valid email address.'
-        });
+        setIsSubmitting(false);
         return;
       }
 
       // Prepare event type (use otherEventType if eventType is 'other')
       const finalEventType = formData.eventType === 'other' ? formData.otherEventType : formData.eventType;
 
-      // Submit form using FormService
-      const result = await FormService.submitContactForm({
+      // Sanitize form data before submission
+      const sanitizedData = FormService.sanitizeFormData({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -148,6 +201,9 @@ export default function ContactClient() {
         eventType: finalEventType,
         message: formData.message
       });
+
+      // Submit form using FormService
+      const result = await FormService.submitContactForm(sanitizedData);
 
       if (result.success) {
         // Store success data for thank you page
@@ -161,16 +217,27 @@ export default function ContactClient() {
         // Navigate to thank you page
         router.push('/thank-you');
       } else {
-        setSubmitStatus({
-          success: false,
-          message: result.message
-        });
+        // Handle specific API errors
+        if (result.error && result.error.includes('Email already')) {
+          setFieldErrors({ email: 'This email has already been used' });
+        } else if (result.error && result.error.includes('validation')) {
+          setSubmitStatus({
+            success: false,
+            message: 'Please check your information and try again.'
+          });
+        } else {
+          setSubmitStatus({
+            success: false,
+            message: result.message || 'Something went wrong. Please try again.'
+          });
+        }
       }
 
     } catch (error) {
+      console.error('Form submission error:', error);
       setSubmitStatus({
         success: false,
-        message: 'An unexpected error occurred. Please try again.'
+        message: 'Network error. Please check your connection and try again.'
       });
     } finally {
       setIsSubmitting(false);
@@ -369,9 +436,21 @@ export default function ContactClient() {
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="Your full name"
-                      className="glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500"
+                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
+                        fieldErrors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                      }`}
                       required
                     />
+                    {fieldErrors.name && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red-600 text-sm mt-1 flex items-center"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-1" />
+                        {fieldErrors.name}
+                      </motion.p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">
@@ -383,9 +462,21 @@ export default function ContactClient() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="your@email.com"
-                      className="glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500"
+                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
+                        fieldErrors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                      }`}
                       required
                     />
+                    {fieldErrors.email && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red-600 text-sm mt-1 flex items-center"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-1" />
+                        {fieldErrors.email}
+                      </motion.p>
+                    )}
                   </div>
                 </div>
 
@@ -400,8 +491,20 @@ export default function ContactClient() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+91 XXXXX XXXXX"
-                      className="glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500"
+                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
+                        fieldErrors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                      }`}
                     />
+                    {fieldErrors.phone && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red-600 text-sm mt-1 flex items-center"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-1" />
+                        {fieldErrors.phone}
+                      </motion.p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">
@@ -451,9 +554,21 @@ export default function ContactClient() {
                       value={formData.otherEventType || ''}
                       onChange={handleInputChange}
                       placeholder="Please describe your event type"
-                      className="glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500"
+                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
+                        fieldErrors.otherEventType ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                      }`}
                       required
                     />
+                    {fieldErrors.otherEventType && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red-600 text-sm mt-1 flex items-center"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-1" />
+                        {fieldErrors.otherEventType}
+                      </motion.p>
+                    )}
                   </div>
                 )}
 
@@ -467,9 +582,21 @@ export default function ContactClient() {
                     onChange={handleInputChange}
                     placeholder="Tell us about your event vision, requirements, and any specific details..."
                     rows={6}
-                    className="glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500"
+                    className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
+                      fieldErrors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                    }`}
                     required
                   />
+                  {fieldErrors.message && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-600 text-sm mt-1 flex items-center"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-1" />
+                      {fieldErrors.message}
+                    </motion.p>
+                  )}
                 </div>
 
                 {/* Status Message */}
