@@ -454,7 +454,7 @@ export function generatePageMetadata({
   const fullUrl = `${companyInfo.url}${path}`;
   
   return {
-    title: `${title} | ${companyInfo.name}`,
+    title: `${title}`,
     description,
     keywords: keywords?.join(", ") || companyInfo.keywords.primary.join(", "),
     authors: [{ name: companyInfo.name }],
@@ -475,7 +475,7 @@ export function generatePageMetadata({
       }
     },
     openGraph: {
-      title: `${title} | ${companyInfo.name}`,
+      title: `${title}`,
       description,
       url: fullUrl,
       siteName: companyInfo.name,
@@ -486,7 +486,7 @@ export function generatePageMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | ${companyInfo.name}`,
+      title: `${title}`,
       description,
       images: images.length > 0 ? images : [companyInfo.logo],
       creator: '@whitemassif'
