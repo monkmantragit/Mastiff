@@ -126,6 +126,26 @@ export default function RootLayout({
           `}
         </Script>
 
+        {/* Google Ads - Click to Call Conversion Tracking */}
+        <Script id="google-ads-conversion" strategy="afterInteractive">
+          {`
+            function gtag_report_conversion(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-971911197/C5M0CMSGq4YcEJ3guM8D',
+                  'value': 1.0,
+                  'currency': 'INR',
+                  'event_callback': callback
+              });
+              return false;
+            }
+          `}
+        </Script>
+
         {/* Microsoft Clarity - Deferred for performance */}
         <Script id="microsoft-clarity" strategy="lazyOnload">
           {`
