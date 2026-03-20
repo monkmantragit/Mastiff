@@ -11,7 +11,7 @@ import {
   Trophy,
   Target,
   CheckCircle,
-  Phone,
+  MessageCircle,
   Star,
   Globe,
   Award,
@@ -648,14 +648,14 @@ export default function HomeClient() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link href="tel:+919900141155">
+                <Link href="https://wa.me/919620257941?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer">
                   <Button
                     variant="outline"
                     size="lg"
                     className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg flex items-center"
                   >
-                    <Phone className="mr-2 h-5 w-5" />
-                    Call us
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    WhatsApp us
                   </Button>
                 </Link>
               </div>

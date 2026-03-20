@@ -6,9 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { 
-  ArrowRight, 
-  Phone,
+import {
+  ArrowRight,
   Mail,
   MapPin,
   Clock,
@@ -71,11 +70,11 @@ export default function ContactClient() {
 
   const contactInfo = [
     {
-      icon: Phone,
-      title: "Call The Experts",
-      details: ["Prakash: +91 99001 41155", "Vinay: +91 99001 41177"],
-      description: "Available when inspiration strikes",
-      gradient: "from-blue-500 to-indigo-600"
+      icon: MessageCircle,
+      title: "Chat on WhatsApp",
+      details: ["wa.me/whitemassif", "Instant responses, real conversations"],
+      description: "Click to start a WhatsApp conversation",
+      gradient: "from-green-500 to-emerald-600"
     },
     {
       icon: Mail,
