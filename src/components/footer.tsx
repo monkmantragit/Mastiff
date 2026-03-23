@@ -281,19 +281,6 @@ export default function Footer() {
                   </div>
                 </div>
 
-                {/* Contact */}
-                <div className="flex items-start space-x-3">
-                  <Phone className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
-                  <div>
-                    <button
-                      onClick={() => openPopup('footer-contact')}
-                      className="text-white/80 hover:text-[#F9A625] transition-colors"
-                    >
-                      Get Quote
-                    </button>
-                  </div>
-                </div>
-
                 {/* Google Maps */}
                 <div className="mt-6">
                   <iframe

@@ -103,7 +103,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
           submissionId: result.id,
           timestamp: new Date().toISOString()
         }));
-        
+
         // Close popup and navigate to thank you page
         onClose();
         router.push('/thank-you');
@@ -154,11 +154,11 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                   <X className="h-4 w-4" />
                 </Button>
               </div>
-              
+
               <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-3 mb-4">
-                <img 
-                  src="/WM LOGO-05.png" 
-                  alt="White Massif Logo" 
+                <img
+                  src="/WM LOGO-05.png"
+                  alt="White Massif Logo"
                   className="h-8 w-auto object-contain"
                 />
                 <div>
@@ -170,8 +170,8 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                   </p>
                 </div>
               </div>
-              
-              
+
+
               {/* Company Statistics */}
               <div className="mt-4 text-center">
                 <p className="text-[#F9A625] text-sm font-medium">
@@ -329,11 +329,10 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-4 rounded-lg ${
-                    submitStatus.success 
-                      ? 'bg-green-50 border border-green-200 text-green-800' 
+                  className={`p-4 rounded-lg ${submitStatus.success
+                      ? 'bg-green-50 border border-green-200 text-green-800'
                       : 'bg-red-50 border border-red-200 text-red-800'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center space-x-2">
                     {submitStatus.success ? (
@@ -378,15 +377,6 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                       Start My Event Journey
                     </>
                   )}
-                </Button>
-                
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={onClose}
-                  className="mobile-touch-target border-gray-300 text-gray-700 hover:bg-gray-50"
-                >
-                  Maybe Later
                 </Button>
               </div>
 

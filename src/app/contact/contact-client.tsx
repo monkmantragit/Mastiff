@@ -62,7 +62,7 @@ export default function ContactClient() {
   const [fieldErrors, setFieldErrors] = useState<{
     [key: string]: string;
   }>({});
-  
+
   // Advanced parallax effects
   const heroY = useTransform(scrollY, [0, 500], [0, -150]);
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.8]);
@@ -72,14 +72,16 @@ export default function ContactClient() {
     {
       icon: MessageCircle,
       title: "Chat on WhatsApp",
-      details: ["wa.me/whitemassif", "Instant responses, real conversations"],
+      details: ["wa.me/919886382222", "Instant responses, real conversations"],
+      href: "https://wa.me/919886382222",
       description: "Click to start a WhatsApp conversation",
       gradient: "from-green-500 to-emerald-600"
     },
     {
       icon: Mail,
-      title: "Start The Conversation",
+      title: "Start a Conversation",
       details: ["info@whitemassif.com", "Where excellence begins"],
+      href: "mailto:info@whitemassif.com",
       description: "We're here when you need us",
       gradient: "from-emerald-500 to-teal-600"
     },
@@ -110,12 +112,12 @@ export default function ContactClient() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
+
     setFormData({
       ...formData,
       [name]: value
     });
-    
+
     // Clear field error when user starts typing
     if (fieldErrors[name]) {
       setFieldErrors({
@@ -123,7 +125,7 @@ export default function ContactClient() {
         [name]: ''
       });
     }
-    
+
     // Clear general error when user makes changes
     if (submitStatus && !submitStatus.success) {
       setSubmitStatus(null);
@@ -133,38 +135,38 @@ export default function ContactClient() {
   // Comprehensive form validation function
   const validateForm = () => {
     const errors: { [key: string]: string } = {};
-    
+
     // Name validation
     if (!formData.name.trim()) {
       errors.name = 'Full name is required';
     } else if (formData.name.trim().length < 2) {
       errors.name = 'Name must be at least 2 characters long';
     }
-    
+
     // Email validation
     if (!formData.email.trim()) {
       errors.email = 'Email address is required';
     } else if (!FormService.validateEmail(formData.email)) {
       errors.email = 'Please enter a valid email address';
     }
-    
+
     // Phone validation (optional but if provided, should be valid)
     if (formData.phone.trim() && !FormService.validatePhone(formData.phone)) {
       errors.phone = 'Please enter a valid phone number';
     }
-    
+
     // Message validation
     if (!formData.message.trim()) {
       errors.message = 'Message is required';
     } else if (formData.message.trim().length < 10) {
       errors.message = 'Message must be at least 10 characters long';
     }
-    
+
     // Other event type validation
     if (formData.eventType === 'other' && !formData.otherEventType.trim()) {
       errors.otherEventType = 'Please specify your event type';
     }
-    
+
     return errors;
   };
 
@@ -177,7 +179,7 @@ export default function ContactClient() {
     try {
       // Validate form fields
       const validationErrors = validateForm();
-      
+
       if (Object.keys(validationErrors).length > 0) {
         setFieldErrors(validationErrors);
         setSubmitStatus({
@@ -212,7 +214,7 @@ export default function ContactClient() {
           submissionId: result.id,
           timestamp: new Date().toISOString()
         }));
-        
+
         // Navigate to thank you page
         router.push('/thank-you');
       } else {
@@ -248,13 +250,13 @@ export default function ContactClient() {
       {/* Ultra-Modern Hero Section */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Animated Gradient Background */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 gradient-mesh"
           style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
         />
-        
+
         {/* Floating Geometric Elements */}
-        <motion.div 
+        <motion.div
           className="absolute top-20 left-20 w-32 h-32 glass rounded-full"
           animate={{
             y: [0, -15, 0],
@@ -266,8 +268,8 @@ export default function ContactClient() {
             ease: "easeInOut"
           }}
         />
-        
-        <motion.div 
+
+        <motion.div
           className="absolute bottom-32 right-32 w-24 h-24 glass-primary organic-blob"
           animate={{
             scale: [1, 1.2, 1],
@@ -280,12 +282,12 @@ export default function ContactClient() {
             delay: 1
           }}
         />
-        
-        <motion.div 
+
+        <motion.div
           className="absolute top-1/2 left-10 w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl floating"
           style={{ rotate: 45 }}
         />
-        
+
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
@@ -294,7 +296,7 @@ export default function ContactClient() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
             {/* Premium Badge */}
-            <motion.div 
+            <motion.div
               className="inline-flex items-center space-x-2 px-6 py-3 glass rounded-full mb-8 micro-glow"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
@@ -302,9 +304,9 @@ export default function ContactClient() {
               <Sparkles className="w-5 h-5 text-amber-500" />
               <span className="text-sm font-medium tracking-wide">Let&apos;s Talk</span>
             </motion.div>
-            
+
             {/* Main Headline with Kinetic Typography */}
-            <motion.h1 
+            <motion.h1
               className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8"
               initial={{ opacity: 0, y: 50 }}
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
@@ -318,22 +320,22 @@ export default function ContactClient() {
                 Build Themselves
               </span>
             </motion.h1>
-            
-            <motion.p 
+
+            <motion.p
               className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              Your vision deserves more than hope. It deserves action. It deserves partners who turn impossible into inevitable. 
+              Your vision deserves more than hope. It deserves action. It deserves partners who turn impossible into inevitable.
               Let&apos;s start the conversation that changes everything.
             </motion.p>
-            
+
           </motion.div>
         </div>
-        
+
         {/* Scroll Indicator */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -341,7 +343,7 @@ export default function ContactClient() {
         >
           <div className="flex flex-col items-center">
             <span className="text-sm mb-2 font-body text-neutral-500">Let&apos;s connect</span>
-            <motion.div 
+            <motion.div
               className="w-px h-16 bg-gradient-to-b from-amber-500 to-transparent"
               animate={{ scaleY: [1, 0.5, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -374,24 +376,34 @@ export default function ContactClient() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="neomorphism rounded-3xl p-8 text-center group hover:shadow-2xl transition-all duration-500"
-              >
-                <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${info.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
-                  <info.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-heading mb-4 text-neutral-900">{info.title}</h3>
-                <div className="space-y-2 mb-4">
-                  {info.details.map((detail, idx) => (
-                    <p key={idx} className="text-neutral-700 font-medium">{detail}</p>
-                  ))}
-                </div>
-                <p className="text-neutral-500 font-body text-sm">{info.description}</p>
-              </motion.div>
-            ))}
+            {contactInfo.map((info, index) => {
+              const MotionComponent = (info as any).href ? motion.a : motion.div;
+              const extraProps = (info as any).href ? {
+                href: (info as any).href,
+                target: (info as any).href.startsWith('http') ? "_blank" : undefined,
+                rel: (info as any).href.startsWith('http') ? "noopener noreferrer" : undefined,
+              } : {};
+
+              return (
+                <MotionComponent
+                  key={index}
+                  variants={fadeInUp}
+                  className={`neomorphism rounded-3xl p-8 text-center group hover:shadow-2xl transition-all duration-500 ${(info as any).href ? 'cursor-pointer' : ''}`}
+                  {...extraProps}
+                >
+                  <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${info.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                    <info.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-heading mb-4 text-neutral-900">{info.title}</h3>
+                  <div className="space-y-2 mb-4">
+                    {info.details.map((detail, idx) => (
+                      <p key={idx} className="text-neutral-700 font-medium">{detail}</p>
+                    ))}
+                  </div>
+                  <p className="text-neutral-500 font-body text-sm">{info.description}</p>
+                </MotionComponent>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -419,7 +431,7 @@ export default function ContactClient() {
                 </p>
               </motion.div>
 
-              <motion.form 
+              <motion.form
                 onSubmit={handleSubmit}
                 variants={fadeInUp}
                 className="space-y-6"
@@ -435,9 +447,8 @@ export default function ContactClient() {
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="Your full name"
-                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
-                        fieldErrors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
-                      }`}
+                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${fieldErrors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                        }`}
                       required
                     />
                     {fieldErrors.name && (
@@ -461,9 +472,8 @@ export default function ContactClient() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="your@email.com"
-                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
-                        fieldErrors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
-                      }`}
+                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${fieldErrors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                        }`}
                       required
                     />
                     {fieldErrors.email && (
@@ -490,9 +500,8 @@ export default function ContactClient() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+91 XXXXX XXXXX"
-                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
-                        fieldErrors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
-                      }`}
+                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${fieldErrors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                        }`}
                     />
                     {fieldErrors.phone && (
                       <motion.p
@@ -553,9 +562,8 @@ export default function ContactClient() {
                       value={formData.otherEventType || ''}
                       onChange={handleInputChange}
                       placeholder="Please describe your event type"
-                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
-                        fieldErrors.otherEventType ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
-                      }`}
+                      className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${fieldErrors.otherEventType ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                        }`}
                       required
                     />
                     {fieldErrors.otherEventType && (
@@ -581,9 +589,8 @@ export default function ContactClient() {
                     onChange={handleInputChange}
                     placeholder="Tell us about your event vision, requirements, and any specific details..."
                     rows={6}
-                    className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${
-                      fieldErrors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
-                    }`}
+                    className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${fieldErrors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
+                      }`}
                     required
                   />
                   {fieldErrors.message && (
@@ -603,11 +610,10 @@ export default function ContactClient() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`p-4 rounded-lg ${
-                      submitStatus.success 
-                        ? 'bg-green-50 border border-green-200 text-green-800' 
-                        : 'bg-red-50 border border-red-200 text-red-800'
-                    }`}
+                    className={`p-4 rounded-lg ${submitStatus.success
+                      ? 'bg-green-50 border border-green-200 text-green-800'
+                      : 'bg-red-50 border border-red-200 text-red-800'
+                      }`}
                   >
                     <div className="flex items-center space-x-2">
                       {submitStatus.success ? (
@@ -620,8 +626,8 @@ export default function ContactClient() {
                   </motion.div>
                 )}
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isSubmitting}
                   className="btn-primary w-full text-lg py-6 disabled:opacity-50 disabled:cursor-not-allowed"
                 >

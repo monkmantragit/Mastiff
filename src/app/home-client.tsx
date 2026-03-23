@@ -94,7 +94,7 @@ export default function HomeClient() {
       description: "We specialize in end-to-end execution of inaugurations tailored to your brand identity.From thematic décor and entry arch setups to floral arrangements and ribbon-cutting stations, we cover it all.",
       icon: Award,
       gradient: "from-[#F9A625] to-[#2A3959]",
-      features: ["Office Launches", "Plant Inaugurations", "Ribbon Cutting Ceremonies", "Facility Tours & Walkthroughs", "Brand Showcases", "CEO / Leadership Addresses", "Media & Press Briefings", "VIP Guest Management", "Customized Stage & Tech Setups", "Cultural & Entertainment Segments"],
+      features: ["Office Launches", "Plant Inaugurations", "Facility Tours & Walkthroughs", "Brand Showcases", "CEO / Leadership Addresses", "Media & Press Briefings", "VIP Guest Management", "Customized Stage & Tech Setups", "Cultural & Entertainment Segments"],
       stats: { events: "200+", clients: "Industry Leaders" },
       image: serviceImages.inauguration
     },
@@ -144,7 +144,7 @@ export default function HomeClient() {
     {
       icon: Sparkles,
       title: "Driven by Creative Impact",
-      description: "From striking ideas to seamless execution, we design events that resonate. Fresh concepts, thoughtful storytelling, lasting impressions."
+      description: "From striking ideas to seamless execution, we design events that resonate. Fresh concepts, thoughtful storytelling and lasting Impression"
     },
     {
       icon: Users,
@@ -409,7 +409,7 @@ export default function HomeClient() {
                 Where Vision Meets <span className="text-[#F9A625]">Precision</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-                Elevating corporate events with seamless planning and strategic impact.
+                Transforming corporate events with flawless planning and strategic impact.
               </p>
             </motion.div>
           </motion.div>
@@ -487,7 +487,7 @@ export default function HomeClient() {
                 The <span className="text-[#F9A625]">White Massif</span> Difference
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto text-center font-body">
-                Why Brands Trust White Massif - our proven approach to creating exceptional corporate experiences.
+                Why Brands Trust White Massif - Our proven approach to creating exceptional corporate experiences.
               </p>
             </motion.div>
           </motion.div>
