@@ -72,8 +72,8 @@ export default function ContactClient() {
     {
       icon: MessageCircle,
       title: "Chat on WhatsApp",
-      details: ["wa.me/919886382222", "Instant responses, real conversations"],
-      href: "https://wa.me/919886382222",
+      details: ["+91 74112 72227", "Instant responses, real conversations"],
+      href: "https://wa.me/917411272227",
       description: "Click to start a WhatsApp conversation",
       gradient: "from-green-500 to-emerald-600"
     },
