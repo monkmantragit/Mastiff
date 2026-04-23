@@ -763,7 +763,8 @@ export default function ServicesClient() {
                     className="mobile-card bg-[#2A3959] backdrop-blur-sm border border-[#2A3959]/30 hover:border-[#F9A625]/50 transition-all duration-300 mobile-animation"
                   >
                     <Calendar className="w-10 h-10 sm:w-12 sm:h-12 text-[#F9A625] mx-auto mb-3 sm:mb-4" />
-                    <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Schedule Meeting</h3>
+                    <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Schedule a Meeting</h3>
+                    <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Let's discuss your event requirements</p>
                     <Button
                       onClick={() => openPopup('services-meeting')}
                       variant="outline"

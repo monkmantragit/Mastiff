@@ -10,7 +10,6 @@ export const companyInfo = {
   foundingDate: "2015",
   founders: ["Harsha", "Team White Massif"],
   email: "info@whitemassif.com",
-  phone: "+91-80-4123-4567", // Add actual phone
   address: {
     streetAddress: "HSR Layout", // Update with actual address
     addressLocality: "Bangalore",
@@ -103,13 +102,6 @@ export function generateOrganizationSchema() {
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: companyInfo.phone,
-        contactType: "sales",
-        areaServed: "IN",
-        availableLanguage: ["English", "Hindi", "Kannada", "Tamil", "Telugu"]
-      },
-      {
-        "@type": "ContactPoint",
         email: companyInfo.email,
         contactType: "customer service",
         areaServed: "IN",
@@ -140,7 +132,6 @@ export function generateLocalBusinessSchema() {
       "/assets/media/Services/Celebration Galore.jpg"
     ],
     url: companyInfo.url,
-    telephone: companyInfo.phone,
     priceRange: companyInfo.priceRange,
     address: {
       "@type": "PostalAddress",
@@ -338,7 +329,6 @@ export function generatePersonSchema(person: {
   description?: string;
   image?: string;
   email?: string;
-  telephone?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -348,7 +338,6 @@ export function generatePersonSchema(person: {
     description: person.description,
     image: person.image,
     email: person.email,
-    telephone: person.telephone,
     worksFor: {
       "@type": "Organization",
       name: companyInfo.name,

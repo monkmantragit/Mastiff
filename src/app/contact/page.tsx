@@ -4,7 +4,7 @@ import ContactClient from "./contact-client";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Contact White Massif - Get Event Management Quote",
-  description: "Contact White Massif for corporate event management services in Bangalore & across India. Get free consultation, instant quotes & professional event planning assistance. Call +91-99001-41155.",
+  description: "Contact White Massif for corporate event management services in Bangalore & across India. Get free consultation, instant quotes & professional event planning assistance. WhatsApp or email us today.",
   keywords: [
     "contact White Massif",
     "event management contact Bangalore",
@@ -14,7 +14,6 @@ export const metadata: Metadata = generatePageMetadata({
     "event management inquiry",
     "White Massif office Bangalore",
     "HSR Layout event planners",
-    "event management phone number",
     "book event management services",
     "request event proposal",
     "event planning contact form"

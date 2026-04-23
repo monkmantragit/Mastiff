@@ -96,6 +96,15 @@ export default function RootLayout({
         ]} />
 
 
+        {/* Google Tag Manager */}
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-W9GQF7WR');`}
+        </Script>
+
         {/* Google Analytics - Deferred for performance */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-3JZS3H8914"
@@ -114,6 +123,26 @@ export default function RootLayout({
               custom_map: {'custom_parameter_1': 'business_type'},
               business_type: 'event_management'
             });
+          `}
+        </Script>
+
+        {/* Google Ads - Click to Call Conversion Tracking */}
+        <Script id="google-ads-conversion" strategy="afterInteractive">
+          {`
+            function gtag_report_conversion(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-971911197/C5M0CMSGq4YcEJ3guM8D',
+                  'value': 1.0,
+                  'currency': 'INR',
+                  'event_callback': callback
+              });
+              return false;
+            }
           `}
         </Script>
 
@@ -149,6 +178,15 @@ export default function RootLayout({
       <body
         className={`${sinkinSans.variable} ${raleway.variable} antialiased`}
       >
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-W9GQF7WR"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
         <PopupProvider>
           <Preloader />
           {/* <CustomCursor /> */}

@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
 
+  // Create a standalone folder with a minimal node_modules for production
+  output: 'standalone',
+
   images: {
     // ✅ Image optimization ENABLED (removed unoptimized: true)
     formats: ['image/webp', 'image/avif'],

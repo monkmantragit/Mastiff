@@ -11,7 +11,7 @@ import {
   Trophy,
   Target,
   CheckCircle,
-  Phone,
+  MessageCircle,
   Star,
   Globe,
   Award,
@@ -94,7 +94,7 @@ export default function HomeClient() {
       description: "We specialize in end-to-end execution of inaugurations tailored to your brand identity.From thematic décor and entry arch setups to floral arrangements and ribbon-cutting stations, we cover it all.",
       icon: Award,
       gradient: "from-[#F9A625] to-[#2A3959]",
-      features: ["Office Launches", "Plant Inaugurations", "Ribbon Cutting Ceremonies", "Facility Tours & Walkthroughs", "Brand Showcases", "CEO / Leadership Addresses", "Media & Press Briefings", "VIP Guest Management", "Customized Stage & Tech Setups", "Cultural & Entertainment Segments"],
+      features: ["Office Launches", "Plant Inaugurations", "Facility Tours & Walkthroughs", "Brand Showcases", "CEO / Leadership Addresses", "Media & Press Briefings", "VIP Guest Management", "Customized Stage & Tech Setups", "Cultural & Entertainment Segments"],
       stats: { events: "200+", clients: "Industry Leaders" },
       image: serviceImages.inauguration
     },
@@ -144,7 +144,7 @@ export default function HomeClient() {
     {
       icon: Sparkles,
       title: "Driven by Creative Impact",
-      description: "From striking ideas to seamless execution, we design events that resonate. Fresh concepts, thoughtful storytelling, lasting impressions."
+      description: "From striking ideas to seamless execution, we design events that resonate. Fresh concepts, thoughtful storytelling and lasting Impression"
     },
     {
       icon: Users,
@@ -409,7 +409,7 @@ export default function HomeClient() {
                 Where Vision Meets <span className="text-[#F9A625]">Precision</span>
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-                Elevating corporate events with seamless planning and strategic impact.
+                Transforming corporate events with flawless planning and strategic impact.
               </p>
             </motion.div>
           </motion.div>
@@ -487,7 +487,7 @@ export default function HomeClient() {
                 The <span className="text-[#F9A625]">White Massif</span> Difference
               </h2>
               <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto text-center font-body">
-                Why Brands Trust White Massif - our proven approach to creating exceptional corporate experiences.
+                Why Brands Trust White Massif - Our proven approach to creating exceptional corporate experiences.
               </p>
             </motion.div>
           </motion.div>
@@ -648,14 +648,14 @@ export default function HomeClient() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link href="tel:+919900141155">
+                <Link href="https://wa.me/919620257941?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer">
                   <Button
                     variant="outline"
                     size="lg"
                     className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg flex items-center"
                   >
-                    <Phone className="mr-2 h-5 w-5" />
-                    Call us
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    WhatsApp us
                   </Button>
                 </Link>
               </div>
