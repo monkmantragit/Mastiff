@@ -82,7 +82,7 @@ export default function Footer() {
 
   const contactInfo = [
     { name: 'Get Quote', href: '/', action: 'popup' },
-    { name: 'WhatsApp Us', href: 'https://wa.me/919900141177?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.' },
+    { name: 'WhatsApp Us', href: 'https://wa.me/917411272227?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.' },
     { name: 'Email Us', href: 'mailto:info@whitemassif.com' }
   ];
 

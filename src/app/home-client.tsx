@@ -648,7 +648,7 @@ export default function HomeClient() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link href="https://wa.me/919620257941?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer">
+                <Link href="https://wa.me/917411272227?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer">
                   <Button
                     variant="outline"
                     size="lg"
