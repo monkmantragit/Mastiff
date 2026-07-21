@@ -69,12 +69,14 @@ export default function Footer() {
     { name: 'Celebrations', href: '/services' },
     { name: 'Inaugurations', href: '/services' },
     { name: 'Hybrid Events', href: '/services' },
-    { name: 'Special Projects', href: '/services' }
+    { name: 'Special Projects', href: '/services' },
+    { name: 'Corporate Gifting', href: '/gifting' }
   ];
 
   const quickLinks = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
+    { name: 'Gifting', href: '/gifting' },
     { name: 'Our Team', href: '/team' },
     { name: 'Our Clients', href: '/clients' },
     { name: 'Careers', href: '/careers' }
