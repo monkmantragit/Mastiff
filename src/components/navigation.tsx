@@ -31,7 +31,7 @@ export default function Navigation() {
   const isHomepage = pathname === '/';
 
   // Check if we're on a page with dark hero background
-  const isDarkHeroPage = pathname.startsWith('/services') || pathname === '/portfolio' || pathname === '/work' || pathname === '/team' || pathname === '/event-management-company-in-bangalore';
+  const isDarkHeroPage = pathname.startsWith('/services') || pathname === '/gifting' || pathname === '/portfolio' || pathname === '/work' || pathname === '/team' || pathname === '/event-management-company-in-bangalore';
 
   // Determine logo color based on page and scroll state
   const shouldLogoBeBlack = isHomepage || isScrolled;
@@ -54,6 +54,7 @@ export default function Navigation() {
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
+    { name: 'Gifting', href: '/gifting' },
     { name: 'Team', href: '/team' },
     { name: 'Work', href: '/portfolio' },
     { name: 'Clients', href: '/clients' },
