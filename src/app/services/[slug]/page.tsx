@@ -4,6 +4,7 @@ import { cache } from 'react';
 import { DirectusService, type Service } from '@/lib/directus-service';
 import SchemaMarkup from '@/components/schema-markup';
 import { generateServiceSchema, generateBreadcrumbSchema, generatePageMetadata, companyInfo } from '@/lib/seo-utils';
+import { DUPLICATE_SERVICE_SLUGS } from '@/lib/service-redirects';
 import ServiceClient from './service-client';
 
 interface ServicePageProps {
@@ -120,9 +121,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
 export async function generateStaticParams() {
   try {
     const services = await DirectusService.getServices();
-    return services.map((service) => ({
-      slug: service.slug || service.id,
-    }));
+    return services
+      // Redirected in next.config.ts, so there is no page left to prerender.
+      .filter((service) => !DUPLICATE_SERVICE_SLUGS.has(service.slug))
+      .map((service) => ({
+        slug: service.slug || service.id,
+      }));
   } catch (error) {
     console.error('Error generating static params:', error);
     return [];

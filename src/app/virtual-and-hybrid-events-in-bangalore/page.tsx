@@ -5,7 +5,7 @@ export const metadata: Metadata = {
     title: "Virtual & Hybrid Corporate Events Bangalore | White Massif",
     description: "Virtual and hybrid corporate events in Bangalore. Secure streaming, professional AV, and engaging online experiences. Book a demo event.",
     alternates: {
-        canonical: 'https://whitemassif.com/virtual-and-hybrid-events-in-bangalore'
+        canonical: 'https://www.whitemassif.com/virtual-and-hybrid-events-in-bangalore'
     }
 };
 

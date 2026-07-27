@@ -5,7 +5,7 @@ export const metadata: Metadata = {
     title: "Annual Day & Awards Night Bangalore | White Massif",
     description: "Annual day and corporate awards night management in Bangalore. Celebrate achievements with professional stage, AV, entertainment and flawless execution. Contact us.",
     alternates: {
-        canonical: 'https://whitemassif.com/annual-day-and-award-event-management-bangalore'
+        canonical: 'https://www.whitemassif.com/annual-day-and-award-event-management-bangalore'
     }
 };
 

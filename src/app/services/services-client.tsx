@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import { usePopup } from "@/components/popup-provider";
 import { ServicesMediaService } from "@/lib/services-media";
 
@@ -55,8 +55,17 @@ const serviceCategories = [
   { id: "special-projects", name: "Special Projects", icon: Star, description: "Professional special projects planning and execution with attention to every detail", path: "/services/industry-convention-project-events" }
 ];
 
+// Specialist capabilities that back the six categories above. Each has its own page but was
+// linked from nowhere, leaving the sitemap as Google's only route to them.
+const supportServices = [
+  { name: "Venue Sourcing", path: "/services/venue-sourcing" },
+  { name: "Curation & Conceptualisation", path: "/services/curation-conceptualisation" },
+  { name: "Production, Fabrication & Technical", path: "/services/production-fabrication-infrastructure-technical" },
+  { name: "Entertainment Curation", path: "/services/entertainment-curation" },
+  { name: "Merchandising & Event Documentation", path: "/services/merchandising-event-documentation-other-support-services" }
+];
+
 export default function ServicesClient() {
-  const router = useRouter();
   const heroRef = useRef(null);
   const { openPopup } = usePopup();
 
@@ -404,10 +413,8 @@ export default function ServicesClient() {
           <div className="mobile-grid">
             {serviceCategories.map((category, index) => {
               return (
-                <motion.button
+                <motion.div
                   key={category.id}
-                  className="group relative mobile-card bg-white shadow-lg hover:shadow-2xl border border-gray-100 hover:border-[#F9A625]/30 transition-all duration-500 hover:-translate-y-2 sm:hover:-translate-y-3 hover:bg-gradient-to-br hover:from-white hover:to-[#F9A625]/5 overflow-hidden mobile-animation"
-                  onClick={() => router.push(category.path)}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.15 }}
@@ -415,6 +422,12 @@ export default function ServicesClient() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
+                  {/* Real anchor, not an onClick handler: Googlebot cannot follow router.push,
+                      which left every /services/* page undiscoverable. */}
+                  <Link
+                    href={category.path}
+                    className="group relative block h-full w-full text-center mobile-card bg-white shadow-lg hover:shadow-2xl border border-gray-100 hover:border-[#F9A625]/30 transition-all duration-500 hover:-translate-y-2 sm:hover:-translate-y-3 hover:bg-gradient-to-br hover:from-white hover:to-[#F9A625]/5 overflow-hidden mobile-animation"
+                  >
                   {/* Background Pattern */}
                   <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-[#F9A625]/10 to-transparent rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16 group-hover:scale-150 transition-transform duration-500"></div>
 
@@ -434,10 +447,35 @@ export default function ServicesClient() {
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </div>
                   </div>
-                </motion.button>
+                  </Link>
+                </motion.div>
               );
             })}
           </div>
+
+          {/* Specialist Services */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="mt-12 sm:mt-16"
+          >
+            <h3 className="text-xl sm:text-2xl font-bold text-[#2A3959] mb-4 sm:mb-6 text-center mobile-heading">
+              Specialist Services
+            </h3>
+            <nav className="flex flex-wrap justify-center gap-3">
+              {supportServices.map((service) => (
+                <Link
+                  key={service.path}
+                  href={service.path}
+                  className="px-4 py-2 rounded-full text-sm font-medium bg-white text-[#2A3959] border border-gray-200 hover:border-[#F9A625] hover:text-[#F9A625] transition-colors duration-300"
+                >
+                  {service.name}
+                </Link>
+              ))}
+            </nav>
+          </motion.div>
 
           {/* Bottom CTA - Mobile Optimized */}
           <motion.div

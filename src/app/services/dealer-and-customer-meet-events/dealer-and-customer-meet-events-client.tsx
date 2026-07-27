@@ -106,7 +106,7 @@ export default function DealerAndCustomerMeetEventsClient() {
                             </Button>
                             <Button
                                 variant="outline"
-                                onClick={() => window.location.href = 'https://whitemassif.com/work'}
+                                onClick={() => window.location.href = '/work'}
                                 className="bg-transparent border-white text-white hover:!bg-white hover:!text-[#2A3959] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg px-10 py-6 text-lg rounded-2xl"
                             >
                                 View Our Portfolio
@@ -562,7 +562,7 @@ export default function DealerAndCustomerMeetEventsClient() {
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
                         <Button
                             variant="outline"
-                            onClick={() => window.location.href = 'https://whitemassif.com/contact'}
+                            onClick={() => window.location.href = '/contact'}
                             className="bg-transparent border-white text-white hover:!bg-white hover:!text-[#2A3959] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg px-8 py-6 text-sm lg:text-lg rounded-2xl"
                         >
                             Speak to Our Event Specialists
