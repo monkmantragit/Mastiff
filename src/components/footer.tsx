@@ -63,23 +63,43 @@ export default function Footer() {
     transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
   };
 
+  // Each entry points at its own page. These previously all pointed at /services, which
+  // left every service sub-page with no inbound internal link and nothing for Googlebot to follow.
   const services = [
     { name: 'All Services', href: '/services' },
-    { name: 'Corporate Events', href: '/services' },
-    { name: 'Celebrations', href: '/services' },
-    { name: 'Inaugurations', href: '/services' },
-    { name: 'Hybrid Events', href: '/services' },
-    { name: 'Special Projects', href: '/services' },
+    { name: 'Corporate Events', href: '/services/corporate-event-management' },
+    { name: 'Celebrations', href: '/services/employee-engagement-activities' },
+    { name: 'Inaugurations', href: '/services/product-brand-launch-events' },
+    { name: 'Hybrid Events', href: '/services/hybrid-and-virtual-events' },
+    { name: 'Industry Conventions', href: '/services/dealer-and-customer-meet-events' },
+    { name: 'Special Projects', href: '/services/industry-convention-project-events' },
     { name: 'Corporate Gifting', href: '/gifting' }
   ];
 
   const quickLinks = [
     { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
     { name: 'Services', href: '/services' },
+    { name: 'Our Work', href: '/work' },
+    { name: 'Portfolio', href: '/portfolio' },
     { name: 'Gifting', href: '/gifting' },
     { name: 'Our Team', href: '/team' },
     { name: 'Our Clients', href: '/clients' },
-    { name: 'Careers', href: '/careers' }
+    { name: 'Blog', href: '/blog' },
+    { name: 'Careers', href: '/careers' },
+    { name: 'Contact', href: '/contact' }
+  ];
+
+  // Bangalore service pages. They are in the sitemap but were linked from nowhere,
+  // so Google had no path to them other than the sitemap itself.
+  const locations = [
+    { name: 'Event Management in Bangalore', href: '/event-management-company-in-bangalore' },
+    { name: 'Corporate Event Management', href: '/corporate-event-management-company-bangalore' },
+    { name: 'Annual Day & Award Events', href: '/annual-day-and-award-event-management-bangalore' },
+    { name: 'Conference & Summit Management', href: '/conference-and-summit-management-in-bangalore' },
+    { name: 'Product Launch Events', href: '/product-launch-event-management-in-bangalore' },
+    { name: 'MICE Event Management', href: '/mice-event-management-in-bangalore' },
+    { name: 'Virtual & Hybrid Events', href: '/virtual-and-hybrid-events-in-bangalore' }
   ];
 
   const contactInfo = [
@@ -208,14 +228,17 @@ export default function Footer() {
 
               {/* Location */}
               <div className="mt-8">
-                <h4 className="font-semibold text-white mb-4">Location</h4>
+                <h4 className="font-semibold text-white mb-4">Event Management in Bangalore</h4>
                 <div className="space-y-3">
-                  <Link
-                    href="/event-management-company-in-bangalore"
-                    className="block text-white/80 hover:text-[#F9A625] transition-colors duration-300 hover:translate-x-1 transform"
-                  >
-                    Bangalore
-                  </Link>
+                  {locations.map((location, index) => (
+                    <Link
+                      key={index}
+                      href={location.href}
+                      className="block text-white/80 hover:text-[#F9A625] transition-colors duration-300 hover:translate-x-1 transform"
+                    >
+                      {location.name}
+                    </Link>
+                  ))}
                 </div>
               </div>
             </motion.div>

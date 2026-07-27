@@ -7,6 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/feedback'],
     },
-    sitemap: 'https://whitemassif.com/sitemap.xml',
+    sitemap: 'https://www.whitemassif.com/sitemap.xml',
+    host: 'https://www.whitemassif.com',
   }
 }

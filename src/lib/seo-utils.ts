@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 export const companyInfo = {
   name: "White Massif Event Management",
   legalName: "White Massif Event Management Private Limited",
-  url: "https://whitemassif.com",
+  url: "https://www.whitemassif.com",
   logo: "/WM LOGO-01.png",
   description: "Premier corporate event management company in India specializing in high-impact corporate events, conferences, team building activities, and brand experiences across Bangalore, Mumbai, Delhi, Chennai, Hyderabad, and Pune.",
   foundingDate: "2015",
