@@ -1,23 +1,30 @@
 import { Metadata } from "next";
-import { generatePageMetadata, generateFAQSchema, generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo-utils";
+import { generatePageMetadata, generateFAQSchema, generateServiceSchema, generateBreadcrumbSchema, companyInfo } from "@/lib/seo-utils";
 import SchemaMarkup from "@/components/schema-markup";
 import GiftingClient from "./gifting-client";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "Corporate Gifting in Bangalore | Massif Gifting Studio by White Massif",
-  description: "Massif Gifting Studio curates corporate gifting for every occasion - welcome kits, festive hampers, employee appreciation, client gifting and awards. Customized, branded and delivered PAN India.",
+  title: "Corporate Gifting Company in Bangalore | Massif Gifting Studio",
+  description: "From new-joiner kits to Diwali hampers, Massif Gifting Studio plans corporate gifts your people actually want - customised, branded and delivered PAN India from Bangalore.",
   keywords: [
-    "corporate gifting company Bangalore",
+    "corporate gifting company in Bangalore",
     "corporate gifts India",
-    "employee welcome kits Bangalore",
-    "customized corporate gifting",
+    "employee welcome kits",
+    "employee onboarding kits",
+    "corporate gift hampers",
     "Diwali corporate hampers",
-    "branded corporate merchandise",
-    "employee appreciation gifts",
-    "client gifting solutions India",
+    "employee appreciation and rewards",
+    "digital gifting and e-gift cards",
+    "wellness gift kits",
+    "gourmet and artisanal hampers",
+    "tech corporate gifts",
+    "eco-friendly corporate gifts",
     "sustainable corporate gifting",
-    "bulk corporate gift orders",
+    "executive and luxury gifts",
+    "bulk corporate gifts",
     "conference delegate kits",
+    "corporate awards and trophies",
+    "PAN India delivery",
     "Massif Gifting Studio"
   ],
   openGraph: {
@@ -29,28 +36,28 @@ export const metadata: Metadata = generatePageMetadata({
 
 const giftingFAQs = [
   {
-    question: "Do you customize gifts?",
-    answer: "Yes. Customisation is at the core of what we do, from logo application and branded packaging to personalized notes, names, and messages on individual gifts."
+    question: "Do you customise gifts with our branding?",
+    answer: "Yes - branding is the point. Logos, brand colours, custom packaging and personalised notes or names go on every gift in the order."
   },
   {
-    question: "What's the minimum order quantity?",
-    answer: "Minimum quantities depend on the product and the level of customisation involved. Share your requirement and we will recommend options that work for your order size."
+    question: "What's your minimum order quantity?",
+    answer: "It depends on the product and how much customisation you want. Tell us the plan and we'll suggest options that fit your numbers and budget."
   },
   {
-    question: "Can you deliver across India?",
-    answer: "Yes. We handle PAN India delivery, including multi-location dispatch to individual employee addresses and direct delivery to your event venue."
+    question: "Do you deliver outside Bangalore?",
+    answer: "Yes. We're based in Bangalore and dispatch PAN India - to one office, to your event venue, or to hundreds of individual home addresses."
   },
   {
-    question: "Can you create gifts within a specific budget?",
-    answer: "Absolutely. Tell us your per-gift budget and audience, and we will curate options that maximise perceived value without exceeding it."
+    question: "Can you work to a fixed per-gift budget?",
+    answer: "Absolutely. Give us a per-head budget and who it's for, and we'll get you the best-looking, best-feeling gift that number allows."
   },
   {
-    question: "Can you match our brand guidelines?",
-    answer: "Yes. We work to your brand guidelines across colours, logo usage, typography, and tone, so every gift and every box looks like it came from you."
+    question: "Do you offer digital or choice-based gifting?",
+    answer: "Yes. Alongside physical gifts, we set up e-gift cards, curated catalogues and reward points, so recipients pick what they actually want."
   },
   {
-    question: "Do you offer sustainable gifting options?",
-    answer: "Yes. We offer eco-friendly gifts, plant and seed paper kits, recycled merchandise, and sustainable packaging for CSR and green gifting initiatives."
+    question: "Do you have sustainable gifting options?",
+    answer: "Yes. Plantable seed-paper kits, recycled and bamboo products, and eco-friendly packaging are all available for CSR and green gifting programmes."
   }
 ];
 
@@ -58,32 +65,55 @@ export default function GiftingPage() {
   return (
     <>
       <SchemaMarkup schema={[
-        generateServiceSchema({
-          name: "Massif Gifting Studio - Corporate Gifting",
-          description: "Curated corporate gifting for every occasion. We design, source, customize, package, and deliver gifts that reflect your brand, with PAN India delivery.",
-          image: "/assets/media/Services/Celebration Galore.jpg",
-          serviceType: "Corporate Gifting",
-          hasOfferCatalog: {
-            "@type": "OfferCatalog",
-            name: "Corporate Gifting Categories",
-            itemListElement: [
-              "Employee Onboarding Gifts",
-              "Employee Appreciation Gifts",
-              "Festive Celebration Hampers",
-              "Conference & Summit Delegate Kits",
-              "Product Launch & PR Kits",
-              "Dealer & Channel Partner Gifts",
-              "Annual Day & Townhall Gifts",
-              "Awards & Recognition Gifts",
-              "CSR & Sustainable Gifting",
-              "Retirement & Farewell Gifts"
-            ].map((name, index) => ({
-              "@type": "Offer",
-              itemOffered: { "@type": "Service", name },
-              position: index + 1
-            }))
+        {
+          ...generateServiceSchema({
+            name: "Corporate Gifting by Massif Gifting Studio",
+            description: "Corporate gifting from Bangalore, delivered PAN India. Massif Gifting Studio by White Massif designs, sources, customises, packs and delivers welcome kits, festive hampers, rewards, client gifts and digital gifting programmes.",
+            image: "/assets/media/Services/Celebration Galore.jpg",
+            provider: "Massif Gifting Studio by White Massif",
+            serviceType: "Corporate Gifting",
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: "Corporate Gifting Categories",
+              itemListElement: [
+                "Onboarding & Welcome Kits",
+                "Rewards & Recognition",
+                "Festive & Diwali Hampers",
+                "Client & Partner Gifting",
+                "Conference & Event Kits",
+                "Employee Wellbeing Gifting",
+                "Digital & Choice-Based Gifting",
+                "Awards & Trophies",
+                "Sustainable & CSR Gifting",
+                "Gourmet & Artisanal Hampers"
+              ].map((name, index) => ({
+                "@type": "Offer",
+                itemOffered: { "@type": "Service", name },
+                position: index + 1
+              }))
+            }
+          }),
+          // Ties the service to the site-wide Organization / LocalBusiness entity
+          provider: {
+            "@type": "Organization",
+            "@id": `${companyInfo.url}/#organization`,
+            name: "Massif Gifting Studio by White Massif",
+            url: `${companyInfo.url}/gifting`,
+            parentOrganization: {
+              "@type": "Organization",
+              name: companyInfo.legalName,
+              url: companyInfo.url
+            },
+            address: {
+              "@type": "PostalAddress",
+              ...companyInfo.address
+            }
+          },
+          areaServed: {
+            "@type": "Country",
+            name: "India"
           }
-        }),
+        },
         generateFAQSchema(giftingFAQs),
         generateBreadcrumbSchema([
           { name: "Home", url: "/" },
