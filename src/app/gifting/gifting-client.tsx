@@ -13,10 +13,8 @@ import {
     ArrowDown,
     Sparkles,
     Gift,
-    PartyPopper,
     Snowflake,
     Handshake,
-    Rocket,
     Users,
     Leaf,
     Building2,
@@ -24,6 +22,9 @@ import {
     Trophy,
     Coffee,
     Heart,
+    HeartPulse,
+    CreditCard,
+    Briefcase,
     Boxes,
     Cpu,
     PenTool,
@@ -51,67 +52,67 @@ const staggerContainer = {
 
 // Occasions for Corporate Gifting
 const occasions = [
-    { icon: Sparkles, title: "Festive Celebrations" },
-    { icon: Snowflake, title: "Year End & Holiday Gifting" },
-    { icon: Heart, title: "Employee Appreciation" },
-    { icon: Handshake, title: "Client Engagement" },
-    { icon: Building2, title: "Mergers & Partnerships" },
-    { icon: Rocket, title: "Product Launches & Events" },
-    { icon: Users, title: "Conferences & Networking Events" },
-    { icon: Leaf, title: "Sustainability & CSR Initiatives" }
+    { icon: Package, title: "Employee Onboarding & Welcome Kits" },
+    { icon: Sparkles, title: "Festive & Diwali Gifting" },
+    { icon: Heart, title: "Employee Appreciation & Rewards" },
+    { icon: Handshake, title: "Client & Partner Gifting" },
+    { icon: Users, title: "Conferences, Offsites & Events" },
+    { icon: Snowflake, title: "Year-End & New Year Gifting" },
+    { icon: HeartPulse, title: "Employee Wellbeing & Hybrid Teams" },
+    { icon: Leaf, title: "CSR & Sustainability Gifting" }
 ];
 
 // Gifting Categories
 const giftingCategories = [
     {
         icon: Package,
-        title: "Employee Onboarding",
-        items: ["Welcome kits", "Joining gifts", "Branded merchandise", "Office essentials", "Personalized welcome notes"]
+        title: "Onboarding & Welcome Kits",
+        items: ["Joining-day kits", "Branded desk essentials", "Custom apparel", "Tech accessories", "Handwritten welcome notes"]
     },
     {
         icon: Heart,
-        title: "Employee Appreciation",
-        items: ["Work anniversaries", "Rewards & recognition", "Milestone celebrations", "Performance awards"]
+        title: "Rewards & Recognition",
+        items: ["Work-anniversary gifts", "Performance awards", "Spot rewards", "Long-service milestones"]
     },
     {
         icon: Sparkles,
-        title: "Festive Celebrations",
-        items: ["Diwali hampers", "Christmas gifts", "New Year gifts", "Regional festival hampers", "Customized festive packaging"]
-    },
-    {
-        icon: Users,
-        title: "Conferences & Summits",
-        items: ["Delegate kits", "Speaker gifts", "VIP hampers", "Registration kits", "Conference merchandise"]
-    },
-    {
-        icon: Rocket,
-        title: "Product Launches",
-        items: ["Influencer kits", "Media kits", "PR boxes", "Launch hampers", "Branded merchandise"]
+        title: "Festive & Diwali Hampers",
+        items: ["Diwali gift hampers", "Dry-fruit & sweet boxes", "Christmas & New Year gifts", "Regional festival hampers", "Eco-friendly festive packs"]
     },
     {
         icon: Handshake,
-        title: "Dealer & Channel Partner Meets",
-        items: ["Recognition gifts", "Incentive hampers", "Premium merchandise", "Achievement awards"]
+        title: "Client & Partner Gifting",
+        items: ["Premium client hampers", "Executive leather sets", "Deal-closure gifts", "Year-in-review boxes"]
     },
     {
-        icon: PartyPopper,
-        title: "Annual Days & Townhalls",
-        items: ["Employee gift boxes", "Appreciation hampers", "Event souvenirs", "Customized memorabilia"]
+        icon: Users,
+        title: "Conference & Event Kits",
+        items: ["Delegate kits", "Speaker & VIP gifts", "Registration goodies", "Branded event merchandise"]
+    },
+    {
+        icon: HeartPulse,
+        title: "Employee Wellbeing",
+        items: ["Wellness & self-care kits", "Fitness & desk-comfort gifts", "WFH & hybrid kits", "Mindfulness hampers"]
+    },
+    {
+        icon: CreditCard,
+        title: "Digital & Choice-Based Gifting",
+        items: ["E-gift cards", "Reward points", "Curated gift catalogues", "Experience vouchers"]
     },
     {
         icon: Trophy,
-        title: "Awards & Recognition",
-        items: ["Custom trophies", "Certificates", "Premium gift boxes", "Branded awards", "Appreciation gifts"]
+        title: "Awards & Trophies",
+        items: ["Custom trophies", "Crystal & acrylic awards", "Certificates", "Premium recognition boxes"]
     },
     {
         icon: Leaf,
-        title: "CSR & Sustainability Initiatives",
-        items: ["Eco-friendly gifts", "Plant kits", "Seed paper products", "Recycled merchandise", "Sustainable hampers"]
+        title: "Sustainable & CSR Gifting",
+        items: ["Plantable seed-paper kits", "Recycled merchandise", "Bamboo gift sets", "NGO donation gifting"]
     },
     {
         icon: Coffee,
-        title: "Retirement & Farewell",
-        items: ["Personalized keepsakes", "Memory boxes", "Premium farewell gifts", "Customized appreciation hampers"]
+        title: "Gourmet & Artisanal",
+        items: ["Gourmet snack hampers", "Artisanal chocolate boxes", "Speciality tea & coffee", "Local & handmade picks"]
     }
 ];
 
@@ -120,80 +121,80 @@ const exploreCategories = [
     { icon: Gift, label: "Premium Hampers" },
     { icon: Package, label: "Welcome Kits" },
     { icon: Boxes, label: "Branded Merchandise" },
-    { icon: Trophy, label: "Executive Gifts" },
-    { icon: Leaf, label: "Eco-Friendly Gifting" },
-    { icon: Cpu, label: "Tech Gifts" },
-    { icon: Coffee, label: "Lifestyle Gifts" },
-    { icon: Palette, label: "Custom Packaging" },
-    { icon: PenTool, label: "Personalized Gifts" }
+    { icon: Cpu, label: "Tech & Smart Gadgets" },
+    { icon: Leaf, label: "Eco-Friendly Gifts" },
+    { icon: HeartPulse, label: "Wellness Kits" },
+    { icon: Coffee, label: "Gourmet & Chocolates" },
+    { icon: Briefcase, label: "Executive & Luxury Gifts" },
+    { icon: PenTool, label: "Personalised Gifts" }
 ];
 
 // Our Process - 5 step timeline
 const processSteps = [
     {
         title: "Understand Your Requirement",
-        desc: "We get the brief right first, so every idea that follows is grounded in your reality.",
-        points: ["Budget", "Audience", "Purpose", "Timeline"]
+        desc: "We start with the brief — budget, audience, occasion, deadline — before anyone talks products.",
+        points: ["Budget", "Audience", "Occasion", "Timeline"]
     },
     {
         title: "Curate Concepts",
-        desc: "Multiple gifting ideas built around your brand, shortlisted with samples and costings.",
+        desc: "You get a few thought-through options, with real samples and honest costings to compare.",
         points: ["Concept options", "Brand-aligned curation", "Samples & costings"]
     },
     {
         title: "Branding & Customisation",
-        desc: "We make the gift unmistakably yours, from the logo on the product to the note inside the box.",
+        desc: "Then we make it unmistakably yours — logo, colours, packaging, and a note that sounds like your company.",
         points: ["Logo application", "Packaging", "Personalisation", "Custom notes"]
     },
     {
         title: "Production",
-        desc: "Trusted sourcing partners, in-house assembly, and checks at every stage before dispatch.",
+        desc: "Vetted suppliers, in-house assembly, and a quality check on every unit before it leaves us.",
         points: ["Quality sourcing", "Assembly", "Quality checks"]
     },
     {
         title: "Delivery",
-        desc: "Gifts reach your people wherever they are, on the date that matters.",
+        desc: "Then it ships — to one office or a hundred home addresses, on the date that matters.",
         points: ["PAN India delivery", "Multi-location dispatch", "Event venue delivery"]
     }
 ];
 
 // Why Choose Us
 const whyChooseUs = [
-    { icon: PenTool, title: "Customized gifting solutions", desc: "Every gift curated around your brief, never pulled off a catalogue." },
-    { icon: Package, title: "Premium packaging", desc: "The unboxing is part of the gift, and we treat it that way." },
-    { icon: Palette, title: "Brand-first approach", desc: "Your guidelines lead every design and material decision." },
-    { icon: Boxes, title: "End-to-end execution", desc: "Concept, sourcing, branding, assembly, and dispatch under one roof." },
-    { icon: Truck, title: "PAN India delivery", desc: "To offices, homes, and event venues across the country." },
-    { icon: Building2, title: "Bulk corporate orders", desc: "Built to scale, from a hundred kits to several thousand." },
-    { icon: Leaf, title: "Sustainable gifting options", desc: "Eco-friendly products and packaging for CSR-led programmes." },
-    { icon: ShieldCheck, title: "Dedicated project management", desc: "One point of contact accountable from brief to delivery." }
+    { icon: PenTool, title: "Curated, not off-the-shelf", desc: "Every gift is chosen for your brief and your people, never lifted from a catalogue." },
+    { icon: Package, title: "Premium packaging", desc: "The box is half the gift, so we sweat it as much as what's inside." },
+    { icon: Palette, title: "Brand-first, always", desc: "Your logo, colours and tone applied with restraint, so it reads premium, not loud." },
+    { icon: Boxes, title: "One team, end to end", desc: "Idea, sourcing, branding, assembly and dispatch — handled in-house, not passed around." },
+    { icon: Truck, title: "Delivered PAN India", desc: "To offices, homes and event venues, wherever your people happen to be." },
+    { icon: Building2, title: "Bulk without the drop-off", desc: "A hundred kits or ten thousand, with the same quality on every single one." },
+    { icon: Leaf, title: "Sustainable when it counts", desc: "Eco-friendly products, recycled packaging and seed-paper kits for greener CSR gifting." },
+    { icon: ShieldCheck, title: "A person who owns it", desc: "One point of contact who stays on your project from brief to delivery." }
 ];
 
 // FAQs
 const faqs = [
     {
-        q: "Do you customize gifts?",
-        a: "Yes. Customisation is at the core of what we do, from logo application and branded packaging to personalized notes, names, and messages on individual gifts."
+        q: "Do you customise gifts with our branding?",
+        a: "Yes — branding is the point. Logos, brand colours, custom packaging and personalised notes or names go on every gift in the order."
     },
     {
-        q: "What's the minimum order quantity?",
-        a: "Minimum quantities depend on the product and the level of customisation involved. Share your requirement and we will recommend options that work for your order size."
+        q: "What's your minimum order quantity?",
+        a: "It depends on the product and how much customisation you want. Tell us the plan and we'll suggest options that fit your numbers and budget."
     },
     {
-        q: "Can you deliver across India?",
-        a: "Yes. We handle PAN India delivery, including multi-location dispatch to individual employee addresses and direct delivery to your event venue."
+        q: "Do you deliver outside Bangalore?",
+        a: "Yes. We're based in Bangalore and dispatch PAN India — to one office, to your event venue, or to hundreds of individual home addresses."
     },
     {
-        q: "Can you create gifts within a specific budget?",
-        a: "Absolutely. Tell us your per-gift budget and audience, and we will curate options that maximise perceived value without exceeding it."
+        q: "Can you work to a fixed per-gift budget?",
+        a: "Absolutely. Give us a per-head budget and who it's for, and we'll get you the best-looking, best-feeling gift that number allows."
     },
     {
-        q: "Can you match our brand guidelines?",
-        a: "Yes. We work to your brand guidelines across colours, logo usage, typography, and tone, so every gift and every box looks like it came from you."
+        q: "Do you offer digital or choice-based gifting?",
+        a: "Yes. Alongside physical gifts, we set up e-gift cards, curated catalogues and reward points, so recipients pick what they actually want."
     },
     {
-        q: "Do you offer sustainable gifting options?",
-        a: "Yes. We offer eco-friendly gifts, plant and seed paper kits, recycled merchandise, and sustainable packaging for CSR and green gifting initiatives."
+        q: "Do you have sustainable gifting options?",
+        a: "Yes. Plantable seed-paper kits, recycled and bamboo products, and eco-friendly packaging are all available for CSR and green gifting programmes."
     }
 ];
 
@@ -210,7 +211,7 @@ export default function GiftingClient() {
                 <div className="absolute inset-0 z-0 bg-[#2A3959]">
                     <Image
                         src={serviceImages.celebrationGalore}
-                        alt="Massif Gifting Studio - Corporate Gifting"
+                        alt="Curated corporate gift hampers by Massif Gifting Studio, Bangalore"
                         fill
                         className="object-cover scale-105"
                         priority
@@ -234,11 +235,11 @@ export default function GiftingClient() {
 
                         {/* Main H1 Heading */}
                         <h1 className="text-4xl mb-12 sm:text-5xl md:text-6xl lg:text-7xl font-display text-white leading-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
-                            Curated Corporate Gifting That <span className="text-[#F9A625]">Creates Lasting Impressions</span>
+                            Corporate Gifting in Bangalore, <span className="text-[#F9A625]">Worth Unwrapping</span>
                         </h1>
 
                         <p className="text-lg sm:text-xl lg:text-2xl text-white max-w-4xl mx-auto leading-relaxed mb-16 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] font-medium">
-                            Gifting experiences designed, sourced, customized, packaged, and delivered for every corporate occasion.
+                            One team to plan, brand, pack and deliver your corporate gifts, right across India.
                         </p>
 
                         {/* CTA Buttons */}
@@ -322,13 +323,13 @@ export default function GiftingClient() {
 
                                 <div className="space-y-8">
                                     <p className="text-lg sm:text-xl text-gray-200 leading-relaxed font-light">
-                                        At <strong className="text-white font-semibold">Massif Gifting Studio</strong>, we curate <span className="px-1 py-0.5 bg-[#F9A625]/20 text-[#FFD180] rounded">gifting experiences</span> tailored to every corporate occasion.
+                                        <strong className="text-white font-semibold">Massif Gifting Studio</strong> is the <span className="px-1 py-0.5 bg-[#F9A625]/20 text-[#FFD180] rounded">gifting arm of White Massif</span>, Bangalore&apos;s event people.
                                     </p>
 
                                     <div className="w-full h-px bg-white/10"></div>
 
                                     <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-                                        Whether you&apos;re welcoming new employees, celebrating milestones, rewarding performance, or strengthening client relationships, we <span className="text-white font-semibold">design, source, customize, package, and deliver</span> gifts that reflect your brand.
+                                        From a new hire&apos;s welcome kit to a client&apos;s Diwali hamper, we own <span className="text-white font-semibold">the idea, the branding, the packing and the doorstep delivery</span> — so your team doesn&apos;t.
                                     </p>
                                 </div>
                             </div>
@@ -348,7 +349,7 @@ export default function GiftingClient() {
                             Occasions for Corporate Gifting
                         </h2>
                         <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                            Every occasion deserves a gift that means something. We curate for the moments that matter across your business calendar.
+                            Good gifting isn&apos;t just a Diwali thing. These are the moments across your year when the right gift quietly does real work.
                         </p>
                     </div>
 
@@ -392,7 +393,7 @@ export default function GiftingClient() {
                             Gifting Categories
                         </h2>
                         <p className="text-lg text-white/90 max-w-4xl mx-auto leading-relaxed">
-                            From the first day at work to the final farewell, we build gifting programmes for <span className="font-semibold text-[#F9A625]">every stage of the employee and client journey.</span>
+                            Whatever the reason you&apos;re gifting, there&apos;s a ready programme for it here — built for <span className="font-semibold text-[#F9A625]">one recipient or ten thousand,</span> and everyone in between.
                         </p>
                     </div>
 
@@ -441,7 +442,7 @@ export default function GiftingClient() {
                             Explore by Category
                         </h2>
                         <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                            Know what you&apos;re looking for? Start here and we&apos;ll build the rest around it.
+                            Prefer to start from the product? Pick a category and we&apos;ll shape the programme around it.
                         </p>
                     </div>
 
@@ -481,7 +482,7 @@ export default function GiftingClient() {
                             Our Process
                         </h2>
                         <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                            A simple five-step journey from brief to doorstep, with <span className="font-semibold text-[#F9A625]">one team accountable</span> at every stage.
+                            Five steps from your brief to your team&apos;s doorstep, with <span className="font-semibold text-[#F9A625]">the same people on it</span> throughout.
                         </p>
                     </div>
 
@@ -607,7 +608,7 @@ export default function GiftingClient() {
                                     <div className="aspect-[4/5] rounded-3xl overflow-hidden relative shadow-2xl">
                                         <Image
                                             src={serviceImages.celebrationGalore}
-                                            alt="Curated corporate gift hampers"
+                                            alt="Premium branded corporate gift hampers curated in Bangalore"
                                             fill
                                             className="object-cover hover:scale-110 transition-transform duration-700"
                                             sizes="(max-width: 1024px) 50vw, 25vw"
@@ -626,7 +627,7 @@ export default function GiftingClient() {
                                     <div className="aspect-[4/5] rounded-3xl overflow-hidden relative shadow-2xl">
                                         <Image
                                             src={serviceImages.conventionMeet}
-                                            alt="Branded corporate merchandise and welcome kits"
+                                            alt="Branded corporate merchandise and employee welcome kits for a dealer meet"
                                             fill
                                             className="object-cover hover:scale-110 transition-transform duration-700"
                                             sizes="(max-width: 1024px) 50vw, 25vw"
@@ -708,10 +709,10 @@ export default function GiftingClient() {
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                     <BadgeCheck className="w-12 h-12 text-[#F9A625] mx-auto mb-8" />
                     <h2 className="text-3xl sm:text-5xl font-display text-white mb-8">
-                        Let&apos;s Create Gifts That <span className="text-[#F9A625]">People Actually Remember.</span>
+                        Let&apos;s Plan Gifting <span className="text-[#F9A625]">Your People Actually Want.</span>
                     </h2>
                     <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
-                        Whether you&apos;re welcoming employees, celebrating milestones, or thanking your clients, we&apos;ll curate gifting experiences that make a lasting impact.
+                        Tell us the occasion, the headcount and the budget, and we&apos;ll come back with gifts worth giving — and ready to ship.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
                         <Button

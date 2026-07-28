@@ -11,6 +11,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // intentionally kept out of the index. Listing them here would contradict those signals.
   const excludedRoutes = new Set(['/feedback', '/thank-you'])
 
+  // CMS slugs are free text and have contained stray spaces. An unencoded space in <loc>
+  // makes the entry invalid per the sitemap protocol, so Google can reject it.
+  const encodeSlug = (slug: string) => encodeURIComponent(slug.trim())
+
   // Dynamic Static Routes Scanner
   const srcAppDir = path.join(process.cwd(), 'src', 'app');
   let scannedStaticRoutes: MetadataRoute.Sitemap = [];
@@ -82,7 +86,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const blogPosts = await DirectusService.getBlogPosts()
     blogRoutes = blogPosts.map((post) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: `${baseUrl}/blog/${encodeSlug(post.slug || String(post.id))}`,
       lastModified: post.published_date ? new Date(post.published_date) : new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
@@ -100,7 +104,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // sitemap is exactly the "Page with redirect" signal we are clearing out.
       .filter((service) => !DUPLICATE_SERVICE_SLUGS.has(service.slug))
       .map((service) => ({
-        url: `${baseUrl}/services/${service.slug}`,
+        url: `${baseUrl}/services/${encodeSlug(service.slug)}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
         priority: 0.7,
@@ -114,7 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const landingPages = await DirectusService.getLandingPages()
     landingPageRoutes = landingPages.map((page) => ({
-      url: `${baseUrl}/landing/${page.slug}`,
+      url: `${baseUrl}/landing/${encodeSlug(page.slug)}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,

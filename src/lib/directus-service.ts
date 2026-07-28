@@ -23,8 +23,11 @@ export class DirectusService {
       logger.log('🔗 URL:', url);
       logger.log('🔑 Token:', token ? `${token.substring(0, 10)}...` : 'NOT FOUND');
 
-      // Include content and slug fields now that they're available
-      const response = await fetch(`${url}/items/blog?fields=id,title,slug,content,featured_image,main_image,published_date,status,excerpt,tags,category,author,read_time&filter={"status":{"_eq":"published"}}&sort=-published_date&limit=10`, {
+      // Include content and slug fields now that they're available.
+      // limit=-1 returns every published post. This was capped at 10, which silently
+      // limited the blog listing, the sitemap and generateStaticParams to the 10 most
+      // recent posts while the rest stayed live but undiscoverable.
+      const response = await fetch(`${url}/items/blog?fields=id,title,slug,content,featured_image,main_image,published_date,status,excerpt,tags,category,author,read_time&filter={"status":{"_eq":"published"}}&sort=-published_date&limit=-1`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
