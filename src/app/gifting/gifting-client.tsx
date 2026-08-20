@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
 import Image from "next/image";
-import { ServicesMediaService } from "@/lib/services-media";
 import {
     ArrowRight,
     ArrowDown,
@@ -34,6 +33,7 @@ import {
     BadgeCheck,
     ChevronDown
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 // Animation variants
 const fadeInUp = {
@@ -50,16 +50,74 @@ const staggerContainer = {
     }
 };
 
+// Gifting imagery - lives in public/assets/media/Gifting
+const giftingImages = {
+    hero: "/assets/media/Gifting/gifting-hero.png",
+    onboarding: "/assets/media/Gifting/employee-onboarding-welcome-kits.png",
+    festive: "/assets/media/Gifting/festive-diwali-gifting.png",
+    appreciation: "/assets/media/Gifting/employee-appreciation-rewards.png",
+    clientPartner: "/assets/media/Gifting/client-partner-gifting.png",
+    conferences: "/assets/media/Gifting/conferences-offsites-events.png",
+    yearEnd: "/assets/media/Gifting/year-end-new-year-gifting.png",
+    csr: "/assets/media/Gifting/csr-sustainability-gifting.png"
+};
+
 // Occasions for Corporate Gifting
-const occasions = [
-    { icon: Package, title: "Employee Onboarding & Welcome Kits" },
-    { icon: Sparkles, title: "Festive & Diwali Gifting" },
-    { icon: Heart, title: "Employee Appreciation & Rewards" },
-    { icon: Handshake, title: "Client & Partner Gifting" },
-    { icon: Users, title: "Conferences, Offsites & Events" },
-    { icon: Snowflake, title: "Year-End & New Year Gifting" },
-    { icon: HeartPulse, title: "Employee Wellbeing & Hybrid Teams" },
-    { icon: Leaf, title: "CSR & Sustainability Gifting" }
+const occasions: {
+    icon: LucideIcon;
+    title: string;
+    image: string | null;
+    alt: string;
+}[] = [
+    {
+        icon: Package,
+        title: "Employee Onboarding & Welcome Kits",
+        image: giftingImages.onboarding,
+        alt: "Navy and gold employee onboarding welcome kit with tumbler, flask, mug, notebook and chocolates"
+    },
+    {
+        icon: Sparkles,
+        title: "Festive & Diwali Gifting",
+        image: giftingImages.festive,
+        alt: "White Massif branded Diwali hamper with festive gift box, preserves, snack jars and candles"
+    },
+    {
+        icon: Heart,
+        title: "Employee Appreciation & Rewards",
+        image: giftingImages.appreciation,
+        alt: "Branded employee reward set with logo tote bag, cap, notebook, power bank and water bottle"
+    },
+    {
+        icon: Handshake,
+        title: "Client & Partner Gifting",
+        image: giftingImages.clientPartner,
+        alt: "Premium client thank-you hamper with engraved bottle, notebook, mug and dark chocolate"
+    },
+    {
+        icon: Users,
+        title: "Conferences, Offsites & Events",
+        image: giftingImages.conferences,
+        alt: "White Massif branded conference delegate kit with tote bag, laptop sleeve, notebook, lanyard and bottle"
+    },
+    {
+        icon: Snowflake,
+        title: "Year-End & New Year Gifting",
+        image: giftingImages.yearEnd,
+        alt: "Year-end festive hamper with Christmas gift box, wine, truffles, preserves and crackers"
+    },
+    {
+        icon: HeartPulse,
+        title: "Employee Wellbeing & Hybrid Teams",
+        // TODO: awaiting artwork - falls back to the icon tile until one is supplied
+        image: null,
+        alt: ""
+    },
+    {
+        icon: Leaf,
+        title: "CSR & Sustainability Gifting",
+        image: giftingImages.csr,
+        alt: "Eco-friendly CSR gift hamper with jute tote, bamboo tumbler, plantable seed kit and organic cotton goods"
+    }
 ];
 
 // Gifting Categories
@@ -200,7 +258,6 @@ const faqs = [
 
 export default function GiftingClient() {
     const { openPopup } = usePopup();
-    const serviceImages = ServicesMediaService.getServicesImages();
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
     return (
@@ -210,14 +267,15 @@ export default function GiftingClient() {
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0 bg-[#2A3959]">
                     <Image
-                        src={serviceImages.celebrationGalore}
-                        alt="Curated corporate gift hampers by Massif Gifting Studio, Bangalore"
+                        src={giftingImages.hero}
+                        alt="Open navy corporate gift box with branded bottle, polo shirt, notebook, headphones and tote by Massif Gifting Studio, Bangalore"
                         fill
                         className="object-cover scale-105"
                         priority
+                        sizes="100vw"
                     />
                     {/* Layered overlay for text contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#2A3959]/90"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0D1422]/80 via-[#1E2A3A]/60 to-[#2A3959]/95"></div>
                 </div>
 
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -361,14 +419,37 @@ export default function GiftingClient() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.06 }}
-                                className="group flex items-center gap-4 p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#F9A625]/30 hover:-translate-y-1 transition-all duration-300"
+                                className="group flex flex-col overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#F9A625]/30 hover:-translate-y-1 transition-all duration-300"
                             >
-                                <span className="w-12 h-12 flex-shrink-0 rounded-xl bg-[#F9A625]/10 flex items-center justify-center text-[#F9A625] group-hover:bg-[#F9A625] group-hover:text-white transition-colors duration-300">
-                                    <occasion.icon className="w-6 h-6" />
-                                </span>
-                                <h3 className="text-base font-bold text-[#2A3959] leading-snug group-hover:text-[#F9A625] transition-colors">
-                                    {occasion.title}
-                                </h3>
+                                {/* Visual */}
+                                <div className="relative aspect-square overflow-hidden bg-[#2A3959]">
+                                    {occasion.image ? (
+                                        <Image
+                                            src={occasion.image}
+                                            alt={occasion.alt}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                        />
+                                    ) : (
+                                        <div
+                                            aria-hidden="true"
+                                            className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#2A3959] via-[#1E2A3A] to-black/80"
+                                        >
+                                            <occasion.icon className="w-16 h-16 text-[#F9A625]/60" />
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Label */}
+                                <div className="flex items-center gap-3 p-5">
+                                    <span className="w-10 h-10 flex-shrink-0 rounded-xl bg-[#F9A625]/10 flex items-center justify-center text-[#F9A625] group-hover:bg-[#F9A625] group-hover:text-white transition-colors duration-300">
+                                        <occasion.icon className="w-5 h-5" />
+                                    </span>
+                                    <h3 className="text-base font-bold text-[#2A3959] leading-snug group-hover:text-[#F9A625] transition-colors">
+                                        {occasion.title}
+                                    </h3>
+                                </div>
                             </motion.div>
                         ))}
                     </div>
@@ -605,10 +686,10 @@ export default function GiftingClient() {
                         >
                             <div className="relative z-10 grid grid-cols-2 gap-6">
                                 <div className="space-y-6 mt-12">
-                                    <div className="aspect-[4/5] rounded-3xl overflow-hidden relative shadow-2xl">
+                                    <div className="aspect-square rounded-3xl overflow-hidden relative shadow-2xl">
                                         <Image
-                                            src={serviceImages.celebrationGalore}
-                                            alt="Premium branded corporate gift hampers curated in Bangalore"
+                                            src={giftingImages.clientPartner}
+                                            alt="Premium branded client gift hamper curated and packed in Bangalore"
                                             fill
                                             className="object-cover hover:scale-110 transition-transform duration-700"
                                             sizes="(max-width: 1024px) 50vw, 25vw"
@@ -624,10 +705,10 @@ export default function GiftingClient() {
                                         <div className="text-3xl font-bold mb-2">End-to-End</div>
                                         <div className="font-medium">Design to Delivery</div>
                                     </div>
-                                    <div className="aspect-[4/5] rounded-3xl overflow-hidden relative shadow-2xl">
+                                    <div className="aspect-square rounded-3xl overflow-hidden relative shadow-2xl">
                                         <Image
-                                            src={serviceImages.conventionMeet}
-                                            alt="Branded corporate merchandise and employee welcome kits for a dealer meet"
+                                            src={giftingImages.onboarding}
+                                            alt="Branded employee onboarding welcome kit packed with desk essentials and chocolates"
                                             fill
                                             className="object-cover hover:scale-110 transition-transform duration-700"
                                             sizes="(max-width: 1024px) 50vw, 25vw"
