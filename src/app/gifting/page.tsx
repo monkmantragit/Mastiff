@@ -29,7 +29,7 @@ export const metadata: Metadata = generatePageMetadata({
   ],
   openGraph: {
     type: "website",
-    images: ["/assets/media/Services/Celebration Galore.jpg"]
+    images: ["/assets/media/Gifting/gifting-hero.png"]
   },
   path: "/gifting"
 });
@@ -69,7 +69,7 @@ export default function GiftingPage() {
           ...generateServiceSchema({
             name: "Corporate Gifting by Massif Gifting Studio",
             description: "Corporate gifting from Bangalore, delivered PAN India. Massif Gifting Studio by White Massif designs, sources, customises, packs and delivers welcome kits, festive hampers, rewards, client gifts and digital gifting programmes.",
-            image: "/assets/media/Services/Celebration Galore.jpg",
+            image: "/assets/media/Gifting/gifting-hero.png",
             provider: "Massif Gifting Studio by White Massif",
             serviceType: "Corporate Gifting",
             hasOfferCatalog: {
