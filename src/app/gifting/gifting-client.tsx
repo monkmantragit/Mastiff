@@ -268,7 +268,7 @@ export default function GiftingClient() {
                 <div className="absolute inset-0 z-0 bg-[#2A3959]">
                     <Image
                         src={giftingImages.hero}
-                        alt="Open navy corporate gift box with branded bottle, polo shirt, notebook, headphones and tote by Massif Gifting Studio, Bangalore"
+                        alt="Open navy corporate gift box with branded bottle, polo shirt, notebook, headphones and tote by Massif Gifting Co., Bangalore"
                         fill
                         className="object-cover scale-105"
                         priority
@@ -288,7 +288,7 @@ export default function GiftingClient() {
                         {/* Badge */}
                         <Badge className="mb-12 mt-6 bg-[#F9A625]/80 backdrop-blur-md text-white border-[#F9A625] px-6 py-2 shadow-lg">
                             <Gift className="w-4 h-4 mr-2" />
-                            Massif Gifting Studio
+                            Massif Gifting Co.
                         </Badge>
 
                         {/* Main H1 Heading */}
@@ -322,7 +322,7 @@ export default function GiftingClient() {
                         {/* Scroll cue */}
                         <motion.a
                             href="#gifting-about"
-                            aria-label="Scroll to learn more about Massif Gifting Studio"
+                            aria-label="Scroll to learn more about Massif Gifting Co."
                             className="inline-flex mt-16 w-11 h-11 rounded-full border border-white/30 items-center justify-center text-white/70 hover:text-white hover:border-white/70 transition-colors"
                             animate={{ y: [0, 8, 0] }}
                             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -333,7 +333,7 @@ export default function GiftingClient() {
                 </div>
             </section>
 
-            {/* About Massif Gifting Studio */}
+            {/* About Massif Gifting Co. */}
             <section id="gifting-about" className="relative py-24 lg:py-32 overflow-hidden scroll-mt-24">
                 {/* Dynamic Dark Background */}
                 <div className="absolute inset-0 bg-[#2A3959]">
@@ -359,7 +359,7 @@ export default function GiftingClient() {
                                 <h2 className="relative text-4xl sm:text-5xl lg:text-7xl font-display text-white leading-[1.1] mb-8">
                                     About <br />
                                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F9A625] to-[#FFD180]">
-                                        Massif Gifting Studio
+                                        Massif Gifting Co.
                                     </span>
                                 </h2>
                             </div>
@@ -381,7 +381,7 @@ export default function GiftingClient() {
 
                                 <div className="space-y-8">
                                     <p className="text-lg sm:text-xl text-gray-200 leading-relaxed font-light">
-                                        <strong className="text-white font-semibold">Massif Gifting Studio</strong> is the <span className="px-1 py-0.5 bg-[#F9A625]/20 text-[#FFD180] rounded">gifting arm of White Massif</span>, Bangalore&apos;s event people.
+                                        <strong className="text-white font-semibold">Massif Gifting Co.</strong> is the <span className="px-1 py-0.5 bg-[#F9A625]/20 text-[#FFD180] rounded">gifting arm of White Massif</span>, Bangalore&apos;s event people.
                                     </p>
 
                                     <div className="w-full h-px bg-white/10"></div>
@@ -647,7 +647,7 @@ export default function GiftingClient() {
                             </Badge>
                             <h2 className="flex flex-col text-4xl sm:text-5xl lg:text-6xl font-display text-white leading-tight max-w-4xl">
                                 <span className="flex">Why Choose</span>
-                                <span className="text-[#F9A625] flex">Massif Gifting Studio?</span>
+                                <span className="text-[#F9A625] flex">Massif Gifting Co.?</span>
                             </h2>
                         </motion.div>
                     </div>
