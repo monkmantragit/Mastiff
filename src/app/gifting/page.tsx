@@ -4,8 +4,8 @@ import SchemaMarkup from "@/components/schema-markup";
 import GiftingClient from "./gifting-client";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "Corporate Gifting Company in Bangalore | Massif Gifting Studio",
-  description: "From new-joiner kits to Diwali hampers, Massif Gifting Studio plans corporate gifts your people actually want - customised, branded and delivered PAN India from Bangalore.",
+  title: "Corporate Gifting Company in Bangalore | Massif Gifting Co.",
+  description: "From new-joiner kits to Diwali hampers, Massif Gifting Co. plans corporate gifts your people actually want - customised, branded and delivered PAN India from Bangalore.",
   keywords: [
     "corporate gifting company in Bangalore",
     "corporate gifts India",
@@ -25,7 +25,7 @@ export const metadata: Metadata = generatePageMetadata({
     "conference delegate kits",
     "corporate awards and trophies",
     "PAN India delivery",
-    "Massif Gifting Studio"
+    "Massif Gifting Co."
   ],
   openGraph: {
     type: "website",
@@ -67,10 +67,10 @@ export default function GiftingPage() {
       <SchemaMarkup schema={[
         {
           ...generateServiceSchema({
-            name: "Corporate Gifting by Massif Gifting Studio",
-            description: "Corporate gifting from Bangalore, delivered PAN India. Massif Gifting Studio by White Massif designs, sources, customises, packs and delivers welcome kits, festive hampers, rewards, client gifts and digital gifting programmes.",
+            name: "Corporate Gifting by Massif Gifting Co.",
+            description: "Corporate gifting from Bangalore, delivered PAN India. Massif Gifting Co. by White Massif designs, sources, customises, packs and delivers welcome kits, festive hampers, rewards, client gifts and digital gifting programmes.",
             image: "/assets/media/Gifting/gifting-hero.png",
-            provider: "Massif Gifting Studio by White Massif",
+            provider: "Massif Gifting Co. by White Massif",
             serviceType: "Corporate Gifting",
             hasOfferCatalog: {
               "@type": "OfferCatalog",
@@ -97,7 +97,7 @@ export default function GiftingPage() {
           provider: {
             "@type": "Organization",
             "@id": `${companyInfo.url}/#organization`,
-            name: "Massif Gifting Studio by White Massif",
+            name: "Massif Gifting Co. by White Massif",
             url: `${companyInfo.url}/gifting`,
             parentOrganization: {
               "@type": "Organization",
