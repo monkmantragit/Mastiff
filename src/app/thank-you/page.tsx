@@ -31,6 +31,35 @@ interface EnquiryData {
 export default function ThankYouPage() {
   const [enquiryData, setEnquiryData] = useState<EnquiryData | null>(null);
 
+  // Google Ads conversion (AW-971911197). This page is only reached after a form
+  // submission, so a page-view conversion here is the lead. Guarded per session so a
+  // refresh or a back-navigation does not report the same lead twice.
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem('wm_ads_conversion_sent') === '1') return;
+      sessionStorage.setItem('wm_ads_conversion_sent', '1');
+    } catch {
+      // Private mode / storage blocked: fall through and report the conversion.
+    }
+
+    const w = window as typeof window & {
+      dataLayer?: unknown[];
+      gtag?: (...args: unknown[]) => void;
+    };
+    w.dataLayer = w.dataLayer || [];
+    if (typeof w.gtag !== 'function') {
+      w.gtag = function gtag() {
+        // eslint-disable-next-line prefer-rest-params
+        w.dataLayer!.push(arguments);
+      };
+    }
+    w.gtag('event', 'conversion', {
+      send_to: 'AW-971911197/191xCNue9wgQneC4zwM',
+      value: 1.0,
+      currency: 'INR',
+    });
+  }, []);
+
   useEffect(() => {
     // Get the enquiry data from localStorage
     const storedData = localStorage.getItem('enquiryData');

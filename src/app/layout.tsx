@@ -126,6 +126,18 @@ export default function RootLayout({
           `}
         </Script>
 
+        {/* Google Ads (AW-971911197) - base tag config.
+            Runs before the deferred gtag.js loader so every conversion command is
+            queued on dataLayer after this config, never before it. */}
+        <Script id="google-ads-config" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-971911197');
+          `}
+        </Script>
+
         {/* Google Ads - Click to Call Conversion Tracking */}
         <Script id="google-ads-conversion" strategy="afterInteractive">
           {`
