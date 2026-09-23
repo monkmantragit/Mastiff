@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import { generatePageMetadata } from "@/lib/seo-utils";
 import PortfolioClient from "./portfolio-client";
+import { WorkMediaService } from "@/lib/work-media";
+
+// Fetched on the server so projects are in the HTML; refreshed hourly from the CMS.
+export const revalidate = 3600;
 
 export const metadata: Metadata = generatePageMetadata({
   title: "White Massif | Successful Corporate Events",
@@ -24,6 +28,7 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/portfolio"
 });
 
-export default function PortfolioPage() {
-  return <PortfolioClient />;
+export default async function PortfolioPage() {
+  const portfolioItems = await WorkMediaService.getPortfolioItems();
+  return <PortfolioClient portfolioItems={portfolioItems} />;
 }

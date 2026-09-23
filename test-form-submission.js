@@ -6,7 +6,7 @@
  */
 
 const DIRECTUS_URL = 'https://directus-production-bc75.up.railway.app';
-const DIRECTUS_TOKEN = 'FAE0VL3TIn4xLMtYP07yFGjIks5km0Kl';
+const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN; // never hardcode: set DIRECTUS_TOKEN in your shell or .env.local
 
 // Test data for different form types
 const testData = {

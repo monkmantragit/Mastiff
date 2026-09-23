@@ -16,6 +16,7 @@ import {
   MessageCircle
 } from 'lucide-react';
 import Link from 'next/link';
+import { consumeLeadSubmission, reportLeadConversion } from '@/lib/lead-handoff';
 
 interface EnquiryData {
   name: string;
@@ -31,46 +32,23 @@ interface EnquiryData {
 export default function ThankYouPage() {
   const [enquiryData, setEnquiryData] = useState<EnquiryData | null>(null);
 
-  // Google Ads conversion (AW-971911197). This page is only reached after a form
-  // submission, so a page-view conversion here is the lead. Guarded per session so a
-  // refresh or a back-navigation does not report the same lead twice.
+  // Only a real submission in this tab (recorded by the form just before redirecting)
+  // counts as a lead. Direct visits, bookmarks and refreshes show the page but report
+  // no conversion. The stored details are deleted as soon as they are read.
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem('wm_ads_conversion_sent') === '1') return;
-      sessionStorage.setItem('wm_ads_conversion_sent', '1');
-    } catch {
-      // Private mode / storage blocked: fall through and report the conversion.
-    }
-
-    const w = window as typeof window & {
-      dataLayer?: unknown[];
-      gtag?: (...args: unknown[]) => void;
-    };
-    w.dataLayer = w.dataLayer || [];
-    if (typeof w.gtag !== 'function') {
-      w.gtag = function gtag() {
-        // eslint-disable-next-line prefer-rest-params
-        w.dataLayer!.push(arguments);
-      };
-    }
-    w.gtag('event', 'conversion', {
-      send_to: 'AW-971911197/191xCNue9wgQneC4zwM',
-      value: 1.0,
-      currency: 'INR',
+    const lead = consumeLeadSubmission();
+    if (!lead) return;
+    reportLeadConversion();
+    setEnquiryData({
+      name: lead.name || '',
+      email: lead.email || '',
+      phone: lead.phone || '',
+      eventType: lead.eventType || '',
+      eventDate: lead.eventDate || '',
+      location: lead.location || '',
+      message: lead.message || '',
+      timestamp: lead.timestamp,
     });
-  }, []);
-
-  useEffect(() => {
-    // Get the enquiry data from localStorage
-    const storedData = localStorage.getItem('enquiryData');
-    if (storedData) {
-      try {
-        const data = JSON.parse(storedData);
-        setEnquiryData(data);
-      } catch (error) {
-        console.error('Error parsing enquiry data:', error);
-      }
-    }
   }, []);
 
   const fadeInUp = {

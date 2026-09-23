@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import { generatePageMetadata } from "@/lib/seo-utils";
 import CareersClient from "./careers-client";
+import { DirectusService } from "@/lib/directus-service";
+
+// Fetched on the server so openings are in the HTML; refreshed hourly from the CMS.
+export const revalidate = 3600;
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Careers at White Massif | Build a Rewarding Career in Corporate Event Management",
@@ -24,6 +28,7 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/careers"
 });
 
-export default function CareersPage() {
-  return <CareersClient />;
+export default async function CareersPage() {
+  const jobs = await DirectusService.getJobs();
+  return <CareersClient jobs={jobs} />;
 }

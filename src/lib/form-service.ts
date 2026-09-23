@@ -79,6 +79,7 @@ export class FormService {
     company?: string;
     eventType?: string;
     message?: string;
+    website?: string;
   }): Promise<FormSubmissionResponse> {
     return this.submitForm({
       ...data,
@@ -99,6 +100,7 @@ export class FormService {
     location?: string;
     message?: string;
     source?: string;
+    website?: string;
   }): Promise<FormSubmissionResponse> {
     return this.submitForm({
       ...data,
@@ -193,29 +195,6 @@ export class FormService {
   static validatePhone(phone: string): boolean {
     const phoneRegex = /^[\+]?[1-9][\d]{3,14}$/;
     return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
-  }
-
-  /**
-   * Sanitize form data
-   */
-  static sanitizeFormData(data: any): any {
-    const sanitized: any = {};
-    
-    for (const [key, value] of Object.entries(data)) {
-      if (typeof value === 'string') {
-        // Basic XSS prevention
-        sanitized[key] = value
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#x27;')
-          .trim();
-      } else {
-        sanitized[key] = value;
-      }
-    }
-    
-    return sanitized;
   }
 
   /**

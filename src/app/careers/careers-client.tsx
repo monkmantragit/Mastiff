@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, useInView } from "framer-motion";
-import { DirectusService, type Job } from '@/lib/directus-service';
+import type { Job } from '@/lib/directus';
 import { 
   ArrowRight, 
   Users, 
@@ -36,30 +36,10 @@ const staggerContainer = {
   }
 };
 
-export default function CareersClient() {
+// Jobs are fetched on the server (page.tsx) so openings are in the initial HTML.
+export default function CareersClient({ jobs }: { jobs: Job[] }) {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
-  const [jobs, setJobs] = useState<Job[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  // Fetch jobs from Directus
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        setLoading(true);
-        const fetchedJobs = await DirectusService.getJobs();
-        setJobs(fetchedJobs);
-      } catch (error) {
-        console.error('Error fetching jobs:', error);
-        // Fallback to hardcoded jobs if Directus fails
-        setJobs(fallbackJobs);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchJobs();
-  }, []);
 
   // Fallback jobs data that matches Job interface
   const fallbackJobs: Job[] = [
@@ -182,7 +162,7 @@ export default function CareersClient() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.4 }}
             >
-              Ordinary careers create ordinary outcomes. At WhiteMassif, we don&apos;t hire employees—we forge visionaries. 
+              Ordinary careers create ordinary outcomes. At White Massif, we don&apos;t hire employees—we forge visionaries. 
               Join the team that turns impossible visions into inevitable realities. Your journey to excellence begins here.
             </motion.p>
 
@@ -254,7 +234,7 @@ export default function CareersClient() {
             variants={staggerContainer}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {(loading ? [] : jobs.length > 0 ? jobs : fallbackJobs).map((job, index) => (
+            {(jobs.length > 0 ? jobs : fallbackJobs).map((job, index) => (
               <motion.div
                 key={job.id || index}
                 variants={fadeInUp}
@@ -314,14 +294,14 @@ export default function CareersClient() {
                   {/* Action Buttons */}
                   <div className="flex flex-col gap-3">
                     <Button 
-                      onClick={() => window.open('https://mail.google.com/mail/?view=cm&to=work@whitemassif.com&subject=Application for ' + encodeURIComponent(job.title) + '&body=' + encodeURIComponent('Dear WhiteMassif Team,\n\nI am writing to express my interest in the ' + job.title + ' position.\n\nPlease find my CV attached. I would be happy to discuss how my experience aligns with your requirements.\n\nBest regards'), '_blank')}
+                      onClick={() => window.location.href = ('mailto:work@whitemassif.com?subject=' + encodeURIComponent('Application for ' + job.title) + '&body=' + encodeURIComponent('Dear White Massif Team,\n\nI am writing to express my interest in the ' + job.title + ' position.\n\nPlease find my CV attached. I would be happy to discuss how my experience aligns with your requirements.\n\nBest regards'))}
                       className="btn-primary group w-full"
                     >
                       <span>Apply Now</span>
                       <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Button>
                     <Button 
-                      onClick={() => window.open('https://mail.google.com/mail/?view=cm&to=work@whitemassif.com&subject=Inquiry about ' + encodeURIComponent(job.title) + ' role', '_blank')}
+                      onClick={() => window.location.href = 'mailto:work@whitemassif.com?subject=' + encodeURIComponent('Inquiry about ' + job.title + ' role')}
                       className="btn-outline group w-full"
                     >
                       <span>Ask Questions</span>
@@ -332,20 +312,8 @@ export default function CareersClient() {
             ))}
           </motion.div>
 
-          {/* Loading State */}
-          {loading && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-16"
-            >
-              <div className="w-8 h-8 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-neutral-600 font-body">Loading positions from Directus...</p>
-            </motion.div>
-          )}
-
           {/* No Jobs State */}
-          {!loading && jobs.length === 0 && fallbackJobs.length === 0 && (
+          {jobs.length === 0 && fallbackJobs.length === 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -382,7 +350,7 @@ export default function CareersClient() {
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <Button 
-                  onClick={() => window.open('https://mail.google.com/mail/?view=cm&to=work@whitemassif.com&subject=Creating My Own Exceptional Role&body=' + encodeURIComponent('Dear WhiteMassif Team,\n\nI am a visionary professional interested in creating a unique role that aligns with my skills and your company\'s mission.\n\nPlease find my CV and cover letter attached outlining my vision for contributing to WhiteMassif.\n\nBest regards'), '_blank')}
+                  onClick={() => window.location.href = ('mailto:work@whitemassif.com?subject=' + encodeURIComponent('Creating My Own Exceptional Role') + '&body=' + encodeURIComponent('Dear White Massif Team,\n\nI am a visionary professional interested in creating a unique role that aligns with my skills and your company\'s mission.\n\nPlease find my CV and cover letter attached outlining my vision for contributing to White Massif.\n\nBest regards'))}
                   className="btn-primary group"
                 >
                   <Mail className="mr-2 w-5 h-5" />

@@ -5,7 +5,7 @@
           "args": ["@directus/content-mcp@latest"],
           "env": {
               "DIRECTUS_URL": "https://directus-production-bc75.up.railway.app/",
-              "DIRECTUS_TOKEN": "FAE0VL3TIn4xLMtYP07yFGjIks5km0Kl"
+              "DIRECTUS_TOKEN": "${DIRECTUS_TOKEN}"
           }
       }
   }

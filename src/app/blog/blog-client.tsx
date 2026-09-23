@@ -8,7 +8,7 @@ import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { type Blog } from '@/lib/directus-service';
+import type { Blog } from '@/lib/directus';
 import { getDirectusAssetUrl } from '@/lib/directus-utils';
 
 interface BlogClientProps {

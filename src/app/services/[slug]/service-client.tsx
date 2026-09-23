@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { type Service } from '@/lib/directus-service';
+import type { Service } from '@/lib/directus';
 import { usePopup } from "@/components/popup-provider";
 import { getDirectusAssetUrl, getDirectusAssetUrls } from '@/lib/directus-utils';
 

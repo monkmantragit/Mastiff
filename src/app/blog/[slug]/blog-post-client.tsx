@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { type Blog } from '@/lib/directus-service';
+import type { Blog } from '@/lib/directus';
 import { getDirectusAssetUrl } from '@/lib/directus-utils';
 
 interface BlogPostClientProps {

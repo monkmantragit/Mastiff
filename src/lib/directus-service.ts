@@ -1,3 +1,4 @@
+import 'server-only';
 import {
   type Blog,
   type Page,
@@ -7,336 +8,119 @@ import {
   type Job,
   type LandingPage
 } from './directus';
-import { logger } from './logger';
+import { directusItems } from './directus-server';
 
-export class DirectusService {
-  /**
-   * Get all published blog posts
-   */
-  static async getBlogPosts(): Promise<Blog[]> {
-    try {
-      logger.log('🔍 Fetching blog posts from Directus...');
+/**
+ * Server-only CMS reads. Client components receive this data as props from their
+ * server page; they must import types from '@/lib/directus', not from this module.
+ *
+ * All filters are passed as objects and serialised + URL-encoded by directusItems, so
+ * slugs or categories containing quotes, '&' or '#' can no longer break or reshape a query.
+ */
 
-      const url = process.env.NEXT_PUBLIC_DIRECTUS_URL;
-      const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
+const BLOG_FIELDS = 'id,title,slug,content,featured_image,main_image,published_date,status,excerpt,tags,category,author,read_time,date_updated';
 
-      logger.log('🔗 URL:', url);
-      logger.log('🔑 Token:', token ? `${token.substring(0, 10)}...` : 'NOT FOUND');
-
-      // Include content and slug fields now that they're available.
-      // limit=-1 returns every published post. This was capped at 10, which silently
-      // limited the blog listing, the sitemap and generateStaticParams to the 10 most
-      // recent posts while the rest stayed live but undiscoverable.
-      const response = await fetch(`${url}/items/blog?fields=id,title,slug,content,featured_image,main_image,published_date,status,excerpt,tags,category,author,read_time&filter={"status":{"_eq":"published"}}&sort=-published_date&limit=-1`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      logger.log('📡 Response status:', response.status);
-      logger.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        logger.error('❌ Error response', errorText);
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      logger.log('📊 Fetched posts:', data);
-
-      // Handle both formats: {data: [...]} and [...]
-      const posts = data.data || data;
-      logger.log('📝 Number of posts:', posts?.length || 0);
-      return posts || [];
-    } catch (error) {
-      logger.error('Error fetching blog posts:', error);
-      return [];
-    }
-  }
-
-  /**
-   * Get a single blog post by slug
-   */
-  static async getBlogPost(slug: string): Promise<Blog | null> {
-    try {
-      // Include content and slug fields and filter by slug
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/blog?fields=id,title,slug,content,featured_image,main_image,published_date,status,excerpt,tags,category,author,read_time&filter={"slug":{"_eq":"${slug}"},"status":{"_eq":"published"}}&limit=1`, {
-        headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const posts = data.data || data;
-      return posts[0] || null;
-    } catch (error) {
-      logger.error(`Error fetching blog post with slug ${slug}:`, error);
-      return null;
-    }
-  }
-
-  /**
-   * Get all services
-   */
-  static async getServices(): Promise<Service[]> {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/services?fields=*&filter={"status":{"_eq":"active"}}&sort=id`, {
-        headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const services = data.data || data;
-      return services || [];
-    } catch (error) {
-      logger.error('Error fetching services:', error);
-      return [];
-    }
-  }
-
-  /**
-   * Get a single service by slug
-   */
-  static async getService(slug: string): Promise<Service | null> {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/services?fields=*&filter={"slug":{"_eq":"${slug}"},"status":{"_eq":"active"}}&limit=1`, {
-        headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const services = data.data || data;
-      return services[0] || null;
-    } catch (error) {
-      logger.error(`Error fetching service with slug ${slug}:`, error);
-      return null;
-    }
-  }
-
-  /**
-   * Get services by category
-   */
-  static async getServicesByCategory(category: string): Promise<Service[]> {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/services?fields=*&filter={"_and":[{"status":{"_eq":"active"}},{"category":{"_eq":"${category}"}}]}&sort=id`, {
-        headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const services = data.data || data;
-      return services || [];
-    } catch (error) {
-      logger.error(`Error fetching services with category "${category}":`, error);
-      return [];
-    }
-  }
-
-  /**
-   * Get all team members
-   */
-  static async getTeamMembers(): Promise<TeamMember[]> {
-    try {
-      // Include image file details to get proper URLs
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/team_members?fields=*,team_member_image.*&filter={"status":{"_eq":"active"}}&sort=name`, {
-        headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const teamMembers = data.data || data;
-
-      // Log for debugging
-      logger.log('Team members from Directus:', teamMembers);
-
-      return teamMembers || [];
-    } catch (error) {
-      logger.error('Error fetching team members:', error);
-      return [];
-    }
-  }
-
-  /**
-   * Get all landing pages
-   */
-  static async getLandingPages(): Promise<LandingPage[]> {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/landing_pages?fields=*&filter={"status":{"_eq":"active"}}&sort=title`, {
-        headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const landingPages = data.data || data;
-      return landingPages || [];
-    } catch (error) {
-      logger.error('Error fetching landing pages:', error);
-      return [];
-    }
-  }
-
-  /**
-   * Get a single landing page by slug
-   */
-  static async getLandingPage(slug: string): Promise<LandingPage | null> {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/items/landing_pages?fields=*&filter={"slug":{"_eq":"${slug}"},"status":{"_eq":"active"}}&limit=1`, {
-        headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DIRECTUS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const landingPages = data.data || data;
-      return landingPages[0] || null;
-    } catch (error) {
-      logger.error(`Error fetching landing page with slug ${slug}:`, error);
-      return null;
-    }
-  }
-
-  /**
-   * Get all published testimonials
-   */
-  static async getTestimonials(): Promise<Testimonial[]> {
-    try {
-      logger.log('🔍 Fetching testimonials from Directus...');
-
-      const url = process.env.NEXT_PUBLIC_DIRECTUS_URL;
-      const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
-
-      logger.log('🔗 URL:', url);
-      logger.log('🔑 Token:', token ? `${token.substring(0, 10)}...` : 'NOT FOUND');
-
-      const response = await fetch(`${url}/items/testimonials?fields=*&filter={"status":{"_eq":"published"}}&sort=sort_order,-date_created`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      logger.log('📡 Response status:', response.status);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      logger.log('✅ Testimonials data received:', data);
-
-      const testimonials = data.data || data;
-      logger.log(`📊 Found ${testimonials.length} testimonials`);
-
-      return testimonials || [];
-    } catch (error) {
-      logger.error('❌ Error fetching testimonials:', error);
-      return [];
-    }
-  }
-
-  /**
-   * Get featured testimonials only
-   */
-  static async getFeaturedTestimonials(): Promise<Testimonial[]> {
-    try {
-      const url = process.env.NEXT_PUBLIC_DIRECTUS_URL;
-      const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
-
-      const response = await fetch(`${url}/items/testimonials?fields=*&filter={"status":{"_eq":"published"},"is_featured":{"_eq":true}}&sort=sort_order,-date_created`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const testimonials = data.data || data;
-
-      return testimonials || [];
-    } catch (error) {
-      logger.error('Error fetching featured testimonials:', error);
-      return [];
-    }
-  }
-
-  /**
-   * Get all published job openings
-   */
-  static async getJobs(): Promise<Job[]> {
-    try {
-      const url = process.env.NEXT_PUBLIC_DIRECTUS_URL;
-      const token = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN;
-
-      const response = await fetch(`${url}/items/jobs?fields=*&filter={"status":{"_eq":"published"}}&sort=sort_order`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        logger.error('Error fetching jobs:', response.status, response.statusText);
-        return [];
-      }
-
-      const data = await response.json();
-      const jobs = data.data || data;
-
-      logger.log('✅ Fetched jobs:', jobs?.length || 0);
-      return jobs || [];
-    } catch (error) {
-      logger.error('❌ Error fetching jobs:', error);
-      return [];
-    }
-  }
-
+/** CMS slugs sometimes carry stray slashes or spaces (e.g. "/corporate-awards-night-planning"). */
+export function normalizeSlug(slug: string | undefined | null): string {
+  return (slug || '').trim().replace(/^\/+|\/+$/g, '');
 }
 
-// Export types for easy import
-export type { Blog, Page, Service, Testimonial, TeamMember, Job, LandingPage }; 
+export class DirectusService {
+  /** All published blog posts, newest first. */
+  static async getBlogPosts(): Promise<Blog[]> {
+    return directusItems<Blog>('blog', {
+      fields: BLOG_FIELDS,
+      filter: { status: { _eq: 'published' } },
+      sort: '-published_date',
+      limit: -1,
+    });
+  }
+
+  /** A single published blog post. Matches the slug with or without a stray leading slash. */
+  static async getBlogPost(slug: string): Promise<Blog | null> {
+    const clean = normalizeSlug(decodeURIComponent(slug));
+    if (!clean) return null;
+    const posts = await directusItems<Blog>('blog', {
+      fields: BLOG_FIELDS,
+      filter: { slug: { _in: [clean, `/${clean}`] }, status: { _eq: 'published' } },
+      limit: 1,
+    });
+    return posts[0] || null;
+  }
+
+  static async getServices(): Promise<Service[]> {
+    return directusItems<Service>('services', {
+      fields: '*',
+      filter: { status: { _eq: 'active' } },
+      sort: 'id',
+    });
+  }
+
+  static async getService(slug: string): Promise<Service | null> {
+    const services = await directusItems<Service>('services', {
+      fields: '*',
+      filter: { slug: { _eq: slug }, status: { _eq: 'active' } },
+      limit: 1,
+    });
+    return services[0] || null;
+  }
+
+  static async getServicesByCategory(category: string): Promise<Service[]> {
+    return directusItems<Service>('services', {
+      fields: '*',
+      filter: { _and: [{ status: { _eq: 'active' } }, { category: { _eq: category } }] },
+      sort: 'id',
+    });
+  }
+
+  static async getTeamMembers(): Promise<TeamMember[]> {
+    return directusItems<TeamMember>('team_members', {
+      fields: '*,team_member_image.*',
+      filter: { status: { _eq: 'active' } },
+      sort: 'name',
+    });
+  }
+
+  static async getLandingPages(): Promise<LandingPage[]> {
+    return directusItems<LandingPage>('landing_pages', {
+      fields: '*',
+      filter: { status: { _eq: 'active' } },
+      sort: 'title',
+    });
+  }
+
+  static async getLandingPage(slug: string): Promise<LandingPage | null> {
+    const pages = await directusItems<LandingPage>('landing_pages', {
+      fields: '*',
+      filter: { slug: { _eq: slug }, status: { _eq: 'active' } },
+      limit: 1,
+    });
+    return pages[0] || null;
+  }
+
+  static async getTestimonials(): Promise<Testimonial[]> {
+    return directusItems<Testimonial>('testimonials', {
+      fields: '*',
+      filter: { status: { _eq: 'published' } },
+      sort: 'sort_order,-date_created',
+    });
+  }
+
+  static async getFeaturedTestimonials(): Promise<Testimonial[]> {
+    return directusItems<Testimonial>('testimonials', {
+      fields: '*',
+      filter: { status: { _eq: 'published' }, is_featured: { _eq: true } },
+      sort: 'sort_order,-date_created',
+    });
+  }
+
+  static async getJobs(): Promise<Job[]> {
+    return directusItems<Job>('jobs', {
+      fields: '*',
+      filter: { status: { _eq: 'published' } },
+      sort: 'sort_order',
+    });
+  }
+}
+
+export type { Blog, Page, Service, Testimonial, TeamMember, Job, LandingPage };

@@ -109,13 +109,8 @@ export function generateOrganizationSchema() {
       }
     ],
     sameAs: companyInfo.socialProfiles,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "175",
-      bestRating: "5",
-      worstRating: "1"
-    }
+    // No aggregateRating: Google only allows review markup backed by real, visible
+    // reviews. The old hard-coded 4.9 / 175 had neither and risked a manual action.
   };
 }
 

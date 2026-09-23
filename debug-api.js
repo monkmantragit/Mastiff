@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const DIRECTUS_URL = 'https://directus-production-bc75.up.railway.app';
-const DIRECTUS_TOKEN = 'FAE0VL3TIn4xLMtYP07yFGjIks5km0Kl';
+const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN; // never hardcode: set DIRECTUS_TOKEN in your shell or .env.local
 
 async function debugAPI() {
   const fetch = (await import('node-fetch')).default;

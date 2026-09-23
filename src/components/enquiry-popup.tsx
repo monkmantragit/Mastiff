@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Phone, User, Calendar, MapPin, Send, Sparkles, CheckCircle, AlertCircle, Shield } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { recordLeadSubmission } from '@/lib/lead-handoff';
+import { Honeypot } from '@/components/honeypot';
 import { FormService } from '@/lib/form-service';
 
 interface EnquiryPopupProps {
@@ -28,7 +30,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
     eventDate: '',
     location: '',
     message: '',
-    source: triggerSource
+    website: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -92,17 +94,22 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
         eventDate: formData.eventDate,
         location: formData.location,
         message: formData.message,
-        source: formData.source
+        // triggerSource, not formData.source: the popup stays mounted, so state set on
+        // first render would tag every later lead with the first CTA's source.
+        source: triggerSource,
+        website: formData.website
       });
 
       if (result.success) {
-        // Store success data for thank you page
-        localStorage.setItem('enquiryData', JSON.stringify({
-          ...formData,
+        recordLeadSubmission({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
           eventType: finalEventType,
-          submissionId: result.id,
-          timestamp: new Date().toISOString()
-        }));
+          eventDate: formData.eventDate,
+          location: formData.location,
+          message: formData.message,
+        });
 
         // Close popup and navigate to thank you page
         onClose();
@@ -181,7 +188,8 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
+            <form onSubmit={handleSubmit} className="relative p-6 sm:p-8 space-y-6">
+              <Honeypot value={formData.website} onChange={(v) => setFormData(prev => ({ ...prev, website: v }))} />
               {/* Personal Information */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">

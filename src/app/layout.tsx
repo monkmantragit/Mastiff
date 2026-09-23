@@ -105,12 +105,14 @@ export default function RootLayout({
           })(window,document,'script','dataLayer','GTM-W9GQF7WR');`}
         </Script>
 
-        {/* Google Analytics - Deferred for performance */}
+        {/* gtag.js (GA4 + Google Ads). afterInteractive, not lazyOnload: with lazyOnload the
+            library only arrived after full page load + idle, so conversions from visitors
+            who left quickly (e.g. right after /thank-you) were never sent. */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-3JZS3H8914"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="lazyOnload">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -138,36 +140,36 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Google Ads - Click to Call Conversion Tracking */}
-        <Script id="google-ads-conversion" strategy="afterInteractive">
+        {/* Google Ads click-to-call conversion. The old gtag_report_conversion() helper was
+            defined but never called anywhere, so no call conversions were recorded. One
+            delegated listener now covers every tel: link on the site. */}
+        <Script id="google-ads-call-conversion" strategy="afterInteractive">
           {`
-            function gtag_report_conversion(url) {
-              var callback = function () {
-                if (typeof(url) != 'undefined') {
-                  window.location = url;
-                }
-              };
-              gtag('event', 'conversion', {
-                  'send_to': 'AW-971911197/C5M0CMSGq4YcEJ3guM8D',
-                  'value': 1.0,
-                  'currency': 'INR',
-                  'event_callback': callback
+            document.addEventListener('click', function (e) {
+              var link = e.target && e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+              if (!link || typeof window.gtag !== 'function') return;
+              window.gtag('event', 'conversion', {
+                send_to: 'AW-971911197/C5M0CMSGq4YcEJ3guM8D',
+                value: 1.0,
+                currency: 'INR'
               });
-              return false;
-            }
+            }, { capture: true });
           `}
         </Script>
 
-        {/* Microsoft Clarity - Deferred for performance */}
-        <Script id="microsoft-clarity" strategy="lazyOnload">
-          {`
-            (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "placeholder");
-          `}
-        </Script>
+        {/* Microsoft Clarity. Previously loaded with the project ID "placeholder", so it
+            never recorded anything. Set NEXT_PUBLIC_CLARITY_ID to enable it. */}
+        {process.env.NEXT_PUBLIC_CLARITY_ID && (
+          <Script id="microsoft-clarity" strategy="lazyOnload">
+            {`
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", ${JSON.stringify(process.env.NEXT_PUBLIC_CLARITY_ID)});
+            `}
+          </Script>
+        )}
 
 
         <link

@@ -1,6 +1,11 @@
 import { Metadata } from "next";
 import { generatePageMetadata } from "@/lib/seo-utils";
 import ClientsClient from "./clients-client";
+import { ClientLogosService } from "@/lib/client-logos-service";
+import { DirectusService } from "@/lib/directus-service";
+
+// Fetched on the server so client logos and testimonials are in the HTML; refreshed hourly.
+export const revalidate = 3600;
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Our Clients | Trusted By Leading Brands | White Massif",
@@ -24,6 +29,10 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/clients"
 });
 
-export default function ClientsPage() {
-  return <ClientsClient />;
+export default async function ClientsPage() {
+  const [testimonials, allLogos] = await Promise.all([
+    DirectusService.getFeaturedTestimonials(),
+    ClientLogosService.getAllClientLogos(),
+  ]);
+  return <ClientsClient testimonials={testimonials} allLogos={allLogos} />;
 }

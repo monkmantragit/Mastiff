@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +18,6 @@ import {
   Camera,
   Play
 } from "lucide-react";
-import { WorkMediaService } from "@/lib/work-media";
 import NextImage from "next/image";
 import GalleryModal from "@/components/ui/GalleryModal";
 import { PortfolioItem, GalleryImage } from "@/types/gallery";
@@ -43,33 +42,15 @@ const scaleIn = {
   transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
 };
 
-export default function PortfolioClient() {
+// Portfolio items are fetched on the server (page.tsx) so projects are in the initial HTML.
+export default function PortfolioClient({ portfolioItems }: { portfolioItems: PortfolioItem[] }) {
   const heroRef = useRef(null);
   const { openPopup } = usePopup();
-  const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  
+
   // Gallery modal states
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [selectedGallery, setSelectedGallery] = useState<GalleryImage[]>([]);
   const [selectedProjectTitle, setSelectedProjectTitle] = useState('');
-
-  // Fetch dynamic portfolio data from Directus
-  useEffect(() => {
-    const fetchPortfolioData = async () => {
-      try {
-        setLoading(true);
-        const items = await WorkMediaService.getPortfolioItems();
-        setPortfolioItems(items);
-      } catch (error) {
-        console.error('Failed to load portfolio items:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPortfolioData();
-  }, []);
 
   // Handle gallery modal opening
   const openGallery = (item: PortfolioItem) => {
@@ -203,23 +184,14 @@ export default function PortfolioClient() {
             variants={staggerContainer}
             className="grid md:grid-cols-2 xl:grid-cols-3 gap-8"
           >
-            {loading ? (
-              <motion.div
-                variants={fadeInUp}
-                className="col-span-full text-center py-20"
-              >
-                <Camera className="w-16 h-16 text-slate-400 mx-auto mb-4 animate-pulse" />
-                <h3 className="text-2xl font-semibold text-slate-600 mb-2">Loading Portfolio...</h3>
-                <p className="text-slate-500">Fetching our amazing event gallery from Directus...</p>
-              </motion.div>
-            ) : portfolioItems.length === 0 ? (
+            {portfolioItems.length === 0 ? (
               <motion.div
                 variants={fadeInUp}
                 className="col-span-full text-center py-20"
               >
                 <Camera className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-2xl font-semibold text-slate-600 mb-2">No Projects Found</h3>
-                <p className="text-slate-500">Please check back later for our portfolio showcase.</p>
+                <h3 className="text-2xl font-semibold text-slate-600 mb-2">Our portfolio is being updated</h3>
+                <p className="text-slate-500">Get in touch and we&apos;ll share case studies relevant to your event.</p>
               </motion.div>
             ) : portfolioItems.map((item, index) => (
               <motion.div
@@ -229,6 +201,15 @@ export default function PortfolioClient() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => openGallery(item)}
+                role="button"
+                tabIndex={0}
+                aria-label={`Open ${item.title} gallery`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openGallery(item);
+                  }
+                }}
               >
                 <Card className="bg-white/95 backdrop-blur-xl border-slate-200 overflow-hidden h-full shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:border-amber-300 hover:bg-white">
                   <div className="relative aspect-[4/3] overflow-hidden">

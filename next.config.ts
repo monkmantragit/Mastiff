@@ -82,6 +82,12 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
+      // /work duplicated /portfolio.
+      {
+        source: '/work',
+        destination: '/portfolio',
+        permanent: true,
+      },
       {
         source: '/rolls-royce',
         destination: '/portfolio',

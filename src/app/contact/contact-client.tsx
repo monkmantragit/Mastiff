@@ -23,6 +23,8 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { recordLeadSubmission } from '@/lib/lead-handoff';
+import { Honeypot } from '@/components/honeypot';
 import { FormService } from "@/lib/form-service";
 
 const fadeInUp = {
@@ -51,7 +53,8 @@ export default function ContactClient() {
     company: '',
     eventType: '',
     otherEventType: '',
-    message: ''
+    message: '',
+    website: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -193,27 +196,26 @@ export default function ContactClient() {
       // Prepare event type (use otherEventType if eventType is 'other')
       const finalEventType = formData.eventType === 'other' ? formData.otherEventType : formData.eventType;
 
-      // Sanitize form data before submission
-      const sanitizedData = FormService.sanitizeFormData({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
+      // Raw values go to the API; escaping happens server-side where the values are
+      // rendered (email HTML). Escaping here stored "O&#x27;Brien" in the CMS.
+      const result = await FormService.submitContactForm({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        company: formData.company.trim(),
         eventType: finalEventType,
-        message: formData.message
+        message: formData.message.trim(),
+        website: formData.website,
       });
 
-      // Submit form using FormService
-      const result = await FormService.submitContactForm(sanitizedData);
-
       if (result.success) {
-        // Store success data for thank you page
-        localStorage.setItem('contactData', JSON.stringify({
-          ...formData,
+        recordLeadSubmission({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
           eventType: finalEventType,
-          submissionId: result.id,
-          timestamp: new Date().toISOString()
-        }));
+          message: formData.message,
+        });
 
         // Navigate to thank you page
         router.push('/thank-you');
@@ -436,6 +438,7 @@ export default function ContactClient() {
                 variants={fadeInUp}
                 className="space-y-6"
               >
+                <Honeypot value={formData.website} onChange={(v) => setFormData(prev => ({ ...prev, website: v }))} />
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-neutral-700 mb-2">
