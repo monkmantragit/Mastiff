@@ -349,26 +349,26 @@ export default function ThankYouPage() {
               variants={fadeInUp}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Link href="/">
-                <Button className="mobile-touch-target border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white" variant="outline">
+              <Button asChild className="mobile-touch-target border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white" variant="outline">
+                <Link href="/">
                   <Home className="mr-2 h-4 w-4" />
                   Back to Home
-                </Button>
-              </Link>
+                </Link>
+              </Button>
               
-              <Link href="/portfolio">
-                <Button className="mobile-touch-target border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black" variant="outline">
+              <Button asChild className="mobile-touch-target border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black" variant="outline">
+                <Link href="/portfolio">
                   <Star className="mr-2 h-4 w-4" />
                   View Portfolio
-                </Button>
-              </Link>
+                </Link>
+              </Button>
               
-              <Link href="/services">
-                <Button className="btn-primary mobile-touch-target">
+              <Button asChild className="btn-primary mobile-touch-target">
+                <Link href="/services">
                   <ArrowRight className="mr-2 h-4 w-4" />
                   Explore Services
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </motion.div>
           </motion.div>
         </div>

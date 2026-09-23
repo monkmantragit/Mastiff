@@ -8,7 +8,8 @@ import {
   type Job,
   type LandingPage
 } from './directus';
-import { directusItems } from './directus-server';
+import { directusItems, directusItemsStrict } from './directus-server';
+import { normalizeSlug } from './slug';
 
 /**
  * Server-only CMS reads. Client components receive this data as props from their
@@ -20,10 +21,7 @@ import { directusItems } from './directus-server';
 
 const BLOG_FIELDS = 'id,title,slug,content,featured_image,main_image,published_date,status,excerpt,tags,category,author,read_time,date_updated';
 
-/** CMS slugs sometimes carry stray slashes or spaces (e.g. "/corporate-awards-night-planning"). */
-export function normalizeSlug(slug: string | undefined | null): string {
-  return (slug || '').trim().replace(/^\/+|\/+$/g, '');
-}
+export { normalizeSlug } from './slug';
 
 export class DirectusService {
   /** All published blog posts, newest first. */
@@ -36,11 +34,14 @@ export class DirectusService {
     });
   }
 
-  /** A single published blog post. Matches the slug with or without a stray leading slash. */
+  /**
+   * A single published blog post. Matches the slug with or without a stray leading slash.
+   * Throws if the CMS is unreachable (see directusItemsStrict); returns null if not found.
+   */
   static async getBlogPost(slug: string): Promise<Blog | null> {
     const clean = normalizeSlug(decodeURIComponent(slug));
     if (!clean) return null;
-    const posts = await directusItems<Blog>('blog', {
+    const posts = await directusItemsStrict<Blog>('blog', {
       fields: BLOG_FIELDS,
       filter: { slug: { _in: [clean, `/${clean}`] }, status: { _eq: 'published' } },
       limit: 1,
@@ -57,7 +58,7 @@ export class DirectusService {
   }
 
   static async getService(slug: string): Promise<Service | null> {
-    const services = await directusItems<Service>('services', {
+    const services = await directusItemsStrict<Service>('services', {
       fields: '*',
       filter: { slug: { _eq: slug }, status: { _eq: 'active' } },
       limit: 1,
@@ -90,7 +91,7 @@ export class DirectusService {
   }
 
   static async getLandingPage(slug: string): Promise<LandingPage | null> {
-    const pages = await directusItems<LandingPage>('landing_pages', {
+    const pages = await directusItemsStrict<LandingPage>('landing_pages', {
       fields: '*',
       filter: { slug: { _eq: slug }, status: { _eq: 'active' } },
       limit: 1,

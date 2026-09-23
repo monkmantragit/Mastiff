@@ -6,7 +6,7 @@ import Footer from "@/components/footer";
 import { PopupProvider } from "@/components/popup-provider";
 import FloatingCTA from "@/components/floating-cta";
 import SchemaMarkup from "@/components/schema-markup";
-import { generateOrganizationSchema, generateLocalBusinessSchema, generateWebSiteSchema, companyInfo, generatePageMetadata } from "@/lib/seo-utils";
+import { generateOrganizationSchema, generateWebSiteSchema, generatePageMetadata } from "@/lib/seo-utils";
 import Script from "next/script";
 import "./globals.css";
 
@@ -26,34 +26,18 @@ const raleway = Raleway({
   display: "swap",
 });
 
+// Site-wide defaults only. No canonical and no og:url here: pages that do not set their
+// own would inherit the homepage's, which told Google that /work, /landing/*, etc. were
+// duplicates of the homepage. Every indexable page sets its own via generatePageMetadata.
+const siteDefaults = generatePageMetadata({
+  title: "White Massif | Corporate Event Management Company in Bangalore",
+  description: "Corporate event management company in Bangalore since 2013: conferences, product launches, annual days, awards, MICE and hybrid events. 1000+ events delivered.",
+});
+
 export const metadata: Metadata = {
-  ...generatePageMetadata({
-    title: "White Massif Event Management - Premier Corporate Event Managers in India",
-    description: "Leading corporate event management company in India with 175+ successful events across Bangalore, Mumbai, Delhi, Chennai. Specializing in product launches, annual day celebrations, team building, conferences & brand activations.",
-    keywords: [
-      "corporate event management company in India",
-      "event management companies in Bangalore",
-      "corporate event planners Bangalore",
-      "best event management company Karnataka",
-      "corporate event organizers India",
-      "team building activities Bangalore",
-      "product launch event management India",
-      "annual day celebration organizers",
-      "conference management services India",
-      "virtual event management India",
-      "hybrid event solutions Bangalore",
-      "employee engagement event planners",
-      "brand activation events Mumbai",
-      "corporate events Delhi NCR",
-      "event management HSR Layout"
-    ],
-    openGraph: {
-      type: "website",
-      locale: "en_IN",
-      images: [companyInfo.logo]
-    },
-    images: [companyInfo.logo]
-  }),
+  ...siteDefaults,
+  alternates: undefined,
+  openGraph: { ...siteDefaults.openGraph, url: undefined },
   icons: [
     {
       rel: 'icon',
@@ -86,7 +70,6 @@ export default function RootLayout({
         {/* Essential SEO Schemas for Organization & Local Business */}
         <SchemaMarkup schema={[
           generateOrganizationSchema(),
-          generateLocalBusinessSchema(),
           generateWebSiteSchema()
         ]} />
 

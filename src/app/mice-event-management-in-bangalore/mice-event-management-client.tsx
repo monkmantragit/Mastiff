@@ -9,6 +9,7 @@ import { ServicesMediaService } from "@/lib/services-media";
 import { ArrowRight, MapPin, Target, Smartphone, MonitorSpeaker, Mic2, Hotel, Globe, Briefcase, Settings, Zap, Award, ShieldCheck, Search, Handshake, UserPlus, FileText, Users, Star, HeartPulse, Users2, Laptop, Landmark, BookOpen, Maximize, Monitor, ChevronDown, Store, Clock, LayoutDashboard, Timer, Video, Building, SlidersHorizontal, Rocket, BarChart, Calendar, GraduationCap, Cpu, Wallet, Stethoscope, Factory, Map, Plane, Compass, Presentation, Tent, Truck, MessagesSquare, Route, BarChartBig, Link, Sparkles, ShieldAlert, Telescope, PenTool, Cog, PieChart, Gift, MonitorPlay, FlaskConical, ShoppingCart, GlassWater, Trees } from "lucide-react";
 import { usePopup } from "@/components/popup-provider";
 
+import { faqs } from './faqs';
 export default function MiceEventClient() {
     const { openPopup } = usePopup();
     const serviceImages = ServicesMediaService.getServicesImages();
@@ -444,28 +445,7 @@ export default function MiceEventClient() {
                     </div>
 
                     <div className="space-y-4">
-                        {[
-                            {
-                                q: "What does MICE include?",
-                                a: "MICE stands for Meetings, Incentives, Conferences, and Exhibitions, covering corporate programs that often involve travel and multi-day planning."
-                            },
-                            {
-                                q: "Do you handle travel bookings?",
-                                a: "We coordinate with trusted travel and hospitality partners to manage flights, transfers, and accommodation while overseeing the complete event flow."
-                            },
-                            {
-                                q: "Can you organize international conferences in Bangalore?",
-                                a: "Yes. Bangalore is globally connected, and we can support visa coordination and compliance protocols in collaboration with specialized partners."
-                            },
-                            {
-                                q: "Do you manage MICE budgets?",
-                                a: "Absolutely. We maintain detailed, transparent budgets covering venue rentals, production, hospitality, travel, and contingency planning, along with cost optimization strategies."
-                            },
-                            {
-                                q: "What’s the typical planning timeline?",
-                                a: "For multi-day MICE programs, 3–6 months is ideal. For single-day meetings, 8–10 weeks may be sufficient depending on scale."
-                            }
-                        ].map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

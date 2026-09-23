@@ -2,6 +2,7 @@
 
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 import { usePopup } from "@/components/popup-provider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -245,13 +246,17 @@ export default function AboutClient() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <Button className="btn-primary group">
-                <span>Discover Our Journey</span>
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              <Button asChild className="btn-primary group">
+                <Link href="/portfolio">
+                  <span>Discover Our Journey</span>
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
               </Button>
-              <Button className="btn-secondary group">
-                <span>Meet The Visionaries</span>
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              <Button asChild className="btn-secondary group">
+                <Link href="/team">
+                  <span>Meet The Visionaries</span>
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
               </Button>
             </motion.div>
           </motion.div>
@@ -574,7 +579,7 @@ export default function AboutClient() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-                <Button className="btn-primary text-lg px-12 py-6">
+                <Button onClick={() => openPopup('about-final-cta')} className="btn-primary text-lg px-12 py-6">
                   <span>Begin The Conversation</span>
                   <ArrowRight className="ml-2 w-6 h-6" />
                 </Button>

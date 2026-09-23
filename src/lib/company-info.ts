@@ -16,7 +16,8 @@ export function yearsInBusiness(now: Date = new Date()): number {
 export const companyInfo = {
   brandName: 'White Massif',
   foundingYear: FOUNDING_YEAR,
-  founders: ['Prakash Vaswani', 'Vinay Kukreja', 'Hasan Peer', 'Naveen Abraham'],
+  // Names exactly as on the About page.
+  founders: ['Prakash A Vaswani', 'Vinay Kukreja', 'Hasan Peer H C', 'Naveen Abraham A'],
 
   stats: {
     events: '1000+',

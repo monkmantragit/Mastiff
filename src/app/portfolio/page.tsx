@@ -7,7 +7,7 @@ import { WorkMediaService } from "@/lib/work-media";
 export const revalidate = 3600;
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "White Massif | Successful Corporate Events",
+  title: "Corporate Event Portfolio | White Massif Bangalore",
   description: "Showcasing White Massif's corporate portfolio with successful conferences, launches, corporate events, impact brand experiences in Bangalore",
   keywords: [
     "White Massif portfolio",
@@ -22,8 +22,7 @@ export const metadata: Metadata = generatePageMetadata({
     "White Massif work examples"
   ],
   openGraph: {
-    type: "website",
-    images: ["/WM LOGO-01.png"]
+    type: "website"
   },
   path: "/portfolio"
 });

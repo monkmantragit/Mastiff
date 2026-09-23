@@ -9,6 +9,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Blog } from '@/lib/directus';
+import { blogPath } from '@/lib/slug';
+import { usePopup } from '@/components/popup-provider';
 import { getDirectusAssetUrl } from '@/lib/directus-utils';
 
 interface BlogClientProps {
@@ -16,6 +18,7 @@ interface BlogClientProps {
 }
 
 export default function BlogClient({ posts }: BlogClientProps) {
+  const { openPopup } = usePopup();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const categories = ['All', ...Array.from(new Set(posts.map(post => post.category).filter((cat): cat is string => Boolean(cat))))];
@@ -90,7 +93,7 @@ export default function BlogClient({ posts }: BlogClientProps) {
                 viewport={{ once: true }}
               >
                 <Card className="h-full glass rounded-3xl hover:shadow-xl transition-all duration-500 group cursor-pointer border-neutral-200">
-                  <Link href={`/blog/${post.slug || post.id}`}>
+                  <Link href={blogPath(post)}>
                     <div className="aspect-video overflow-hidden rounded-t-3xl relative">
                       {(getDirectusAssetUrl(post.main_image) || getDirectusAssetUrl(post.featured_image)) ? (
                         <Image
@@ -169,21 +172,6 @@ export default function BlogClient({ posts }: BlogClientProps) {
           </div>
         )}
 
-        {/* Load More - Future Enhancement */}
-        {filteredPosts.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mt-16"
-          >
-            <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black px-8 py-4 rounded-full">
-              <span>Explore More Insights</span>
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </motion.div>
-        )}
       </section>
 
       {/* CTA Section */}
@@ -207,15 +195,16 @@ export default function BlogClient({ posts }: BlogClientProps) {
                 Get a free consultation and see how we can handle your corporate event from start to finish.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg">
+                <Button onClick={() => openPopup('blog-consultation')} className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg">
                   Get Free Consultation
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <Button
+                  asChild
                   variant="outline"
                   className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
                 >
-                  View Our Work
+                  <Link href="/portfolio">View Our Work</Link>
                 </Button>
               </div>
             </CardContent>

@@ -22,8 +22,7 @@ export const metadata: Metadata = generatePageMetadata({
     "corporate event management team"
   ],
   openGraph: {
-    type: "website",
-    images: ["/WM LOGO-01.png"]
+    type: "website"
   },
   path: "/team"
 });

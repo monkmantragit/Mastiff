@@ -1,39 +1,52 @@
 import { Metadata } from 'next';
+import { companyInfo as facts } from './company-info';
 
-// Company information for White Massif - India focused
+const SITE_URL = "https://www.whitemassif.com";
+
+/** Absolute URL for a site path, with spaces and special characters encoded. */
+export function absoluteUrl(path: string): string {
+  if (/^https?:\/\//.test(path)) return path;
+  return `${SITE_URL}${encodeURI(path.startsWith('/') ? path : `/${path}`)}`;
+}
+
+// Company information for structured data. Facts (founding year, founders, stats,
+// phone, social profiles) come from company-info.ts so the schema can never disagree
+// with what the pages say.
 export const companyInfo = {
   name: "White Massif Event Management",
   legalName: "White Massif Event Management Private Limited",
-  url: "https://www.whitemassif.com",
-  logo: "/WM LOGO-01.png",
-  description: "Premier corporate event management company in India specializing in high-impact corporate events, conferences, team building activities, and brand experiences across Bangalore, Mumbai, Delhi, Chennai, Hyderabad, and Pune.",
-  foundingDate: "2015",
-  founders: ["Harsha", "Team White Massif"],
-  email: "info@whitemassif.com",
+  url: SITE_URL,
+  // Absolute, no spaces: Google requires an absolute logo URL for the knowledge panel.
+  logo: `${SITE_URL}/brand/wm-logo.png`,
+  ogImage: `${SITE_URL}/brand/wm-og.jpg`,
+  description: `Corporate event management company in Bangalore, founded in ${facts.foundingYear}, with ${facts.stats.events} events delivered for ${facts.stats.clients} corporate clients: conferences, product launches, annual days, awards, MICE, employee engagement and hybrid events across India.`,
+  foundingDate: String(facts.foundingYear),
+  founders: facts.founders,
+  email: facts.email,
+  telephone: facts.phoneE164,
+  // City-level address only. The street address will be added once confirmed; the old
+  // "HSR Layout // Update with actual address" placeholder and HSR coordinates did not
+  // match the Google Business Profile embedded in the footer.
   address: {
-    streetAddress: "HSR Layout", // Update with actual address
     addressLocality: "Bangalore",
     addressRegion: "Karnataka",
-    postalCode: "560102",
     addressCountry: "IN"
   },
-  geo: {
-    latitude: "12.9121",
-    longitude: "77.6446"
-  },
-  openingHours: "Mo-Fr 09:00-18:00, Sa 09:00-14:00",
+  // Google Business Profile (the same place embedded in the footer map).
+  hasMap: "https://www.google.com/maps?cid=9888755426919568659",
+  openingHours: "Mo-Sa 09:00-19:00",
   priceRange: "₹₹₹",
   currenciesAccepted: "INR",
-  paymentAccepted: "Cash, Credit Card, UPI, Bank Transfer",
+  paymentAccepted: "Credit Card, UPI, Bank Transfer",
   areaServed: [
     "Bangalore", "Mumbai", "Delhi", "Chennai", "Hyderabad", "Pune",
     "Kolkata", "Ahmedabad", "Gurgaon", "Noida", "India", "Karnataka"
   ],
   socialProfiles: [
-    "https://www.linkedin.com/company/white-massif",
-    "https://www.instagram.com/whitemassif",
-    "https://www.facebook.com/whitemassif",
-    "https://www.youtube.com/@whitemassif"
+    facts.social.linkedin,
+    facts.social.instagram,
+    facts.social.facebook,
+    facts.social.youtube,
   ],
   serviceTypes: [
     "Corporate Events",
@@ -63,49 +76,71 @@ export const companyInfo = {
       "employee engagement event planners",
       "virtual event management India",
       "hybrid event solutions Bangalore"
-    ],
-    local: [
-      "event management HSR Layout",
-      "corporate events Koramangala",
-      "event planners Indiranagar",
-      "Whitefield event management",
-      "Electronic City corporate events"
     ]
   }
 };
 
-// Organization Schema for Google Rich Results
+const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+
+// Organization + local business in one entity (ProfessionalService is both). One @id
+// that every other schema on the site references.
 export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${companyInfo.url}/#organization`,
+    "@type": ["Organization", "ProfessionalService"],
+    "@id": ORGANIZATION_ID,
     name: companyInfo.name,
+    alternateName: facts.brandName,
     legalName: companyInfo.legalName,
     url: companyInfo.url,
     logo: {
       "@type": "ImageObject",
       url: companyInfo.logo,
-      width: "200",
-      height: "60"
+      width: 480,
+      height: 399
     },
+    image: companyInfo.ogImage,
     description: companyInfo.description,
     foundingDate: companyInfo.foundingDate,
     founder: companyInfo.founders.map(founder => ({
       "@type": "Person",
       name: founder
     })),
+    numberOfEmployees: {
+      "@type": "QuantitativeValue",
+      minValue: parseInt(facts.stats.team, 10)
+    },
+    email: companyInfo.email,
+    telephone: companyInfo.telephone,
     address: {
       "@type": "PostalAddress",
       ...companyInfo.address
     },
+    hasMap: companyInfo.hasMap,
+    priceRange: companyInfo.priceRange,
+    currenciesAccepted: companyInfo.currenciesAccepted,
+    paymentAccepted: companyInfo.paymentAccepted,
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        opens: "09:00",
+        closes: "19:00"
+      }
+    ],
+    areaServed: companyInfo.areaServed.map(area => ({
+      "@type": area === "India" ? "Country" : area === "Karnataka" ? "State" : "City",
+      name: area
+    })),
+    knowsAbout: companyInfo.serviceTypes,
     contactPoint: [
       {
         "@type": "ContactPoint",
+        telephone: companyInfo.telephone,
         email: companyInfo.email,
-        contactType: "customer service",
+        contactType: "sales",
         areaServed: "IN",
-        availableLanguage: ["English", "Hindi"]
+        availableLanguage: ["English", "Hindi", "Kannada"]
       }
     ],
     sameAs: companyInfo.socialProfiles,
@@ -114,54 +149,12 @@ export function generateOrganizationSchema() {
   };
 }
 
-// LocalBusiness Schema for Local SEO in India
+/**
+ * @deprecated Merged into generateOrganizationSchema (typed Organization +
+ * ProfessionalService). The old "EventVenue" type was wrong: White Massif is not a venue.
+ */
 export function generateLocalBusinessSchema() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "EventVenue",
-    "@id": `${companyInfo.url}/#localbusiness`,
-    name: companyInfo.name,
-    image: [
-      "/assets/media/Services/Services- Landing page 1.jpg",
-      "/assets/media/Services/Hybrid Events .jpg",
-      "/assets/media/Services/Celebration Galore.jpg"
-    ],
-    url: companyInfo.url,
-    priceRange: companyInfo.priceRange,
-    address: {
-      "@type": "PostalAddress",
-      ...companyInfo.address
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      ...companyInfo.geo
-    },
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "09:00",
-        closes: "18:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Saturday",
-        opens: "09:00",
-        closes: "14:00"
-      }
-    ],
-    currenciesAccepted: companyInfo.currenciesAccepted,
-    paymentAccepted: companyInfo.paymentAccepted,
-    areaServed: companyInfo.areaServed.map(area => ({
-      "@type": "City",
-      name: area
-    })),
-    amenityFeature: [
-      { "@type": "LocationFeatureSpecification", value: "Event Planning" },
-      { "@type": "LocationFeatureSpecification", value: "Corporate Events" },
-      { "@type": "LocationFeatureSpecification", value: "Virtual Events" }
-    ]
-  };
+  return null;
 }
 
 // Service Schema for Event Management Services
@@ -179,12 +172,10 @@ export function generateServiceSchema(service: {
     "@type": "Service",
     name: service.name,
     description: service.description,
-    image: service.image,
-    provider: {
-      "@type": "Organization",
-      name: service.provider || companyInfo.name,
-      url: companyInfo.url
-    },
+    image: service.image ? absoluteUrl(service.image) : companyInfo.ogImage,
+    provider: service.provider
+      ? { "@type": "Organization", name: service.provider }
+      : { "@id": ORGANIZATION_ID },
     serviceType: service.serviceType || "Event Management",
     areaServed: service.areaServed || companyInfo.areaServed,
     hasOfferCatalog: service.hasOfferCatalog || {
@@ -202,45 +193,41 @@ export function generateServiceSchema(service: {
   };
 }
 
-// Article Schema for Blog Posts
+// BlogPosting schema. URLs are absolute, the publisher is the site Organization, and
+// dateModified uses the CMS update time instead of always repeating the publish date.
 export function generateArticleSchema(article: {
   title: string;
   description: string;
   content: string;
-  author: string;
+  author?: string;
   publishDate: string;
   modifiedDate?: string;
   image?: string;
   url: string;
   keywords?: string[];
 }) {
+  const plainText = article.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const author = article.author && !/white massif/i.test(article.author)
+    ? { "@type": "Person", name: article.author }
+    : { "@id": ORGANIZATION_ID };
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: article.title,
     description: article.description,
-    articleBody: article.content.substring(0, 1000),
-    author: {
-      "@type": "Person",
-      name: article.author,
-      url: `${companyInfo.url}/team`
-    },
-    publisher: {
-      "@type": "Organization",
-      name: companyInfo.name,
-      logo: {
-        "@type": "ImageObject",
-        url: companyInfo.logo
-      }
-    },
+    articleBody: plainText.substring(0, 1000),
+    wordCount: plainText ? plainText.split(' ').length : undefined,
+    author,
+    publisher: { "@id": ORGANIZATION_ID },
     datePublished: article.publishDate,
     dateModified: article.modifiedDate || article.publishDate,
-    image: article.image || companyInfo.logo,
+    image: article.image ? absoluteUrl(article.image) : companyInfo.ogImage,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": article.url
+      "@id": absoluteUrl(article.url)
     },
-    keywords: article.keywords?.join(", ") || companyInfo.keywords.primary.join(", ")
+    keywords: article.keywords?.join(", ") || undefined,
+    inLanguage: "en-IN"
   };
 }
 
@@ -274,7 +261,7 @@ export function generateEventSchema(event: {
         addressCountry: "IN"
       }
     } : undefined,
-    image: event.image || companyInfo.logo,
+    image: event.image ? absoluteUrl(event.image) : companyInfo.ogImage,
     organizer: {
       "@type": "Organization",
       name: event.organizer || companyInfo.name,
@@ -365,10 +352,12 @@ export function generateJobPostingSchema(job: {
     employmentType: job.employmentType || "FULL_TIME",
     hiringOrganization: {
       "@type": "Organization",
+      "@id": ORGANIZATION_ID,
       name: companyInfo.name,
       sameAs: companyInfo.url,
       logo: companyInfo.logo
     },
+    directApply: false,
     jobLocation: {
       "@type": "Place",
       address: {
@@ -391,7 +380,8 @@ export function generateJobPostingSchema(job: {
   };
 }
 
-// WebSite Schema with SearchAction
+// WebSite schema. No SearchAction: the site has no /search page (it returned 404),
+// and inLanguage only lists the language the content is actually in.
 export function generateWebSiteSchema() {
   return {
     "@context": "https://schema.org",
@@ -399,19 +389,12 @@ export function generateWebSiteSchema() {
     "@id": `${companyInfo.url}/#website`,
     url: companyInfo.url,
     name: companyInfo.name,
+    alternateName: facts.brandName,
     description: companyInfo.description,
     publisher: {
-      "@id": `${companyInfo.url}/#organization`
+      "@id": ORGANIZATION_ID
     },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${companyInfo.url}/search?q={search_term_string}`
-      },
-      "query-input": "required name=search_term_string"
-    },
-    inLanguage: ["en-IN", "en", "hi", "kn", "ta", "te"]
+    inLanguage: "en-IN"
   };
 }
 
@@ -436,6 +419,7 @@ export function generatePageMetadata({
   alternates?: any;
 }): Metadata {
   const fullUrl = `${companyInfo.url}${path}`;
+  const shareImages = (images.length > 0 ? images : [companyInfo.ogImage]).map(absoluteUrl);
 
   return {
     title: `${title}`,
@@ -450,29 +434,27 @@ export function generatePageMetadata({
       telephone: false,
     },
     metadataBase: new URL(companyInfo.url),
+    // Single-language site: a canonical is enough. The old en-IN + en hreflang pair
+    // pointed at the same URL with no x-default, which only adds noise.
     alternates: {
       canonical: fullUrl,
-      languages: {
-        'en-IN': fullUrl,
-        'en': fullUrl,
-        ...alternates
-      }
+      ...alternates
     },
     openGraph: {
       title: `${title}`,
       description,
       url: fullUrl,
       siteName: companyInfo.name,
-      images: images.length > 0 ? images : [companyInfo.logo],
       locale: 'en_IN',
+      ...openGraph,
       type: openGraph?.type || 'website',
-      ...openGraph
+      images: openGraph?.images ? [].concat(openGraph.images).map((img: string) => absoluteUrl(img)) : shareImages
     },
     twitter: {
       card: 'summary_large_image',
       title: `${title}`,
       description,
-      images: images.length > 0 ? images : [companyInfo.logo],
+      images: shareImages,
       creator: '@whitemassif'
     },
     robots: {
@@ -529,7 +511,7 @@ export function generateLocationContent(city: string, region?: string) {
   return {
     title: `Event Management Company in ${city}${region ? `, ${region}` : ''}`,
     h1: `Leading Corporate Event Management Services in ${city}`,
-    description: `White Massif - Your trusted corporate event management partner in ${city}. Specializing in corporate events, product launches, team building activities, and conferences. Serving ${region || city} with 175+ successful events for Fortune 500 companies.`,
+    description: `White Massif - Your trusted corporate event management partner in ${city}. Specializing in corporate events, product launches, team building activities, and conferences. Serving ${region || city} since ${facts.foundingYear}, with ${facts.stats.events} events delivered for ${facts.stats.clients} corporate clients.`,
     keywords: [
       `event management company in ${city}`,
       `corporate event planners ${city}`,
@@ -559,7 +541,7 @@ export const commonFAQs = [
   },
   {
     question: "What makes White Massif the best event management company in Karnataka?",
-    answer: "With over 175+ successful events, a decade of experience, and partnerships with Fortune 500 companies, White Massif brings creativity, reliability, and seamless execution to every event. Our team of 20+ professionals ensures end-to-end event management with attention to detail."
+    answer: `Since ${facts.foundingYear}, White Massif has delivered ${facts.stats.events} events for ${facts.stats.clients} corporate clients, including Fortune 500 companies. A ${facts.stats.team}-person in-house team handles strategy, creative, production and on-ground execution end to end.`
   },
   {
     question: "Does White Massif handle virtual and hybrid events?",

@@ -8,8 +8,8 @@ import { DirectusService } from "@/lib/directus-service";
 export const revalidate = 3600;
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "Our Clients | Trusted By Leading Brands | White Massif",
-  description: "Discover the top brands and businesses that have made White Massif their reliable event management partner. Our clients are proof of our creativity and event expertise.",
+  title: "Our Clients | Brands That Trust White Massif",
+  description: "175+ corporate clients, from Fortune 500 companies to fast-growing startups, trust White Massif with their conferences, launches and celebrations.",
   keywords: [
     "White Massif clients",
     "corporate clients Bangalore",
@@ -23,8 +23,7 @@ export const metadata: Metadata = generatePageMetadata({
     "White Massif portfolio clients"
   ],
   openGraph: {
-    type: "website",
-    images: ["/WM LOGO-01.png"]
+    type: "website"
   },
   path: "/clients"
 });

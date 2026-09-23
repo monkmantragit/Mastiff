@@ -20,10 +20,7 @@ export default function FeedbackLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <>
-      <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
-      {children}
-    </>
-  )
+  // robots noindex comes from the metadata export above; a second <meta> in <body> was
+  // a duplicate in an invalid position.
+  return <>{children}</>
 }

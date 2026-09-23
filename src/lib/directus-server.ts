@@ -117,6 +117,21 @@ export async function directusItems<T>(
   }
 }
 
+/**
+ * Like directusItems, but throws when Directus cannot be reached instead of returning [].
+ * Use for single-page lookups (blog post, service, landing page): an empty result there
+ * means "404", and during a CMS outage a cached page must not be revalidated into a 404.
+ * Throwing during ISR revalidation keeps serving the last good version.
+ */
+export async function directusItemsStrict<T>(
+  collection: string,
+  params: Record<string, QueryValue> = {},
+  revalidate: number | false = 3600
+): Promise<T[]> {
+  const result = await directusRequest<{ data?: T[] }>(`/items/${collection}`, params, { revalidate });
+  return Array.isArray(result?.data) ? result.data : [];
+}
+
 /** Create an item. Throws on failure so callers can decide how to recover. */
 export async function directusCreate<T = unknown>(collection: string, data: unknown): Promise<T> {
   return directusRequest<T>(`/items/${collection}`, {}, { method: 'POST', body: data });

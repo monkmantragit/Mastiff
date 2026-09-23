@@ -3,8 +3,8 @@ import { generatePageMetadata } from "@/lib/seo-utils";
 import AboutClient from "./about-client";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "About White Massif - 12+ Years of Event Excellence",
-  description: "Founded in 2013, White Massif has delivered 1000+ exceptional corporate events across India. Meet our team of event management experts in Bangalore leading innovation in corporate experiences.",
+  title: "About White Massif | Corporate Event Experts Since 2013",
+  description: "Founded in 2013 in Bangalore, White Massif has delivered 1000+ corporate events. Meet the founders and the team behind them.",
   keywords: [
     "about White Massif",
     "event management company history",
@@ -18,8 +18,7 @@ export const metadata: Metadata = generatePageMetadata({
     "trusted event partners India"
   ],
   openGraph: {
-    type: "website",
-    images: ["/WM LOGO-01.png"]
+    type: "website"
   },
   path: "/about"
 });

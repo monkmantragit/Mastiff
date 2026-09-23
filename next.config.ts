@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { DUPLICATE_SERVICE_REDIRECTS } from "./src/lib/service-redirects";
+import { DUPLICATE_SERVICE_REDIRECTS, DUPLICATE_STATIC_SERVICE_REDIRECTS } from "./src/lib/service-redirects";
 
 const nextConfig: NextConfig = {
   // Enable production optimizations
@@ -176,6 +176,12 @@ const nextConfig: NextConfig = {
       // Duplicate CMS service pages -> the Bangalore page that targets the same queries.
       ...Object.entries(DUPLICATE_SERVICE_REDIRECTS).map(([slug, destination]) => ({
         source: `/services/${slug}`,
+        destination,
+        permanent: true,
+      })),
+      // Duplicate hand-built service pages -> the Bangalore page that wins that intent.
+      ...Object.entries(DUPLICATE_STATIC_SERVICE_REDIRECTS).map(([source, destination]) => ({
+        source,
         destination,
         permanent: true,
       })),

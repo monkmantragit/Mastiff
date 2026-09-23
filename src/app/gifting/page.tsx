@@ -5,7 +5,7 @@ import GiftingClient from "./gifting-client";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Corporate Gifting Company in Bangalore | Massif Gifting Co.",
-  description: "From new-joiner kits to Diwali hampers, Massif Gifting Co. plans corporate gifts your people actually want - customised, branded and delivered PAN India from Bangalore.",
+  description: "Corporate gifting in Bangalore by Massif Gifting Co.: curated hampers, welcome kits and branded merchandise for employees and clients, delivered pan-India.",
   keywords: [
     "corporate gifting company in Bangalore",
     "corporate gifts India",

@@ -17,15 +17,9 @@ interface ServicePageProps {
 }
 
 // Cache the service fetch for performance
-const getService = cache(async (slug: string): Promise<Service | null> => {
-  try {
-    const service = await DirectusService.getService(slug);
-    return service;
-  } catch (error) {
-    console.error('Error fetching service:', error);
-    return null;
-  }
-});
+// No try/catch: a CMS outage must throw (Next keeps serving the cached page) instead of
+// returning null, which would render and cache a 404 for a page that exists.
+const getService = cache((slug: string): Promise<Service | null> => DirectusService.getService(slug));
 
 // Generate metadata for SEO
 export async function generateMetadata({ 
@@ -58,8 +52,8 @@ export async function generateMetadata({
   ];
 
   return generatePageMetadata({
-    title: `${service.title} Services in India - White Massif Event Management`,
-    description: service.description || `Professional ${service.title.toLowerCase()} services by White Massif - India's leading event management company. Specializing in corporate events, conferences, and brand experiences across major Indian cities.`,
+    title: service.meta_title || `${service.title} in Bangalore | White Massif`,
+    description: service.meta_description || service.description || `Professional ${service.title.toLowerCase()} services by White Massif - India's leading event management company. Specializing in corporate events, conferences, and brand experiences across major Indian cities.`,
     keywords,
     path: `/services/${service.slug || service.id}`,
     images: service.featured_image ? [service.featured_image] : [],

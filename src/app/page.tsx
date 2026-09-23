@@ -16,8 +16,8 @@ const HomeClient = dynamic(() => import("./home-client"), {
 });
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "White Massif - Trusted Corporate Event Management Company",
-  description: "White Massif is a leading corporate event management company delivering seamless events, conferences, and celebrations tailored for businesses.",
+  title: "Corporate Event Management Company in Bangalore | White Massif",
+  description: "White Massif plans and runs corporate events in Bangalore and across India since 2013: conferences, product launches, annual days, awards and hybrid events.",
   keywords: [
     "corporate event management company India",
     "event management companies Bangalore",
@@ -29,11 +29,10 @@ export const metadata: Metadata = generatePageMetadata({
     "team building activities Bangalore",
     "conference management services India",
     "White Massif events",
-    "event management HSR Layout Bangalore"
+    "corporate event management company Bangalore"
   ],
   openGraph: {
-    type: "website",
-    images: ["/WM LOGO-01.png"]
+    type: "website"
   },
   path: "/"
 });
