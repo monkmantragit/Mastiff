@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { getBestLogoUrl, type ClientLogo } from '@/lib/client-logos-utils';
@@ -241,10 +242,13 @@ export function ViewAllClientsModal({ clients, isOpen, onClose }: ViewAllClients
                             >
                               <div className="bg-neutral-50 rounded-lg p-3 lg:p-4 aspect-square flex items-center justify-center hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 hover:scale-105 border border-transparent hover:border-amber-200">
                                 {getBestLogoUrl(client) ? (
-                                  <img
+                                  <Image
                                     src={getBestLogoUrl(client) || ''}
                                     alt={client.client_name}
-                                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                                    width={240}
+                                    height={120}
+                                    sizes="(max-width: 768px) 40vw, 200px"
+                                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 w-auto h-auto"
                                     onError={(e) => {
                                       e.currentTarget.style.display = 'none';
                                       e.currentTarget.nextElementSibling?.classList.remove('hidden');

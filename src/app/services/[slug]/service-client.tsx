@@ -65,7 +65,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
 
         <div className="container mx-auto px-4 py-32 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             className="max-w-6xl mx-auto text-center"
@@ -88,7 +88,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
             {/* Service Category Badge */}
             {service.category && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={false}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
                 className="mb-8"
@@ -100,14 +100,9 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
             )}
 
             {/* Service Title */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-display text-[#2A3959] mb-8 leading-tight"
-            >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display text-[#2A3959] mb-8 leading-tight">
               {service.title}
-            </motion.h1>
+            </h1>
 
             {/* Service Description */}
             {service.description && (

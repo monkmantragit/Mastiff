@@ -5,16 +5,16 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { ServicesMediaService } from "@/lib/services-media";
 import { ArrowRight, Trophy, Music, Building, Camera, ChevronDown, CheckCircle2, Wine, Tent, MapPin, Speaker, Palette, Layers, ClipboardList, HeartHandshake, Clapperboard, Heart, Clock, Compass, LayoutTemplate, UsersRound, Handshake, Sliders, Activity, FileText, PartyPopper, Presentation, Cpu, Landmark, HeartPulse, Factory, Rocket, Hotel, Building2 } from "lucide-react";
 import { usePopup } from "@/components/popup-provider";
 
 import { faqs } from './faqs';
 export default function AnnualDayEventClient() {
     const { openPopup } = usePopup();
-    const serviceImages = ServicesMediaService.getServicesImages();
     // Use an appropriate image for annual day/awards
-    const defaultImage = serviceImages.employeeEngagement || serviceImages.eventManagement || "/assets/images/placeholder.jpg";
+    // The keys used before (employeeEngagement, eventManagement) do not exist, so this page
+    // always fell through to /assets/images/placeholder.jpg, which does not exist either.
+    const defaultImage = "/assets/media/Home Page/Home page 3 - Award Ceremony.jpg";
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
     return (

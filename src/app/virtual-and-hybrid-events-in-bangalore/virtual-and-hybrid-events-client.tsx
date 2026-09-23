@@ -13,7 +13,7 @@ import { faqs } from './faqs';
 export default function VirtualHybridEventClient() {
     const { openPopup } = usePopup();
     const serviceImages = ServicesMediaService.getServicesImages();
-    const defaultImage = serviceImages.hybridEvents || "/assets/images/placeholder.jpg";
+    const defaultImage = serviceImages.hybridEvents;
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
     return (

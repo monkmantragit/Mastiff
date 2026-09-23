@@ -308,7 +308,7 @@ export default function ContactClient() {
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
+            initial={false}
             animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
@@ -323,12 +323,7 @@ export default function ContactClient() {
             </motion.div>
 
             {/* Main Headline with Kinetic Typography */}
-            <motion.h1
-              className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            >
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
               <span className="kinetic-text">
                 Dreams Don't
               </span>
@@ -336,7 +331,7 @@ export default function ContactClient() {
               <span className="text-neutral-800">
                 Build Themselves
               </span>
-            </motion.h1>
+            </h1>
 
             <motion.p
               className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"

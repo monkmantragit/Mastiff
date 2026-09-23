@@ -84,12 +84,15 @@ export default function PortfolioClient({ portfolioItems }: { portfolioItems: Po
         
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="text-center max-w-4xl mx-auto text-white"
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display leading-tight mb-6">
+              <span className="block text-sm md:text-base font-body font-semibold tracking-[0.2em] uppercase text-[#F9A625] mb-5 leading-normal">
+                Corporate Event Portfolio, Bangalore &amp; India
+              </span>
               <span className="kinetic-text">
                 Where Vision
               </span>

@@ -221,7 +221,7 @@ export default function TeamClient({ teamStructure }: TeamClientProps) {
         
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="text-center max-w-5xl mx-auto text-white"
@@ -232,6 +232,9 @@ export default function TeamClient({ teamStructure }: TeamClientProps) {
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display leading-tight mb-8">
+              <span className="block text-sm md:text-base font-body font-semibold tracking-[0.2em] uppercase text-amber-400 mb-5 leading-normal">
+                Our Corporate Event Management Team in Bangalore
+              </span>
               <span className="block bg-gradient-to-r from-white via-amber-100 to-white bg-clip-text text-transparent">
                 The Minds Behind
               </span>

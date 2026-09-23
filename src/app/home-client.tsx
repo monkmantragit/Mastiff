@@ -169,7 +169,7 @@ export default function HomeClient() {
         {/* Minimal Top Badge */}
         <motion.div
           className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
-          initial={{ opacity: 0, y: -20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
@@ -182,7 +182,7 @@ export default function HomeClient() {
         {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
-          initial={{ opacity: 0 }}
+          initial={false}
           animate={{ opacity: 1, y: [0, 10, 0] }}
           transition={{ delay: 2, duration: 2, repeat: Infinity }}
         >
@@ -199,7 +199,7 @@ export default function HomeClient() {
       <section ref={heroRef} className="relative py-16 lg:py-24 bg-gradient-to-br from-neutral-50 via-white to-amber-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
+            initial={false}
             animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="text-center"

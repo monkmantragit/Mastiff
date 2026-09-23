@@ -161,7 +161,7 @@ export default function ClientsClient({ testimonials, allLogos }: ClientsClientP
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
+            initial={false}
             animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
@@ -175,12 +175,7 @@ export default function ClientsClient({ testimonials, allLogos }: ClientsClientP
             </motion.div>
 
             {/* Main Headline */}
-            <motion.h1
-              className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1.2, delay: 0.2 }}
-            >
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
               <span className="kinetic-text">
                 What Sets Us
               </span>
@@ -188,7 +183,7 @@ export default function ClientsClient({ testimonials, allLogos }: ClientsClientP
               <span className="text-neutral-800">
                 Apart
               </span>
-            </motion.h1>
+            </h1>
 
             <motion.p
               className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"
@@ -358,10 +353,13 @@ export default function ClientsClient({ testimonials, allLogos }: ClientsClientP
                 >
                   <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl transition-all duration-500 aspect-square flex items-center justify-center glass micro-bounce">
                     {getBestLogoUrl(client) ? (
-                      <img
+                      <Image
                         src={getBestLogoUrl(client) || ''}
                         alt={client.client_name}
-                        className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        width={240}
+                        height={120}
+                        sizes="(max-width: 768px) 40vw, 200px"
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 w-auto h-auto"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
                         }}
