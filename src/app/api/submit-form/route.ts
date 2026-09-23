@@ -43,6 +43,15 @@ const rateLimitHits = new Map<string, number[]>();
 function isRateLimited(key: string): boolean {
   const now = Date.now();
   const hits = (rateLimitHits.get(key) || []).filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+  if (hits.length > 0) rateLimitHits.set(key, hits);
+  else rateLimitHits.delete(key);
+  return hits.length >= RATE_LIMIT_MAX;
+}
+
+/** Count a submission that passed validation (typos and rejected attempts don't count). */
+function recordSubmission(key: string): void {
+  const now = Date.now();
+  const hits = (rateLimitHits.get(key) || []).filter(t => now - t < RATE_LIMIT_WINDOW_MS);
   hits.push(now);
   rateLimitHits.set(key, hits);
 
@@ -51,13 +60,19 @@ function isRateLimited(key: string): boolean {
       if (times.every(t => now - t >= RATE_LIMIT_WINDOW_MS)) rateLimitHits.delete(k);
     }
   }
-  return hits.length > RATE_LIMIT_MAX;
 }
 
+// Prefer headers set by the CDN / hosting proxy. The first X-Forwarded-For entry is
+// client-controlled when proxies append to it, so it is only a last resort.
 function getClientIP(request: NextRequest): string {
+  const trusted = request.headers.get('cf-connecting-ip') || request.headers.get('x-real-ip');
+  if (trusted) return trusted.trim();
   const forwarded = request.headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
-  return request.headers.get('cf-connecting-ip') || request.headers.get('x-real-ip') || 'unknown';
+  if (forwarded) {
+    const hops = forwarded.split(',').map(h => h.trim()).filter(Boolean);
+    return hops[hops.length - 1] || 'unknown';
+  }
+  return 'unknown';
 }
 
 function error(message: string, status: number) {
@@ -121,7 +136,8 @@ export async function POST(request: NextRequest) {
   }
 
   const clientIP = getClientIP(request);
-  if (isRateLimited(`${clientIP}:${formType || 'none'}`)) {
+  const rateKey = `${clientIP}:${formType || 'none'}`;
+  if (isRateLimited(rateKey)) {
     return error('Too many submissions. Please wait a few minutes, or call us on +91 74112 72227.', 429);
   }
 
@@ -133,15 +149,19 @@ export async function POST(request: NextRequest) {
   try {
     if (LEAD_FORM_TYPES.has(formType)) {
       const email = str(formData.email);
-      if (!email || !EMAIL_PATTERN.test(email)) {
+      const phone = str(formData.phone);
+      // Landing pages are built in the CMS and may collect only a phone number.
+      const phoneOnlyAllowed = formType === 'landing' && !email && phone && /^\+?\d{7,15}$/.test(phone.replace(/[\s().-]/g, ''));
+      if (!phoneOnlyAllowed && (!email || !EMAIL_PATTERN.test(email))) {
         return error('Please enter a valid email address.', 400);
       }
+      recordSubmission(rateKey);
 
       const submission = {
         form_type: formType,
         name: str(formData.name),
         email,
-        phone: str(formData.phone),
+        phone,
         company: str(formData.company),
         event_type: str(formData.eventType),
         event_date: str(formData.eventDate),
@@ -193,13 +213,14 @@ export async function POST(request: NextRequest) {
       if (!email || !EMAIL_PATTERN.test(email)) {
         return error('Please enter a valid email address.', 400);
       }
+      recordSubmission(rateKey);
 
       // Same response whether or not the address is already subscribed, so the endpoint
       // cannot be used to check who is on the list.
       const existing = await directusItems<{ id: number }>(
         'newsletter_subscribers',
         { fields: 'id', filter: { email: { _eq: email } }, limit: 1 },
-        false
+        0 // never cached: a stale "not subscribed" answer would insert duplicates
       );
       if (existing.length === 0) {
         await directusCreate('newsletter_subscribers', {
@@ -220,6 +241,7 @@ export async function POST(request: NextRequest) {
         ? (body.payload as Record<string, unknown>)
         : null;
       if (!payload) return error('Invalid submission.', 400);
+      recordSubmission(rateKey);
 
       const webhookUrl = process.env.FEEDBACK_WEBHOOK_URL || process.env.NEXT_PUBLIC_FEEDBACK_WEBHOOK_URL;
       if (webhookUrl) {

@@ -404,6 +404,37 @@ function GeneralTemplate({ landingPage, openPopup }: { landingPage: LandingPage;
 }
 
 /**
+ * Landing forms are defined in the CMS, so field names vary ("Full Name", "mobile",
+ * "work_email"). Map recognisable ones onto the lead fields the API stores, and turn any
+ * other name into a safe key so its value is kept instead of silently dropped.
+ */
+const FIELD_ALIASES: Array<[RegExp, string]> = [
+  [/e-?mail/i, 'email'],
+  [/phone|mobile|contact.?number|whats\s?app/i, 'phone'],
+  [/company|organi[sz]ation|business/i, 'company'],
+  [/event.?type/i, 'eventType'],
+  [/event.?date|date/i, 'eventDate'],
+  [/city|location|venue/i, 'location'],
+  [/message|details|requirement|comments?|notes?/i, 'message'],
+  [/name/i, 'name'],
+];
+
+function mapLandingFields(formData: FormData): Record<string, string> {
+  const fields: Record<string, string> = {};
+  formData.forEach((value, rawKey) => {
+    if (typeof value !== 'string' || rawKey === 'website') return;
+    const trimmed = value.trim();
+    if (!trimmed) return;
+    const alias = FIELD_ALIASES.find(([pattern]) => pattern.test(rawKey))?.[1];
+    const key = alias && !fields[alias]
+      ? alias
+      : rawKey.replace(/[^A-Za-z0-9_]+/g, '_').replace(/^[^A-Za-z]+/, '').slice(0, 60) || 'field';
+    fields[key] = trimmed;
+  });
+  return fields;
+}
+
+/**
  * Runs the CMS tracking snippet. React never executes <script> tags rendered with
  * dangerouslySetInnerHTML, so the old version silently did nothing. A contextual
  * fragment does execute its scripts (inline and external) when inserted.
@@ -448,13 +479,16 @@ export default function LandingClient({ landingPage }: { landingPage: LandingPag
     if (isSubmitting) return;
     setFormError(null);
 
-    const fields: Record<string, string> = {};
-    new FormData(e.currentTarget).forEach((value, key) => {
-      if (typeof value === 'string' && key !== 'website') fields[key] = value.trim();
-    });
+    const fields = mapLandingFields(new FormData(e.currentTarget));
 
-    if (!fields.email || !FormService.validateEmail(fields.email)) {
+    const hasEmail = Boolean(fields.email) && FormService.validateEmail(fields.email);
+    const hasPhone = Boolean(fields.phone) && FormService.validatePhone(fields.phone);
+    if (fields.email && !hasEmail) {
       setFormError('Please enter a valid email address.');
+      return;
+    }
+    if (!hasEmail && !hasPhone) {
+      setFormError('Please enter a valid email address or phone number.');
       return;
     }
 
@@ -462,7 +496,7 @@ export default function LandingClient({ landingPage }: { landingPage: LandingPag
     try {
       const result = await FormService.submitLandingPageForm({
         ...fields,
-        email: fields.email,
+        email: fields.email || '',
         source: `landing:${landingPage.slug}`,
         website: honeypot,
       });

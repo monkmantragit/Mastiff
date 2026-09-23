@@ -49,10 +49,17 @@ async function fetchPublishedProjects(): Promise<DirectusProject[]> {
     { ...base, fields: '*,category.*,featured_image.*' },
   ];
 
+  let lastError: unknown = null;
   for (const params of attempts) {
-    const projects = await directusItems<DirectusProject>('portfolio_projects', params);
-    if (projects.length > 0) return projects;
+    try {
+      const projects = await directusItems<DirectusProject>('portfolio_projects', params);
+      if (projects.length > 0) return projects;
+    } catch (error) {
+      lastError = error;
+    }
   }
+  // Every attempt failed at runtime: throw so ISR keeps the last good portfolio page.
+  if (lastError) throw lastError;
   return [];
 }
 

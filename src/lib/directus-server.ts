@@ -82,8 +82,10 @@ export async function directusRequest<T = unknown>(
     signal: AbortSignal.timeout(options.timeoutMs ?? DEFAULT_TIMEOUT_MS),
   };
 
-  if (method === 'POST') {
-    init.body = JSON.stringify(options.body ?? {});
+  if (method === 'POST' || options.revalidate === 0) {
+    // POSTs and reads that must be fresh (e.g. duplicate checks) bypass the data cache.
+    // Note: revalidate `false` would mean "cache forever", never use it for those.
+    if (method === 'POST') init.body = JSON.stringify(options.body ?? {});
     init.cache = 'no-store';
   } else if (options.revalidate !== undefined) {
     init.next = { revalidate: options.revalidate };
@@ -99,9 +101,16 @@ export async function directusRequest<T = unknown>(
   return (await response.json()) as T;
 }
 
+const isBuildPhase = () => process.env.NEXT_PHASE === 'phase-production-build';
+
 /**
- * Fetch a list of items from a collection. Returns [] on any failure so pages can render
- * their empty state instead of crashing; the error is logged on the server.
+ * Fetch a list of items from a collection.
+ *
+ * On failure:
+ * - during `next build` it returns [] so a CMS outage cannot block a deploy (the page
+ *   is rebuilt on the next hourly revalidation);
+ * - at runtime it throws, so ISR keeps serving the last good page instead of caching
+ *   an empty team/clients/portfolio page or a sitemap with no blog URLs for an hour.
  */
 export async function directusItems<T>(
   collection: string,
@@ -113,7 +122,8 @@ export async function directusItems<T>(
     return Array.isArray(result?.data) ? result.data : [];
   } catch (error) {
     console.error(`[directus] Failed to load ${collection}:`, error instanceof Error ? error.message : error);
-    return [];
+    if (isBuildPhase()) return [];
+    throw error;
   }
 }
 

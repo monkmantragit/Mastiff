@@ -193,8 +193,9 @@ export class FormService {
    * Validate phone number format (basic validation)
    */
   static validatePhone(phone: string): boolean {
-    const phoneRegex = /^[\+]?[1-9][\d]{3,14}$/;
-    return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
+    // 7-15 digits, optional leading +. Accepts 0-prefixed mobiles and landlines
+    // ("080 4123 4567", "09845012345"), which the old pattern rejected.
+    return /^\+?\d{7,15}$/.test(phone.replace(/[\s.\-()]/g, ''));
   }
 
   /**

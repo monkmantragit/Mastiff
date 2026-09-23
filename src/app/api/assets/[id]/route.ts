@@ -65,7 +65,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
 
   const contentType = upstream.headers.get('content-type') || '';
-  if (!contentType.startsWith('image/') && !contentType.startsWith('video/')) {
+  // SVG can carry script and would run on whitemassif.com if opened directly.
+  if ((!contentType.startsWith('image/') && !contentType.startsWith('video/')) || contentType.includes('svg')) {
     await upstream.body?.cancel();
     return new NextResponse('Not found', { status: 404 });
   }
@@ -77,6 +78,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
   responseHeaders.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
   responseHeaders.set('X-Content-Type-Options', 'nosniff');
+  responseHeaders.set('Content-Security-Policy', "default-src 'none'; sandbox");
 
   return new NextResponse(upstream.body, { status: upstream.status, headers: responseHeaders });
 }

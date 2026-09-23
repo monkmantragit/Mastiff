@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   // Fetch related posts
-  const allPosts = await DirectusService.getBlogPosts();
+  const allPosts = await DirectusService.getBlogPosts().catch(() => [] as Blog[]);
   const relatedPosts = allPosts.filter(p => p.id !== post.id).slice(0, 3);
 
   // Generate schemas for SEO

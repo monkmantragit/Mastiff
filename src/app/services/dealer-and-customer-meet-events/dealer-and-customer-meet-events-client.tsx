@@ -107,7 +107,7 @@ export default function DealerAndCustomerMeetEventsClient() {
                             </Button>
                             <Button
                                 variant="outline"
-                                onClick={() => window.location.href = '/work'}
+                                onClick={() => window.location.href = '/portfolio'}
                                 className="bg-transparent border-white text-white hover:!bg-white hover:!text-[#2A3959] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg px-10 py-6 text-lg rounded-2xl"
                             >
                                 View Our Portfolio

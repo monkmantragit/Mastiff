@@ -5,6 +5,7 @@ import { DirectusService, type Service } from '@/lib/directus-service';
 import SchemaMarkup from '@/components/schema-markup';
 import { generateServiceSchema, generateBreadcrumbSchema, generatePageMetadata, companyInfo } from '@/lib/seo-utils';
 import { DUPLICATE_SERVICE_SLUGS } from '@/lib/service-redirects';
+import { getDirectusAssetUrl } from '@/lib/directus-utils';
 import ServiceClient from './service-client';
 
 // Rebuilt at most hourly so CMS edits go live without a redeploy.
@@ -56,7 +57,8 @@ export async function generateMetadata({
     description: service.meta_description || service.description || `Professional ${service.title.toLowerCase()} services by White Massif - India's leading event management company. Specializing in corporate events, conferences, and brand experiences across major Indian cities.`,
     keywords,
     path: `/services/${service.slug || service.id}`,
-    images: service.featured_image ? [service.featured_image] : [],
+    // featured_image is a Directus file id; resolve it through the asset proxy.
+    images: [getDirectusAssetUrl(service.featured_image, { width: 1200, height: 630, fit: 'cover' })].filter((u): u is string => Boolean(u)),
     openGraph: {
       type: 'article',
       section: 'Services',
@@ -92,7 +94,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const serviceSchema = generateServiceSchema({
     name: service.title,
     description: service.description || '',
-    image: service.featured_image,
+    image: getDirectusAssetUrl(service.featured_image, { width: 1200, height: 630, fit: 'cover' }),
     serviceType: service.category || 'Event Management',
     areaServed: companyInfo.areaServed
   });
