@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Raleway } from "next/font/google";
 import Navigation from "@/components/navigation";
-import { Preloader } from "@/components/preloader";
+import { MotionProvider } from "@/components/motion-provider";
 import Footer from "@/components/footer";
 import { PopupProvider } from "@/components/popup-provider";
 import FloatingCTA from "@/components/floating-cta";
 import SchemaMarkup from "@/components/schema-markup";
 import { generateOrganizationSchema, generateLocalBusinessSchema, generateWebSiteSchema, companyInfo, generatePageMetadata } from "@/lib/seo-utils";
-import { ServicesMediaService } from "@/lib/services-media";
 import Script from "next/script";
 import "./globals.css";
 
@@ -83,9 +82,6 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png?v=2" type="image/png" />
         <link rel="shortcut icon" href="/favicon.png?v=2" />
         <link rel="apple-touch-icon" href="/favicon.png?v=2" />
-
-        {/* Critical CSS - Inline for faster FCP */}
-        <style dangerouslySetInnerHTML={{ __html: `*,::before,::after{box-sizing:border-box;border-width:0;border-style:solid}html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}body{margin:0;line-height:inherit}.min-h-screen{min-height:100vh}.relative{position:relative}.absolute{position:absolute}.inset-0{inset:0}.flex{display:flex}.items-center{align-items:center}.justify-center{justify-content:center}.text-center{text-align:center}.object-cover{object-fit:cover}.overflow-hidden{overflow:hidden}.animate-spin{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}` }} />
 
         {/* Essential SEO Schemas for Organization & Local Business */}
         <SchemaMarkup schema={[
@@ -171,13 +167,6 @@ export default function RootLayout({
         )}
 
 
-        <link
-          rel="preload"
-          as="image"
-          href={ServicesMediaService.getServicesImages().servicesLanding}
-          fetchPriority="high"
-        />
-
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -200,13 +189,14 @@ export default function RootLayout({
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
-        <PopupProvider>
-          <Preloader />
-          <Navigation />
-          <main>{children}</main>
-          <Footer />
-          <FloatingCTA />
-        </PopupProvider>
+        <MotionProvider>
+          <PopupProvider>
+            <Navigation />
+            <main>{children}</main>
+            <Footer />
+            <FloatingCTA />
+          </PopupProvider>
+        </MotionProvider>
       </body>
     </html>
   );

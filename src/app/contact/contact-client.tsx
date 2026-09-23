@@ -16,6 +16,8 @@ import {
   CheckCircle,
   Globe,
   MessageCircle,
+  AlertCircle,
+  Phone,
   Calendar,
   Users,
   Award,
@@ -79,6 +81,14 @@ export default function ContactClient() {
       href: "https://wa.me/917411272227",
       description: "Click to start a WhatsApp conversation",
       gradient: "from-green-500 to-emerald-600"
+    },
+    {
+      icon: Phone,
+      title: "Call Us",
+      details: ["+91 74112 72227", "Speak to an event specialist"],
+      href: "tel:+917411272227",
+      description: "Mon - Sat, 9:00 AM - 7:00 PM",
+      gradient: "from-sky-500 to-blue-600"
     },
     {
       icon: Mail,
@@ -153,8 +163,10 @@ export default function ContactClient() {
       errors.email = 'Please enter a valid email address';
     }
 
-    // Phone validation (optional but if provided, should be valid)
-    if (formData.phone.trim() && !FormService.validatePhone(formData.phone)) {
+    // Phone is required on every form: the thank-you page promises a call back.
+    if (!formData.phone.trim()) {
+      errors.phone = 'Phone number is required';
+    } else if (!FormService.validatePhone(formData.phone)) {
       errors.phone = 'Please enter a valid phone number';
     }
 
@@ -259,7 +271,8 @@ export default function ContactClient() {
 
         {/* Floating Geometric Elements */}
         <motion.div
-          className="absolute top-20 left-20 w-32 h-32 glass rounded-full"
+          aria-hidden="true"
+          className="hidden md:block absolute top-20 left-20 w-32 h-32 glass rounded-full"
           animate={{
             y: [0, -15, 0],
             rotate: [0, 180, 360]
@@ -272,7 +285,8 @@ export default function ContactClient() {
         />
 
         <motion.div
-          className="absolute bottom-32 right-32 w-24 h-24 glass-primary organic-blob"
+          aria-hidden="true"
+          className="hidden md:block absolute bottom-32 right-32 w-24 h-24 glass-primary organic-blob"
           animate={{
             scale: [1, 1.2, 1],
             rotate: [0, -180, 0]
@@ -286,7 +300,8 @@ export default function ContactClient() {
         />
 
         <motion.div
-          className="absolute top-1/2 left-10 w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl floating"
+          aria-hidden="true"
+          className="hidden md:block absolute top-1/2 left-10 w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl floating"
           style={{ rotate: 45 }}
         />
 
@@ -377,7 +392,7 @@ export default function ContactClient() {
             </motion.div>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {contactInfo.map((info, index) => {
               const MotionComponent = (info as any).href ? motion.a : motion.div;
               const extraProps = (info as any).href ? {
@@ -441,11 +456,15 @@ export default function ContactClient() {
                 <Honeypot value={formData.website} onChange={(v) => setFormData(prev => ({ ...prev, website: v }))} />
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    <label htmlFor="contact-name" className="block text-sm font-medium text-neutral-700 mb-2">
                       Full Name *
                     </label>
                     <Input
                       type="text"
+                      id="contact-name"
+                      autoComplete="name"
+                      aria-invalid={fieldErrors.name ? true : undefined}
+                      aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
@@ -458,19 +477,25 @@ export default function ContactClient() {
                       <motion.p
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
+                        id="contact-name-error"
+                        role="alert"
                         className="text-red-600 text-sm mt-1 flex items-center"
                       >
-                        <MessageCircle className="w-4 h-4 mr-1" />
+                        <AlertCircle className="w-4 h-4 mr-1" aria-hidden="true" />
                         {fieldErrors.name}
                       </motion.p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    <label htmlFor="contact-email" className="block text-sm font-medium text-neutral-700 mb-2">
                       Email Address *
                     </label>
                     <Input
                       type="email"
+                      id="contact-email"
+                      autoComplete="email"
+                      aria-invalid={fieldErrors.email ? true : undefined}
+                      aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
@@ -483,9 +508,11 @@ export default function ContactClient() {
                       <motion.p
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
+                        id="contact-email-error"
+                        role="alert"
                         className="text-red-600 text-sm mt-1 flex items-center"
                       >
-                        <MessageCircle className="w-4 h-4 mr-1" />
+                        <AlertCircle className="w-4 h-4 mr-1" aria-hidden="true" />
                         {fieldErrors.email}
                       </motion.p>
                     )}
@@ -494,15 +521,20 @@ export default function ContactClient() {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
-                      Phone Number
+                    <label htmlFor="contact-phone" className="block text-sm font-medium text-neutral-700 mb-2">
+                      Phone Number *
                     </label>
                     <Input
                       type="tel"
+                      id="contact-phone"
+                      autoComplete="tel"
+                      aria-invalid={fieldErrors.phone ? true : undefined}
+                      aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+91 XXXXX XXXXX"
+                      required
                       className={`glass border-neutral-200 focus:border-amber-500 focus:ring-amber-500 ${fieldErrors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''
                         }`}
                     />
@@ -510,19 +542,23 @@ export default function ContactClient() {
                       <motion.p
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
+                        id="contact-phone-error"
+                        role="alert"
                         className="text-red-600 text-sm mt-1 flex items-center"
                       >
-                        <MessageCircle className="w-4 h-4 mr-1" />
+                        <AlertCircle className="w-4 h-4 mr-1" aria-hidden="true" />
                         {fieldErrors.phone}
                       </motion.p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    <label htmlFor="contact-company" className="block text-sm font-medium text-neutral-700 mb-2">
                       Company/Organization
                     </label>
                     <Input
                       type="text"
+                      id="contact-company"
+                      autoComplete="organization"
                       name="company"
                       value={formData.company}
                       onChange={handleInputChange}
@@ -533,10 +569,11 @@ export default function ContactClient() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label htmlFor="contact-eventType" className="block text-sm font-medium text-neutral-700 mb-2">
                     Event Type
                   </label>
                   <select
+                    id="contact-eventType"
                     name="eventType"
                     value={formData.eventType}
                     onChange={handleInputChange}
@@ -556,11 +593,14 @@ export default function ContactClient() {
                 {/* Other Event Type Input */}
                 {formData.eventType === 'other' && (
                   <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    <label htmlFor="contact-otherEventType" className="block text-sm font-medium text-neutral-700 mb-2">
                       Please specify your event type
                     </label>
                     <Input
                       type="text"
+                      id="contact-otherEventType"
+                      aria-invalid={fieldErrors.otherEventType ? true : undefined}
+                      aria-describedby={fieldErrors.otherEventType ? "contact-otherEventType-error" : undefined}
                       name="otherEventType"
                       value={formData.otherEventType || ''}
                       onChange={handleInputChange}
@@ -573,9 +613,11 @@ export default function ContactClient() {
                       <motion.p
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
+                        id="contact-otherEventType-error"
+                        role="alert"
                         className="text-red-600 text-sm mt-1 flex items-center"
                       >
-                        <MessageCircle className="w-4 h-4 mr-1" />
+                        <AlertCircle className="w-4 h-4 mr-1" aria-hidden="true" />
                         {fieldErrors.otherEventType}
                       </motion.p>
                     )}
@@ -583,10 +625,13 @@ export default function ContactClient() {
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <label htmlFor="contact-message" className="block text-sm font-medium text-neutral-700 mb-2">
                     Message *
                   </label>
                   <Textarea
+                    id="contact-message"
+                    aria-invalid={fieldErrors.message ? true : undefined}
+                    aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
@@ -600,9 +645,11 @@ export default function ContactClient() {
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
+                      id="contact-message-error"
+                      role="alert"
                       className="text-red-600 text-sm mt-1 flex items-center"
                     >
-                      <MessageCircle className="w-4 h-4 mr-1" />
+                      <AlertCircle className="w-4 h-4 mr-1" aria-hidden="true" />
                       {fieldErrors.message}
                     </motion.p>
                   )}
@@ -622,7 +669,7 @@ export default function ContactClient() {
                       {submitStatus.success ? (
                         <CheckCircle className="w-5 h-5 text-green-600" />
                       ) : (
-                        <MessageCircle className="w-5 h-5 text-red-600" />
+                        <AlertCircle className="w-5 h-5 text-red-600" aria-hidden="true" />
                       )}
                       <span className="font-medium">{submitStatus.message}</span>
                     </div>

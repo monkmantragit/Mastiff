@@ -14,8 +14,16 @@ export class HomepageMediaService {
     return serviceImageMap;
   }
 
+  /**
+   * Muted background loop. Web encodes of "Intro Video of 2026 - Home page.mp4" (45 MB):
+   * 720p ~10 MB for desktop, 480p ~5 MB for phones, no audio track (it plays muted).
+   */
   static getHeroVideo() {
-    return '/assets/videos/Intro%20Video%20of%202026%20-%20Home%20page.mp4';
+    return {
+      src: '/assets/videos/home-hero-720.mp4',
+      mobileSrc: '/assets/videos/home-hero-480.mp4',
+      poster: '/assets/videos/home-hero-poster.webp',
+    };
   }
 
   static getPortfolioImages() {

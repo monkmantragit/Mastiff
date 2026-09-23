@@ -24,6 +24,8 @@ import Link from 'next/link';
 import type { Service } from '@/lib/directus';
 import { usePopup } from "@/components/popup-provider";
 import { getDirectusAssetUrl, getDirectusAssetUrls } from '@/lib/directus-utils';
+import GalleryModal from '@/components/ui/GalleryModal';
+import type { GalleryImage } from '@/types/gallery';
 
 interface ServiceClientProps {
   service: Service;
@@ -31,12 +33,20 @@ interface ServiceClientProps {
 }
 
 export default function ServiceClient({ service, relatedServices }: ServiceClientProps) {
-  const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
+  const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
   const { openPopup } = usePopup();
   
   // Process images to get full URLs
   const featuredImageUrl = getDirectusAssetUrl(service.featured_image);
   const galleryUrls = getDirectusAssetUrls(service.gallery);
+  const galleryImages: GalleryImage[] = galleryUrls.slice(0, 6).map((url, index) => ({
+    id: `${service.id}-${index}`,
+    url,
+    thumbnail: url,
+    title: service.title,
+    alt: `${service.title} event photo ${index + 1}`,
+    type: 'image',
+  }));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100">
@@ -198,14 +208,16 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
                 </h2>
                 <div className="grid md:grid-cols-3 gap-6">
                   {galleryUrls.slice(0, 6).map((image, index) => (
-                    <motion.div
+                    <motion.button
+                      type="button"
                       key={index}
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: index * 0.1, duration: 0.6 }}
                       viewport={{ once: true }}
-                      className="group cursor-pointer rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500"
-                      onClick={() => setSelectedGalleryImage(image)}
+                      className="group block w-full text-left cursor-pointer rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F9A625]"
+                      onClick={() => setGalleryIndex(index)}
+                      aria-label={`View ${service.title} photo ${index + 1}`}
                     >
                       <div className="relative aspect-video">
                         <Image
@@ -218,7 +230,7 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
                           <GalleryIcon className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         </div>
                       </div>
-                    </motion.div>
+                    </motion.button>
                   ))}
                 </div>
               </div>
@@ -333,29 +345,14 @@ export default function ServiceClient({ service, relatedServices }: ServiceClien
         </div>
       </section>
 
-      {/* Gallery Modal */}
-      {selectedGalleryImage && (
-        <div 
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedGalleryImage(null)}
-        >
-          <div className="relative max-w-4xl max-h-[90vh]">
-            <Image
-              src={selectedGalleryImage}
-              alt="Gallery image"
-              width={800}
-              height={600}
-              className="object-contain rounded-lg"
-            />
-            <button
-              onClick={() => setSelectedGalleryImage(null)}
-              className="absolute top-4 right-4 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Gallery modal: keyboard navigation, Esc to close, scroll lock, labelled controls. */}
+      <GalleryModal
+        isOpen={galleryIndex !== null}
+        onClose={() => setGalleryIndex(null)}
+        images={galleryImages}
+        initialIndex={galleryIndex ?? 0}
+        projectTitle={service.title}
+      />
     </div>
   );
 }

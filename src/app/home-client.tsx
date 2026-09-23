@@ -49,23 +49,6 @@ export default function HomeClient() {
   const heroVideo = HomepageMediaService.getHeroVideo();
   const portfolioImages = HomepageMediaService.getPortfolioImages();
 
-  // Optional: Keep minimal logging for verification (remove in production)
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-    console.log('🎬 Hero Video URL:', heroVideo);
-    console.log('🎯 Service Images loaded:', Object.keys(serviceImages).length, 'images');
-    console.log('🎨 Portfolio Images loaded:', portfolioImages.length, 'images');
-
-    // Test video URL accessibility
-    console.log('🧪 Testing hero video URL...');
-    fetch(heroVideo, { method: 'HEAD' })
-      .then(response => {
-        console.log('✅ Video HEAD request:', response.status, response.statusText);
-        console.log('📝 Video Content-Type:', response.headers.get('content-type'));
-        console.log('📊 Video Content-Length:', response.headers.get('content-length'));
-      })
-      .catch(err => console.error('❌ Video HEAD request failed:', err));
-  }
-
   // Event services data with local event photos
   const services = [
     {
@@ -161,17 +144,15 @@ export default function HomeClient() {
         {/* Full Video Background */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <ProgressiveVideo
-            src={heroVideo}
-            poster={serviceImages.servicesLanding}
-            fallbackImage={serviceImages.servicesLanding}
-            captionSrc="/assets/captions/hero-video.vtt"
-            captionLabel="English"
+            src={heroVideo.src}
+            mobileSrc={heroVideo.mobileSrc}
+            poster={heroVideo.poster}
+            fallbackImage={heroVideo.poster}
+            priority
+            preload="metadata"
+            label="White Massif showreel"
             className="absolute inset-0 w-full h-full"
-            style={{
-              zIndex: 1,
-              willChange: 'auto',
-              backfaceVisibility: 'hidden'
-            }}
+
             onError={(error) => console.error('Video playback error:', error)}
           />
 

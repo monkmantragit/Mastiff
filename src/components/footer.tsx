@@ -22,6 +22,7 @@ import {
   Send
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FormService } from '@/lib/form-service';
 
 export default function Footer() {
@@ -29,29 +30,33 @@ export default function Footer() {
   const [email, setEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
 
+  const [newsletterStatus, setNewsletterStatus] = useState<{ success: boolean; message: string } | null>(null);
+
+  // Inline status instead of alert(): alerts block the page and are jarring on mobile.
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setNewsletterStatus(null);
+
+    if (!FormService.validateEmail(email)) {
+      setNewsletterStatus({ success: false, message: 'Please enter a valid email address.' });
+      return;
+    }
+
     setIsSubscribing(true);
-
     try {
-      if (!FormService.validateEmail(email)) {
-        alert('Please enter a valid email address.');
-        return;
-      }
-
       const result = await FormService.submitNewsletterForm({
         email: email,
         source: 'footer-newsletter'
       });
 
       if (result.success) {
-        alert('Successfully subscribed to our newsletter!');
+        setNewsletterStatus({ success: true, message: 'You\'re subscribed. Thank you!' });
         setEmail('');
       } else {
-        alert(result.message);
+        setNewsletterStatus({ success: false, message: result.message });
       }
-    } catch (error) {
-      alert('An error occurred. Please try again.');
+    } catch {
+      setNewsletterStatus({ success: false, message: 'Something went wrong. Please try again.' });
     } finally {
       setIsSubscribing(false);
     }
@@ -65,14 +70,13 @@ export default function Footer() {
 
   // Each entry points at its own page. These previously all pointed at /services, which
   // left every service sub-page with no inbound internal link and nothing for Googlebot to follow.
+  // Labels match each page's own heading; the Bangalore pages are the canonical URLs for
+  // corporate events, launches and hybrid events (the /services/ duplicates redirect).
   const services = [
     { name: 'All Services', href: '/services' },
-    { name: 'Corporate Events', href: '/services/corporate-event-management' },
-    { name: 'Celebrations', href: '/services/employee-engagement-activities' },
-    { name: 'Inaugurations', href: '/services/product-brand-launch-events' },
-    { name: 'Hybrid Events', href: '/services/hybrid-and-virtual-events' },
-    { name: 'Industry Conventions', href: '/services/dealer-and-customer-meet-events' },
-    { name: 'Special Projects', href: '/services/industry-convention-project-events' },
+    { name: 'Employee Engagement Activities', href: '/services/employee-engagement-activities' },
+    { name: 'Dealer & Customer Meets', href: '/services/dealer-and-customer-meet-events' },
+    { name: 'Industry Conventions & Projects', href: '/services/industry-convention-project-events' },
     { name: 'Corporate Gifting', href: '/gifting' }
   ];
 
@@ -80,7 +84,6 @@ export default function Footer() {
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
     { name: 'Services', href: '/services' },
-    { name: 'Our Work', href: '/work' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Gifting', href: '/gifting' },
     { name: 'Our Team', href: '/team' },
@@ -152,9 +155,12 @@ export default function Footer() {
                 </p>
               </div>
 
-              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row flex-wrap gap-3">
+                <label htmlFor="footer-newsletter-email" className="sr-only">Email address</label>
                 <Input
+                  id="footer-newsletter-email"
                   type="email"
+                  autoComplete="email"
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -179,6 +185,11 @@ export default function Footer() {
                     </>
                   )}
                 </Button>
+                {newsletterStatus && (
+                  <p role="status" className={`w-full text-sm ${newsletterStatus.success ? 'text-green-300' : 'text-red-300'}`}>
+                    {newsletterStatus.message}
+                  </p>
+                )}
               </form>
             </motion.div>
           </div>
@@ -198,10 +209,12 @@ export default function Footer() {
             >
               <div className="mb-6">
                 <div className="flex justify-start mb-4">
-                  <img
-                    src="/WM LOGO-05.png"
-                    alt="White Massif Event Management Logo"
-                    className="h-8 w-auto object-contain brightness-0 invert"
+                  <Image
+                    src="/brand/wm-logo-white.png"
+                    alt="White Massif Event Management"
+                    width={480}
+                    height={399}
+                    className="h-16 w-auto object-contain"
                   />
                 </div>
               </div>
@@ -296,13 +309,21 @@ export default function Footer() {
               <h4 className="font-bold text-lg mb-6">Get In Touch</h4>
 
               <div className="space-y-6">
+                {/* Phone */}
+                <div className="flex items-start space-x-3">
+                  <Phone className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" aria-hidden="true" />
+                  <a href="tel:+917411272227" className="text-white/80 hover:text-[#F9A625] transition-colors">
+                    +91 74112 72227
+                  </a>
+                </div>
+
                 {/* Email */}
                 <div className="flex items-start space-x-3">
                   <Mail className="w-5 h-5 text-[#F9A625] mt-1 flex-shrink-0" />
                   <div>
-                    <Link href="mailto:info@whitemassif.com" className="text-white/80 hover:text-[#F9A625] transition-colors">
+                    <a href="mailto:info@whitemassif.com" className="text-white/80 hover:text-[#F9A625] transition-colors">
                       info@whitemassif.com
-                    </Link>
+                    </a>
                   </div>
                 </div>
 

@@ -392,7 +392,7 @@ export default function FeedbackPage() {
             
             <p className="text-xl text-neutral-600 mb-8 font-body leading-relaxed">
               Your valuable insights are now part of our evolution. Every word you&apos;ve shared brings us closer to creating 
-              the extraordinary digital experience that WhiteMassif deserves. Thank you for helping us achieve excellence.
+              the extraordinary digital experience that White Massif deserves. Thank you for helping us achieve excellence.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -479,7 +479,7 @@ export default function FeedbackPage() {
                   
                   <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed">
                     Every great company listens to the voices that matter most. Your insights don&apos;t just improve our website—they shape the future 
-                    of how WhiteMassif creates exceptional experiences. Help us perfect what promises to be extraordinary.
+                    of how White Massif creates exceptional experiences. Help us perfect what promises to be extraordinary.
                   </p>
                 </motion.div>
 
