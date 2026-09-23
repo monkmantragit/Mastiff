@@ -213,15 +213,39 @@ export async function POST(request: NextRequest) {
     }
 
     if (formType === 'feedback') {
-      const { name, role, overallRating, comments, ...answers } = formData;
-      const result = await directusCreate<{ data?: { id?: unknown } }>('feedback_responses', {
-        name: str(name),
-        role: str(role),
-        overall_rating: typeof overallRating === 'number' ? overallRating : Number(overallRating) || null,
-        feedback_data: answers,
-        comments: str(comments),
+      // The feedback survey sends a nested payload (questions + answers). Forward it to
+      // the feedback webhook from the server so the webhook URL is never public; fall
+      // back to the CMS if no webhook is configured or it fails.
+      const payload = body.payload && typeof body.payload === 'object' && !Array.isArray(body.payload)
+        ? (body.payload as Record<string, unknown>)
+        : null;
+      if (!payload) return error('Invalid submission.', 400);
+
+      const webhookUrl = process.env.FEEDBACK_WEBHOOK_URL || process.env.NEXT_PUBLIC_FEEDBACK_WEBHOOK_URL;
+      if (webhookUrl) {
+        try {
+          const response = await fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...payload, receivedAt: new Date().toISOString() }),
+            signal: AbortSignal.timeout(10_000),
+          });
+          if (response.ok) return NextResponse.json({ success: true, message: 'Feedback submitted' });
+          console.error('[submit-form] Feedback webhook returned', response.status);
+        } catch (webhookError) {
+          console.error('[submit-form] Feedback webhook failed:', webhookError instanceof Error ? webhookError.message : webhookError);
+        }
+      }
+
+      const user = (payload.user && typeof payload.user === 'object' ? payload.user : {}) as Record<string, unknown>;
+      await directusCreate('feedback_responses', {
+        name: str(user.name),
+        role: str(user.role),
+        overall_rating: null,
+        feedback_data: payload,
+        comments: null,
       });
-      return NextResponse.json({ success: true, message: 'Feedback submitted', id: result?.data?.id ?? null });
+      return NextResponse.json({ success: true, message: 'Feedback submitted' });
     }
 
     return error('Invalid form type.', 400);

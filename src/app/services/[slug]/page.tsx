@@ -7,6 +7,9 @@ import { generateServiceSchema, generateBreadcrumbSchema, generatePageMetadata, 
 import { DUPLICATE_SERVICE_SLUGS } from '@/lib/service-redirects';
 import ServiceClient from './service-client';
 
+// Rebuilt at most hourly so CMS edits go live without a redeploy.
+export const revalidate = 3600;
+
 interface ServicePageProps {
   params: Promise<{
     slug: string;
@@ -81,11 +84,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
   try {
     if (service.category) {
       const related = await DirectusService.getServicesByCategory(service.category);
-      relatedServices = related.filter(s => s.id !== service.id).slice(0, 3);
+      relatedServices = related.filter(s => s.id !== service.id && !DUPLICATE_SERVICE_SLUGS.has(s.slug)).slice(0, 3);
     } else {
       // Fallback: get any services if no category
       const allServices = await DirectusService.getServices();
-      relatedServices = allServices.filter(s => s.id !== service.id).slice(0, 3);
+      relatedServices = allServices.filter(s => s.id !== service.id && !DUPLICATE_SERVICE_SLUGS.has(s.slug)).slice(0, 3);
     }
   } catch (error) {
     console.error('Error fetching related services:', error);

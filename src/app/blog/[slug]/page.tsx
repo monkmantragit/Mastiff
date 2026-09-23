@@ -1,10 +1,13 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
-import { DirectusService, type Blog } from '@/lib/directus-service';
+import { DirectusService, normalizeSlug, type Blog } from '@/lib/directus-service';
 import SchemaMarkup from '@/components/schema-markup';
 import { generateArticleSchema, generateBreadcrumbSchema, generatePageMetadata } from '@/lib/seo-utils';
 import BlogPostClient from './blog-post-client';
+
+// Rebuilt at most hourly so CMS edits and new posts go live without a redeploy.
+export const revalidate = 3600;
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -113,7 +116,7 @@ export async function generateStaticParams() {
   try {
     const posts = await DirectusService.getBlogPosts();
     return posts.map((post) => ({
-      slug: post.slug || post.id,
+      slug: normalizeSlug(post.slug) || String(post.id),
     }));
   } catch (error) {
     console.error('Error generating static params:', error);

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Raleway } from "next/font/google";
 import Navigation from "@/components/navigation";
-import { CustomCursor } from "@/components/custom-cursor";
 import { Preloader } from "@/components/preloader";
 import Footer from "@/components/footer";
 import { PopupProvider } from "@/components/popup-provider";
@@ -203,7 +202,6 @@ export default function RootLayout({
         </noscript>
         <PopupProvider>
           <Preloader />
-          {/* <CustomCursor /> */}
           <Navigation />
           <main>{children}</main>
           <Footer />
