@@ -1,6 +1,8 @@
-import { createDirectus, rest, authentication } from '@directus/sdk';
+/**
+ * Directus collection types. Type-only module: safe to import from client components.
+ * Data fetching lives in the server-only modules (directus-server.ts, directus-service.ts).
+ */
 
-// Define your Directus collections interface
 interface Blog {
   id: number;
   title: string;
@@ -15,6 +17,7 @@ interface Blog {
   author?: string;
   read_time?: string;
   category?: string;
+  date_updated?: string;
 }
 
 interface Page {
@@ -168,16 +171,6 @@ interface DirectusSchema {
   portfolio_projects: PortfolioProject[];
 }
 
-// Create Directus client with proper Next.js configuration
-const directus = createDirectus<DirectusSchema>(
-  process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055'
-).with(
-  rest({
-    onRequest: (options) => ({ ...options, cache: 'no-store' }),
-  })
-).with(authentication('json'));
-
-export { directus };
 export type { 
   Blog, 
   Page, 

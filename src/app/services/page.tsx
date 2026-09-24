@@ -4,8 +4,8 @@ import ServicesClient from "./services-client";
 import { ServicesMediaService } from "@/lib/services-media";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "White Massif Services | Successful Corporate Events",
-  description: "Discover the top brands and businesses that White Massif has delivered successful corporate event management for the past decade, innovative brand experiences.",
+  title: "Corporate Event Management Services | White Massif",
+  description: "Corporate event services from White Massif: conferences, launches, annual days, awards, dealer meets, employee engagement and hybrid events in Bangalore.",
   keywords: [
     "event management services India",
     "corporate event services Bangalore",

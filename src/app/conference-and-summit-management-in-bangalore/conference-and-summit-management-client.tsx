@@ -9,6 +9,7 @@ import { ServicesMediaService } from "@/lib/services-media";
 import { ArrowRight, MapPin, Target, Smartphone, MonitorSpeaker, Mic2, Hotel, Globe, Briefcase, Settings, Zap, Award, ShieldCheck, Search, Handshake, UserPlus, FileText, Users, Star, HeartPulse, Users2, Laptop, Landmark, BookOpen, Maximize, Monitor, ChevronDown, Store, Clock, LayoutDashboard, Timer, Video, Building, SlidersHorizontal, Rocket, BarChart, Calendar, GraduationCap, Cpu, Wallet, Stethoscope, Factory, Map } from "lucide-react";
 import { usePopup } from "@/components/popup-provider";
 
+import { faqs } from './faqs';
 export default function ConferenceSummitClient() {
     const { openPopup } = usePopup();
     const serviceImages = ServicesMediaService.getServicesImages();
@@ -483,28 +484,7 @@ export default function ConferenceSummitClient() {
                     </div>
 
                     <div className="space-y-4">
-                        {[
-                            {
-                                q: "How far in advance should I plan a conference?",
-                                a: " For 500+ delegates, begin planning at least 3–4 months in advance. Large conventions or multi-day summits may require 6+ months for venue and sponsor alignment."
-                            },
-                            {
-                                q: "Do you handle delegate registration systems?",
-                                a: "Yes. We set up online registration portals, QR-based on-site check-in systems, badge printing stations, and self-service kiosks."
-                            },
-                            {
-                                q: "Can you coordinate international delegations?",
-                                a: "Yes. We collaborate with travel partners and DMCs to support visas, airport transfers, hotel bookings, and protocol management."
-                            },
-                            {
-                                q: "What technology capabilities do you provide?",
-                                a: "Professional A/V systems, live polling apps, interpretation equipment, Wi-Fi optimization, recording services, and secure streaming solutions."
-                            },
-                            {
-                                q: "Is on-site support included?",
-                                a: "Absolutely. Our team manages the event floor throughout the conference duration, often operating a centralized control room for multi-day events."
-                            }
-                        ].map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

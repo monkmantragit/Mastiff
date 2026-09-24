@@ -37,6 +37,20 @@ export default function GalleryModal({
     }
   }, [isOpen, initialIndex]);
 
+  const goToNext = useCallback(() => {
+    setImageLoading(true);
+    setImageError(false);
+    setVideoPlaying(false);
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const goToPrevious = useCallback(() => {
+    setImageLoading(true);
+    setImageError(false);
+    setVideoPlaying(false);
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
   // Keyboard navigation
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isOpen) return;
@@ -52,7 +66,7 @@ export default function GalleryModal({
         goToNext();
         break;
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, goToNext, goToPrevious]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -68,20 +82,6 @@ export default function GalleryModal({
       };
     }
   }, [isOpen]);
-
-  const goToNext = () => {
-    setImageLoading(true);
-    setImageError(false);
-    setVideoPlaying(false);
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const goToPrevious = () => {
-    setImageLoading(true);
-    setImageError(false);
-    setVideoPlaying(false);
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
 
   const goToImage = (index: number) => {
     setImageLoading(true);

@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
-import { DirectusService, type Testimonial } from '@/lib/directus-service';
-import { ClientLogosService, type ClientLogo } from '@/lib/client-logos-service';
+import type { Testimonial } from '@/lib/directus';
+import { getBestLogoUrl, getIndustryCategories, type ClientLogo } from '@/lib/client-logos-utils';
 import { ViewAllClientsModal } from '@/components/ViewAllClientsModal';
 import Image from 'next/image';
 import {
@@ -21,7 +21,6 @@ import {
   ChevronDown,
   Target
 } from "lucide-react";
-import { logger } from '@/lib/logger';
 
 // Animation variants
 const fadeInUp = {
@@ -67,85 +66,24 @@ const stats = [
 ];
 
 
-export default function ClientsClient() {
+interface ClientsClientProps {
+  testimonials: Testimonial[];
+  allLogos: ClientLogo[];
+}
+
+// Logos and testimonials are fetched on the server (page.tsx) so they are in the initial
+// HTML. Industry filtering happens here on the already-loaded list.
+export default function ClientsClient({ testimonials, allLogos }: ClientsClientProps) {
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
   const { openPopup } = usePopup();
   const [showAllClientsModal, setShowAllClientsModal] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string>('All');
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [clientLogos, setClientLogos] = useState<ClientLogo[]>([]);
-  const [industryCategories, setIndustryCategories] = useState<Array<{ category: string; count: number }>>([]);
-  const [totalClientCount, setTotalClientCount] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
-  const [clientsLoading, setClientsLoading] = useState(true);
-
-  // Fetch testimonials from Directus
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const data = await DirectusService.getFeaturedTestimonials();
-        setTestimonials(data || []);
-      } catch (error) {
-        console.error('Error fetching testimonials:', error);
-        setTestimonials([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTestimonials();
-  }, []);
-
-  // Fetch client data from Directus
-  useEffect(() => {
-    const fetchClientData = async () => {
-      setClientsLoading(true);
-      try {
-        // Fetch all data concurrently
-        const [logos, categories, totalCount] = await Promise.all([
-          ClientLogosService.getAllClientLogos(),
-          ClientLogosService.getIndustryCategories(),
-          ClientLogosService.getTotalClientCount()
-        ]);
-
-        setClientLogos(logos);
-        setIndustryCategories(categories);
-        setTotalClientCount(totalCount);
-      } catch (error) {
-        console.error('Error fetching client data:', error);
-      } finally {
-        setClientsLoading(false);
-      }
-    };
-
-    fetchClientData();
-  }, []);
-
-  // Filter clients by industry when selection changes
-  useEffect(() => {
-    const fetchFilteredClients = async () => {
-      logger.log('Fetching clients for industry:', selectedIndustry);
-      setClientsLoading(true);
-      try {
-        if (selectedIndustry === 'All') {
-          const allLogos = await ClientLogosService.getAllClientLogos();
-          logger.log('All logos fetched:', allLogos.length);
-          setClientLogos(allLogos);
-        } else {
-          const filteredLogos = await ClientLogosService.getClientLogosByIndustry(selectedIndustry);
-          logger.log(`${selectedIndustry} logos fetched:`, filteredLogos.length);
-          setClientLogos(filteredLogos);
-        }
-      } catch (error) {
-        logger.error('Error fetching filtered clients:', error);
-      } finally {
-        setClientsLoading(false);
-      }
-    };
-
-    fetchFilteredClients();
-  }, [selectedIndustry]);
+  const industryCategories = useMemo(() => getIndustryCategories(allLogos), [allLogos]);
+  const clientLogos = useMemo(
+    () => selectedIndustry === 'All' ? allLogos : allLogos.filter(logo => logo.Category === selectedIndustry),
+    [allLogos, selectedIndustry]
+  );
 
   // Logo data slices for animated rows using Directus data
   const moreClientsRow1 = clientLogos.slice(0, Math.min(20, clientLogos.length));
@@ -223,7 +161,7 @@ export default function ClientsClient() {
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
+            initial={false}
             animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
@@ -237,12 +175,7 @@ export default function ClientsClient() {
             </motion.div>
 
             {/* Main Headline */}
-            <motion.h1
-              className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1.2, delay: 0.2 }}
-            >
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
               <span className="kinetic-text">
                 What Sets Us
               </span>
@@ -250,7 +183,7 @@ export default function ClientsClient() {
               <span className="text-neutral-800">
                 Apart
               </span>
-            </motion.h1>
+            </h1>
 
             <motion.p
               className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"
@@ -382,16 +315,8 @@ export default function ClientsClient() {
                 ))}
               </div>
 
-              {/* Loading State */}
-              {clientsLoading && (
-                <div className="flex items-center justify-center mt-8">
-                  <div className="w-6 h-6 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
-                  <span className="ml-3 text-sm text-neutral-500">Loading industries...</span>
-                </div>
-              )}
-
               {/* Active Filter Info */}
-              {selectedIndustry !== 'All' && !clientsLoading && (
+              {selectedIndustry !== 'All' && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -411,27 +336,7 @@ export default function ClientsClient() {
           </motion.div>
 
           {/* Featured Premium Clients */}
-          {clientsLoading ? (
-            <motion.div
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 mb-12"
-            >
-              {Array.from({ length: 12 }).map((_, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  className="group relative"
-                >
-                  <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm aspect-square flex items-center justify-center animate-pulse">
-                    <div className="w-20 h-20 bg-neutral-200 rounded-lg"></div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          ) : clientLogos.length > 0 ? (
+          {clientLogos.length > 0 ? (
             <motion.div
               key={`client-grid-${selectedIndustry}-${clientLogos.length}`}
               initial="initial"
@@ -447,11 +352,14 @@ export default function ClientsClient() {
                   className="group relative"
                 >
                   <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl transition-all duration-500 aspect-square flex items-center justify-center glass micro-bounce">
-                    {ClientLogosService.getBestLogoUrl(client) ? (
-                      <img
-                        src={ClientLogosService.getBestLogoUrl(client) || ''}
+                    {getBestLogoUrl(client) ? (
+                      <Image
+                        src={getBestLogoUrl(client) || ''}
                         alt={client.client_name}
-                        className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                        width={240}
+                        height={120}
+                        sizes="(max-width: 768px) 40vw, 200px"
+                        className="max-w-full max-h-full object-contain filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 w-auto h-auto"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
                         }}
@@ -476,13 +384,13 @@ export default function ClientsClient() {
               <div className="w-16 h-16 bg-neutral-200 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-neutral-400" />
               </div>
-              <h3 className="text-xl font-semibold text-neutral-600 mb-2">No Client Logos Found</h3>
-              <p className="text-neutral-500">Please check the Directus connection or try refreshing the page.</p>
+              <h3 className="text-xl font-semibold text-neutral-600 mb-2">Client showcase coming soon</h3>
+              <p className="text-neutral-500">We&apos;re updating this section. Get in touch to hear about work we&apos;ve done in your industry.</p>
             </motion.div>
           )}
 
           {/* View All Clients Button */}
-          {!clientsLoading && clientLogos.length > 0 && (
+          {clientLogos.length > 0 && (
             <motion.div
               initial="initial"
               whileInView="animate"
@@ -508,6 +416,7 @@ export default function ClientsClient() {
 
       {/* View All Clients Modal */}
       <ViewAllClientsModal
+        clients={allLogos}
         isOpen={showAllClientsModal}
         onClose={() => setShowAllClientsModal(false)}
       />

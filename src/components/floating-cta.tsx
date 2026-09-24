@@ -2,44 +2,34 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Phone, Mail } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { MessageCircle, X, Phone, Mail, MoreHorizontal, Send } from 'lucide-react';
 import { usePopup } from './popup-provider';
-import { logger } from '@/lib/logger';
+import { companyInfo } from '@/lib/company-info';
 
 export default function FloatingCTA() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const { openPopup } = usePopup();
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const showAfter = 500; // Show after scrolling 500px
-      setIsVisible(scrollPosition > showAfter);
-    };
-
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsVisible(window.scrollY > 500);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleMainClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (isExpanded) {
-      setIsExpanded(false);
-    } else {
-      // Open WhatsApp chat
-      const whatsappUrl = 'https://wa.me/917411272227?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services.';
-      logger.log('Opening WhatsApp:', whatsappUrl);
-      window.location.href = whatsappUrl;
-    }
-  };
+  useEffect(() => {
+    if (!isExpanded) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsExpanded(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isExpanded]);
 
-  const handleToggleExpand = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsExpanded(!isExpanded);
-  };
+  const optionClass = 'shadow-lg rounded-full h-11 min-w-11 px-3 sm:px-4 flex items-center justify-center gap-2';
 
   return (
     <AnimatePresence>
@@ -50,117 +40,82 @@ export default function FloatingCTA() {
           exit={{ opacity: 0, scale: 0 }}
           className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3"
         >
-          {/* Expanded Options */}
           <AnimatePresence>
             {isExpanded && (
               <motion.div
+                id="floating-cta-options"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                className="flex flex-col gap-3"
+                className="flex flex-col items-end gap-3"
               >
-                {/* WhatsApp Button */}
-                <motion.div
-                  initial={{ x: 100 }}
-                  animate={{ x: 0 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <Button
-                    asChild
-                    size="sm"
-                    className="bg-[#F9A625] hover:bg-[#e8951e] text-white shadow-lg rounded-full px-4 py-2"
-                  >
-                    <a href="https://wa.me/917411272227?text=Hello%20White%20Massif!%20I%20would%20like%20to%20inquire%20about%20your%20event%20management%20services." target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                      <MessageCircle className="w-4 h-4" />
-                      <span className="hidden sm:inline">WhatsApp</span>
-                    </a>
-                  </Button>
-                </motion.div>
+                <Button asChild size="sm" className={`${optionClass} bg-[#25D366] hover:bg-[#1ebe5b] text-black`}>
+                  <a href={companyInfo.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+                    <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                    <span className="hidden sm:inline">WhatsApp</span>
+                  </a>
+                </Button>
 
-                {/* Email Button */}
-                <motion.div
-                  initial={{ x: 100 }}
-                  animate={{ x: 0 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <Button
-                    asChild
-                    size="sm"
-                    className="bg-blue-500 hover:bg-blue-600 text-white shadow-lg rounded-full px-4 py-2"
-                  >
-                    <a href="mailto:info@whitemassif.com" className="flex items-center gap-2">
-                      <Mail className="w-4 h-4" />
-                      <span className="hidden sm:inline">Email Us</span>
-                    </a>
-                  </Button>
-                </motion.div>
+                <Button asChild size="sm" className={`${optionClass} bg-[#2A3959] hover:bg-[#1f2b45] text-white`}>
+                  <a href={`tel:${companyInfo.phoneE164}`} aria-label={`Call ${companyInfo.phoneDisplay}`}>
+                    <Phone className="w-4 h-4" aria-hidden="true" />
+                    <span className="hidden sm:inline">Call Us</span>
+                  </a>
+                </Button>
 
-                {/* Quick Enquiry Button */}
-                <motion.div
-                  initial={{ x: 100 }}
-                  animate={{ x: 0 }}
-                  transition={{ delay: 0.3 }}
+                <Button asChild size="sm" className={`${optionClass} bg-blue-600 hover:bg-blue-700 text-white`}>
+                  <a href={`mailto:${companyInfo.email}`} aria-label="Email us">
+                    <Mail className="w-4 h-4" aria-hidden="true" />
+                    <span className="hidden sm:inline">Email Us</span>
+                  </a>
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    openPopup('floating-quick-enquiry');
+                    setIsExpanded(false);
+                  }}
+                  size="sm"
+                  aria-label="Quick enquiry form"
+                  className={`${optionClass} bg-[#F9A625] hover:bg-[#F9A625]/90 text-black`}
                 >
-                  <Button
-                    onClick={() => {
-                      openPopup('floating-quick-enquiry');
-                      setIsExpanded(false);
-                    }}
-                    size="sm"
-                    className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black shadow-lg rounded-full px-4 py-2"
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    <span className="hidden sm:inline">Quick Enquiry</span>
-                  </Button>
-                </motion.div>
+                  <Send className="w-4 h-4" />
+                  <span className="hidden sm:inline">Quick Enquiry</span>
+                </Button>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Main CTA Button with Text */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="relative"
-          >
-            <Button
-              type="button"
-              onClick={handleMainClick}
-              className="bg-[#F9A625] hover:bg-[#e8951e] text-white rounded-full shadow-2xl border-4 border-white/20 backdrop-blur-sm relative z-10 flex items-center gap-2 px-4 py-3 h-auto"
-            >
-              <MessageCircle className="w-5 h-5" />
-              <span className="font-semibold text-sm">Need help?</span>
+          <div className="relative flex items-center gap-2">
+            {/* Opens WhatsApp in a new tab so visitors keep the site open (it used to
+                navigate away in the same tab, unlike the WhatsApp option above). */}
+            <Button asChild className="bg-[#F9A625] hover:bg-[#e8951e] text-black rounded-full shadow-2xl border-4 border-white/20 relative z-10 flex items-center gap-2 px-4 py-3 h-auto">
+              <a href={companyInfo.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Need help? Chat with us on WhatsApp">
+                <MessageCircle className="w-5 h-5" aria-hidden="true" />
+                <span className="font-semibold text-sm">Need help?</span>
+              </a>
             </Button>
 
-            {/* Expand/Collapse Toggle */}
             <button
               type="button"
-              onClick={handleToggleExpand}
-              className="absolute -top-1 -right-1 w-6 h-6 bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-100 transition-colors z-20"
+              onClick={() => setIsExpanded(expanded => !expanded)}
+              aria-label={isExpanded ? 'Hide contact options' : 'More contact options'}
+              aria-expanded={isExpanded}
+              aria-controls="floating-cta-options"
+              className="w-11 h-11 bg-white text-gray-800 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F9A625]"
             >
-              {isExpanded ? (
-                <X className="w-3 h-3" />
-              ) : (
-                <span className="text-xs font-bold">•••</span>
-              )}
+              {isExpanded ? <X className="w-5 h-5" /> : <MoreHorizontal className="w-5 h-5" />}
             </button>
-          </motion.div>
 
-          {/* Pulse Animation for Attention */}
-          {!isExpanded && (
-            <motion.div
-              className="absolute inset-0 bg-[#F9A625] rounded-full pointer-events-none"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.7, 0, 0.7],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          )}
+            {!isExpanded && !reduceMotion && (
+              <motion.div
+                aria-hidden="true"
+                className="absolute left-0 top-0 bottom-0 right-[3.25rem] bg-[#F9A625] rounded-full pointer-events-none"
+                animate={{ scale: [1, 1.15, 1], opacity: [0.6, 0, 0.6] }}
+                transition={{ duration: 2, repeat: 3, ease: 'easeInOut' }}
+              />
+            )}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

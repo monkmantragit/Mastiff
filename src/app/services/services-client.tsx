@@ -47,10 +47,10 @@ const staggerContainer = {
 
 // Service Categories for Quick Navigation
 const serviceCategories = [
-  { id: "corporate-events", name: "Business Events", icon: Building2, description: "Professional business events planning and execution with attention to every detail", path: "/services/corporate-event-management" },
+  { id: "corporate-events", name: "Business Events", icon: Building2, description: "Professional business events planning and execution with attention to every detail", path: "/corporate-event-management-company-bangalore" },
   { id: "celebrations", name: "Celebrations Galore", icon: PartyPopper, description: "Professional celebrations galore planning and execution with attention to every detail", path: "/services/employee-engagement-activities" },
-  { id: "inaugurations", name: "Launches", icon: Scissors, description: "Professional launches planning and execution with attention to every detail", path: "/services/product-brand-launch-events" },
-  { id: "hybrid-events", name: "Hybrid Events", icon: Monitor, description: "Professional planning and execution with attention to every detail", path: "/services/hybrid-and-virtual-events" },
+  { id: "inaugurations", name: "Launches", icon: Scissors, description: "Professional launches planning and execution with attention to every detail", path: "/product-launch-event-management-in-bangalore" },
+  { id: "hybrid-events", name: "Hybrid Events", icon: Monitor, description: "Professional planning and execution with attention to every detail", path: "/virtual-and-hybrid-events-in-bangalore" },
   { id: "conventions", name: "Industry Conventions", icon: Users, description: "Professional industry conventions planning and execution with attention to every detail", path: "/services/dealer-and-customer-meet-events" },
   { id: "special-projects", name: "Special Projects", icon: Star, description: "Professional special projects planning and execution with attention to every detail", path: "/services/industry-convention-project-events" }
 ];
@@ -790,8 +790,8 @@ export default function ServicesClient() {
                     <Mail className="w-10 h-10 sm:w-12 sm:h-12 text-[#F9A625] mx-auto mb-3 sm:mb-4" />
                     <h3 className="text-base sm:text-lg font-semibold text-white mb-2 mobile-heading">Email Us</h3>
                     <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 mobile-body-text">Get detailed proposals and answers</p>
-                    <Button variant="outline" className="mobile-touch-target border-[#F9A625]/50 text-[#F9A625] hover:bg-[#F9A625] hover:text-[#2A3959] text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
-                      info@whitemassif.com
+                    <Button asChild variant="outline" className="mobile-touch-target border-[#F9A625]/50 text-[#F9A625] hover:bg-[#F9A625] hover:text-[#2A3959] text-sm sm:text-base min-h-[44px] w-full sm:w-auto">
+                      <a href="mailto:info@whitemassif.com">info@whitemassif.com</a>
                     </Button>
                   </motion.div>
 

@@ -1,5 +1,5 @@
 // Test Directus token directly
-const token = 'FAE0VL3TIn4xLMtYP07yFGjIks5km0Kl';
+const token = process.env.DIRECTUS_TOKEN; // never hardcode: set DIRECTUS_TOKEN in your shell
 const url = 'https://directus-production-bc75.up.railway.app';
 
 async function testToken() {

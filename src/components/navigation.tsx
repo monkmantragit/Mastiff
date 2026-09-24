@@ -1,490 +1,397 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sparkles, ArrowRight, Phone, Mail, MapPin, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePopup } from '@/components/popup-provider';
+import { companyInfo } from '@/lib/company-info';
 
-// Service pages for dropdown
+// Service pages for the dropdown. Labels match each page's own heading, and every link
+// points at the canonical URL (the /services/* duplicates redirect to the Bangalore pages).
 const servicePages = [
-  { name: 'Business Events', href: '/services/corporate-event-management' },
-  { name: 'Celebrations Galore', href: '/services/employee-engagement-activities' },
-  { name: 'Launches', href: '/services/product-brand-launch-events' },
-  { name: 'Hybrid Events', href: '/services/hybrid-and-virtual-events' },
-  { name: 'Industry Conventions', href: '/services/dealer-and-customer-meet-events' },
-  { name: 'Special Projects', href: '/services/industry-convention-project-events' }
+  { name: 'Corporate Events', href: '/corporate-event-management-company-bangalore' },
+  { name: 'Conferences & Summits', href: '/conference-and-summit-management-in-bangalore' },
+  { name: 'Product Launches', href: '/product-launch-event-management-in-bangalore' },
+  { name: 'Annual Day & Awards', href: '/annual-day-and-award-event-management-bangalore' },
+  { name: 'MICE Events', href: '/mice-event-management-in-bangalore' },
+  { name: 'Virtual & Hybrid Events', href: '/virtual-and-hybrid-events-in-bangalore' },
+  { name: 'Employee Engagement', href: '/services/employee-engagement-activities' },
+  { name: 'Dealer & Customer Meets', href: '/services/dealer-and-customer-meet-events' },
+  { name: 'Industry Conventions', href: '/services/industry-convention-project-events' },
 ];
+
+const navItems = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Services', href: '/services' },
+  { name: 'Gifting', href: '/gifting' },
+  { name: 'Work', href: '/portfolio' },
+  { name: 'Clients', href: '/clients' },
+  { name: 'Team', href: '/team' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Careers', href: '/careers' },
+];
+
+// Mobile has no room for the header "Contact Us" button, so Contact is a menu item there.
+const mobileNavItems = [...navItems, { name: 'Contact', href: '/contact' }];
+
+const DARK_HERO_PREFIXES = ['/services', '/gifting', '/portfolio', '/team', '/event-management-company-in-bangalore'];
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isServicesHovered, setIsServicesHovered] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isServicesExpanded, setIsServicesExpanded] = useState(false);
   const pathname = usePathname();
-  const { scrollY } = useScroll();
   const { openPopup } = usePopup();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
 
-  // Check if we're on homepage
   const isHomepage = pathname === '/';
+  const isDarkHeroPage = DARK_HERO_PREFIXES.some(prefix => pathname === prefix || pathname.startsWith(`${prefix}/`));
 
-  // Check if we're on a page with dark hero background
-  const isDarkHeroPage = pathname.startsWith('/services') || pathname === '/gifting' || pathname === '/portfolio' || pathname === '/work' || pathname === '/team' || pathname === '/event-management-company-in-bangalore';
-
-  // Determine logo color based on page and scroll state
-  const shouldLogoBeBlack = isHomepage || isScrolled;
-
-  // Advanced scroll effects
-  const headerY = useTransform(scrollY, [0, 100], [0, -10]);
-  const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.95]);
-  const logoScale = useTransform(scrollY, [0, 100], [1, 0.9]);
-  const logoY = useTransform(scrollY, [0, 100], [0, -2]);
+  // The header is dark (glass) on dark-hero pages and on other pages once scrolled;
+  // light on the homepage. Logo and menu icon follow so they are always visible.
+  const headerIsDark = !isHomepage && (isDarkHeroPage || isScrolled);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
-    { name: 'Gifting', href: '/gifting' },
-    { name: 'Team', href: '/team' },
-    { name: 'Work', href: '/portfolio' },
-    { name: 'Clients', href: '/clients' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Careers', href: '/careers' }
-  ];
+  const closeMenu = useCallback(() => {
+    setIsOpen(false);
+    menuButtonRef.current?.focus();
+  }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  // Mobile menu: Esc closes it, focus moves into it, and the page behind stops scrolling.
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isOpen, closeMenu]);
 
-  // Dynamic header background based on page and scroll
+  // Close menus on navigation.
+  useEffect(() => {
+    setIsOpen(false);
+    setIsServicesOpen(false);
+  }, [pathname]);
+
   const getHeaderBackground = () => {
     if (isHomepage) {
-      // On homepage, always have some background to stand out from video
       return isScrolled
         ? 'bg-white/95 backdrop-blur-2xl border-b border-gray-200/50 shadow-lg'
         : 'bg-white/90 backdrop-blur-xl border-b border-white/20';
-    } else if (isDarkHeroPage) {
-      // On dark hero pages, use dark glass backgrounds for visibility
+    }
+    if (isDarkHeroPage) {
       return isScrolled
         ? 'bg-black/80 backdrop-blur-2xl border-b border-white/10 shadow-2xl'
         : 'bg-black/40 backdrop-blur-xl border-b border-white/10';
-    } else {
-      // On other pages, keep original transparent to glass behavior
-      return isScrolled
-        ? 'glass-dark backdrop-blur-2xl border-b border-white/10 shadow-2xl shadow-black/20'
-        : 'bg-transparent';
     }
+    return isScrolled
+      ? 'glass-dark backdrop-blur-2xl border-b border-white/10 shadow-2xl shadow-black/20'
+      : 'bg-transparent';
   };
+
+  const linkClass = (active: boolean) =>
+    `relative block px-3 lg:px-3.5 py-2 rounded-xl font-medium text-sm xl:text-base transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F9A625] ${
+      active
+        ? isHomepage
+          ? 'text-[#F9A625] bg-[#F9A625]/10'
+          : headerIsDark
+            ? 'text-[#F9A625] bg-[#F9A625]/20'
+            : 'text-amber-600 bg-amber-50'
+        : isHomepage
+          ? 'text-[#2A3959] hover:text-[#F9A625] hover:bg-[#F9A625]/5'
+          : headerIsDark
+            ? 'text-white hover:text-[#F9A625] hover:bg-white/10'
+            : 'text-neutral-700 hover:text-amber-600 hover:bg-neutral-50'
+    }`;
+
+  const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`));
+  const servicesActive = isActive('/services') || servicePages.some(s => s.href === pathname);
 
   return (
     <>
-      {/* Premium Navigation Header */}
-      <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${getHeaderBackground()}`}
-        style={{ y: headerY, opacity: headerOpacity }}
-      >
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${getHeaderBackground()}`}>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex h-16 lg:h-20 items-center justify-between">
+            <Link href="/" className="group flex items-center rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F9A625]" aria-label="White Massif home">
+              <Image
+                src={headerIsDark ? '/brand/wm-logo-white.png' : '/brand/wm-logo.png'}
+                alt="White Massif Event Management"
+                width={480}
+                height={399}
+                priority
+                className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              />
+            </Link>
 
-            {/* Premium Logo */}
-            <motion.div
-              style={{ y: logoY, scale: logoScale }}
-              className="flex items-center relative z-10"
-            >
-              <Link href="/" className="group flex items-center space-x-4">
-                {/* Company Logo */}
-                <div className="relative transition-all duration-300">
-                  <img
-                    src="/WM LOGO-01.png"
-                    alt="White Massif Event Management Logo"
-                    className="h-8 sm:h-10 w-auto object-contain transition-all duration-300 group-hover:scale-105"
-                  />
-                </div>
-
-              </Link>
-            </motion.div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-1">
+            {/* Desktop navigation */}
+            <nav className="hidden lg:flex items-center space-x-0.5" aria-label="Main">
               {navItems.map((item) => {
-                // Special handling for Services menu
-                if (item.name === 'Services') {
+                if (item.name !== 'Services') {
                   return (
-                    <div
-                      key={item.name}
-                      className="relative"
-                      onMouseEnter={() => setIsServicesHovered(true)}
-                      onMouseLeave={() => setIsServicesHovered(false)}
-                    >
-                      <Link href={item.href}>
-                        <motion.div
-                          className={`relative px-3 lg:px-4 py-2 rounded-xl font-medium text-sm lg:text-base transition-all duration-300 ${pathname === item.href || pathname.startsWith('/services/')
-                            ? isHomepage
-                              ? 'text-[#F9A625] bg-[#F9A625]/10'
-                              : isDarkHeroPage
-                                ? 'text-[#F9A625] bg-[#F9A625]/20'
-                                : 'text-amber-600 bg-amber-50'
-                            : isHomepage
-                              ? 'text-[#2A3959] hover:text-[#F9A625] hover:bg-[#F9A625]/5'
-                              : isDarkHeroPage
-                                ? 'text-white hover:text-[#F9A625] hover:bg-white/10'
-                                : 'text-neutral-700 hover:text-amber-600 hover:bg-neutral-50'
-                            }`}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          {item.name}
-                          {(pathname === item.href || pathname.startsWith('/services/')) && (
-                            <motion.div
-                              className={`absolute inset-0 rounded-xl -z-10 ${isHomepage
-                                ? 'bg-gradient-to-r from-[#F9A625]/10 to-[#F9A625]/5'
-                                : isDarkHeroPage
-                                  ? 'bg-gradient-to-r from-[#F9A625]/20 to-[#F9A625]/10'
-                                  : 'bg-gradient-to-r from-amber-100 to-orange-100'
-                                }`}
-                              layoutId="activeTab"
-                              transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                            />
-                          )}
-                        </motion.div>
-                      </Link>
-
-                      {/* Services Dropdown */}
-                      <AnimatePresence>
-                        {isServicesHovered && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            transition={{ duration: 0.2 }}
-                            className={`absolute top-full left-0 mt-2 w-64 rounded-2xl shadow-2xl border overflow-hidden z-50 ${isHomepage
-                              ? 'bg-white/95 backdrop-blur-xl border-gray-200'
-                              : isDarkHeroPage
-                                ? 'bg-black/90 backdrop-blur-xl border-white/10'
-                                : 'bg-white border-gray-200'
-                              }`}
-                          >
-                            <div className="py-2">
-                              {servicePages.map((service, idx) => (
-                                <Link key={service.href} href={service.href}>
-                                  <motion.div
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: idx * 0.05 }}
-                                    className={`px-4 py-3 transition-all duration-200 ${pathname === service.href
-                                      ? isHomepage
-                                        ? 'bg-[#F9A625]/10 text-[#F9A625]'
-                                        : isDarkHeroPage
-                                          ? 'bg-[#F9A625]/20 text-[#F9A625]'
-                                          : 'bg-amber-50 text-amber-600'
-                                      : isHomepage
-                                        ? 'text-[#2A3959] hover:bg-[#F9A625]/5 hover:text-[#F9A625]'
-                                        : isDarkHeroPage
-                                          ? 'text-white hover:bg-white/10 hover:text-[#F9A625]'
-                                          : 'text-neutral-700 hover:bg-neutral-50 hover:text-amber-600'
-                                      }`}
-                                  >
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-sm font-medium">{service.name}</span>
-                                      <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    </div>
-                                  </motion.div>
-                                </Link>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                    <Link key={item.name} href={item.href} className={linkClass(isActive(item.href))} aria-current={isActive(item.href) ? 'page' : undefined}>
+                      {item.name}
+                    </Link>
                   );
                 }
 
-                // Regular menu items
+                // Services: link plus a disclosure button. Opens on hover, on keyboard focus
+                // and on click/tap, so keyboard and touch-laptop users can reach sub-pages.
                 return (
-                  <Link key={item.name} href={item.href}>
-                    <motion.div
-                      className={`relative px-3 lg:px-4 py-2 rounded-xl font-medium text-sm lg:text-base transition-all duration-300 ${pathname === item.href
-                        ? isHomepage
-                          ? 'text-[#F9A625] bg-[#F9A625]/10'
-                          : isDarkHeroPage
-                            ? 'text-[#F9A625] bg-[#F9A625]/20'
-                            : 'text-amber-600 bg-amber-50'
-                        : isHomepage
-                          ? 'text-[#2A3959] hover:text-[#F9A625] hover:bg-[#F9A625]/5'
-                          : isDarkHeroPage
-                            ? 'text-white hover:text-[#F9A625] hover:bg-white/10'
-                            : 'text-neutral-700 hover:text-amber-600 hover:bg-neutral-50'
-                        }`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
+                  <div
+                    key={item.name}
+                    ref={servicesRef}
+                    className="relative flex items-center"
+                    onMouseEnter={() => setIsServicesOpen(true)}
+                    onMouseLeave={() => setIsServicesOpen(false)}
+                    onBlur={(e) => {
+                      if (!servicesRef.current?.contains(e.relatedTarget as Node)) setIsServicesOpen(false);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Escape') setIsServicesOpen(false);
+                    }}
+                  >
+                    <Link href={item.href} className={linkClass(servicesActive)} aria-current={isActive(item.href) ? 'page' : undefined}>
                       {item.name}
-                      {pathname === item.href && (
+                    </Link>
+                    <button
+                      type="button"
+                      className={`-ml-2 p-1.5 rounded-lg ${headerIsDark ? 'text-white' : 'text-[#2A3959]'} hover:text-[#F9A625] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F9A625]`}
+                      aria-label="Show service pages"
+                      aria-expanded={isServicesOpen}
+                      aria-controls="services-menu"
+                      onClick={() => setIsServicesOpen(open => !open)}
+                    >
+                      <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    <AnimatePresence>
+                      {isServicesOpen && (
                         <motion.div
-                          className={`absolute inset-0 rounded-xl -z-10 ${isHomepage
-                            ? 'bg-gradient-to-r from-[#F9A625]/10 to-[#F9A625]/5'
-                            : isDarkHeroPage
-                              ? 'bg-gradient-to-r from-[#F9A625]/20 to-[#F9A625]/10'
-                              : 'bg-gradient-to-r from-amber-100 to-orange-100'
+                          id="services-menu"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          className={`absolute top-full left-0 pt-2 w-72 z-50`}
+                        >
+                          <ul
+                            className={`py-2 rounded-2xl shadow-2xl border overflow-hidden ${
+                              headerIsDark ? 'bg-black/90 backdrop-blur-xl border-white/10' : 'bg-white/95 backdrop-blur-xl border-gray-200'
                             }`}
-                          layoutId="activeTab"
-                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                        />
+                          >
+                            {servicePages.map((service) => (
+                              <li key={service.href}>
+                                <Link
+                                  href={service.href}
+                                  aria-current={pathname === service.href ? 'page' : undefined}
+                                  className={`flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:bg-[#F9A625]/15 ${
+                                    pathname === service.href
+                                      ? headerIsDark ? 'bg-[#F9A625]/20 text-[#F9A625]' : 'bg-[#F9A625]/10 text-[#F9A625]'
+                                      : headerIsDark ? 'text-white hover:bg-white/10 hover:text-[#F9A625]' : 'text-[#2A3959] hover:bg-[#F9A625]/5 hover:text-[#F9A625]'
+                                  }`}
+                                >
+                                  {service.name}
+                                  <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </motion.div>
                       )}
-                    </motion.div>
-                  </Link>
+                    </AnimatePresence>
+                  </div>
                 );
               })}
             </nav>
 
-            {/* CTA Button & Mobile Menu */}
             <div className="flex items-center space-x-4">
-              <Link href="/contact">
-                <Button
-                  className={`hidden md:flex text-sm px-6 py-2 ${isHomepage
-                    ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black'
-                    : isDarkHeroPage
-                      ? 'bg-[#F9A625] hover:bg-[#F9A625]/90 text-black'
-                      : 'btn-primary'
-                    }`}>
+              <Button asChild className="hidden md:flex text-sm px-6 py-2 bg-[#F9A625] hover:bg-[#F9A625]/90 text-black">
+                <Link href="/contact">
                   <span>Contact Us</span>
                   <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
+                </Link>
+              </Button>
 
-              {/* Mobile menu button - Touch Optimized */}
-              <motion.button
-                onClick={toggleMenu}
-                className={`lg:hidden relative mobile-touch-target rounded-xl flex items-center justify-center transition-colors ${isHomepage
-                  ? 'bg-gray-100 hover:bg-gray-200'
-                  : isDarkHeroPage
-                    ? 'bg-white/20 hover:bg-white/30 backdrop-blur-sm'
-                    : 'glass hover:bg-neutral-100'
-                  }`}
-                style={{ minWidth: '44px', minHeight: '44px' }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                aria-label="Toggle navigation menu"
+              {/* Mobile menu button. Icon colour follows the header so it is never
+                  white-on-light (it was invisible on the homepage). */}
+              <button
+                ref={menuButtonRef}
+                type="button"
+                onClick={() => setIsOpen(true)}
+                className={`lg:hidden relative rounded-xl flex items-center justify-center transition-colors w-11 h-11 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F9A625] ${
+                  headerIsDark ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-gray-100 hover:bg-gray-200 text-[#2A3959]'
+                }`}
+                aria-label="Open menu"
+                aria-expanded={isOpen}
+                aria-controls="mobile-menu"
               >
-                <AnimatePresence mode="wait">
-                  {isOpen ? (
-                    <motion.div
-                      key="close"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <X className="w-5 h-5 text-white" />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="menu"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Menu className="w-5 h-5 text-white" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
+                <Menu className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>
-      </motion.header>
+      </header>
 
-      {/* Premium Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              onClick={toggleMenu}
+              onClick={closeMenu}
+              aria-hidden="true"
             />
 
-            {/* Mobile Menu Panel */}
             <motion.div
-              className="fixed top-0 right-0 h-full w-80 max-w-[90vw] glass-dark backdrop-blur-2xl border-l border-white/10 z-50 lg:hidden"
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu"
+              className="fixed top-0 right-0 h-full w-80 max-w-[90vw] glass-dark backdrop-blur-2xl border-l border-white/10 z-50 lg:hidden overflow-y-auto"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             >
-              <div className="flex flex-col h-full">
-                {/* Header */}
+              <div className="flex flex-col min-h-full">
                 <div className="flex items-center justify-between p-6 border-b border-white/10">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-[#F9A625] to-[#2A3959] rounded-lg flex items-center justify-center">
-                      <Sparkles className="w-4 h-4 text-white" />
-                    </div>
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#F9A625] to-[#2A3959] rounded-lg flex items-center justify-center" aria-hidden="true">
+                    <Sparkles className="w-4 h-4 text-white" />
                   </div>
                   <button
-                    onClick={toggleMenu}
-                    className="w-8 h-8 glass rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors"
+                    ref={closeButtonRef}
+                    type="button"
+                    onClick={closeMenu}
+                    aria-label="Close menu"
+                    className="w-11 h-11 glass rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F9A625]"
                   >
-                    <X className="w-4 h-4 text-white" />
+                    <X className="w-5 h-5 text-white" />
                   </button>
                 </div>
 
-                {/* Navigation Links */}
                 <div className="flex-1 px-6 py-8">
-                  <nav className="space-y-2">
-                    {navItems.map((item, index) => {
-                      // Special handling for Services menu on mobile
+                  <nav className="space-y-2" aria-label="Mobile">
+                    {mobileNavItems.map((item) => {
                       if (item.name === 'Services') {
                         return (
-                          <motion.div
-                            key={item.name}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                          >
-                            {/* Services main item with arrow button */}
+                          <div key={item.name}>
                             <div className="flex items-center gap-2">
-                              {/* Services link - navigates to /services */}
                               <Link
                                 href={item.href}
-                                onClick={toggleMenu}
-                                className={`flex-1 mobile-touch-target px-4 py-3 rounded-xl font-medium transition-all duration-300 ${pathname === item.href
-                                  ? 'text-amber-400 bg-amber-500/20'
-                                  : 'text-white/80 hover:text-white hover:bg-white/10'
-                                  }`}
-                                style={{ minHeight: '44px' }}
+                                onClick={() => setIsOpen(false)}
+                                className={`flex-1 min-h-11 px-4 py-3 rounded-xl font-medium transition-colors duration-300 ${
+                                  isActive(item.href) ? 'text-amber-400 bg-amber-500/20' : 'text-white/80 hover:text-white hover:bg-white/10'
+                                }`}
                               >
                                 {item.name}
                               </Link>
-
-                              {/* Arrow button - expands submenu */}
                               <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setIsServicesExpanded(!isServicesExpanded);
-                                }}
-                                className="mobile-touch-target p-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300"
-                                style={{ minWidth: '44px', minHeight: '44px' }}
-                                aria-label="Toggle services submenu"
+                                type="button"
+                                onClick={() => setIsServicesExpanded(expanded => !expanded)}
+                                className="w-11 h-11 flex items-center justify-center rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+                                aria-label="Show service pages"
+                                aria-expanded={isServicesExpanded}
+                                aria-controls="mobile-services"
                               >
-                                <motion.div
-                                  animate={{ rotate: isServicesExpanded ? 180 : 0 }}
-                                  transition={{ duration: 0.2 }}
-                                >
-                                  <ChevronDown className="w-5 h-5" />
-                                </motion.div>
+                                <ChevronDown className={`w-5 h-5 transition-transform ${isServicesExpanded ? 'rotate-180' : ''}`} />
                               </button>
                             </div>
 
-                            {/* Services submenu - expandable */}
-                            <AnimatePresence>
-                              {isServicesExpanded && (
-                                <motion.div
-                                  initial={{ height: 0, opacity: 0 }}
-                                  animate={{ height: 'auto', opacity: 1 }}
-                                  exit={{ height: 0, opacity: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                  className="overflow-hidden ml-4 mt-2 space-y-1"
-                                >
-                                  {servicePages.map((service, idx) => (
-                                    <motion.div
-                                      key={service.href}
-                                      initial={{ opacity: 0, x: -10 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      transition={{ delay: idx * 0.05 }}
+                            {isServicesExpanded && (
+                              <ul id="mobile-services" className="ml-4 mt-2 space-y-1">
+                                {servicePages.map((service) => (
+                                  <li key={service.href}>
+                                    <Link
+                                      href={service.href}
+                                      onClick={() => setIsOpen(false)}
+                                      className={`block min-h-11 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                                        pathname === service.href ? 'text-amber-400 bg-amber-500/20' : 'text-white/70 hover:text-white hover:bg-white/5'
+                                      }`}
                                     >
-                                      <Link
-                                        href={service.href}
-                                        onClick={toggleMenu}
-                                        className={`block mobile-touch-target px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${pathname === service.href
-                                          ? 'text-amber-400 bg-amber-500/20'
-                                          : 'text-white/70 hover:text-white hover:bg-white/5'
-                                          }`}
-                                        style={{ minHeight: '40px' }}
-                                      >
-                                        {service.name}
-                                      </Link>
-                                    </motion.div>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </motion.div>
+                                      {service.name}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
                         );
                       }
 
-                      // Regular menu items
                       return (
-                        <motion.div
+                        <Link
                           key={item.name}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
+                          href={item.href}
+                          onClick={() => setIsOpen(false)}
+                          aria-current={isActive(item.href) ? 'page' : undefined}
+                          className={`block min-h-11 px-4 py-3 rounded-xl font-medium transition-colors duration-300 ${
+                            isActive(item.href) ? 'text-amber-400 bg-amber-500/20' : 'text-white/80 hover:text-white hover:bg-white/10'
+                          }`}
                         >
-                          <Link
-                            href={item.href}
-                            onClick={toggleMenu}
-                            className={`block mobile-touch-target px-4 py-3 rounded-xl font-medium transition-all duration-300 ${pathname === item.href
-                              ? 'text-amber-400 bg-amber-500/20'
-                              : 'text-white/80 hover:text-white hover:bg-white/10'
-                              }`}
-                            style={{ minHeight: '44px' }}
-                          >
-                            {item.name}
-                          </Link>
-                        </motion.div>
+                          {item.name}
+                        </Link>
                       );
                     })}
                   </nav>
 
-                  {/* Mobile CTA */}
-                  <motion.div
-                    className="mt-8 space-y-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <div className="space-y-3 pt-4 border-t border-white/10">
-                      <button
-                        onClick={() => openPopup('nav-contact')}
-                        className="flex items-center space-x-3 text-white/70 hover:text-white transition-colors"
-                      >
-                        <div className="w-8 h-8 glass rounded-lg flex items-center justify-center">
-                          <Phone className="w-4 h-4" />
-                        </div>
-                        <span className="text-sm">Get Quote</span>
-                      </button>
+                  <div className="mt-8 space-y-3 pt-4 border-t border-white/10">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsOpen(false);
+                        openPopup('nav-mobile-quote');
+                      }}
+                      className="w-full min-h-11 flex items-center justify-center gap-2 rounded-xl bg-[#F9A625] text-black font-semibold"
+                    >
+                      Get a Quote
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
 
-                      <a
-                        href="mailto:info@whitemassif.com"
-                        className="flex items-center space-x-3 text-white/70 hover:text-white transition-colors"
-                      >
-                        <div className="w-8 h-8 glass rounded-lg flex items-center justify-center">
-                          <Mail className="w-4 h-4" />
-                        </div>
-                        <span className="text-sm">info@whitemassif.com</span>
-                      </a>
+                    <a href={`tel:${companyInfo.phoneE164}`} className="flex items-center space-x-3 min-h-11 text-white/70 hover:text-white transition-colors">
+                      <span className="w-8 h-8 glass rounded-lg flex items-center justify-center" aria-hidden="true">
+                        <Phone className="w-4 h-4" />
+                      </span>
+                      <span className="text-sm">{companyInfo.phoneDisplay}</span>
+                    </a>
 
-                      <div className="flex items-center space-x-3 text-white/70">
-                        <div className="w-8 h-8 glass rounded-lg flex items-center justify-center">
-                          <MapPin className="w-4 h-4" />
-                        </div>
-                        <span className="text-sm">Bangalore, India</span>
-                      </div>
+                    <a href={`mailto:${companyInfo.email}`} className="flex items-center space-x-3 min-h-11 text-white/70 hover:text-white transition-colors">
+                      <span className="w-8 h-8 glass rounded-lg flex items-center justify-center" aria-hidden="true">
+                        <Mail className="w-4 h-4" />
+                      </span>
+                      <span className="text-sm">{companyInfo.email}</span>
+                    </a>
+
+                    <div className="flex items-center space-x-3 text-white/70">
+                      <span className="w-8 h-8 glass rounded-lg flex items-center justify-center" aria-hidden="true">
+                        <MapPin className="w-4 h-4" />
+                      </span>
+                      <span className="text-sm">Bangalore, India</span>
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </motion.div>

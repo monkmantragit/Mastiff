@@ -11,7 +11,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = generatePageMetadata({
   title: 'Corporate Event Insights & Ideas | White Massif Blog',
   description:
-    'Expert insights on corporate event planning, conferences, product launches and employee engagement from White Massif, Bangalore’s leading event management company.',
+    "Corporate event planning insights from White Massif in Bangalore: conferences, product launches, annual days and employee engagement ideas.",
   path: '/blog',
 });
 

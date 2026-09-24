@@ -11,6 +11,7 @@ import { ServicesMediaService } from "@/lib/services-media";
 import { ArrowRight, MapPin, Briefcase, Rocket, Presentation, Map, Video, Award, Building2, Star, LineChart, Key, Hotel, Compass, Landmark, CheckCircle2, Search, Palette, Handshake, CalendarCheck, Zap, FileText, ChevronDown } from "lucide-react";
 import { usePopup } from "@/components/popup-provider";
 
+import { faqs } from './faqs';
 export default function BangaloreClient() {
     const { openPopup } = usePopup();
     const serviceImages = ServicesMediaService.getServicesImages();
@@ -378,28 +379,7 @@ export default function BangaloreClient() {
                     </div>
 
                     <div className="space-y-4">
-                        {[
-                            {
-                                q: "How much lead time is needed to plan a Bangalore event?",
-                                a: "Typically 8–12 weeks. For large conferences or holiday periods, we suggest 4–6 months."
-                            },
-                            {
-                                q: "Can you handle city permits and local requirements?",
-                                a: "Yes. We coordinate with local authorities (e.g. traffic police for road shows, noise permits) and venue management as needed."
-                            },
-                            {
-                                q: "Do you provide audio-visual equipment?",
-                                a: "Absolutely. We supply professional sound systems, lighting rigs, LED screens, interpretation equipment, and streaming platforms for hybrid events."
-                            },
-                            {
-                                q: "Is there a local White Massif manager?",
-                                a: "Yes. Every Bangalore event has a dedicated Project Lead from our local team, backed by specialists in production and design."
-                            },
-                            {
-                                q: "What does a proposal include?",
-                                a: "Our proposal outlines concept ideas, budget estimates (venue, AV, staffing, etc.), a draft schedule, and projected outcomes. It’s usually delivered within 3 business days of briefing."
-                            }
-                        ].map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

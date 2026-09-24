@@ -2,6 +2,7 @@
 
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 import { usePopup } from "@/components/popup-provider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -199,7 +200,7 @@ export default function AboutClient() {
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
+            initial={false}
             animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
@@ -214,12 +215,10 @@ export default function AboutClient() {
             </motion.div>
             
             {/* Main Headline with Kinetic Typography */}
-            <motion.h1 
-              className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            >
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display leading-[0.85] mb-8">
+              <span className="block text-sm md:text-base font-body font-semibold tracking-[0.2em] uppercase text-[#F9A625] mb-5 leading-normal">
+                About White Massif, Corporate Event Management in Bangalore since 2013
+              </span>
               <span className="kinetic-text">
                 We Are
               </span>
@@ -227,7 +226,7 @@ export default function AboutClient() {
               <span className="text-neutral-800">
                 The Architects of Extraordinary
               </span>
-            </motion.h1>
+            </h1>
             
             <motion.p 
               className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed"
@@ -245,13 +244,17 @@ export default function AboutClient() {
               animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <Button className="btn-primary group">
-                <span>Discover Our Journey</span>
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              <Button asChild className="btn-primary group">
+                <Link href="/portfolio">
+                  <span>Discover Our Journey</span>
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
               </Button>
-              <Button className="btn-secondary group">
-                <span>Meet The Visionaries</span>
-                <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              <Button asChild className="btn-secondary group">
+                <Link href="/team">
+                  <span>Meet The Visionaries</span>
+                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
               </Button>
             </motion.div>
           </motion.div>
@@ -574,7 +577,7 @@ export default function AboutClient() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-                <Button className="btn-primary text-lg px-12 py-6">
+                <Button onClick={() => openPopup('about-final-cta')} className="btn-primary text-lg px-12 py-6">
                   <span>Begin The Conversation</span>
                   <ArrowRight className="ml-2 w-6 h-6" />
                 </Button>

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
 import Image from "next/image";
 import { ServicesMediaService } from "@/lib/services-media";
+import { faqs } from './faqs';
 import {
     ArrowRight,
     Sparkles,
@@ -106,7 +107,7 @@ export default function DealerAndCustomerMeetEventsClient() {
                             </Button>
                             <Button
                                 variant="outline"
-                                onClick={() => window.location.href = '/work'}
+                                onClick={() => window.location.href = '/portfolio'}
                                 className="bg-transparent border-white text-white hover:!bg-white hover:!text-[#2A3959] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg px-10 py-6 text-lg rounded-2xl"
                             >
                                 View Our Portfolio
@@ -588,28 +589,7 @@ export default function DealerAndCustomerMeetEventsClient() {
                     </div>
 
                     <div className="space-y-4">
-                        {[
-                            {
-                                q: "What types of dealer and customer events do you manage?",
-                                a: "We manage dealer meets, customer appreciation events, channel partner conferences, and structured product demonstration events."
-                            },
-                            {
-                                q: "Can these events be customized for different audiences?",
-                                a: "Yes. Every event is tailored based on audience profile, business objectives, and brand positioning."
-                            },
-                            {
-                                q: "Do you handle end-to-end execution?",
-                                a: "Absolutely. From planning and logistics to live execution and post-event closure, we manage the complete lifecycle."
-                            },
-                            {
-                                q: "How early should dealer or customer meets be planned?",
-                                a: "Ideally 4–6 weeks in advance for larger events, though smaller meets can be organized on shorter timelines."
-                            },
-                            {
-                                q: "Do you provide post-event insights?",
-                                a: "Yes. We share feedback and engagement insights to help refine future dealer and customer engagement strategies."
-                            }
-                        ].map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

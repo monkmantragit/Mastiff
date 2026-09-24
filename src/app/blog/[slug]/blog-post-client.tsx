@@ -16,7 +16,9 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { type Blog } from '@/lib/directus-service';
+import type { Blog } from '@/lib/directus';
+import { blogPath } from '@/lib/slug';
+import { usePopup } from '@/components/popup-provider';
 import { getDirectusAssetUrl } from '@/lib/directus-utils';
 
 interface BlogPostClientProps {
@@ -25,6 +27,7 @@ interface BlogPostClientProps {
 }
 
 export default function BlogPostClient({ post, relatedPosts }: BlogPostClientProps) {
+  const { openPopup } = usePopup();
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100">
       {/* Breadcrumbs */}
@@ -219,7 +222,7 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {relatedPosts.map((relatedPost) => (
                 <Card key={relatedPost.id} className="glass rounded-2xl hover:shadow-xl transition-all duration-500 group cursor-pointer">
-                  <Link href={`/blog/${relatedPost.slug || relatedPost.id}`}>
+                  <Link href={blogPath(relatedPost)}>
                     <div className="aspect-video overflow-hidden rounded-t-2xl relative">
                       {(getDirectusAssetUrl(relatedPost.main_image) || getDirectusAssetUrl(relatedPost.featured_image)) ? (
                         <Image
@@ -289,8 +292,16 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
               <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
                 Don&apos;t just read about exceptional events. Create them. Let our insights inspire your next vision.
               </p>
+              {/* Links from every article to the money pages (blog posts only linked to
+                  other posts, so none of their authority reached the service pages). */}
+              <nav aria-label="Our services" className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-10 text-white/80">
+                <Link href="/corporate-event-management-company-bangalore" className="underline underline-offset-4 hover:text-[#F9A625]">Corporate event management</Link>
+                <Link href="/conference-and-summit-management-in-bangalore" className="underline underline-offset-4 hover:text-[#F9A625]">Conferences &amp; summits</Link>
+                <Link href="/annual-day-and-award-event-management-bangalore" className="underline underline-offset-4 hover:text-[#F9A625]">Annual days &amp; awards</Link>
+                <Link href="/product-launch-event-management-in-bangalore" className="underline underline-offset-4 hover:text-[#F9A625]">Product launches</Link>
+              </nav>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Button className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg">
+                <Button onClick={() => openPopup('blog-post-cta')} className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg">
                   Start Your Journey
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>

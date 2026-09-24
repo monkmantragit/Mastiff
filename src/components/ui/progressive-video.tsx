@@ -2,9 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { Pause, Play } from 'lucide-react';
 
 interface ProgressiveVideoProps {
   src: string;
+  /** Smaller encode served to screens up to 767px wide. */
+  mobileSrc?: string;
   poster?: string;
   fallbackImage?: string;
   className?: string;
@@ -14,15 +17,23 @@ interface ProgressiveVideoProps {
   autoPlay?: boolean;
   playsInline?: boolean;
   controls?: boolean;
-  onError?: (error: any) => void;
-  priority?: boolean; // Control loading priority
-  preload?: 'none' | 'metadata' | 'auto'; // Control preload behavior
-  captionSrc?: string; // VTT caption file
-  captionLabel?: string; // Caption label
+  onError?: (error: unknown) => void;
+  priority?: boolean;
+  preload?: 'none' | 'metadata' | 'auto';
+  captionSrc?: string;
+  captionLabel?: string;
+  /** Accessible name for the pause/play control. */
+  label?: string;
 }
 
+/**
+ * Background video with lazy loading, a poster image, a mobile-sized source and a
+ * pause control (WCAG 2.2.2: looping motion longer than 5s must be pausable). Autoplay
+ * is skipped for visitors who prefer reduced motion or have Data Saver on.
+ */
 export default function ProgressiveVideo({
   src,
+  mobileSrc,
   poster,
   fallbackImage,
   className = '',
@@ -33,122 +44,98 @@ export default function ProgressiveVideo({
   playsInline = true,
   controls = false,
   onError,
-  priority = false, // Default: lazy load
-  preload = 'none', // Default: don't preload for performance
+  priority = false,
+  preload = 'none',
   captionSrc,
   captionLabel = 'English',
+  label = 'background video',
 }: ProgressiveVideoProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [shouldLoad, setShouldLoad] = useState(priority); // Load immediately if priority
+  const [shouldLoad, setShouldLoad] = useState(priority);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [allowAutoplay, setAllowAutoplay] = useState(autoPlay);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    // If priority, load immediately
-    if (priority) {
-      setShouldLoad(true);
-      return;
-    }
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    if (reduceMotion || saveData) setAllowAutoplay(false);
+  }, []);
 
-    // Otherwise, use Intersection Observer for lazy loading
-    if (!observerRef.current && videoRef.current) {
-      observerRef.current = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && !shouldLoad) {
-              setShouldLoad(true);
-              // Disconnect once loaded
-              if (observerRef.current) {
-                observerRef.current.disconnect();
-              }
-            }
-          });
-        },
-        {
-          rootMargin: '100px', // Start loading 100px before entering viewport
-          threshold: 0.1,
+  useEffect(() => {
+    if (priority || shouldLoad || !videoRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          setShouldLoad(true);
+          observer.disconnect();
         }
-      );
-
-      observerRef.current.observe(videoRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
+      },
+      { rootMargin: '100px', threshold: 0.1 }
+    );
+    observer.observe(videoRef.current);
+    return () => observer.disconnect();
   }, [priority, shouldLoad]);
 
-  const handleError = (error: any) => {
-    setHasError(true);
-    if (onError) {
-      onError(error);
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      void video.play();
+    } else {
+      video.pause();
     }
   };
 
-  const handleLoadedData = () => {
-    setIsLoaded(true);
-  };
-
-  // Show fallback image if error or while loading
   if (hasError && fallbackImage) {
     return (
       <div className={`relative ${className}`} style={style}>
-        <Image
-          src={fallbackImage}
-          alt="Video fallback"
-          fill
-          className="object-cover"
-          priority={priority}
-        />
+        <Image src={fallbackImage} alt="" fill className="object-cover" priority={priority} sizes="100vw" />
       </div>
     );
   }
 
   return (
     <div className={`relative ${className}`} style={style}>
-      {/* Poster/Placeholder while video loads */}
       {!isLoaded && poster && (
-        <Image
-          src={poster}
-          alt="Video poster"
-          fill
-          className="object-cover"
-          priority={priority}
-        />
+        <Image src={poster} alt="" fill className="object-cover" priority={priority} sizes="100vw" />
       )}
 
-      {/* Video element - only render src when shouldLoad is true */}
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
         muted={muted}
         loop={loop}
-        autoPlay={autoPlay && shouldLoad} // Only autoplay when loaded
+        autoPlay={allowAutoplay && shouldLoad}
         playsInline={playsInline}
         controls={controls}
-        poster={poster}
-        preload={preload} // Respect preload setting
-        onLoadedData={handleLoadedData}
-        onError={handleError}
-        style={{
-          opacity: isLoaded ? 1 : 0,
-          transition: 'opacity 0.5s ease-in-out',
+        preload={preload}
+        aria-hidden={controls ? undefined : true}
+        onLoadedData={() => setIsLoaded(true)}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onError={(error) => {
+          setHasError(true);
+          onError?.(error);
         }}
+        style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}
       >
+        {shouldLoad && mobileSrc && <source src={mobileSrc} type="video/mp4" media="(max-width: 767px)" />}
         {shouldLoad && <source src={src} type="video/mp4" />}
-        {captionSrc && (
-          <track
-            kind="captions"
-            src={captionSrc}
-            srcLang="en"
-            label={captionLabel}
-          />
-        )}
-        Your browser does not support the video tag.
+        {captionSrc && <track kind="captions" src={captionSrc} srcLang="en" label={captionLabel} />}
       </video>
+
+      {!controls && isLoaded && (
+        <button
+          type="button"
+          onClick={togglePlayback}
+          aria-label={isPlaying ? `Pause ${label}` : `Play ${label}`}
+          className="absolute bottom-4 right-4 z-30 w-11 h-11 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-sm hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F9A625]"
+        >
+          {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+        </button>
+      )}
     </div>
   );
 }

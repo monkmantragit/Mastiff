@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
 import Image from "next/image";
 import { ServicesMediaService } from "@/lib/services-media";
+import { faqs } from './faqs';
 import {
     ArrowRight,
     Sparkles,
@@ -109,7 +110,7 @@ export default function IndustryConventionProjectEventsClient() {
                             </Button>
                             <Button
                                 variant="outline"
-                                onClick={() => window.location.href = '/work'}
+                                onClick={() => window.location.href = '/portfolio'}
                                 className="bg-transparent border-white text-white hover:!bg-white hover:!text-[#2A3959] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg px-10 py-6 text-lg rounded-2xl"
                             >
                                 View Our Portfolio
@@ -600,28 +601,7 @@ export default function IndustryConventionProjectEventsClient() {
                     </div>
 
                     <div className="space-y-4">
-                        {[
-                            {
-                                q: "What types of industry events do you manage?",
-                                a: "We manage trade shows, exhibitions, industry conventions, specialized workshops, and fully customized event projects."
-                            },
-                            {
-                                q: "Can you handle large-scale, multi-day events?",
-                                a: "Yes. We have experience managing large, multi-day conventions with multiple stakeholders, sessions, and exhibitors."
-                            },
-                            {
-                                q: "Do you offer customized event formats?",
-                                a: "Absolutely. We design custom event solutions based on unique objectives, audiences, and environments."
-                            },
-                            {
-                                q: "How early should industry conventions be planned?",
-                                a: "Large-scale events ideally require 2–4 months of planning, depending on complexity and scale."
-                            },
-                            {
-                                q: "Do you support post-event reporting and insights?",
-                                a: "Yes. We provide feedback summaries and insights to help evaluate event success and guide future planning."
-                            }
-                        ].map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

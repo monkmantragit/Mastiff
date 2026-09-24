@@ -1,14 +1,40 @@
 import { Metadata } from 'next';
+import SchemaMarkup from '@/components/schema-markup';
+import { generatePageMetadata, generateServiceSchema, generateBreadcrumbSchema, generateFAQSchema } from '@/lib/seo-utils';
+import { faqs } from './faqs';
 import MiceEventClient from './mice-event-management-client';
 
-export const metadata: Metadata = {
-    title: 'MICE Event Management Bangalore | White Massif',
-    description: 'Meetings, Incentives, Conferences & Exhibitions (MICE) event management in Bangalore. End-to-end planning for corporate retreats, conventions, and incentive travel. Learn more.',
-    alternates: {
-        canonical: 'https://www.whitemassif.com/mice-event-management-in-bangalore'
-    }
-};
+const PATH = '/mice-event-management-in-bangalore';
 
-export default function MiceEventPage() {
-    return <MiceEventClient />;
+// generatePageMetadata sets canonical, Open Graph and Twitter tags for this URL. The old
+// hand-written metadata only set a canonical, so shares and crawlers inherited the
+// homepage's og:url and title.
+export const metadata: Metadata = generatePageMetadata({
+    title: 'MICE Event Management in Bangalore | White Massif',
+    description: 'MICE event management in Bangalore: meetings, incentive trips, conferences and exhibitions, with venues, travel and on-ground delivery handled end to end.',
+    path: PATH,
+});
+
+export default function Page() {
+    return (
+        <>
+            <SchemaMarkup
+                schema={[
+                    generateServiceSchema({
+                        name: 'MICE Event Management',
+                        description: 'MICE event management in Bangalore: meetings, incentive trips, conferences and exhibitions, with venues, travel and on-ground delivery handled end to end.',
+                        serviceType: 'MICE Event Management',
+                        areaServed: ['Bangalore', 'Karnataka', 'India'],
+                    }),
+                    generateBreadcrumbSchema([
+                        { name: 'Home', url: '/' },
+                        { name: 'Services', url: '/services' },
+                        { name: 'MICE Event Management', url: PATH },
+                    ]),
+                    generateFAQSchema(faqs.map(({ q, a }) => ({ question: q, answer: a }))),
+                ]}
+            />
+            <MiceEventClient />
+        </>
+    );
 }

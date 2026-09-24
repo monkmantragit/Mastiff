@@ -4,7 +4,7 @@ echo "🚀 Testing Directus Connection..."
 echo "=================================="
 
 DIRECTUS_URL="https://directus-production-bc75.up.railway.app"
-DIRECTUS_TOKEN="_8D1RkGRInqtUMz95MqWMsshQ-g1N1rL"
+DIRECTUS_TOKEN="${DIRECTUS_TOKEN:?Set DIRECTUS_TOKEN in your environment}"
 
 echo "📡 Testing connection to: $DIRECTUS_URL"
 echo ""

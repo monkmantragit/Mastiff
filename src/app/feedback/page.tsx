@@ -251,6 +251,7 @@ export default function FeedbackPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
@@ -290,14 +291,9 @@ export default function FeedbackPage() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
+    setSubmitError(null);
     
     try {
-      const webhookUrl = process.env.NEXT_PUBLIC_FEEDBACK_WEBHOOK_URL;
-      
-      if (!webhookUrl) {
-        throw new Error('Webhook URL not configured');
-      }
-
       // Build enhanced responses with full question context
       const enhancedResponses = Object.keys(formData.responses).map(questionId => {
         const question = questions.find(q => q.id === questionId);
@@ -327,12 +323,14 @@ export default function FeedbackPage() {
         };
       });
 
-      const response = await fetch(webhookUrl, {
+      // Sent via our own API, which forwards to the webhook server-side. Posting straight
+      // to NEXT_PUBLIC_FEEDBACK_WEBHOOK_URL published the webhook URL to every visitor.
+      const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
+        body: JSON.stringify({ formType: 'feedback', payload: {
           timestamp: new Date().toISOString(),
           type: 'design_feedback',
           user: {
@@ -350,7 +348,7 @@ export default function FeedbackPage() {
             referrer: document.referrer,
             url: window.location.href
           }
-        })
+        } })
       });
 
       if (!response.ok) {
@@ -360,7 +358,7 @@ export default function FeedbackPage() {
       setIsSubmitted(true);
     } catch (error) {
       console.error('Error submitting feedback:', error);
-      alert('Error submitting feedback. Please try again.');
+      setSubmitError('We could not submit your feedback. Please try again in a moment.');
     } finally {
       setIsSubmitting(false);
     }
@@ -394,7 +392,7 @@ export default function FeedbackPage() {
             
             <p className="text-xl text-neutral-600 mb-8 font-body leading-relaxed">
               Your valuable insights are now part of our evolution. Every word you&apos;ve shared brings us closer to creating 
-              the extraordinary digital experience that WhiteMassif deserves. Thank you for helping us achieve excellence.
+              the extraordinary digital experience that White Massif deserves. Thank you for helping us achieve excellence.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -481,7 +479,7 @@ export default function FeedbackPage() {
                   
                   <p className="text-xl md:text-2xl mb-12 font-body max-w-4xl mx-auto text-neutral-600 leading-relaxed">
                     Every great company listens to the voices that matter most. Your insights don&apos;t just improve our website—they shape the future 
-                    of how WhiteMassif creates exceptional experiences. Help us perfect what promises to be extraordinary.
+                    of how White Massif creates exceptional experiences. Help us perfect what promises to be extraordinary.
                   </p>
                 </motion.div>
 
@@ -572,6 +570,9 @@ export default function FeedbackPage() {
               />
             )}
           </AnimatePresence>
+          {submitError && (
+            <p role="alert" className="mt-6 text-center text-sm text-red-600">{submitError}</p>
+          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -29,7 +29,7 @@ import {
   Sparkles
 } from "lucide-react";
 import Image from "next/image";
-import { TeamService, type TeamMember } from '@/lib/team-service';
+import { getTeamMemberImageUrl, type TeamMember, type OrganizedTeam, type TeamStats } from '@/lib/team-utils';
 import { usePopup } from '@/components/popup-provider';
 
 const fadeInUp = {
@@ -52,43 +52,16 @@ const leadershipAnimation = {
   transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
 };
 
-export default function TeamClient() {
-  const [teamStructure, setTeamStructure] = useState<{
-    leadership: TeamMember[];
-    creative: TeamMember[];
-    clientServices: TeamMember[];
-    production: TeamMember[];
-    operations: TeamMember[];
-    strategy: TeamMember[];
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState<{
-    totalMembers: number;
-    departmentCounts: Record<string, number>;
-    averageExperience: number;
-  } | null>(null);
+interface TeamClientProps {
+  teamStructure: OrganizedTeam;
+  stats: TeamStats;
+}
+
+// Team data is fetched on the server (page.tsx) so it is in the initial HTML for
+// visitors and crawlers, and the Directus token never reaches the browser.
+export default function TeamClient({ teamStructure }: TeamClientProps) {
   const { openPopup } = usePopup();
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchTeamData = async () => {
-      setLoading(true);
-      try {
-        const [structure, teamStats] = await Promise.all([
-          TeamService.getOrganizedTeamStructure(),
-          TeamService.getTeamStats()
-        ]);
-        setTeamStructure(structure);
-        setStats(teamStats);
-      } catch (error) {
-        console.error('Error fetching team data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTeamData();
-  }, []);
 
   const departmentConfigs = [
     {
@@ -158,7 +131,7 @@ export default function TeamClient() {
           <div className={`w-full ${isLeadership ? 'h-96' : 'h-80'} bg-neutral-100 overflow-hidden`}>
             {member.team_member_image ? (
               <Image
-                src={TeamService.getTeamMemberImageUrl(member.team_member_image) || ''}
+                src={getTeamMemberImageUrl(member.team_member_image) || ''}
                 alt={member.name}
                 width={400}
                 height={isLeadership ? 480 : 400}
@@ -248,7 +221,7 @@ export default function TeamClient() {
         
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="text-center max-w-5xl mx-auto text-white"
@@ -259,6 +232,9 @@ export default function TeamClient() {
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display leading-tight mb-8">
+              <span className="block text-sm md:text-base font-body font-semibold tracking-[0.2em] uppercase text-amber-400 mb-5 leading-normal">
+                Our Corporate Event Management Team in Bangalore
+              </span>
               <span className="block bg-gradient-to-r from-white via-amber-100 to-white bg-clip-text text-transparent">
                 The Minds Behind
               </span>
@@ -278,14 +254,7 @@ export default function TeamClient() {
 
       {/* Main Content */}
       <div className="container mx-auto px-6 py-20">
-        {loading ? (
-          <div className="flex items-center justify-center py-32">
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
-              <p className="text-neutral-600">Loading our amazing team...</p>
-            </div>
-          </div>
-        ) : (
+        {(
           <>
             {/* Leadership Section */}
             {teamStructure?.leadership && teamStructure.leadership.length > 0 && (

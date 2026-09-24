@@ -49,28 +49,12 @@ export default function HomeClient() {
   const heroVideo = HomepageMediaService.getHeroVideo();
   const portfolioImages = HomepageMediaService.getPortfolioImages();
 
-  // Optional: Keep minimal logging for verification (remove in production)
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-    console.log('🎬 Hero Video URL:', heroVideo);
-    console.log('🎯 Service Images loaded:', Object.keys(serviceImages).length, 'images');
-    console.log('🎨 Portfolio Images loaded:', portfolioImages.length, 'images');
-
-    // Test video URL accessibility
-    console.log('🧪 Testing hero video URL...');
-    fetch(heroVideo, { method: 'HEAD' })
-      .then(response => {
-        console.log('✅ Video HEAD request:', response.status, response.statusText);
-        console.log('📝 Video Content-Type:', response.headers.get('content-type'));
-        console.log('📊 Video Content-Length:', response.headers.get('content-length'));
-      })
-      .catch(err => console.error('❌ Video HEAD request failed:', err));
-  }
-
   // Event services data with local event photos
   const services = [
     {
       id: "01",
       title: "Business Events",
+      href: "/corporate-event-management-company-bangalore",
       description: "As business event management we are specialized in crafting extraordinary business conferences that inspire, educate, and propel organizations to new heights.",
       icon: Target,
       gradient: "from-[#F9A625] to-[#2A3959]",
@@ -81,6 +65,7 @@ export default function HomeClient() {
     {
       id: "02",
       title: "Celebration Galore",
+      href: "/services/employee-engagement-activities",
       description: "Celebrate your success with style and distinction. At White Massif Corporate event management, we understand that corporate celebrations go beyond just marking a date on the calendar.",
       icon: Sparkles,
       gradient: "from-[#2A3959] to-[#F9A625]",
@@ -91,6 +76,7 @@ export default function HomeClient() {
     {
       id: "03",
       title: "Inauguration",
+      href: "/product-launch-event-management-in-bangalore",
       description: "We specialize in end-to-end execution of inaugurations tailored to your brand identity.From thematic décor and entry arch setups to floral arrangements and ribbon-cutting stations, we cover it all.",
       icon: Award,
       gradient: "from-[#F9A625] to-[#2A3959]",
@@ -101,6 +87,7 @@ export default function HomeClient() {
     {
       id: "04",
       title: "Industry Convention, Customer & Dealers Meet",
+      href: "/services/dealer-and-customer-meet-events",
       description: "In an ever-evolving business landscape staying at the forefront of innovation, collaboration, and knowledge exchange is paramount.",
       icon: Users,
       gradient: "from-[#2A3959] to-[#F9A625]",
@@ -111,6 +98,7 @@ export default function HomeClient() {
     {
       id: "05",
       title: "Hybrid Events",
+      href: "/virtual-and-hybrid-events-in-bangalore",
       description: "Tailor made services to seamlessly execute hybrid events, combining the best of in person and virtual components for a dynamic and engaging experience.",
       icon: Globe,
       gradient: "from-[#F9A625] to-[#2A3959]",
@@ -121,6 +109,7 @@ export default function HomeClient() {
     {
       id: "06",
       title: "Special Projects",
+      href: "/services/industry-convention-project-events",
       description: "In a world where one-size-fits-all doesn't suffice, We design tailor-made experiences, where every detail is meticulously crafted to align with the unique vision, preferences, and objectives of our clients.",
       icon: Star,
       gradient: "from-[#2A3959] to-[#F9A625]",
@@ -161,17 +150,15 @@ export default function HomeClient() {
         {/* Full Video Background */}
         <div className="absolute inset-0 z-0 bg-[#2A3959]">
           <ProgressiveVideo
-            src={heroVideo}
-            poster={serviceImages.servicesLanding}
-            fallbackImage={serviceImages.servicesLanding}
-            captionSrc="/assets/captions/hero-video.vtt"
-            captionLabel="English"
+            src={heroVideo.src}
+            mobileSrc={heroVideo.mobileSrc}
+            poster={heroVideo.poster}
+            fallbackImage={heroVideo.poster}
+            priority
+            preload="metadata"
+            label="White Massif showreel"
             className="absolute inset-0 w-full h-full"
-            style={{
-              zIndex: 1,
-              willChange: 'auto',
-              backfaceVisibility: 'hidden'
-            }}
+
             onError={(error) => console.error('Video playback error:', error)}
           />
 
@@ -182,7 +169,7 @@ export default function HomeClient() {
         {/* Minimal Top Badge */}
         <motion.div
           className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
-          initial={{ opacity: 0, y: -20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
@@ -195,7 +182,7 @@ export default function HomeClient() {
         {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
-          initial={{ opacity: 0 }}
+          initial={false}
           animate={{ opacity: 1, y: [0, 10, 0] }}
           transition={{ delay: 2, duration: 2, repeat: Infinity }}
         >
@@ -212,7 +199,7 @@ export default function HomeClient() {
       <section ref={heroRef} className="relative py-16 lg:py-24 bg-gradient-to-br from-neutral-50 via-white to-amber-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
+            initial={false}
             animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="text-center"
@@ -227,15 +214,15 @@ export default function HomeClient() {
             </motion.div>
 
             {/* Main Headline */}
-            <motion.h1
-              className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-display leading-[0.9] mb-8 text-[#2A3959]"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1.2, delay: 0.2 }}
-            >
+            {/* Static (not fade-in) so the largest text renders immediately for LCP, and the
+                heading names the service and city it should rank for. */}
+            <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-display leading-[0.9] mb-8 text-[#2A3959]">
+              <span className="block text-sm md:text-base font-body font-semibold tracking-[0.2em] uppercase text-[#F9A625] mb-5 leading-normal">
+                Corporate Event Management Company in Bangalore
+              </span>
               <span className="block">Crafting Corporate Gatherings</span>
               <span className="block">into <span className="text-[#F9A625]">Remarkable</span> Experiences</span>
-            </motion.h1>
+            </h1>
 
             <motion.p
               className="text-base md:text-lg lg:text-xl mb-12 font-body max-w-5xl mx-auto text-neutral-600 leading-relaxed"
@@ -367,6 +354,14 @@ export default function HomeClient() {
                       ))}
                     </div>
 
+                    {/* Crawlable link to the service page (the cards used to link nowhere). */}
+                    <Link
+                      href={service.href}
+                      className="inline-flex items-center gap-2 font-semibold text-[#2A3959] hover:text-[#F9A625] transition-colors"
+                    >
+                      Explore {service.title}
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </Link>
                   </div>
                 </motion.div>
               );

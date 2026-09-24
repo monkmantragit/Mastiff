@@ -5,15 +5,16 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { ServicesMediaService } from "@/lib/services-media";
 import { ArrowRight, Trophy, Music, Building, Camera, ChevronDown, CheckCircle2, Wine, Tent, MapPin, Speaker, Palette, Layers, ClipboardList, HeartHandshake, Clapperboard, Heart, Clock, Compass, LayoutTemplate, UsersRound, Handshake, Sliders, Activity, FileText, PartyPopper, Presentation, Cpu, Landmark, HeartPulse, Factory, Rocket, Hotel, Building2 } from "lucide-react";
 import { usePopup } from "@/components/popup-provider";
 
+import { faqs } from './faqs';
 export default function AnnualDayEventClient() {
     const { openPopup } = usePopup();
-    const serviceImages = ServicesMediaService.getServicesImages();
     // Use an appropriate image for annual day/awards
-    const defaultImage = serviceImages.employeeEngagement || serviceImages.eventManagement || "/assets/images/placeholder.jpg";
+    // The keys used before (employeeEngagement, eventManagement) do not exist, so this page
+    // always fell through to /assets/images/placeholder.jpg, which does not exist either.
+    const defaultImage = "/assets/media/Home Page/Home page 3 - Award Ceremony.jpg";
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
     return (
@@ -466,28 +467,7 @@ export default function AnnualDayEventClient() {
                     </div>
 
                     <div className="space-y-4">
-                        {[
-                            {
-                                q: "When should we begin planning our annual day or awards night?",
-                                a: "Ideally 3–4 months in advance. Bangalore’s peak corporate event season (especially Q4) results in early venue bookings."
-                            },
-                            {
-                                q: "Do you provide complete audio and lighting for performances?",
-                                a: "Yes. We partner with leading production providers in Bangalore to deliver professional sound, lighting, and stage setups."
-                            },
-                            {
-                                q: "Can employees perform at the event?",
-                                a: "Absolutely. We facilitate rehearsals, manage stage coordination, and ensure appropriate audio-visual support for employee-led performances."
-                            },
-                            {
-                                q: "Can families be included in the celebration?",
-                                a: "Yes. We design separate kids’ activity zones or family-friendly layouts depending on company culture and preferences."
-                            },
-                            {
-                                q: "What safety measures are implemented?",
-                                a: "We coordinate crowd management with venue teams and arrange security oversight. Sanitization stations and spaced seating can also be implemented when required."
-                            }
-                        ].map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

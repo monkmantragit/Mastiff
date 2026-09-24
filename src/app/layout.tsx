@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Raleway } from "next/font/google";
 import Navigation from "@/components/navigation";
-import { CustomCursor } from "@/components/custom-cursor";
-import { Preloader } from "@/components/preloader";
+import { MotionProvider } from "@/components/motion-provider";
 import Footer from "@/components/footer";
 import { PopupProvider } from "@/components/popup-provider";
 import FloatingCTA from "@/components/floating-cta";
 import SchemaMarkup from "@/components/schema-markup";
-import { generateOrganizationSchema, generateLocalBusinessSchema, generateWebSiteSchema, companyInfo, generatePageMetadata } from "@/lib/seo-utils";
-import { ServicesMediaService } from "@/lib/services-media";
+import { generateOrganizationSchema, generateWebSiteSchema, generatePageMetadata } from "@/lib/seo-utils";
 import Script from "next/script";
 import "./globals.css";
 
@@ -28,34 +26,18 @@ const raleway = Raleway({
   display: "swap",
 });
 
+// Site-wide defaults only. No canonical and no og:url here: pages that do not set their
+// own would inherit the homepage's, which told Google that /work, /landing/*, etc. were
+// duplicates of the homepage. Every indexable page sets its own via generatePageMetadata.
+const siteDefaults = generatePageMetadata({
+  title: "White Massif | Corporate Event Management Company in Bangalore",
+  description: "Corporate event management company in Bangalore since 2013: conferences, product launches, annual days, awards, MICE and hybrid events. 1000+ events delivered.",
+});
+
 export const metadata: Metadata = {
-  ...generatePageMetadata({
-    title: "White Massif Event Management - Premier Corporate Event Managers in India",
-    description: "Leading corporate event management company in India with 175+ successful events across Bangalore, Mumbai, Delhi, Chennai. Specializing in product launches, annual day celebrations, team building, conferences & brand activations.",
-    keywords: [
-      "corporate event management company in India",
-      "event management companies in Bangalore",
-      "corporate event planners Bangalore",
-      "best event management company Karnataka",
-      "corporate event organizers India",
-      "team building activities Bangalore",
-      "product launch event management India",
-      "annual day celebration organizers",
-      "conference management services India",
-      "virtual event management India",
-      "hybrid event solutions Bangalore",
-      "employee engagement event planners",
-      "brand activation events Mumbai",
-      "corporate events Delhi NCR",
-      "event management HSR Layout"
-    ],
-    openGraph: {
-      type: "website",
-      locale: "en_IN",
-      images: [companyInfo.logo]
-    },
-    images: [companyInfo.logo]
-  }),
+  ...siteDefaults,
+  alternates: undefined,
+  openGraph: { ...siteDefaults.openGraph, url: undefined },
   icons: [
     {
       rel: 'icon',
@@ -85,13 +67,9 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.png?v=2" />
         <link rel="apple-touch-icon" href="/favicon.png?v=2" />
 
-        {/* Critical CSS - Inline for faster FCP */}
-        <style dangerouslySetInnerHTML={{ __html: `*,::before,::after{box-sizing:border-box;border-width:0;border-style:solid}html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}body{margin:0;line-height:inherit}.min-h-screen{min-height:100vh}.relative{position:relative}.absolute{position:absolute}.inset-0{inset:0}.flex{display:flex}.items-center{align-items:center}.justify-center{justify-content:center}.text-center{text-align:center}.object-cover{object-fit:cover}.overflow-hidden{overflow:hidden}.animate-spin{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}` }} />
-
         {/* Essential SEO Schemas for Organization & Local Business */}
         <SchemaMarkup schema={[
           generateOrganizationSchema(),
-          generateLocalBusinessSchema(),
           generateWebSiteSchema()
         ]} />
 
@@ -105,12 +83,14 @@ export default function RootLayout({
           })(window,document,'script','dataLayer','GTM-W9GQF7WR');`}
         </Script>
 
-        {/* Google Analytics - Deferred for performance */}
+        {/* gtag.js (GA4 + Google Ads). afterInteractive, not lazyOnload: with lazyOnload the
+            library only arrived after full page load + idle, so conversions from visitors
+            who left quickly (e.g. right after /thank-you) were never sent. */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-3JZS3H8914"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="lazyOnload">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -138,44 +118,37 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Google Ads - Click to Call Conversion Tracking */}
-        <Script id="google-ads-conversion" strategy="afterInteractive">
+        {/* Google Ads click-to-call conversion. The old gtag_report_conversion() helper was
+            defined but never called anywhere, so no call conversions were recorded. One
+            delegated listener now covers every tel: link on the site. */}
+        <Script id="google-ads-call-conversion" strategy="afterInteractive">
           {`
-            function gtag_report_conversion(url) {
-              var callback = function () {
-                if (typeof(url) != 'undefined') {
-                  window.location = url;
-                }
-              };
-              gtag('event', 'conversion', {
-                  'send_to': 'AW-971911197/C5M0CMSGq4YcEJ3guM8D',
-                  'value': 1.0,
-                  'currency': 'INR',
-                  'event_callback': callback
+            document.addEventListener('click', function (e) {
+              var link = e.target && e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
+              if (!link || typeof window.gtag !== 'function') return;
+              window.gtag('event', 'conversion', {
+                send_to: 'AW-971911197/C5M0CMSGq4YcEJ3guM8D',
+                value: 1.0,
+                currency: 'INR'
               });
-              return false;
-            }
+            }, { capture: true });
           `}
         </Script>
 
-        {/* Microsoft Clarity - Deferred for performance */}
-        <Script id="microsoft-clarity" strategy="lazyOnload">
-          {`
-            (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "placeholder");
-          `}
-        </Script>
+        {/* Microsoft Clarity. Previously loaded with the project ID "placeholder", so it
+            never recorded anything. Set NEXT_PUBLIC_CLARITY_ID to enable it. */}
+        {process.env.NEXT_PUBLIC_CLARITY_ID && (
+          <Script id="microsoft-clarity" strategy="lazyOnload">
+            {`
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", ${JSON.stringify(process.env.NEXT_PUBLIC_CLARITY_ID)});
+            `}
+          </Script>
+        )}
 
-
-        <link
-          rel="preload"
-          as="image"
-          href={ServicesMediaService.getServicesImages().servicesLanding}
-          fetchPriority="high"
-        />
 
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -199,14 +172,14 @@ export default function RootLayout({
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
-        <PopupProvider>
-          <Preloader />
-          {/* <CustomCursor /> */}
-          <Navigation />
-          <main>{children}</main>
-          <Footer />
-          <FloatingCTA />
-        </PopupProvider>
+        <MotionProvider>
+          <PopupProvider>
+            <Navigation />
+            <main>{children}</main>
+            <Footer />
+            <FloatingCTA />
+          </PopupProvider>
+        </MotionProvider>
       </body>
     </html>
   );

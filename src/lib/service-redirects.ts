@@ -14,13 +14,24 @@
  * To undo: remove an entry here and the slug returns to being a normal, indexable page.
  */
 export const DUPLICATE_SERVICE_REDIRECTS: Record<string, string> = {
-  'business-events': '/services/corporate-event-management',
-  'corporate-annual-events': '/services/corporate-event-management',
+  'business-events': '/corporate-event-management-company-bangalore',
+  'corporate-annual-events': '/corporate-event-management-company-bangalore',
   'celebrations-galore': '/services/employee-engagement-activities',
-  'inaugurations': '/services/product-brand-launch-events',
-  'hybrid-events': '/services/hybrid-and-virtual-events',
+  'inaugurations': '/product-launch-event-management-in-bangalore',
+  'hybrid-events': '/virtual-and-hybrid-events-in-bangalore',
   'industry-convention-customer-dealers-meet': '/services/dealer-and-customer-meet-events',
   'special-projects': '/services/industry-convention-project-events',
+}
+
+/**
+ * Hand-built /services/* pages that duplicated a Bangalore page (same intent, split
+ * ranking signals). Decision (Sep 2026): the Bangalore URL wins; these 301 to it and the
+ * old folders were removed. Targets above point straight at the winners, so no chains.
+ */
+export const DUPLICATE_STATIC_SERVICE_REDIRECTS: Record<string, string> = {
+  '/services/corporate-event-management': '/corporate-event-management-company-bangalore',
+  '/services/hybrid-and-virtual-events': '/virtual-and-hybrid-events-in-bangalore',
+  '/services/product-brand-launch-events': '/product-launch-event-management-in-bangalore',
 }
 
 export const DUPLICATE_SERVICE_SLUGS = new Set(Object.keys(DUPLICATE_SERVICE_REDIRECTS))

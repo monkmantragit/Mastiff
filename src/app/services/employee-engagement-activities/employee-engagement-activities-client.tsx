@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { usePopup } from "@/components/popup-provider";
 import Image from "next/image";
 import { ServicesMediaService } from "@/lib/services-media";
+import { faqs } from './faqs';
 import {
     ArrowRight,
     Sparkles,
@@ -102,7 +103,7 @@ export default function EmployeeEngagementActivitiesClient() {
                             </Button>
                             <Button
                                 variant="outline"
-                                onClick={() => window.location.href = '/work'}
+                                onClick={() => window.location.href = '/portfolio'}
                                 className="bg-transparent border-white text-white hover:!bg-white hover:!text-[#2A3959] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg px-10 py-6 text-lg rounded-2xl"
                             >
                                 View Our Portfolio
@@ -598,28 +599,7 @@ export default function EmployeeEngagementActivitiesClient() {
                     </div>
 
                     <div className="space-y-4">
-                        {[
-                            {
-                                q: "What types of team building activities can you customize?",
-                                a: "We design a wide range of activities including outdoor adventures, interactive workshops, collaborative problem-solving games, and theme-based celebrations tailored to your goals."
-                            },
-                            {
-                                q: "Can you handle events for remote or hybrid teams?",
-                                a: "Yes. We can plan hybrid engagement activities that combine in-person experiences with virtual collaboration elements for distributed teams."
-                            },
-                            {
-                                q: "What is the ideal group size for these activities?",
-                                a: "Activities can be designed for small teams of 10–20 people or large groups of 100+ participants depending on your event goals and space requirements."
-                            },
-                            {
-                                q: "How far in advance should we plan employee engagement events?",
-                                a: "For larger programs and offsites, it’s ideal to plan 4–8 weeks ahead. Shorter engagement workshops can be organized within shorter timelines as needed."
-                            },
-                            {
-                                q: "Do you provide post-event engagement insights?",
-                                a: "Yes. We provide summary reports and insights that help you measure engagement outcomes and inform future planning."
-                            }
-                        ].map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

@@ -1,9 +1,13 @@
 import { Metadata } from "next";
 import { generatePageMetadata } from "@/lib/seo-utils";
 import PortfolioClient from "./portfolio-client";
+import { WorkMediaService } from "@/lib/work-media";
+
+// Fetched on the server so projects are in the HTML; refreshed hourly from the CMS.
+export const revalidate = 3600;
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "White Massif | Successful Corporate Events",
+  title: "Corporate Event Portfolio | White Massif Bangalore",
   description: "Showcasing White Massif's corporate portfolio with successful conferences, launches, corporate events, impact brand experiences in Bangalore",
   keywords: [
     "White Massif portfolio",
@@ -18,12 +22,12 @@ export const metadata: Metadata = generatePageMetadata({
     "White Massif work examples"
   ],
   openGraph: {
-    type: "website",
-    images: ["/WM LOGO-01.png"]
+    type: "website"
   },
   path: "/portfolio"
 });
 
-export default function PortfolioPage() {
-  return <PortfolioClient />;
+export default async function PortfolioPage() {
+  const portfolioItems = await WorkMediaService.getPortfolioItems();
+  return <PortfolioClient portfolioItems={portfolioItems} />;
 }

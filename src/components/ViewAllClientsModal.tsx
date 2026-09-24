@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ClientLogosService, type ClientLogo } from '@/lib/client-logos-service';
+import { getBestLogoUrl, type ClientLogo } from '@/lib/client-logos-utils';
 import { X, Search, Loader2, Users } from 'lucide-react';
 
 interface ViewAllClientsModalProps {
+  clients: ClientLogo[];
   isOpen: boolean;
   onClose: () => void;
 }
@@ -17,22 +19,13 @@ interface GroupedClients {
 
 const ITEMS_PER_INDUSTRY = 12;
 
-export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProps) {
-  const [clients, setClients] = useState<ClientLogo[]>([]);
+export function ViewAllClientsModal({ clients, isOpen, onClose }: ViewAllClientsModalProps) {
   const [groupedClients, setGroupedClients] = useState<GroupedClients>({});
   const [displayedGroups, setDisplayedGroups] = useState<GroupedClients>({});
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [visibleCount, setVisibleCount] = useState<{ [industry: string]: number }>({});
   const observer = useRef<IntersectionObserver | null>(null);
-
-  // Fetch all clients on modal open
-  useEffect(() => {
-    if (isOpen && clients.length === 0) {
-      fetchAllClients();
-    }
-  }, [isOpen]);
 
   // Group clients by industry and handle search
   useEffect(() => {
@@ -70,18 +63,6 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
     setDisplayedGroups(initialDisplayed);
     setVisibleCount(initialCounts);
   }, [clients, searchTerm]);
-
-  const fetchAllClients = async () => {
-    setLoading(true);
-    try {
-      const allClients = await ClientLogosService.getAllClientLogos();
-      setClients(allClients);
-    } catch (error) {
-      console.error('Error fetching clients:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const loadMoreForIndustry = useCallback((industry: string) => {
     if (loadingMore) return;
@@ -121,10 +102,25 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
     if (node) observer.current.observe(node);
   }, [loadingMore, visibleCount, groupedClients, loadMoreForIndustry]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setSearchTerm('');
     onClose();
-  };
+  }, [onClose]);
+
+  // Esc closes the dialog and the page behind it stops scrolling while it is open.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose();
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isOpen, handleClose]);
 
   if (!isOpen) return null;
 
@@ -133,8 +129,14 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
+      >
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="all-clients-title"
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -145,7 +147,7 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
           <div className="sticky top-0 z-10 p-6 lg:p-8 border-b border-neutral-200 bg-gradient-to-r from-neutral-50 to-amber-50/30 backdrop-blur-md">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl lg:text-3xl font-display text-neutral-900 mb-2">
+                <h2 id="all-clients-title" className="text-2xl lg:text-3xl font-display text-neutral-900 mb-2">
                   Our <span className="text-amber-600">175+ Clients</span>
                 </h2>
                 <p className="text-neutral-600 font-body">
@@ -156,7 +158,9 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
                 onClick={handleClose}
                 variant="outline"
                 size="sm"
-                className="rounded-full p-2 hover:bg-neutral-100 transition-colors"
+                aria-label="Close client list"
+                autoFocus
+                className="rounded-full p-2 w-11 h-11 hover:bg-neutral-100 transition-colors"
               >
                 <X className="w-5 h-5" />
               </Button>
@@ -168,6 +172,7 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
               <input
                 type="text"
                 placeholder="Search clients or industries..."
+                aria-label="Search clients or industries"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all font-body text-sm"
@@ -177,12 +182,7 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
 
           {/* Modal Content */}
           <div className="p-6 lg:p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
-            {loading ? (
-              <div className="flex flex-col items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 text-amber-500 animate-spin mb-4" />
-                <p className="text-neutral-600 font-body">Loading all clients...</p>
-              </div>
-            ) : Object.keys(displayedGroups).length === 0 && !loading ? (
+            {Object.keys(displayedGroups).length === 0 ? (
               <div className="text-center py-20">
                 <Users className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
                 <h3 className="text-xl font-display text-neutral-600 mb-2">
@@ -241,11 +241,14 @@ export function ViewAllClientsModal({ isOpen, onClose }: ViewAllClientsModalProp
                               className="group"
                             >
                               <div className="bg-neutral-50 rounded-lg p-3 lg:p-4 aspect-square flex items-center justify-center hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 hover:scale-105 border border-transparent hover:border-amber-200">
-                                {ClientLogosService.getBestLogoUrl(client) ? (
-                                  <img
-                                    src={ClientLogosService.getBestLogoUrl(client) || ''}
+                                {getBestLogoUrl(client) ? (
+                                  <Image
+                                    src={getBestLogoUrl(client) || ''}
                                     alt={client.client_name}
-                                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                                    width={240}
+                                    height={120}
+                                    sizes="(max-width: 768px) 40vw, 200px"
+                                    className="max-w-full max-h-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 w-auto h-auto"
                                     onError={(e) => {
                                       e.currentTarget.style.display = 'none';
                                       e.currentTarget.nextElementSibling?.classList.remove('hidden');

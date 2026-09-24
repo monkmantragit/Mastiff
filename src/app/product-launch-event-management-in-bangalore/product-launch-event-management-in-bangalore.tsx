@@ -10,6 +10,7 @@ import { ServicesMediaService } from "@/lib/services-media";
 import { ArrowRight, MapPin, Target, Lightbulb, Cast, Users, BarChart, Compass, Video, ShieldCheck, Award, Building2, TrendingUp, Presentation, Cog, CheckCircle2, Briefcase, Users2, LineChart, Star, Rocket, Globe, Building, Landmark, Hotel, Key, ChevronDown, Mic2, MonitorSpeaker, UserPlus, BookOpen, Zap, Megaphone, Search, Palette, Handshake, Settings, FileText, Sparkles, Laptop, HeartPulse, Factory, GlassWater, Monitor, Maximize } from "lucide-react";
 import { usePopup } from "@/components/popup-provider";
 
+import { faqs } from './faqs';
 export default function ProductLaunchEvent() {
     const { openPopup } = usePopup();
     const serviceImages = ServicesMediaService.getServicesImages();
@@ -459,28 +460,7 @@ export default function ProductLaunchEvent() {
                     </div>
 
                     <div className="space-y-4">
-                        {[
-                            {
-                                q: "How much lead time is needed?",
-                                a: "Plan 8–12 weeks for a fully branded launch with custom stage builds and immersive production. Simpler reveal formats can be executed in shorter timelines."
-                            },
-                            {
-                                q: "Can you manage launches for startups?",
-                                a: "Yes. We scale creativity and production to suit startup budgets, particularly within Bangalore’s incubator and co-working ecosystems."
-                            },
-                            {
-                                q: "Do you coordinate product demonstrations?",
-                                a: "Absolutely. We set up demo kiosks, technical troubleshooting teams, and interactive product experience zones."
-                            },
-                            {
-                                q: "Are hybrid launches possible?",
-                                a: "Yes. We livestream launches so remote teams or investors (Mumbai, US, or global offices) can watch live, with translated or multi-language feeds if required."
-                            },
-                            {
-                                q: "What’s included in a launch package?",
-                                a: "Typically: concept development, creative design, audiovisual production, logistics management, and on-ground execution. Every proposal is customized to your launch objectives."
-                            }
-                        ].map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

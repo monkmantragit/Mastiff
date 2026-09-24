@@ -5,7 +5,11 @@ import { DirectusService, type Service } from '@/lib/directus-service';
 import SchemaMarkup from '@/components/schema-markup';
 import { generateServiceSchema, generateBreadcrumbSchema, generatePageMetadata, companyInfo } from '@/lib/seo-utils';
 import { DUPLICATE_SERVICE_SLUGS } from '@/lib/service-redirects';
+import { getDirectusAssetUrl } from '@/lib/directus-utils';
 import ServiceClient from './service-client';
+
+// Rebuilt at most hourly so CMS edits go live without a redeploy.
+export const revalidate = 3600;
 
 interface ServicePageProps {
   params: Promise<{
@@ -14,15 +18,9 @@ interface ServicePageProps {
 }
 
 // Cache the service fetch for performance
-const getService = cache(async (slug: string): Promise<Service | null> => {
-  try {
-    const service = await DirectusService.getService(slug);
-    return service;
-  } catch (error) {
-    console.error('Error fetching service:', error);
-    return null;
-  }
-});
+// No try/catch: a CMS outage must throw (Next keeps serving the cached page) instead of
+// returning null, which would render and cache a 404 for a page that exists.
+const getService = cache((slug: string): Promise<Service | null> => DirectusService.getService(slug));
 
 // Generate metadata for SEO
 export async function generateMetadata({ 
@@ -55,11 +53,12 @@ export async function generateMetadata({
   ];
 
   return generatePageMetadata({
-    title: `${service.title} Services in India - White Massif Event Management`,
-    description: service.description || `Professional ${service.title.toLowerCase()} services by White Massif - India's leading event management company. Specializing in corporate events, conferences, and brand experiences across major Indian cities.`,
+    title: service.meta_title || `${service.title} in Bangalore | White Massif`,
+    description: service.meta_description || service.description || `Professional ${service.title.toLowerCase()} services by White Massif - India's leading event management company. Specializing in corporate events, conferences, and brand experiences across major Indian cities.`,
     keywords,
     path: `/services/${service.slug || service.id}`,
-    images: service.featured_image ? [service.featured_image] : [],
+    // featured_image is a Directus file id; resolve it through the asset proxy.
+    images: [getDirectusAssetUrl(service.featured_image, { width: 1200, height: 630, fit: 'cover' })].filter((u): u is string => Boolean(u)),
     openGraph: {
       type: 'article',
       section: 'Services',
@@ -81,11 +80,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
   try {
     if (service.category) {
       const related = await DirectusService.getServicesByCategory(service.category);
-      relatedServices = related.filter(s => s.id !== service.id).slice(0, 3);
+      relatedServices = related.filter(s => s.id !== service.id && !DUPLICATE_SERVICE_SLUGS.has(s.slug)).slice(0, 3);
     } else {
       // Fallback: get any services if no category
       const allServices = await DirectusService.getServices();
-      relatedServices = allServices.filter(s => s.id !== service.id).slice(0, 3);
+      relatedServices = allServices.filter(s => s.id !== service.id && !DUPLICATE_SERVICE_SLUGS.has(s.slug)).slice(0, 3);
     }
   } catch (error) {
     console.error('Error fetching related services:', error);
@@ -95,7 +94,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const serviceSchema = generateServiceSchema({
     name: service.title,
     description: service.description || '',
-    image: service.featured_image,
+    image: getDirectusAssetUrl(service.featured_image, { width: 1200, height: 630, fit: 'cover' }),
     serviceType: service.category || 'Event Management',
     areaServed: companyInfo.areaServed
   });

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,7 +10,10 @@ import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Phone, User, Calendar, MapPin, Send, Sparkles, CheckCircle, AlertCircle, Shield } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { recordLeadSubmission } from '@/lib/lead-handoff';
+import { Honeypot } from '@/components/honeypot';
 import { FormService } from '@/lib/form-service';
+import { companyInfo } from '@/lib/company-info';
 
 interface EnquiryPopupProps {
   isOpen: boolean;
@@ -28,7 +32,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
     eventDate: '',
     location: '',
     message: '',
-    source: triggerSource
+    website: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -37,6 +41,7 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
   } | null>(null);
 
   const eventTypes = [
+    'Corporate Gifting',
     'Corporate Conference',
     'Product Launch',
     'Team Building',
@@ -48,6 +53,52 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
     'Hybrid Event',
     'Other'
   ];
+
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  // Dialog behaviour: Esc closes, focus moves into the form, the page behind stops
+  // scrolling, and focus returns to the button that opened it on close.
+  useEffect(() => {
+    if (!isOpen) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusTimer = window.setTimeout(() => {
+      dialogRef.current?.querySelector<HTMLElement>('#enq-name')?.focus();
+    }, 50);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([tabindex="-1"]), select, textarea'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+      previouslyFocused?.focus?.();
+    };
+  }, [isOpen, onClose]);
+
+  // Gifting CTAs open this form; preselect the matching enquiry type.
+  useEffect(() => {
+    if (isOpen && triggerSource.startsWith('gifting')) {
+      setFormData(prev => (prev.eventType ? prev : { ...prev, eventType: 'Corporate Gifting' }));
+    }
+  }, [isOpen, triggerSource]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -80,6 +131,14 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
         return;
       }
 
+      if (!FormService.validatePhone(formData.phone)) {
+        setSubmitStatus({
+          success: false,
+          message: 'Please enter a valid phone number so our team can call you back.'
+        });
+        return;
+      }
+
       // Prepare event type (use otherEventType if eventType is 'Other')
       const finalEventType = formData.eventType === 'Other' ? formData.otherEventType : formData.eventType;
 
@@ -92,17 +151,22 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
         eventDate: formData.eventDate,
         location: formData.location,
         message: formData.message,
-        source: formData.source
+        // triggerSource, not formData.source: the popup stays mounted, so state set on
+        // first render would tag every later lead with the first CTA's source.
+        source: triggerSource,
+        website: formData.website
       });
 
       if (result.success) {
-        // Store success data for thank you page
-        localStorage.setItem('enquiryData', JSON.stringify({
-          ...formData,
+        recordLeadSubmission({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
           eventType: finalEventType,
-          submissionId: result.id,
-          timestamp: new Date().toISOString()
-        }));
+          eventDate: formData.eventDate,
+          location: formData.location,
+          message: formData.message,
+        });
 
         // Close popup and navigate to thank you page
         onClose();
@@ -136,6 +200,10 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
           onClick={onClose}
         >
           <motion.div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="enquiry-title"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -149,20 +217,23 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                   variant="ghost"
                   size="sm"
                   onClick={onClose}
-                  className="h-8 w-8 p-0 hover:bg-gray-100 rounded-full transition-all duration-300 hover:rotate-90"
+                  aria-label="Close enquiry form"
+                  className="h-11 w-11 p-0 hover:bg-gray-100 rounded-full transition-all duration-300 hover:rotate-90"
                 >
                   <X className="h-4 w-4" />
                 </Button>
               </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-3 mb-4">
-                <img
-                  src="/WM LOGO-05.png"
-                  alt="White Massif Logo"
-                  className="h-8 w-auto object-contain"
+                <Image
+                  src="/brand/wm-logo.png"
+                  alt="White Massif"
+                  width={480}
+                  height={399}
+                  className="h-12 w-auto object-contain"
                 />
                 <div>
-                  <h2 className="text-2xl sm:text-3xl font-display text-[#2A3959] mb-1">
+                  <h2 id="enquiry-title" className="text-2xl sm:text-3xl font-display text-[#2A3959] mb-1">
                     Let&apos;s Create Something Amazing
                   </h2>
                   <p className="text-gray-600 font-body">
@@ -175,42 +246,45 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               {/* Company Statistics */}
               <div className="mt-4 text-center">
                 <p className="text-[#F9A625] text-sm font-medium">
-                  2M+ Audience Engagement • 1000+ Events • 175+ Corporate Clients • 35+ Team Size
+                  2M+ Audience Engagement • {companyInfo.stats.events} Events • {companyInfo.stats.clients} Corporate Clients • {companyInfo.stats.team} Team Size
                 </p>
               </div>
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
+            <form onSubmit={handleSubmit} className="relative p-6 sm:p-8 space-y-6">
+              <Honeypot value={formData.website} onChange={(v) => setFormData(prev => ({ ...prev, website: v }))} />
               {/* Personal Information */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm font-medium text-gray-700 flex items-center">
+                  <Label htmlFor="enq-name" className="text-sm font-medium text-gray-700 flex items-center">
                     <User className="w-4 h-4 mr-2 text-[#F9A625]" />
                     Full Name *
                   </Label>
                   <Input
-                    id="name"
+                    id="enq-name"
                     name="name"
                     type="text"
                     required
                     value={formData.name}
                     onChange={handleInputChange}
                     className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
-                    placeholder="John Doe"
+                    placeholder="Your full name"
+                    autoComplete="name"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-sm font-medium text-gray-700 flex items-center">
+                  <Label htmlFor="enq-phone" className="text-sm font-medium text-gray-700 flex items-center">
                     <Phone className="w-4 h-4 mr-2 text-[#F9A625]" />
                     Phone Number *
                   </Label>
                   <Input
-                    id="phone"
+                    id="enq-phone"
                     name="phone"
                     type="tel"
                     required
+                    autoComplete="tel"
                     value={formData.phone}
                     onChange={handleInputChange}
                     className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
@@ -220,15 +294,16 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-gray-700 flex items-center">
+                <Label htmlFor="enq-email" className="text-sm font-medium text-gray-700 flex items-center">
                   <Mail className="w-4 h-4 mr-2 text-[#F9A625]" />
                   Email Address *
                 </Label>
                 <Input
-                  id="email"
+                  id="enq-email"
                   name="email"
                   type="email"
                   required
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   className="mobile-input border-2 border-gray-200 focus:border-[#F9A625] focus:ring-[#F9A625] rounded-lg px-4 py-3 transition-all duration-300 hover:border-gray-300"
@@ -239,12 +314,12 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               {/* Event Details */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="eventType" className="text-sm font-medium text-gray-700 flex items-center">
+                  <Label htmlFor="enq-eventType" className="text-sm font-medium text-gray-700 flex items-center">
                     <Sparkles className="w-4 h-4 mr-2 text-[#F9A625]" />
                     Event Type
                   </Label>
                   <select
-                    id="eventType"
+                    id="enq-eventType"
                     name="eventType"
                     value={formData.eventType}
                     onChange={handleInputChange}
@@ -260,12 +335,12 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                 {/* Other Event Type Input */}
                 {formData.eventType === 'Other' && (
                   <div className="space-y-2">
-                    <Label htmlFor="otherEventType" className="text-sm font-medium text-gray-700 flex items-center">
+                    <Label htmlFor="enq-otherEventType" className="text-sm font-medium text-gray-700 flex items-center">
                       <Sparkles className="w-4 h-4 mr-2 text-[#F9A625]" />
                       Please specify your event type
                     </Label>
                     <Input
-                      id="otherEventType"
+                      id="enq-otherEventType"
                       name="otherEventType"
                       type="text"
                       required
@@ -278,12 +353,12 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="eventDate" className="text-sm font-medium text-gray-700 flex items-center">
+                  <Label htmlFor="enq-eventDate" className="text-sm font-medium text-gray-700 flex items-center">
                     <Calendar className="w-4 h-4 mr-2 text-[#F9A625]" />
                     Preferred Date
                   </Label>
                   <Input
-                    id="eventDate"
+                    id="enq-eventDate"
                     name="eventDate"
                     type="date"
                     value={formData.eventDate}
@@ -294,12 +369,12 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="location" className="text-sm font-medium text-gray-700 flex items-center">
+                <Label htmlFor="enq-location" className="text-sm font-medium text-gray-700 flex items-center">
                   <MapPin className="w-4 h-4 mr-2 text-[#F9A625]" />
                   Event Location
                 </Label>
                 <Input
-                  id="location"
+                  id="enq-location"
                   name="location"
                   type="text"
                   value={formData.location}
@@ -310,11 +385,11 @@ export default function EnquiryPopup({ isOpen, onClose, triggerSource = 'general
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message" className="text-sm font-medium text-gray-700">
+                <Label htmlFor="enq-message" className="text-sm font-medium text-gray-700">
                   Tell us about your vision
                 </Label>
                 <Textarea
-                  id="message"
+                  id="enq-message"
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}

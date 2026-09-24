@@ -16,6 +16,7 @@ import {
   MessageCircle
 } from 'lucide-react';
 import Link from 'next/link';
+import { consumeLeadSubmission, reportLeadConversion } from '@/lib/lead-handoff';
 
 interface EnquiryData {
   name: string;
@@ -31,46 +32,23 @@ interface EnquiryData {
 export default function ThankYouPage() {
   const [enquiryData, setEnquiryData] = useState<EnquiryData | null>(null);
 
-  // Google Ads conversion (AW-971911197). This page is only reached after a form
-  // submission, so a page-view conversion here is the lead. Guarded per session so a
-  // refresh or a back-navigation does not report the same lead twice.
+  // Only a real submission in this tab (recorded by the form just before redirecting)
+  // counts as a lead. Direct visits, bookmarks and refreshes show the page but report
+  // no conversion. The stored details are deleted as soon as they are read.
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem('wm_ads_conversion_sent') === '1') return;
-      sessionStorage.setItem('wm_ads_conversion_sent', '1');
-    } catch {
-      // Private mode / storage blocked: fall through and report the conversion.
-    }
-
-    const w = window as typeof window & {
-      dataLayer?: unknown[];
-      gtag?: (...args: unknown[]) => void;
-    };
-    w.dataLayer = w.dataLayer || [];
-    if (typeof w.gtag !== 'function') {
-      w.gtag = function gtag() {
-        // eslint-disable-next-line prefer-rest-params
-        w.dataLayer!.push(arguments);
-      };
-    }
-    w.gtag('event', 'conversion', {
-      send_to: 'AW-971911197/191xCNue9wgQneC4zwM',
-      value: 1.0,
-      currency: 'INR',
+    const lead = consumeLeadSubmission();
+    if (!lead) return;
+    reportLeadConversion();
+    setEnquiryData({
+      name: lead.name || '',
+      email: lead.email || '',
+      phone: lead.phone || '',
+      eventType: lead.eventType || '',
+      eventDate: lead.eventDate || '',
+      location: lead.location || '',
+      message: lead.message || '',
+      timestamp: lead.timestamp,
     });
-  }, []);
-
-  useEffect(() => {
-    // Get the enquiry data from localStorage
-    const storedData = localStorage.getItem('enquiryData');
-    if (storedData) {
-      try {
-        const data = JSON.parse(storedData);
-        setEnquiryData(data);
-      } catch (error) {
-        console.error('Error parsing enquiry data:', error);
-      }
-    }
   }, []);
 
   const fadeInUp = {
@@ -371,26 +349,26 @@ export default function ThankYouPage() {
               variants={fadeInUp}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Link href="/">
-                <Button className="mobile-touch-target border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white" variant="outline">
+              <Button asChild className="mobile-touch-target border-[#2A3959] text-[#2A3959] hover:bg-[#2A3959] hover:text-white" variant="outline">
+                <Link href="/">
                   <Home className="mr-2 h-4 w-4" />
                   Back to Home
-                </Button>
-              </Link>
+                </Link>
+              </Button>
               
-              <Link href="/portfolio">
-                <Button className="mobile-touch-target border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black" variant="outline">
+              <Button asChild className="mobile-touch-target border-[#F9A625] text-[#F9A625] hover:bg-[#F9A625] hover:text-black" variant="outline">
+                <Link href="/portfolio">
                   <Star className="mr-2 h-4 w-4" />
                   View Portfolio
-                </Button>
-              </Link>
+                </Link>
+              </Button>
               
-              <Link href="/services">
-                <Button className="btn-primary mobile-touch-target">
+              <Button asChild className="btn-primary mobile-touch-target">
+                <Link href="/services">
                   <ArrowRight className="mr-2 h-4 w-4" />
                   Explore Services
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </motion.div>
           </motion.div>
         </div>

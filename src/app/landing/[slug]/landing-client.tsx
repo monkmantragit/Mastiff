@@ -1,0 +1,581 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  ArrowRight,
+  Calendar,
+  CheckCircle,
+  Star,
+  Users,
+  Award,
+  Target,
+  Play,
+  X
+} from 'lucide-react';
+import Image from 'next/image';
+import type { LandingPage } from '@/lib/directus';
+import { getDirectusAssetUrl } from '@/lib/directus-utils';
+import { FormService } from '@/lib/form-service';
+import { recordLeadSubmission } from '@/lib/lead-handoff';
+import { Honeypot } from '@/components/honeypot';
+import { usePopup } from "@/components/popup-provider";
+
+const AUTOCOMPLETE: Record<string, string> = {
+  name: 'name',
+  email: 'email',
+  phone: 'tel',
+  company: 'organization',
+};
+
+const WATCH_VIDEO_SRC = '/assets/videos/Intro%20Video%20of%202026%20-%20Home%20page.mp4';
+
+type OpenPopup = (source?: string) => void;
+
+interface ServiceTemplateProps {
+  landingPage: LandingPage;
+  heroImage?: string;
+  heroVideo?: string;
+  isSubmitting: boolean;
+  formError: string | null;
+  honeypot: string;
+  setHoneypot: (value: string) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onWatchVideo: () => void;
+  openPopup: OpenPopup;
+}
+
+// Templates live at module scope. Defined inside the page component they were new
+// component types on every render, so any state change remounted the page and wiped
+// whatever the visitor had typed into the form.
+
+function ServiceTemplate({
+  landingPage,
+  heroImage,
+  heroVideo,
+  isSubmitting,
+  formError,
+  honeypot,
+  setHoneypot,
+  onSubmit,
+  onWatchVideo,
+  openPopup,
+}: ServiceTemplateProps) {
+  return (
+  <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100">
+    {/* Hero Section */}
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0">
+        {heroVideo ? (
+          <div className="relative w-full h-full">
+            <video
+              className="absolute inset-0 w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src={heroVideo} type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-black/50" />
+          </div>
+        ) : heroImage ? (
+          <>
+            <Image
+              src={heroImage}
+              alt={landingPage.hero_title || landingPage.title}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#2A3959] to-[#1a2332]" />
+        )}
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Hero Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            className="text-white"
+          >
+            <Badge className="mb-6 bg-[#F9A625]/20 text-[#F9A625] border-[#F9A625]/30 px-4 py-2">
+              Premium Event Services
+            </Badge>
+
+            <h1 className="text-4xl md:text-6xl font-display mb-6 leading-tight">
+              {landingPage.hero_title || landingPage.title}
+            </h1>
+
+            {landingPage.hero_subtitle && (
+              <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
+                {landingPage.hero_subtitle}
+              </p>
+            )}
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                onClick={() => openPopup('service-cta')}
+                className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg"
+              >
+                {landingPage.cta_text || "Get Started"}
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+
+              <Button
+                variant="outline"
+                className="border-white text-white hover:bg-white hover:text-[#2A3959] px-8 py-4 rounded-full text-lg"
+                onClick={onWatchVideo}
+              >
+                <Play className="mr-2 w-5 h-5" />
+                Watch Our Work
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* Lead Capture Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+          >
+            <Card className="bg-white/95 backdrop-blur-sm border-0 shadow-2xl rounded-3xl">
+              <CardContent className="p-8">
+                {(
+                  <>
+                    <h3 className="text-2xl font-display text-[#2A3959] mb-2">
+                      Get Your Free Consultation
+                    </h3>
+                    <p className="text-neutral-600 mb-6">
+                      Let&apos;s discuss your vision and create something extraordinary together.
+                    </p>
+
+                    <form onSubmit={onSubmit} className="relative space-y-4">
+                      <Honeypot value={honeypot} onChange={setHoneypot} />
+                      {landingPage.form_fields?.map((field) => (
+                        <div key={field.name}>
+                          <Label htmlFor={field.name} className="text-sm font-medium text-[#2A3959]">
+                            {field.label} {field.required && <span className="text-red-500">*</span>}
+                          </Label>
+                          {field.type === 'textarea' ? (
+                            <Textarea
+                              id={field.name}
+                              name={field.name}
+                              required={field.required}
+                              className="mt-1"
+                              placeholder={`Enter your ${field.label.toLowerCase()}`}
+                            />
+                          ) : field.type === 'select' ? (
+                            <select
+                              id={field.name}
+                              name={field.name}
+                              required={field.required}
+                              className="mt-1 w-full rounded-md border border-neutral-300 px-3 py-2"
+                            >
+                              <option value="">Select {field.label}</option>
+                              {field.options?.map((option) => (
+                                <option key={option} value={option}>{option}</option>
+                              ))}
+                            </select>
+                          ) : (
+                            <Input
+                              type={field.type === 'phone' ? 'tel' : field.type}
+                              autoComplete={AUTOCOMPLETE[field.name] || undefined}
+                              id={field.name}
+                              name={field.name}
+                              required={field.required}
+                              className="mt-1"
+                              placeholder={`Enter your ${field.label.toLowerCase()}`}
+                            />
+                          )}
+                        </div>
+                      ))}
+
+                      {formError && (
+                        <p role="alert" className="text-sm text-red-600">{formError}</p>
+                      )}
+
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold py-3 rounded-full disabled:opacity-60"
+                      >
+                        {isSubmitting ? 'Sending…' : 'Get Free Consultation'}
+                        {!isSubmitting && <ArrowRight className="ml-2 w-4 h-4" />}
+                      </Button>
+                    </form>
+
+                    <div className="mt-6 text-center text-sm text-neutral-500">
+                      <div className="flex items-center justify-center gap-4">
+                        <div className="flex items-center gap-1">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span>Free consultation</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span>No obligation</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span>Quick response</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+
+    {/* Content Section */}
+    {landingPage.content && (
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div
+            className="prose prose-lg max-w-none text-neutral-700"
+            dangerouslySetInnerHTML={{ __html: landingPage.content }}
+          />
+        </div>
+      </section>
+    )}
+
+    {/* Social Proof */}
+    <section className="py-20 bg-neutral-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-display text-[#2A3959] mb-4">
+            Trusted by <span className="text-[#F9A625]">175+ Companies</span>
+          </h2>
+          <p className="text-xl text-neutral-600">
+            From Fortune 500 corporations to growing startups
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-4 gap-8 text-center">
+          {[
+            { icon: Users, number: "1000+", label: "Events Delivered" },
+            { icon: Star, number: "99%", label: "Client Satisfaction" },
+            { icon: Award, number: "175+", label: "Happy Clients" },
+            { icon: Target, number: "12+", label: "Years Experience" }
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 shadow-lg"
+            >
+              <stat.icon className="w-12 h-12 text-[#F9A625] mx-auto mb-4" />
+              <div className="text-3xl font-display text-[#2A3959] mb-2">{stat.number}</div>
+              <div className="text-neutral-600">{stat.label}</div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+  );
+}
+
+function EventTemplate({ landingPage, openPopup }: { landingPage: LandingPage; openPopup: OpenPopup }) {
+  return (
+  <div className="min-h-screen bg-gradient-to-br from-[#2A3959] via-[#1a2332] to-[#2A3959] text-white">
+    {/* Event-specific content */}
+    <section className="relative min-h-screen flex items-center">
+      <div className="container mx-auto px-4 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-5xl md:text-7xl font-display mb-6 leading-tight">
+            {landingPage.hero_title || landingPage.title}
+          </h1>
+          {landingPage.hero_subtitle && (
+            <p className="text-2xl md:text-3xl text-white/90 mb-12 leading-relaxed max-w-4xl mx-auto">
+              {landingPage.hero_subtitle}
+            </p>
+          )}
+          <Button
+            className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-bold px-12 py-6 rounded-full text-xl"
+            onClick={() => openPopup('event-cta')}
+          >
+            {landingPage.cta_text || "Join the Event"}
+            <Calendar className="ml-3 w-6 h-6" />
+          </Button>
+        </motion.div>
+      </div>
+    </section>
+  </div>
+  );
+}
+
+function CampaignTemplate({ landingPage, openPopup }: { landingPage: LandingPage; openPopup: OpenPopup }) {
+  return (
+  <div className="min-h-screen bg-gradient-to-br from-[#F9A625] via-[#e8951e] to-[#F9A625]">
+    {/* Campaign-specific content */}
+    <section className="relative min-h-screen flex items-center">
+      <div className="container mx-auto px-4 text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-5xl md:text-7xl font-display mb-6 leading-tight text-black">
+            {landingPage.hero_title || landingPage.title}
+          </h1>
+          {landingPage.hero_subtitle && (
+            <p className="text-2xl md:text-3xl text-black/80 mb-12 leading-relaxed max-w-4xl mx-auto">
+              {landingPage.hero_subtitle}
+            </p>
+          )}
+          <Button
+            className="bg-[#2A3959] hover:bg-[#2A3959]/90 text-white font-bold px-12 py-6 rounded-full text-xl"
+            onClick={() => openPopup('campaign-cta')}
+          >
+            {landingPage.cta_text || "Get Started"}
+            <ArrowRight className="ml-3 w-6 h-6" />
+          </Button>
+        </motion.div>
+      </div>
+    </section>
+  </div>
+  );
+}
+
+function GeneralTemplate({ landingPage, openPopup }: { landingPage: LandingPage; openPopup: OpenPopup }) {
+  return (
+  <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-neutral-100">
+    <section className="relative min-h-screen flex items-center">
+      <div className="container mx-auto px-4 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-5xl md:text-7xl font-display mb-6 leading-tight text-[#2A3959]">
+            {landingPage.hero_title || landingPage.title}
+          </h1>
+          {landingPage.hero_subtitle && (
+            <p className="text-xl md:text-2xl text-neutral-600 mb-12 leading-relaxed max-w-4xl mx-auto">
+              {landingPage.hero_subtitle}
+            </p>
+          )}
+          <Button
+            className="bg-[#F9A625] hover:bg-[#F9A625]/90 text-black font-semibold px-8 py-4 rounded-full text-lg"
+            onClick={() => openPopup('general-cta')}
+          >
+            {landingPage.cta_text || "Learn More"}
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Button>
+        </motion.div>
+      </div>
+    </section>
+
+    {landingPage.content && (
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div
+            className="prose prose-lg max-w-none text-neutral-700"
+            dangerouslySetInnerHTML={{ __html: landingPage.content }}
+          />
+        </div>
+      </section>
+    )}
+  </div>
+  );
+}
+
+/**
+ * Landing forms are defined in the CMS, so field names vary ("Full Name", "mobile",
+ * "work_email"). Map recognisable ones onto the lead fields the API stores, and turn any
+ * other name into a safe key so its value is kept instead of silently dropped.
+ */
+const FIELD_ALIASES: Array<[RegExp, string]> = [
+  [/e-?mail/i, 'email'],
+  [/phone|mobile|contact.?number|whats\s?app/i, 'phone'],
+  [/company|organi[sz]ation|business/i, 'company'],
+  [/event.?type/i, 'eventType'],
+  [/event.?date|date/i, 'eventDate'],
+  [/city|location|venue/i, 'location'],
+  [/message|details|requirement|comments?|notes?/i, 'message'],
+  [/name/i, 'name'],
+];
+
+function mapLandingFields(formData: FormData): Record<string, string> {
+  const fields: Record<string, string> = {};
+  formData.forEach((value, rawKey) => {
+    if (typeof value !== 'string' || rawKey === 'website') return;
+    const trimmed = value.trim();
+    if (!trimmed) return;
+    const alias = FIELD_ALIASES.find(([pattern]) => pattern.test(rawKey))?.[1];
+    const key = alias && !fields[alias]
+      ? alias
+      : rawKey.replace(/[^A-Za-z0-9_]+/g, '_').replace(/^[^A-Za-z]+/, '').slice(0, 60) || 'field';
+    fields[key] = trimmed;
+  });
+  return fields;
+}
+
+/**
+ * Runs the CMS tracking snippet. React never executes <script> tags rendered with
+ * dangerouslySetInnerHTML, so the old version silently did nothing. A contextual
+ * fragment does execute its scripts (inline and external) when inserted.
+ */
+function useTrackingCode(code?: string) {
+  useEffect(() => {
+    if (!code) return;
+    const html = /<\s*(script|noscript|img|iframe)\b/i.test(code) ? code : `<script>${code}</script>`;
+    const container = document.createElement('div');
+    container.dataset.landingTracking = 'true';
+    try {
+      container.appendChild(document.createRange().createContextualFragment(html));
+      document.body.appendChild(container);
+    } catch (error) {
+      console.error('Landing page tracking code failed to load:', error);
+    }
+    return () => container.remove();
+  }, [code]);
+}
+
+export default function LandingClient({ landingPage }: { landingPage: LandingPage }) {
+  const router = useRouter();
+  const { openPopup } = usePopup();
+  const [showVideo, setShowVideo] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState('');
+
+  useTrackingCode(landingPage.tracking_code);
+
+  useEffect(() => {
+    if (!showVideo) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowVideo(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [showVideo]);
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+    setFormError(null);
+
+    const fields = mapLandingFields(new FormData(e.currentTarget));
+
+    const hasEmail = Boolean(fields.email) && FormService.validateEmail(fields.email);
+    const hasPhone = Boolean(fields.phone) && FormService.validatePhone(fields.phone);
+    if (fields.email && !hasEmail) {
+      setFormError('Please enter a valid email address.');
+      return;
+    }
+    if (!hasEmail && !hasPhone) {
+      setFormError('Please enter a valid email address or phone number.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const result = await FormService.submitLandingPageForm({
+        ...fields,
+        email: fields.email || '',
+        source: `landing:${landingPage.slug}`,
+        website: honeypot,
+      });
+
+      if (!result.success) {
+        setFormError(result.message || 'Something went wrong. Please try again.');
+        return;
+      }
+
+      recordLeadSubmission({
+        name: fields.name,
+        email: fields.email,
+        phone: fields.phone,
+        eventType: fields.eventType,
+        message: fields.message,
+      });
+      router.push('/thank-you');
+    } catch {
+      setFormError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  let content: React.ReactNode;
+  switch (landingPage.template) {
+    case 'service':
+      content = (
+        <ServiceTemplate
+          landingPage={landingPage}
+          heroImage={getDirectusAssetUrl(landingPage.hero_image)}
+          heroVideo={getDirectusAssetUrl(landingPage.hero_video)}
+          isSubmitting={isSubmitting}
+          formError={formError}
+          honeypot={honeypot}
+          setHoneypot={setHoneypot}
+          onSubmit={handleFormSubmit}
+          onWatchVideo={() => setShowVideo(true)}
+          openPopup={openPopup}
+        />
+      );
+      break;
+    case 'event':
+      content = <EventTemplate landingPage={landingPage} openPopup={openPopup} />;
+      break;
+    case 'campaign':
+      content = <CampaignTemplate landingPage={landingPage} openPopup={openPopup} />;
+      break;
+    default:
+      content = <GeneralTemplate landingPage={landingPage} openPopup={openPopup} />;
+  }
+
+  return (
+    <>
+      {content}
+
+      {showVideo && (
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="White Massif showreel"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowVideo(false); }}
+        >
+          <div className="relative w-full max-w-4xl aspect-video">
+            <button
+              onClick={() => setShowVideo(false)}
+              aria-label="Close video"
+              autoFocus
+              className="absolute -top-12 right-0 w-11 h-11 flex items-center justify-center text-white hover:text-[#F9A625] transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <video className="w-full h-full rounded-lg" controls autoPlay playsInline>
+              <source src={WATCH_VIDEO_SRC} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
