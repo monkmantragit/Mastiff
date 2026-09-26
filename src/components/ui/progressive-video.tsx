@@ -61,6 +61,17 @@ export default function ProgressiveVideo({
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
     if (reduceMotion || saveData) setAllowAutoplay(false);
+
+    // With `priority` the sources are server-rendered, so the browser can fire loadeddata
+    // and play before React hydrates and attaches handlers. Sync from the element instead.
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) setIsLoaded(true);
+    if (reduceMotion || saveData) {
+      video.pause();
+    } else if (!video.paused) {
+      setIsPlaying(true);
+    }
   }, []);
 
   useEffect(() => {
