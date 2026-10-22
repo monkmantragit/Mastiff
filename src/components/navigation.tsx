@@ -46,7 +46,11 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isServicesExpanded, setIsServicesExpanded] = useState(false);
-  const pathname = usePathname();
+  // Production renders the cached homepage with the pathname "/index", which made the server
+  // HTML use the transparent non-home header. Hydration keeps server classes, so it stayed
+  // transparent until the first scroll. Treat "/index" as "/".
+  const rawPathname = usePathname();
+  const pathname = rawPathname === '/index' ? '/' : rawPathname;
   const { openPopup } = usePopup();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);

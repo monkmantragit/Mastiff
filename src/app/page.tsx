@@ -37,9 +37,9 @@ export const metadata: Metadata = generatePageMetadata({
   path: "/"
 });
 
-// ISR: Revalidate every hour for better caching
-export const revalidate = 3600;
-
+// No `revalidate`: the homepage has no CMS data, so it is built once per deploy. The hourly
+// ISR regeneration only re-rendered identical content, and production served a copy rendered
+// as "/index", which broke the homepage-only header styling.
 export default function HomePage() {
   return <HomeClient />;
 }

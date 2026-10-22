@@ -166,9 +166,10 @@ export default function HomeClient() {
           <div className="absolute inset-0 bg-black/10 z-10" />
         </div>
 
-        {/* Minimal Top Badge */}
+        {/* Minimal Top Badge. Offset clears the fixed header (h-16, lg:h-20), which hid it.
+            Centred with auto margins: framer-motion's inline transform overrode -translate-x-1/2. */}
         <motion.div
-          className="absolute top-8 left-1/2 transform -translate-x-1/2 z-20"
+          className="absolute top-24 lg:top-28 inset-x-0 mx-auto w-fit z-20"
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
@@ -179,9 +180,10 @@ export default function HomeClient() {
           </Badge>
         </motion.div>
 
-        {/* Scroll Indicator */}
+        {/* Scroll Indicator. Only where the hero is full-screen (md+); below that the hero is a
+            short 16:9 strip, the next section is already in view, and it would hit the badge. */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
+          className="hidden md:block absolute bottom-8 inset-x-0 mx-auto w-fit text-white z-20"
           initial={false}
           animate={{ opacity: 1, y: [0, 10, 0] }}
           transition={{ delay: 2, duration: 2, repeat: Infinity }}
